@@ -1,0 +1,18 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  gap: 20px;
+}
+
+.dashboard-main {
+  flex-grow: 1; /* Takes up remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  overflow-y: auto; /* Allows scrolling */
+  padding: 20px; /* Adjust as necessary */
+  /* More styles for main content */
+}

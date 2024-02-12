@@ -1,0 +1,40 @@
+.Sidebar {
+  width: 80px;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
+  box-shadow: 10px 0px 20px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 0 25px 25px 0;
+}
+
+.Sidebar.open {
+  width: 250px;
+}
+
+.logo {
+  margin: 20px 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.menu-items {
+  flex: 1;
+}
+
+.menu-item {
+  margin: 20px 0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+}
+
+.logout {
+  margin-bottom: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* You'll need to include a font-awesome CDN link in your index.html for the icons */
