@@ -1,0 +1,80 @@
+.header {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.title {
+  flex: 0.5;
+  color: #a2a2c2;
+  font-size: 0.8rem; /* Adjust the size as needed */
+  font-weight: 600;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.value-box {
+  position: relative;
+  padding: 12px 8.25rem 12px 0px;
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1c274c;
+}
+
+.change {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.increase {
+  color: #66ebab;
+}
+.decrease {
+  color: #eb3333;
+}
+
+.change-time {
+  color: #a1a5a4;
+  font-weight: bold;
+}
+
+.timeSwitch {
+  width: 16rem;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  display: flex;
+}
+
+.timeSwitch div {
+  flex: 1;
+  padding: 10px;
+  margin: 0 5px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  color: #1c274c;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.timeSwitch div:hover {
+  color: #a2a2c2;
+}
+
+.timeSwitch div.active {
+  color: #fff; /* Or any other color to highlight the active state */
+  background-color: #00988f; /* Or any other color to highlight the active state */
+  border-radius: 4px; /* Optional: if you want rounded corners */
+}

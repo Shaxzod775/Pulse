@@ -7,7 +7,7 @@
 }
 
 .title {
-  flex: 1;
+  flex: 0.5;
   color: #1c274c;
   font-size: 1.4rem; /* Adjust the size as needed */
   font-weight: 1000;
@@ -18,7 +18,7 @@
   /* Additional styling for the circular progress bars */
 }
 
-.bars {
+.progress {
   flex: 2;
   margin-left: 20px;
   /* Additional styling for the progress bars */

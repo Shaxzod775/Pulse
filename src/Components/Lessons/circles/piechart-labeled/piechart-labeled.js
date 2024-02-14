@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart } from "@mui/x-charts/PieChart";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import { styled } from "@mui/material/styles";
 
@@ -42,13 +42,19 @@ const PiechartLabeled = ({ data, label }) => {
     <PieChart
       series={[
         {
+          arcLabel: (item) => `${item.arcLabel ? item.arcLabel : ""}`,
           data,
           ...configuration,
         },
       ]}
+      sx={{
+        [`& .${pieArcLabelClasses.root}`]: {
+          fill: "white",
+          fontWeight: "bold",
+        },
+      }}
       {...size}
       margin={{ right: 5 }}
-      {...size}
     >
       <PieCenterLabel>{label}</PieCenterLabel>
     </PieChart>

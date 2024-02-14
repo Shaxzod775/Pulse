@@ -1,0 +1,11 @@
+.scaleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mark {
+  flex: 1;
+  /* text-align: center; */
+  font-size: 12px;
+}
