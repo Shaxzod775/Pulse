@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Dashboard.module.css";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
+import DashboardMain from "../Dashboard-main/Dashboard-main";
 
 const Dashboard = () => {
   return (
@@ -12,7 +13,7 @@ const Dashboard = () => {
       <div className={styles["dashboard-main"]}>
         <Header />
         <div className={styles["dashboard-content"]}>
-          {/* Content will go here */}
+          <DashboardMain />
         </div>
       </div>
     </div>

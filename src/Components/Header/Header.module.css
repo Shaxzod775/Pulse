@@ -10,6 +10,7 @@
 }
 
 .header-fullname {
+  color: #1c274c;
   font-size: 1.2rem; /* Adjust the size as needed */
   font-weight: bold;
 }
@@ -29,13 +30,14 @@
 }
 
 .header-search-input {
+  all: inherit;
   border: none;
   outline: none;
   margin-left: 8px;
 }
 
 .header-icon {
-  color: #333; /* Adjust the color to match your design */
+  color: #1c274c; /* Adjust the color to match your design */
   cursor: pointer;
 }
 

@@ -20,7 +20,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`${styles["Sidebar"]} ${isOpen && styles["open"]}`}>
+    <div className={`${styles["sidebar"]} ${isOpen && styles["open"]}`}>
       <div className={styles["logo"]}>ITEC</div>
       <div className={styles["menu-items"]}>
         <div className={styles["menu-item"]} onClick={() => setIsOpen(!isOpen)}>
