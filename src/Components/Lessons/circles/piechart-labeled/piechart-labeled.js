@@ -44,6 +44,12 @@ const PiechartLabeled = ({ data, label }) => {
         {
           arcLabel: (item) => `${item.arcLabel ? item.arcLabel : ""}`,
           data,
+          // highlightScope: { highlighted: "item" },
+          // highlighted: {
+          //   additionalRadius: 10,
+          //   innerRadius: 50,
+          //   paddingAngle: 16,
+          // },
           ...configuration,
         },
       ]}

@@ -1,5 +1,6 @@
 .revenue {
-  flex: 3;
+  /* flex: 2; */
+  width: 67%;
   padding: 20px;
   background: white;
   border-radius: 8px;

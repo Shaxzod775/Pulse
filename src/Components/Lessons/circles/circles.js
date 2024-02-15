@@ -3,23 +3,6 @@ import styles from "./circles.module.css";
 import { PieChart } from "@mui/x-charts/PieChart";
 import PiechartLabeled from "./piechart-labeled/piechart-labeled";
 
-const PieParams = {
-  configuration: {
-    innerRadius: "60%",
-    outerRadius: "100%",
-    cornerRadius: 10,
-    paddingAngle: 8,
-    startAngle: -90,
-    endAngle: 360,
-    cy: "50%",
-    cx: "50%",
-  },
-  size: {
-    width: 400,
-    height: 200,
-  },
-};
-
 const Circles = () => {
   const values = [24, 28, 39];
   const dataActive = [
