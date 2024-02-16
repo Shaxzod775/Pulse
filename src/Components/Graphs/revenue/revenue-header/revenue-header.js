@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styles from "./revenue-header.module.css";
 import Icon from "@mui/material/Icon";
 
-const RevenueHeader = () => {
-  const [activeTime, setActiveTime] = useState("year"); // Initialize with "year" as the default active time
+const RevenueHeader = ({ activeTime, setActiveTime }) => {
+  // const [activeTime, setActiveTime] = useState("year"); // Initialize with "year" as the default active time
   const change = 1.36;
 
   const handleTimeSwitch = (time) => {

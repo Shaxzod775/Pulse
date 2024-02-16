@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "./custom-linechart.module.css";
 
-const year = 1990; // replace with the year you want
-const months = Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
+// const year = 1990; // replace with the year you want
+// const months = Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
 
-const CustomLineChart = () => {
+const CustomLineChart = ({ labels, data }) => {
   const chartContainerRef = useRef(null); // Create a ref for the container div
   const [chartWidth, setChartWidth] = useState(0); // State to keep track of the chart width
   const [chartHeight, setChartHeight] = useState(0); // State to keep track of the chart height
@@ -29,52 +29,6 @@ const CustomLineChart = () => {
     return () => resizeObserver.disconnect(); // Clean up the observer on component unmount
   }, []);
 
-  const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    datasets: [
-      {
-        label: "Sales",
-        data: [
-          15000, 21000, 18000, 22000, 26000, 30000, 25000, 27000, 30000, 35000,
-          32000, 28000,
-        ],
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Monthly Sales Data",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
   return (
     <div
       ref={chartContainerRef}
@@ -89,17 +43,16 @@ const CustomLineChart = () => {
         }}
         xAxis={[
           {
-            data: months,
-            scaleType: "time",
-            valueFormatter: (date) =>
-              date.toLocaleString("default", { month: "short" }),
+            data: labels,
+            scaleType: "point",
           },
         ]}
         series={[
           {
             id: "MySeries",
             curve: "catmullRom",
-            data: [105, 345, 789, 656, 890, 234, 567, 901, 112, 678, 345, 987],
+            data: data,
+            // data: [105, 345, 789, 656, 890, 234, 567, 901, 112, 678, 345, 987],
             //   data: [
             //     789, 845, 987, 1023, 1100, 1156, 876, 945, 1001, 1123, 1189, 1200,
             //   ],
