@@ -76,13 +76,14 @@ const getMonthlyData = (wholeData) => {
 
 const Revenue = () => {
   const [activeTime, setActiveTime] = useState("year");
+  const [monthIndex, setMonthIndex] = useState(11);
 
   // Function to determine chart labels
   const getChartLabels = () => {
     switch (activeTime) {
       case "month":
         return Array.from(
-          { length: getDaysInMonth(StaticYear, StaticMonthIndex) },
+          { length: getDaysInMonth(StaticYear, monthIndex) },
           (_, i) => i + 1
         );
       case "year":
@@ -111,7 +112,7 @@ const Revenue = () => {
       // case "week":
       //   return getLastNDaysData(7);
       case "month":
-        return getMonthData(WholeData, StaticMonthIndex);
+        return getMonthData(WholeData, monthIndex);
       case "year":
         return getMonthlyData(WholeData);
       default:
@@ -128,7 +129,12 @@ const Revenue = () => {
     <div className={styles.revenue}>
       {/* <RevenueHeader />
       <CustomLineChart /> */}
-      <RevenueHeader activeTime={activeTime} setActiveTime={setActiveTime} />
+      <RevenueHeader
+        activeTime={activeTime}
+        setActiveTime={setActiveTime}
+        month={monthIndex}
+        setMonth={setMonthIndex}
+      />
       <CustomLineChart labels={ChartLabels} data={ChartData} />
     </div>
   );
