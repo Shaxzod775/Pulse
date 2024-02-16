@@ -65,7 +65,7 @@ const RevenueHeader = ({ activeTime, setActiveTime, month, setMonth }) => {
       </div>
       <>
         {activeTime === "month" && (
-          <Box sx={{ maxWidth: 125 }}>
+          <Box sx={{ maxWidth: 125 }} className={styles.formBox}>
             <FormControl fullWidth size="small">
               <InputLabel id="demo-simple-select-label">Month</InputLabel>
               <Select
