@@ -73,20 +73,20 @@ const Home = () => {
   const cards = [
     {
       image:
-        "https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop=",
-      header: "Canyons",
+        "https://images.adsttc.com/media/images/53ae/0e31/c07a/8079/0f00/0039/newsletter/PORT_LITTLE_EXPLORERS_2.jpg?1403915790",
+      header: "Kindergarden",
       content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1479659929431-4342107adfc1?dpr=2&auto=format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=",
-      header: "Beaches",
+        "https://media.consumeraffairs.com/files/cache/news/Students_raising_hands_in_classroom_skynesher_Getty_Images_large.webp",
+      header: "School",
       content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1479644025832-60dabb8be2a1?dpr=2&auto=format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=",
-      header: "Trees",
+        "https://www.theedadvocate.org/wp-content/uploads/2017/05/6-660x400.jpg",
+      header: "Learning Center",
       content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     },
     // {
@@ -98,19 +98,25 @@ const Home = () => {
   ];
   return (
     <div>
-      <h1>HOME</h1>
-      <Link to="/sign-in">sign in</Link>
+      <Link
+        to="/sign-in"
+        className={styles["signIn-btn"]}
+        style={{ margin: "20px" }}
+      >
+        sign in
+      </Link>
       <br />
-      <Link to="/dashboard">dashboard</Link>
+      <h1 className={styles["title"]}>Choose type of your School</h1>
       <div className={styles["container"]}>
-        <h1 className={styles["title"]}>Choose type of your School</h1>
         {cards.map((card, index) => (
-          <Card
-            key={index}
-            dataImage={card.image}
-            headerContent={card.header}
-            contentContent={card.content}
-          />
+          <Link to="/dashboard">
+            <Card
+              key={index}
+              dataImage={card.image}
+              headerContent={card.header}
+              contentContent={card.content}
+            />
+          </Link>
         ))}
       </div>
     </div>
