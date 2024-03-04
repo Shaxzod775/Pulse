@@ -20,6 +20,10 @@
   font-size: 24px;
   font-weight: bold;
 }
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
 
 .menu-items {
   flex: 1;

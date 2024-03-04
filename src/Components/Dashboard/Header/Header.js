@@ -7,6 +7,7 @@ import {
   Notifications as NotificationsIcon,
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -22,7 +23,9 @@ const Header = () => {
         </div>
         <LanguageIcon className={styles["header-icon"]} />
         <NotificationsIcon className={styles["header-icon"]} />
-        <AccountCircleIcon className={styles["header-icon"]} />
+        <Link to={"/sign-in"} style={{ display: "flex" }}>
+          <AccountCircleIcon className={styles["header-icon"]} />
+        </Link>
       </div>
     </div>
   );

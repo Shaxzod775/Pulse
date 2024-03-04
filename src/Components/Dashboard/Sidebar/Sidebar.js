@@ -15,13 +15,16 @@ import {
   Iso,
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={`${styles["sidebar"]} ${isOpen && styles["open"]}`}>
-      <div className={styles["logo"]}>ITEC</div>
+      <div className={styles["logo"]}>
+        <Link to={"/"}>ITEC</Link>
+      </div>
       <div className={styles["menu-items"]}>
         <div className={styles["menu-item"]} onClick={() => setIsOpen(!isOpen)}>
           <KeyboardDoubleArrowRightOutlined />
