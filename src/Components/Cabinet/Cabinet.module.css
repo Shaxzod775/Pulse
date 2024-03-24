@@ -1,19 +1,21 @@
-.dashboard {
+.cabinet {
   background-color: #f6f8fb;
   display: flex;
   height: 100vh;
   gap: 20px;
 }
 
-.dashboard-main {
+.cabinet-main {
   flex-grow: 1; /* Takes up remaining space */
   display: flex;
   flex-direction: column;
 }
 
-.dashboard-content {
+.cabinet-content {
   flex-grow: 1;
   overflow-y: auto; /* Allows scrolling */
   padding: 20px 20px 20px 0px; /* Adjust as necessary */
   /* More styles for main content */
+  display: flex;
+  justify-content: center;
 }

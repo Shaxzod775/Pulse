@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 // import "./Home.scss";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
+import * as routes from "../../Constants/routes";
 
 const Card = ({ dataImage, headerContent, contentContent }) => {
   const [width, setWidth] = useState(0);
@@ -99,7 +100,7 @@ const Home = () => {
   return (
     <div>
       <Link
-        to="/sign-in"
+        to={routes.SIGN_IN}
         className={styles["signIn-btn"]}
         style={{ margin: "20px" }}
       >
@@ -109,7 +110,7 @@ const Home = () => {
       <h1 className={styles["title"]}>Choose type of your School</h1>
       <div className={styles["container"]}>
         {cards.map((card, index) => (
-          <Link to="/dashboard">
+          <Link to={routes.CABINET}>
             <Card
               key={index}
               dataImage={card.image}

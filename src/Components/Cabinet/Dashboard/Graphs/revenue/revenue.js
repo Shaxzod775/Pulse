@@ -123,8 +123,6 @@ const Revenue = () => {
   const ChartLabels = getChartLabels();
   const ChartData = getChartData();
 
-  console.log(WholeData);
-
   return (
     <div className={styles.revenue}>
       {/* <RevenueHeader />

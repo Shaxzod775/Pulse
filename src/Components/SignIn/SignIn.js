@@ -8,6 +8,7 @@ import {
   WbSunnyOutlined,
   NightlightOutlined,
 } from "@mui/icons-material";
+import * as routes from "../../Constants/routes";
 
 const Logo = require("../../Assets/Images/Logo.png");
 const LogoClosed = require("../../Assets/Images/LogoClosed.png");
@@ -101,7 +102,7 @@ const SignIn = () => {
           >
             Войти
           </Button>
-          <Link to="/" className={styles["forgot-password"]}>
+          <Link to={routes.HOME} className={styles["forgot-password"]}>
             <div>Забыли пароль?</div>
           </Link>
         </div>

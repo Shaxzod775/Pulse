@@ -12,7 +12,7 @@
 }
 
 .sidebar.open {
-  width: 250px;
+  width: var(--sidebar-open-width);
 }
 
 .logo {
@@ -30,10 +30,20 @@
 }
 
 .menu-item {
+  all: inherit; /* to revert styles of <Link>*/
+  /* color: inherit;
+  text-decoration: inherit; */
   margin: 20px 0;
   font-size: 20px;
   cursor: pointer;
   display: flex;
+  justify-content: center;
+}
+.menu-item.double-arrow {
+  justify-content: center;
+}
+.menu-item.open {
+  justify-content: start;
 }
 
 .logout {

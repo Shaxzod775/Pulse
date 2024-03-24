@@ -8,10 +8,12 @@ import {
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { Toolbar } from "@mui/material";
+import * as routes from "../../../Constants/routes";
 
 const Header = () => {
   return (
-    <div className={styles["header"]}>
+    <Toolbar className={styles["header"]}>
       <span className={styles["header-fullname"]}>Привет Александр</span>
       <div className={styles["header-right"]}>
         <div className={styles["header-search"]}>
@@ -23,11 +25,11 @@ const Header = () => {
         </div>
         <LanguageIcon className={styles["header-icon"]} />
         <NotificationsIcon className={styles["header-icon"]} />
-        <Link to={"/sign-in"} style={{ display: "flex" }}>
+        <Link to={routes.SIGN_IN} style={{ display: "flex" }}>
           <AccountCircleIcon className={styles["header-icon"]} />
         </Link>
       </div>
-    </div>
+    </Toolbar>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Sidebar.module.css"; // Assuming you will create a CSS file to style the sidebar
 import {
   PaidOutlined,
@@ -13,28 +13,54 @@ import {
   SettingsOutlined,
   LogoutOutlined,
   Iso,
+  KeyboardDoubleArrowLeftOutlined,
 } from "@mui/icons-material";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import * as routes from "../../../Constants/routes";
+import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--sidebar-open-width",
+      `${SIDEBAR_OPEN_WIDTH}px`
+    );
+  }, []);
 
   return (
     <div className={`${styles["sidebar"]} ${isOpen && styles["open"]}`}>
       <div className={styles["logo"]}>
-        <Link to={"/"}>ITEC</Link>
+        <Link to={routes.HOME}>ITEC</Link>
       </div>
       <div className={styles["menu-items"]}>
-        <div className={styles["menu-item"]} onClick={() => setIsOpen(!isOpen)}>
-          <KeyboardDoubleArrowRightOutlined />
+        <div
+          className={`${styles["menu-item"]} ${styles["double-arrow"]}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <IconButton color="inherit">
+            {isOpen ? (
+              <KeyboardDoubleArrowLeftOutlined />
+            ) : (
+              <KeyboardDoubleArrowRightOutlined />
+            )}
+          </IconButton>
         </div>
-        <div className={styles["menu-item"]}>
+        <Link
+          to={routes.CABINET + routes.DASHBOARD}
+          className={styles["menu-item"]}
+        >
           <PaidOutlined />
-        </div>
-        <div className={styles["menu-item"]}>
+          {isOpen && <Typography marginLeft="1rem">Dashboard</Typography>}
+        </Link>
+        <Link
+          to={routes.CABINET + routes.GROUPS}
+          className={styles["menu-item"]}
+        >
           <PeopleAltOutlined />
-        </div>
+          {isOpen && <Typography marginLeft="1rem">Groups</Typography>}
+        </Link>
         <div className={styles["menu-item"]}>
           <CalendarMonthOutlined />
         </div>
