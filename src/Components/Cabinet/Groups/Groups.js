@@ -1,30 +1,65 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React from "react";
 import {
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
   Paper,
   Select,
   ThemeProvider,
+  createTheme,
   styled,
 } from "@mui/material";
-import {
-  SPACING_SM,
-  SIDEBAR_OPEN_WIDTH,
-  SPACING_MD,
-  FONT_BLUE_DARK,
-  FONT_SM,
-} from "../../../Constants/stylesConstants";
-import { ArrowDownwardOutlined } from "@mui/icons-material";
 
-const Root = styled("div")({
-  width: `calc(100vw - ${SIDEBAR_OPEN_WIDTH + SPACING_SM * 2}px)`,
+const theme = createTheme({
+  palette: {
+    aqua: {
+      main: "#00988F",
+      light: "#00988F",
+      dark: "#00988F",
+      contrastText: "#ffffff",
+    },
+    darkBlue: {
+      main: "#1C274C",
+      light: "#1C274C",
+      dark: "#1C274C",
+      contrastText: "#00000",
+    },
+  },
+  typography: {
+    fontSize: {
+      sm: "1.2rem",
+      md: "1.75rem",
+      lg: "2.5rem",
+    },
+    color: {
+      darkBlue: "#1C274C",
+    },
+  },
+  shape: {
+    borderRadius: 12,
+  },
+  custom: {
+    sidebarOpenWidth: 250,
+    spacing: {
+      xs: 15,
+      sm: 20,
+      md2: 27,
+      md: 30,
+    },
+  },
 });
 
-const Main = styled("div")({
+const Root = styled("div")(({ theme }) => ({
+  width: `calc(100vw - ${
+    theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
+  }px)`,
+}));
+
+const Main = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  gap: `${SPACING_MD}px`,
+  gap: theme.custom.spacing.md,
   "& .flex": {
     display: "flex",
   },
@@ -38,15 +73,15 @@ const Main = styled("div")({
     justifyContent: "space-around",
   },
   "& .gap-sm": {
-    gap: `${SPACING_SM}px`,
+    gap: theme.custom.spacing.sm,
   },
   "& .gap-md": {
-    gap: `${SPACING_SM}px`,
+    gap: theme.custom.spacing.md,
   },
   "& .full-width": {
     width: "100%",
   },
-});
+}));
 
 const Header = styled("div")({
   display: "flex",
@@ -54,103 +89,114 @@ const Header = styled("div")({
   alignItems: "center",
 });
 
-const Title = styled("h1")({
+const Title = styled("h1")(({ theme }) => ({
   margin: "0",
-  color: "#1c274c",
-  fontSize: "2.5rem",
+  color: theme.typography.color.darkBlue,
+  fontSize: theme.typography.fontSize.lg,
   fontWeight: "1000",
-});
+}));
 
-const InputLabelStyled = styled(InputLabel)({
-  color: FONT_BLUE_DARK,
+const InputLabelStyled = styled(InputLabel)(({ theme }) => ({
+  color: theme.typography.color.darkBlue,
   fontWeight: "600",
   font: "inherit",
-  fontSize: `${FONT_SM}`,
-});
+  fontSize: theme.typography.fontSize.sm,
+}));
 
 const SelectStyled = styled(Select)({
-  width: "auto",
   backgroundColor: "white",
-  borderRadius: "12px",
+  borderRadius: theme.shape.borderRadius,
   font: "inherit",
-  fontSize: `${FONT_SM}`,
-  color: `${FONT_BLUE_DARK}`,
+  fontSize: theme.typography.fontSize.sm,
+  color: theme.palette.darkBlue.main,
   "& .MuiSelect-select": {
-    padding: "15px",
+    padding: theme.custom.spacing.xs,
     display: "flex",
     alignItems: "center",
   },
   "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
     {
-      border: "2px solid #E5E5E5 !important",
+      border: "2px solid #E5E5E5",
     },
 });
 
+const ButtonStyled = styled(Button)((props) => ({
+  borderRadius: theme.shape.borderRadius,
+  font: "inherit",
+  fontSize: theme.typography.fontSize.sm,
+  padding: theme.custom.spacing.xs,
+}));
+
 const Groups = () => {
   return (
-    <Root>
-      <Main>
-        <Header>
-          <Title>Группы</Title>
-          <div className="flex items-center gap-sm">
-            <FormControl sx={{ minWidth: 200 }}>
-              <InputLabelStyled
-                htmlFor="teacher-select"
-                id="teacher-select-label"
-              >
-                Преподаватель
-              </InputLabelStyled>
-              <SelectStyled
-                labelId="teacher-select-label"
-                id="teacher-select"
-                label="Преподаватель"
-                autoWidth
-              >
-                <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                <MenuItem value={3}>Azizova Aziza</MenuItem>
-              </SelectStyled>
-            </FormControl>
-            <FormControl sx={{ minWidth: 100 }}>
-              <InputLabelStyled
-                htmlFor="teacher-select"
-                id="course-select-label"
-              >
-                Курс
-              </InputLabelStyled>
-              <SelectStyled
-                labelId="course-select-label"
-                id="course-select"
-                label="Курс"
-                autoWidth
-              >
-                <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                <MenuItem value={3}>Azizova Aziza</MenuItem>
-              </SelectStyled>
-            </FormControl>
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabelStyled
-                htmlFor="teacher-select"
-                id="state-select-label"
-              >
-                Статус
-              </InputLabelStyled>
-              <SelectStyled
-                labelId="state-select-label"
-                id="state-select"
-                label="Статус"
-                autoWidth
-              >
-                <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                <MenuItem value={3}>Azizova Aziza</MenuItem>
-              </SelectStyled>
-            </FormControl>
-          </div>
-        </Header>
-      </Main>
-    </Root>
+    <ThemeProvider theme={theme}>
+      <Root>
+        <Main>
+          <Header>
+            <Title>Группы</Title>
+            <div className="flex items-center gap-sm">
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabelStyled
+                  htmlFor="teacher-select"
+                  id="teacher-select-label"
+                >
+                  Преподаватель
+                </InputLabelStyled>
+                <SelectStyled
+                  labelId="teacher-select-label"
+                  id="teacher-select"
+                  label="Преподаватель"
+                  autoWidth
+                >
+                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
+                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
+                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                </SelectStyled>
+              </FormControl>
+              <FormControl sx={{ minWidth: 100 }}>
+                <InputLabelStyled
+                  htmlFor="teacher-select"
+                  id="course-select-label"
+                >
+                  Курс
+                </InputLabelStyled>
+                <SelectStyled
+                  labelId="course-select-label"
+                  id="course-select"
+                  label="Курс"
+                  autoWidth
+                >
+                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
+                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
+                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                </SelectStyled>
+              </FormControl>
+              <FormControl sx={{ minWidth: 120 }}>
+                <InputLabelStyled
+                  htmlFor="teacher-select"
+                  id="state-select-label"
+                >
+                  Статус
+                </InputLabelStyled>
+                <SelectStyled
+                  labelId="state-select-label"
+                  id="state-select"
+                  label="Статус"
+                  autoWidth
+                >
+                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
+                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
+                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                </SelectStyled>
+              </FormControl>
+              <ButtonStyled variant="contained" color="aqua">
+                Boom +
+              </ButtonStyled>
+            </div>
+          </Header>
+        </Main>
+      </Root>
+    </ThemeProvider>
   );
 };
 
