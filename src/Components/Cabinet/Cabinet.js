@@ -67,6 +67,7 @@ export const theme = createTheme({
     color: {
       darkBlue: "#1C274C",
       mediumaquamarine: "#89CCB5",
+      aqua: "#00988F",
     },
   },
   shape: {
@@ -83,6 +84,7 @@ export const theme = createTheme({
       md2: 27,
       md: 30,
       lg: 40,
+      xlg: 57,
     },
   },
 });
@@ -91,6 +93,7 @@ export const Root = styled("div")(({ theme }) => ({
   width: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
+  fontFamily: "Rubik",
   "& .flex": {
     display: "flex",
   },
