@@ -67,9 +67,13 @@ const Sidebar = () => {
         <div className={styles["menu-item"]}>
           <SchoolOutlined />
         </div>
-        <div className={styles["menu-item"]}>
+        <Link
+          to={routes.CABINET + routes.COURSES}
+          className={styles["menu-item"]}
+        >
           <DescriptionOutlined />
-        </div>
+          {isOpen && <Typography marginLeft="1rem">Courses</Typography>}
+        </Link>
         <div className={styles["menu-item"]}>
           <PersonOutlineOutlined />
         </div>
