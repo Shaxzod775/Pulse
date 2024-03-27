@@ -299,7 +299,12 @@ const Courses = () => {
                           variant="outlined"
                         />
                       )}
-                      popupIcon={<Icons.ArrowD />}
+                      popupIcon={
+                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                      }
+                      clearIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
                     />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
@@ -327,7 +332,16 @@ const Courses = () => {
                           />
                         )}
                         renderTags={() => null}
-                        popupIcon={<Icons.ArrowD />}
+                        popupIcon={
+                          <Icons.ArrowD
+                            color={theme.typography.color.darkBlue}
+                          />
+                        }
+                        clearIcon={
+                          <Icons.Delete
+                            color={theme.typography.color.darkBlue}
+                          />
+                        }
                       />
                       <div className="flex flex-wrap gap-x3s">
                         {selectedTechs.map((tech, i) => (
@@ -335,6 +349,16 @@ const Courses = () => {
                             label={tech}
                             onDelete={handleDeleteTech(tech)}
                             key={i}
+                            variant="outlined"
+                            color="darkBlue"
+                            sx={{
+                              borderRadius: `${theme.custom.spacing.xxs}px`,
+                            }}
+                            deleteIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
                           />
                         ))}
                       </div>

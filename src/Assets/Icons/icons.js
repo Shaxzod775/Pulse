@@ -7,6 +7,7 @@ import { ReactComponent as Clock } from "./svgs/clock.svg";
 import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
+import { ReactComponent as Delete } from "./svgs/delete.svg";
 
 export const Icons = {
   ArrowD,
@@ -18,4 +19,5 @@ export const Icons = {
   Calendar,
   UsersGroupRounded,
   AcademicCap,
+  Delete,
 };
