@@ -14,6 +14,8 @@ import {
   Select,
   Button,
   Card,
+  TextField,
+  Autocomplete,
 } from "@mui/material";
 import Courses from "./Courses/Courses";
 
@@ -29,7 +31,7 @@ export const theme = createTheme({
       main: "#1C274C",
       light: "#1C274C",
       dark: "#1C274C",
-      contrastText: "#00000",
+      contrastText: "#ffffff",
     },
     purpleGrey: {
       main: "#A2A2C2",
@@ -61,6 +63,7 @@ export const theme = createTheme({
       xxs: "0.8rem",
       xs: "1rem",
       sm: "1.2rem",
+      sm2: "1.5rem",
       md: "1.75rem",
       lg: "2.5rem",
     },
@@ -79,6 +82,7 @@ export const theme = createTheme({
       x4s: 3,
       x3s: 5,
       xxs: 10,
+      xs2: 12,
       xs: 15,
       sm: 20,
       md2: 27,
@@ -102,6 +106,12 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .flex-row": {
     flexDirection: "row",
+  },
+  "& .flex-grow": {
+    flexGrow: 1,
+  },
+  "& .flex-grow-2": {
+    flexGrow: 2,
   },
   "& .items-start": {
     alignItems: "start",
@@ -219,6 +229,36 @@ export const CardStyled = styled(Card)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   fontWeight: 600,
   border: "2px solid #E5E5E5",
+}));
+
+export const TextFieldStyled = styled(TextField)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  font: "inherit",
+  fontSize: theme.typography.fontSize.sm,
+  lineHeight: theme.typography.fontSize.md,
+  color: "inherit",
+  "& .MuiInputBase-root .MuiInputBase-input": {
+    padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
+    borderRadius: theme.custom.spacing.xs,
+  },
+}));
+
+export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  font: "inherit",
+  fontSize: theme.typography.fontSize.sm,
+  lineHeight: theme.typography.fontSize.md,
+  color: "inherit",
+  "& .MuiInputBase-root": {
+    padding: "0",
+  },
+  "& .MuiInputBase-root .MuiInputBase-input": {
+    padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
+  },
+  "& .MuiSvgIcon-root": {
+    width: theme.custom.spacing.sm,
+    height: "auto",
+  },
 }));
 
 const Cabinet = () => {
