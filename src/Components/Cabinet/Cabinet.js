@@ -113,6 +113,9 @@ export const Root = styled("div")(({ theme }) => ({
   "& .flex-grow-2": {
     flexGrow: 2,
   },
+  "& .flex-wrap": {
+    flexWrap: "wrap",
+  },
   "& .items-start": {
     alignItems: "start",
   },

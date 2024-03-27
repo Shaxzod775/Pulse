@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Autocomplete,
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -71,10 +72,32 @@ function TagCheckbox({
 }
 
 const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const techs = [
+  "JavaScript",
+  "Django",
+  "Python",
+  "GitHub",
+  "React",
+  "Node.js",
+  "Ruby on Rails",
+  "Vue.js",
+  "Angular",
+  "Flask",
+  "Express.js",
+  "MongoDB",
+  "PostgreSQL",
+  "AWS",
+  "Heroku",
+  "CSS",
+  "HTML",
+  "TypeScript",
+  "GraphQL",
+];
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [selectedTechs, setSelectedTechs] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,6 +105,14 @@ const Courses = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAutocompleteChange = (event, newValue) => {
+    setSelectedTechs(newValue);
+  };
+
+  const handleDeleteTech = (techToDelete) => () => {
+    setSelectedTechs(selectedTechs.filter((tech) => tech !== techToDelete));
   };
 
   return (
@@ -282,17 +313,32 @@ const Courses = () => {
                         Стек Технологий
                       </Title>
                     </label>
-                    <AutocompleteStyled
-                      options={teachers}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          id="course-name"
-                          variant="outlined"
-                        />
-                      )}
-                      popupIcon={<Icons.ArrowD />}
-                    />
+                    <div className="flex flex-column gap-x3s">
+                      <AutocompleteStyled
+                        multiple
+                        options={techs}
+                        value={selectedTechs}
+                        onChange={handleAutocompleteChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            id="course-name"
+                            variant="outlined"
+                          />
+                        )}
+                        renderTags={() => null}
+                        popupIcon={<Icons.ArrowD />}
+                      />
+                      <div className="flex flex-wrap gap-x3s">
+                        {selectedTechs.map((tech, i) => (
+                          <Chip
+                            label={tech}
+                            onDelete={handleDeleteTech(tech)}
+                            key={i}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </FormControl>
                 </div>
                 <div className="full-width">Yo!</div>
