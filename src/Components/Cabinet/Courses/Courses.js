@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  InputAdornment,
   InputLabel,
   TextField,
   styled,
@@ -27,6 +28,9 @@ import {
 } from "../Cabinet";
 import CourseCard from "./CourseCard/CourseCard";
 import { Icons } from "../../../Assets/Icons/icons";
+import { DateRangeOutlined } from "@mui/icons-material";
+import { NumericFormat } from "react-number-format";
+import PropTypes from "prop-types";
 
 const DialogButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.sm,
@@ -94,10 +98,41 @@ const techs = [
   "GraphQL",
 ];
 
+const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
+  props,
+  ref
+) {
+  const { onChange, ...other } = props;
+
+  return (
+    <NumericFormat
+      {...other}
+      getInputRef={ref}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      thousandSeparator
+      valueIsNumericString
+    />
+  );
+});
+NumericFormatCustom.propTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
 const Courses = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(false);
   const [selectedTechs, setSelectedTechs] = useState([]);
+
+  const [durationIndex, setDurationIndex] = useState(0);
+  const durations = ["3 месяца", "6 месяцев", "12 месяцев"];
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -113,6 +148,10 @@ const Courses = () => {
 
   const handleDeleteTech = (techToDelete) => () => {
     setSelectedTechs(selectedTechs.filter((tech) => tech !== techToDelete));
+  };
+
+  const handleDurationChange = (number) => {
+    durations[number] ? setDurationIndex(number) : setDurationIndex(0);
   };
 
   return (
@@ -217,7 +256,7 @@ const Courses = () => {
                     <TextFieldStyled id="course-name" variant="outlined" />
                   </FormControl>
                   <div>
-                    <label htmlFor="course-name">
+                    <label htmlFor="week-days">
                       <Title
                         sx={{
                           fontSize: theme.typography.fontSize.sm2,
@@ -280,7 +319,7 @@ const Courses = () => {
                     </div>
                   </div>
                   <FormControl fullWidth variant="outlined">
-                    <label htmlFor="course-name">
+                    <label htmlFor="teacher">
                       <Title
                         sx={{
                           fontSize: theme.typography.fontSize.sm2,
@@ -295,7 +334,7 @@ const Courses = () => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          id="course-name"
+                          id="teacher"
                           variant="outlined"
                         />
                       )}
@@ -308,7 +347,7 @@ const Courses = () => {
                     />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
-                    <label htmlFor="course-name">
+                    <label htmlFor="techs">
                       <Title
                         sx={{
                           fontSize: theme.typography.fontSize.sm2,
@@ -327,7 +366,7 @@ const Courses = () => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            id="course-name"
+                            id="techs"
                             variant="outlined"
                           />
                         )}
@@ -365,7 +404,140 @@ const Courses = () => {
                     </div>
                   </FormControl>
                 </div>
-                <div className="full-width">Yo!</div>
+                <div className="full-width flex flex-column gap-sm">
+                  <FormControl fullWidth variant="outlined">
+                    <label htmlFor="price">
+                      <Title
+                        sx={{
+                          fontSize: theme.typography.fontSize.sm2,
+                          paddingBottom: `${theme.custom.spacing.xs2}px`,
+                        }}
+                      >
+                        Введите цену
+                      </Title>
+                    </label>
+                    <TextFieldStyled
+                      id="price"
+                      variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">so'm</InputAdornment>
+                        ),
+                        inputComponent: NumericFormatCustom,
+                      }}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth variant="outlined">
+                    <label htmlFor="info">
+                      <Title
+                        sx={{
+                          fontSize: theme.typography.fontSize.sm2,
+                          paddingBottom: `${theme.custom.spacing.xs2}px`,
+                        }}
+                      >
+                        Введите цену
+                      </Title>
+                    </label>
+                    <TextFieldStyled
+                      id="info"
+                      variant="outlined"
+                      multiline
+                      rows={4}
+                      sx={{
+                        "& .MuiInputBase-multiline": {
+                          padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
+                          "&.MuiInputBase-root .MuiInputBase-input": {
+                            padding: "0",
+                          },
+                        },
+                      }}
+                    />
+                  </FormControl>
+                  <div>
+                    <Title
+                      sx={{
+                        fontSize: theme.typography.fontSize.sm2,
+                        paddingBottom: `${theme.custom.spacing.xs2}px`,
+                      }}
+                    >
+                      Теги
+                    </Title>
+                    <div className="flex flex-wrap gap-x3s">
+                      {["Тег 1", "Тег 2", "Тег 3", "+"].map((tech, i) => (
+                        <Chip
+                          label={tech}
+                          onDelete={i !== 3 && handleDeleteTech(tech)}
+                          key={i}
+                          variant="outlined"
+                          color="darkBlue"
+                          sx={{
+                            borderRadius: `${theme.custom.spacing.xxs}px`,
+                          }}
+                          deleteIcon={
+                            <Icons.Delete
+                              color={theme.typography.color.darkBlue}
+                            />
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="full-width flex flex-column justify-between gap-xxs">
+                    <FormControl fullWidth variant="outlined">
+                      <label htmlFor="date-start">
+                        <Title
+                          sx={{
+                            fontSize: theme.typography.fontSize.sm2,
+                            paddingBottom: `${theme.custom.spacing.xs2}px`,
+                          }}
+                        >
+                          Начало курса
+                        </Title>
+                      </label>
+                      <TextFieldStyled
+                        id="date-start"
+                        variant="outlined"
+                        type="date"
+                      />
+                    </FormControl>
+                    <FormControl fullWidth variant="outlined">
+                      <label htmlFor="date-end">
+                        <Title
+                          sx={{
+                            fontSize: theme.typography.fontSize.sm2,
+                            paddingBottom: `${theme.custom.spacing.xs2}px`,
+                          }}
+                        >
+                          Конец курса
+                        </Title>
+                      </label>
+                      <TextFieldStyled
+                        id="date-end"
+                        variant="outlined"
+                        type="date"
+                      />
+                    </FormControl>
+                    <div className="flex flex-wrap gap-x3s">
+                      {durations.map((duration, i) => (
+                        <Chip
+                          label={duration}
+                          key={i}
+                          variant={`${
+                            durationIndex === i ? "contained" : "outlined"
+                          }`}
+                          color="aqua"
+                          sx={{
+                            borderRadius: `${theme.custom.spacing.xxs}px`,
+                            "&:focus": {
+                              boxShadow: "none",
+                            },
+                          }}
+                          onClick={() => handleDurationChange(i)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="full-width flex justify-between gap-sm">

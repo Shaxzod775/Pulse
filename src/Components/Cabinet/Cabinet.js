@@ -262,6 +262,7 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
     width: theme.custom.spacing.sm,
     height: "auto",
   },
+  "& .MuiAutocomplete-endAdornment": {},
 }));
 
 const Cabinet = () => {
