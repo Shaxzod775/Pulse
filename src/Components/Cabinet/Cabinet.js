@@ -131,6 +131,12 @@ export const Root = styled("div")(({ theme }) => ({
   "& .justify-around": {
     justifyContent: "space-around",
   },
+  "& .align-self-start": {
+    alignSelf: "start",
+  },
+  "& .justify-self-end": {
+    justifySelf: "end",
+  },
   "& .gap-x4s": {
     gap: theme.custom.spacing.x4s,
   },
@@ -154,6 +160,24 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .full-width": {
     width: "100%",
+  },
+  "& .grid": {
+    display: "grid",
+  },
+  "& .grid-cols-2": {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+  "& .col-start-1": {
+    gridColumnStart: "1",
+  },
+  "& .col-end-2": {
+    gridColumnEnd: "2",
+  },
+  "& .col-start-2": {
+    gridColumnStart: "2",
+  },
+  "& .col-end-3": {
+    gridColumnEnd: "3",
   },
 }));
 

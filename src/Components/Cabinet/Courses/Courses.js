@@ -79,6 +79,32 @@ const techs = [
   "GraphQL",
 ];
 
+function createCourse({
+  name = "python",
+  teacher = "Eshmatov Toshmat",
+  price = 1000000,
+  currency = "so'm",
+  weekDays = [0, 2, 4],
+  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  techs = ["Python", "GitHub", "React", "Node.js", "Ruby on Rails", "Vue.js"],
+  tags = ["certificate", "best"],
+  duration = 3, // in months
+  startDate = new Date(2024, 4, 3),
+} = {}) {
+  return {
+    name,
+    teacher,
+    price,
+    currency,
+    weekDays,
+    description,
+    techs,
+    tags,
+    duration,
+    startDate,
+  };
+}
+
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
   props,
   ref
@@ -110,6 +136,17 @@ NumericFormatCustom.propTypes = {
 const Courses = () => {
   const [open, setOpen] = useState(false);
 
+  const [courses, setCourses] = useState([
+    createCourse({ name: "Javascript", duration: 3 }),
+    createCourse({ name: "Python", duration: 3 }),
+    createCourse({ name: "Node.js", duration: 3 }),
+    createCourse({ name: "Front-end", duration: 6 }),
+    createCourse({ name: "Back-end", duration: 9 }),
+    createCourse({ name: "Javascript", duration: 3 }),
+    createCourse({ name: "Python", duration: 3 }),
+    createCourse({ name: "Node.js", duration: 3 }),
+  ]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -139,30 +176,11 @@ const Courses = () => {
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs="auto" md="auto" lg={3}>
-            <CourseCard />
-          </Grid>
+          {courses.map((course, i) => (
+            <Grid item xs="auto" md="auto" lg={3} key={i}>
+              <CourseCard {...courses[i]} />
+            </Grid>
+          ))}
         </Grid>
       </Main>
 

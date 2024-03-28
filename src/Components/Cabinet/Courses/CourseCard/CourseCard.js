@@ -27,18 +27,22 @@ const EditButton = styled(CardButton)(({ theme }) => ({
   justifyContent: "center",
   gap: theme.custom.spacing.x3s,
   "& svg": {
-    width: theme.typography.fontSize.xs,
-    height: "auto",
+    minWidth: `${theme.typography.fontSize.xs} !important`,
+    height: `${theme.typography.fontSize.xs} !important`,
   },
 }));
 
-const CourseCard = () => {
+const CourseCard = ({ name, duration }) => {
+  const lessonsInOneMonth = 12;
+  const lessonLength = 2; // in hours
+  const durationInHours = duration * lessonsInOneMonth * lessonLength;
   return (
     <CardStyled>
       <CardContent
         sx={{
           padding: 0,
           color: theme.typography.color.darkBlue,
+          position: "relative",
           "&:last-child": {
             padding: 0,
           },
@@ -46,7 +50,7 @@ const CourseCard = () => {
       >
         <div className="flex flex-column gap-md">
           <div className="flex justify-between">
-            <span>Python</span>
+            <span>{name}</span>
             <EditButton color="grey">
               <Icons.Edit />
               <span>Редактировать</span>
@@ -55,7 +59,7 @@ const CourseCard = () => {
           <div className="flex flex-column gap-xxs">
             <div className="flex items-center gap-x4s">
               <Icons.Clock color="mediumaquamarine" />
-              <span>120 часов</span>
+              <span>{durationInHours} часов</span>
             </div>
             <div className="flex items-end justify-between">
               <div className="flex items-center gap-x4s">
