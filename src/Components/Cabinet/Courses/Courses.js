@@ -1,20 +1,5 @@
 import React, { useState } from "react";
-import {
-  Autocomplete,
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  TextField,
-  styled,
-} from "@mui/material";
+import { Button, Grid, styled } from "@mui/material";
 import {
   theme,
   ButtonStyled,
@@ -22,13 +7,8 @@ import {
   Main,
   Root,
   Title,
-  TextFieldStyled,
-  InputLabelStyled,
-  AutocompleteStyled,
 } from "../Cabinet";
 import CourseCard from "./CourseCard/CourseCard";
-import { Icons } from "../../../Assets/Icons/icons";
-import { DateRangeOutlined } from "@mui/icons-material";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";

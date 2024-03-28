@@ -119,6 +119,8 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
   const [selected, setSelected] = useState(false);
   const [selectedTechs, setSelectedTechs] = useState([]);
   const [durationIndex, setDurationIndex] = useState(0);
+  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
+  const [tagFormOpen, setTagFormOpen] = useState(false);
 
   const handleAutocompleteChange = (event, newValue) => {
     setSelectedTechs(newValue);
@@ -130,6 +132,14 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
 
   const handleDurationChange = (number) => {
     durations[number] ? setDurationIndex(number) : setDurationIndex(0);
+  };
+
+  const handleAddTag = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  const handleDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
   };
   return (
     <Dialog
@@ -163,6 +173,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
           }}
         >
           <div className="flex flex-column gap-md">
+            {/* DIALOG TITLE */}
             <Title
               sx={{
                 fontSize: theme.typography.fontSize.md,
@@ -171,7 +182,9 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
             >
               Новый курс
             </Title>
+            {/* MAIN CONTENT OF DIALOG */}
             <div className="full-width flex justify-between gap-sm">
+              {/* LEFT COLUMN */}
               <div className="full-width flex flex-column gap-sm">
                 <FormControl fullWidth variant="outlined">
                   <label htmlFor="course-name">
@@ -323,6 +336,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                   </div>
                 </FormControl>
               </div>
+              {/* RIGHT COLUMN */}
               <div className="full-width flex flex-column gap-sm">
                 <FormControl fullWidth variant="outlined">
                   <label htmlFor="price">
@@ -382,10 +396,10 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                     Теги
                   </Title>
                   <div className="flex flex-wrap gap-x3s">
-                    {["Тег 1", "Тег 2", "Тег 3", "+"].map((tech, i) => (
+                    {tags.map((tag, i) => (
                       <Chip
-                        label={tech}
-                        onDelete={i !== 3 && handleDeleteTech(tech)}
+                        label={tag}
+                        onDelete={() => handleDeleteTag(tag)}
                         key={i}
                         variant="outlined"
                         color="darkBlue"
@@ -399,6 +413,43 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                         }
                       />
                     ))}
+                    {tagFormOpen && (
+                      <FormControl variant="outlined">
+                        <TextFieldStyled
+                          autoFocus
+                          onBlur={() => {
+                            setTagFormOpen(!tagFormOpen);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              setTagFormOpen(false);
+                              handleAddTag(e.target.value);
+                            }
+                          }}
+                          id="info"
+                          variant="outlined"
+                          sx={{
+                            "& .MuiInputBase-input": {
+                              height: theme.typography.fontSize.xs,
+                              fontSize: theme.typography.fontSize.xs,
+                              lineHeight: theme.typography.fontSize.xs,
+                              padding: "8px 11px !important",
+                              color: "",
+                            },
+                          }}
+                        />
+                      </FormControl>
+                    )}
+                    <Chip
+                      label="+"
+                      variant="outlined"
+                      color="darkBlue"
+                      sx={{
+                        borderRadius: `${theme.custom.spacing.xxs}px`,
+                      }}
+                      onClick={() => setTagFormOpen(!tagFormOpen)}
+                    />
                   </div>
                 </div>
                 <div className="full-width flex flex-column justify-between gap-xxs">
@@ -459,6 +510,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
               </div>
             </div>
 
+            {/* DIALOG ACTIONS */}
             <div className="full-width flex justify-between gap-sm">
               <DialogButton
                 type="submit"
