@@ -86,6 +86,7 @@ const techs = [
   "GraphQL",
 ];
 const durations = ["3 месяца", "6 месяцев", "12 месяцев"];
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
   props,
@@ -117,10 +118,19 @@ NumericFormatCustom.propTypes = {
 
 const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
   const [selected, setSelected] = useState(false);
+  const [selectedWeekDays, setSelectedWeekDays] = useState(
+    weekDays.map(() => false)
+  );
   const [selectedTechs, setSelectedTechs] = useState([]);
   const [durationIndex, setDurationIndex] = useState(0);
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
+
+  const handleSelectWeekDays = (index) => {
+    const updatedSelectedWeekDays = [...selectedWeekDays];
+    updatedSelectedWeekDays[index] = !updatedSelectedWeekDays[index];
+    setSelectedWeekDays(updatedSelectedWeekDays);
+  };
 
   const handleAutocompleteChange = (event, newValue) => {
     setSelectedTechs(newValue);
@@ -211,55 +221,16 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                     </Title>
                   </label>
                   <div className="flex gap-xxs">
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Пн
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Вт
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Ср
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Чт
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Пт
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Сб
-                    </TagCheckbox>
-                    <TagCheckbox
-                      color="darkBlue"
-                      selected={selected}
-                      setSelected={setSelected}
-                    >
-                      Вс
-                    </TagCheckbox>
+                    {weekDays.map((weekDay, i) => (
+                      <TagCheckbox
+                        key={i}
+                        color="darkBlue"
+                        selected={selectedWeekDays[i]}
+                        onClick={() => handleSelectWeekDays(i)}
+                      >
+                        {weekDay}
+                      </TagCheckbox>
+                    ))}
                   </div>
                 </div>
                 <FormControl fullWidth variant="outlined">
