@@ -39,10 +39,10 @@
   display: flex;
   justify-content: center;
 }
-.menu-item.double-arrow {
+.sidebar.open .menu-item.double-arrow {
   justify-content: center;
 }
-.menu-item.open {
+.sidebar.open .menu-item {
   justify-content: start;
 }
 
