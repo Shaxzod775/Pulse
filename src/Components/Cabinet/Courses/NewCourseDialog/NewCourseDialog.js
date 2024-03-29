@@ -228,13 +228,30 @@ const NewCourseDialog = ({
       },
       []
     );
+    // id,
+    // name,
+    // teacher,
+    // price,
+    // currency,
+    // weekDays,
+    // description,
+    // techs,
+    // tags,
+    // duration,
+    // startDate,
     const newCourse = createCourse({
-      name: name,
+      name,
+      teacher,
+      price,
+      weekDays: chosenDays,
+      description,
+      techs: selectedTechs,
+      tags,
       duration: durationChosen.number,
+      startDate,
     });
-    console.log(description);
     handleAddCourse(newCourse);
-    // handleClose();
+    handleClose();
   };
 
   return (
