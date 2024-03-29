@@ -8,9 +8,11 @@ import {
   Root,
   Title,
 } from "../Cabinet";
-import CourseCard from "./CourseCard/CourseCard";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
+
+import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
 
 const DialogButton = styled(Button)(({ theme }) => ({
@@ -79,7 +81,8 @@ const techs = [
   "GraphQL",
 ];
 
-function createCourse({
+export function createCourse({
+  id = uuidv4(),
   name = "python",
   teacher = "Eshmatov Toshmat",
   price = 1000000,
@@ -92,6 +95,7 @@ function createCourse({
   startDate = new Date(2024, 4, 3),
 } = {}) {
   return {
+    id,
     name,
     teacher,
     price,
@@ -155,6 +159,14 @@ const Courses = () => {
     setOpen(false);
   };
 
+  const handleAddCourse = (newCourse) => {
+    setCourses([...courses, newCourse]);
+  };
+
+  const handleAddDelete = (idToDelete) => {
+    setCourses(courses.filter((course) => course.id !== idToDelete));
+  };
+
   return (
     <Root>
       <Main>
@@ -184,7 +196,11 @@ const Courses = () => {
         </Grid>
       </Main>
 
-      <NewCourseDialog open={open} handleClose={handleClose} />
+      <NewCourseDialog
+        open={open}
+        handleClose={handleClose}
+        handleAddCourse={handleAddCourse}
+      />
     </Root>
   );
 };

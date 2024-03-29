@@ -101,7 +101,7 @@ export const Root = styled("div")(({ theme }) => ({
   "& .flex": {
     display: "flex",
   },
-  "& .flex-column": {
+  "& .flex-col": {
     flexDirection: "column",
   },
   "& .flex-row": {
@@ -133,6 +133,12 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .align-self-start": {
     alignSelf: "start",
+  },
+  "& .align-self-end": {
+    alignSelf: "end",
+  },
+  "& .justify-self-start": {
+    justifySelf: "start",
   },
   "& .justify-self-end": {
     justifySelf: "end",

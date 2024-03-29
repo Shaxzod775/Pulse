@@ -48,15 +48,19 @@ const CourseCard = ({ name, duration }) => {
           },
         }}
       >
-        <div className="flex flex-column gap-md">
-          <div className="flex justify-between">
-            <span>{name}</span>
-            <EditButton color="grey">
+        <div className="flex flex-col gap-md">
+          <div className="flex flex-col justify-between">
+            <EditButton
+              color="grey"
+              className="align-self-end"
+              sx={{ maxWidth: "max-content" }}
+            >
               <Icons.Edit />
               <span>Редактировать</span>
             </EditButton>
+            <span>{name}</span>
           </div>
-          <div className="flex flex-column gap-xxs">
+          <div className="flex flex-col gap-xxs">
             <div className="flex items-center gap-x4s">
               <Icons.Clock color="mediumaquamarine" />
               <span>{durationInHours} часов</span>

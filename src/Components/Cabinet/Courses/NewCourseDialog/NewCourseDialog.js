@@ -7,6 +7,7 @@ import {
   FormControl,
   InputAdornment,
   TextField,
+  duration,
   styled,
 } from "@mui/material";
 import {
@@ -19,6 +20,8 @@ import {
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
+import { createCourse } from "../Courses";
+import useInput from "../../../../hooks/useInput";
 
 const DialogButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.sm,
@@ -85,7 +88,11 @@ const techs = [
   "TypeScript",
   "GraphQL",
 ];
-const durations = ["3 месяца", "6 месяцев", "12 месяцев"];
+const durations = [
+  { number: 3, text: "3 месяца" },
+  { number: 6, text: "6 месяцев" },
+  { number: 12, text: "12 месяцев" },
+];
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
@@ -116,51 +123,115 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
-  const [selected, setSelected] = useState(false);
+const NewCourseDialog = ({
+  open,
+  handleClose,
+  handleAddCourse,
+  ...otherProps
+}) => {
+  const [name, changeName, resetName] = useInput("");
   const [selectedWeekDays, setSelectedWeekDays] = useState(
     weekDays.map(() => false)
   );
+  const [teacher, changeTeacher, resetTeacher] = useInput(null);
   const [selectedTechs, setSelectedTechs] = useState([]);
-  const [durationIndex, setDurationIndex] = useState(0);
+  const [price, changePrice, resetPrice] = useInput(0);
+  const [description, changeDescription, resetDescription] = useInput("");
+  const [durationChosen, setDurationChosen] = useState({
+    number: 0,
+    text: "",
+  });
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
+  const [startDate, setStartDate] = useState(null); // State for start date
+  // State for end date - Calculated based on start date and duration
+  const [endDate, setEndDate] = useState(null);
 
+  // Function to handle selecting week days
   const handleSelectWeekDays = (index) => {
     const updatedSelectedWeekDays = [...selectedWeekDays];
     updatedSelectedWeekDays[index] = !updatedSelectedWeekDays[index];
     setSelectedWeekDays(updatedSelectedWeekDays);
   };
 
+  // Function to handle change in teacher selection
+  const handleTeacherChange = (event, newValue) => {
+    changeTeacher({ target: { value: newValue } });
+  };
+
+  // Function to handle change in autocomplete techs selection
   const handleAutocompleteChange = (event, newValue) => {
     setSelectedTechs(newValue);
   };
 
+  // Function to handle deletion of selected tech
   const handleDeleteTech = (techToDelete) => () => {
     setSelectedTechs(selectedTechs.filter((tech) => tech !== techToDelete));
   };
 
-  const handleDurationChange = (number) => {
-    durations[number] ? setDurationIndex(number) : setDurationIndex(0);
-  };
-
+  // Function to handle adding a new tag
   const handleAddTag = (tag) => {
     setTags([...tags, tag]);
   };
 
+  // Function to handle deletion of a tag
   const handleDeleteTag = (tagToDelete) => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
+
+  // Function to handle change in start date
+  const handleStartDateChange = (event) => {
+    const newStartDate = new Date(event.target.value); // Convert string to Date object
+    const newEndDate = calculateEndDate(newStartDate, durationChosen);
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+  };
+
+  // Function to handle change in duration selection
+  const handleDurationChange = (duration) => {
+    const newEndDate = calculateEndDate(startDate, duration);
+    setDurationChosen(duration);
+    setEndDate(newEndDate);
+  };
+
+  // Function to calculate end date based on selected duration and start date
+  const calculateEndDate = (startDate, duration) => {
+    if (startDate && duration.number > 0) {
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + duration.number);
+      return endDate;
+    }
+    return null;
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const chosenDays = selectedWeekDays.reduce(
+      (daysAccumulator, isDaySelected, dayIndex) => {
+        if (isDaySelected) {
+          daysAccumulator.push(dayIndex);
+        }
+        return daysAccumulator;
+      },
+      []
+    );
+    const newCourse = createCourse({
+      name: name,
+      duration: durationChosen.number,
+    });
+    console.log(description);
+    handleAddCourse(newCourse);
+    // handleClose();
+  };
+
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       PaperProps={{
         component: "form",
-        onSubmit: (event) => {
-          event.preventDefault();
-          handleClose();
-        },
+        onSubmit: (e) => handleSubmit(e),
       }}
       sx={{
         fontFamily: "Rubik",
@@ -182,7 +253,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
             width: "100%",
           }}
         >
-          <div className="flex flex-column gap-md">
+          <div className="flex flex-col gap-md">
             {/* DIALOG TITLE */}
             <Title
               sx={{
@@ -195,8 +266,8 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
             {/* MAIN CONTENT OF DIALOG */}
             <div className="full-width flex justify-between gap-sm">
               {/* LEFT COLUMN */}
-              <div className="full-width flex flex-column gap-sm">
-                <FormControl fullWidth variant="outlined">
+              <div className="full-width flex flex-col gap-sm">
+                <FormControl fullWidth variant="outlined" required>
                   <label htmlFor="course-name">
                     <Title
                       sx={{
@@ -207,7 +278,12 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                       Название курса
                     </Title>
                   </label>
-                  <TextFieldStyled id="course-name" variant="outlined" />
+                  <TextFieldStyled
+                    id="course-name"
+                    variant="outlined"
+                    value={name}
+                    onChange={changeName}
+                  />
                 </FormControl>
                 <div>
                   <label htmlFor="week-days">
@@ -246,6 +322,8 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                   </label>
                   <AutocompleteStyled
                     options={teachers}
+                    value={teacher}
+                    onChange={handleTeacherChange}
                     renderInput={(params) => (
                       <TextField {...params} id="teacher" variant="outlined" />
                     )}
@@ -268,7 +346,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                       Стек Технологий
                     </Title>
                   </label>
-                  <div className="flex flex-column gap-x3s">
+                  <div className="flex flex-col gap-x3s">
                     <AutocompleteStyled
                       multiple
                       options={techs}
@@ -308,7 +386,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                 </FormControl>
               </div>
               {/* RIGHT COLUMN */}
-              <div className="full-width flex flex-column gap-sm">
+              <div className="full-width flex flex-col gap-sm">
                 <FormControl fullWidth variant="outlined">
                   <label htmlFor="price">
                     <Title
@@ -323,6 +401,8 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                   <TextFieldStyled
                     id="price"
                     variant="outlined"
+                    value={price}
+                    onChange={changePrice}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">so'm</InputAdornment>
@@ -332,7 +412,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                   />
                 </FormControl>
                 <FormControl fullWidth variant="outlined">
-                  <label htmlFor="info">
+                  <label htmlFor="description">
                     <Title
                       sx={{
                         fontSize: theme.typography.fontSize.sm2,
@@ -343,8 +423,10 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                     </Title>
                   </label>
                   <TextFieldStyled
-                    id="info"
+                    id="description"
                     variant="outlined"
+                    value={description}
+                    onChange={changeDescription}
                     multiline
                     rows={4}
                     sx={{
@@ -388,6 +470,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                       <FormControl variant="outlined">
                         <TextFieldStyled
                           autoFocus
+                          required
                           onBlur={() => {
                             setTagFormOpen(!tagFormOpen);
                           }}
@@ -423,7 +506,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                     />
                   </div>
                 </div>
-                <div className="full-width flex flex-column justify-between gap-xxs">
+                <div className="full-width flex flex-col justify-between gap-xxs">
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="date-start">
                       <Title
@@ -439,6 +522,10 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                       id="date-start"
                       variant="outlined"
                       type="date"
+                      value={
+                        startDate ? startDate.toISOString().split("T")[0] : ""
+                      }
+                      onChange={handleStartDateChange}
                     />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
@@ -456,15 +543,19 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                       id="date-end"
                       variant="outlined"
                       type="date"
+                      disabled
+                      value={endDate ? endDate.toISOString().split("T")[0] : ""}
                     />
                   </FormControl>
                   <div className="flex flex-wrap gap-x3s">
                     {durations.map((duration, i) => (
                       <Chip
-                        label={duration}
+                        label={duration.text}
                         key={i}
                         variant={`${
-                          durationIndex === i ? "contained" : "outlined"
+                          duration.number === durationChosen.number
+                            ? "contained"
+                            : "outlined"
                         }`}
                         color="aqua"
                         sx={{
@@ -473,7 +564,7 @@ const NewCourseDialog = ({ open, handleClose, ...otherProps }) => {
                             boxShadow: "none",
                           },
                         }}
-                        onClick={() => handleDurationChange(i)}
+                        onClick={() => handleDurationChange(duration)}
                       />
                     ))}
                   </div>

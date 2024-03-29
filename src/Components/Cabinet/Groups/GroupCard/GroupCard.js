@@ -60,7 +60,7 @@ const GroupCard = ({ info = { state: "archive" } }) => {
           color: theme.typography.color.darkBlue,
         }}
       >
-        <div className="flex flex-column gap-sm">
+        <div className="flex flex-col gap-sm">
           <div className="flex items-center justify-between">
             <Title
               sx={{
@@ -81,7 +81,7 @@ const GroupCard = ({ info = { state: "archive" } }) => {
               <span>10.10.2022</span>
             </div>
           </div>
-          <div className="flex flex-column gap-xs">
+          <div className="flex flex-col gap-xs">
             <div className="flex justify-between">
               <div className="flex items-center gap-x4s">
                 <Icons.Notebook />
