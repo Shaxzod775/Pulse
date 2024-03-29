@@ -181,10 +181,22 @@ const NewCourseDialog = ({
 
   // Function to handle change in start date
   const handleStartDateChange = (event) => {
-    const newStartDate = new Date(event.target.value); // Convert string to Date object
-    const newEndDate = calculateEndDate(newStartDate, durationChosen);
-    setStartDate(newStartDate);
-    setEndDate(newEndDate);
+    const inputDate = event.target.value;
+    const newStartDate = new Date(inputDate);
+    if (!isNaN(newStartDate.getTime())) {
+      setStartDate(newStartDate);
+
+      // Calculate end date based on selected duration and new start date
+      if (durationChosen.number > 0) {
+        const newEndDate = new Date(newStartDate);
+        newEndDate.setMonth(newStartDate.getMonth() + durationChosen.number);
+        setEndDate(newEndDate);
+      }
+    } else {
+      // Handle invalid input date here
+      setStartDate(null);
+      setEndDate(null);
+    }
   };
 
   // Function to handle change in duration selection
