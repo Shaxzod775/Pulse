@@ -80,6 +80,7 @@ export const theme = createTheme({
       lg: "2.5rem",
     },
     color: {
+      purpleBlue: "#6574D8",
       darkBlue: "#1C274C",
       mediumaquamarine: "#89CCB5",
       aqua: "#00988F",
@@ -93,6 +94,7 @@ export const theme = createTheme({
     spacing: {
       x4s: 3,
       x3s: 5,
+      xxs2: 8,
       xxs: 10,
       xs2: 12,
       xs: 15,
@@ -155,11 +157,15 @@ export const Root = styled("div")(({ theme }) => ({
   "& .justify-self-end": {
     justifySelf: "end",
   },
+
   "& .gap-x4s": {
     gap: theme.custom.spacing.x4s,
   },
   "& .gap-x3s": {
     gap: theme.custom.spacing.x3s,
+  },
+  "& .gap-xxs2": {
+    gap: theme.custom.spacing.xxs2,
   },
   "& .gap-xxs": {
     gap: theme.custom.spacing.xxs,

@@ -1,94 +1,102 @@
 import React from "react";
-import { Button, CardContent, CardMedia, styled } from "@mui/material";
+import { Button, CardContent, CardMedia, Divider, styled } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, CardStyled } from "../../Cabinet";
 import courseImage from "../../../../Assets/Images/course.png";
+import { format, weeksToDays } from "date-fns";
 
-const CardButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.custom.spacing.xxs,
-  font: "inherit",
-  fontSize: theme.typography.fontSize.xs,
-  padding: theme.custom.spacing.xxs,
-  textTransform: "capitalize",
-  boxShadow: "none",
-  "&:hover": { boxShadow: "none" },
-}));
-
-const EditButton = styled(CardButton)(({ theme }) => ({
-  top: -theme.custom.spacing.xxs + 1.5,
-  right: -theme.custom.spacing.xxs + 1.5,
-  borderRadius: theme.shape.borderRadius,
-  font: "inherit",
-  fontSize: theme.typography.fontSize.xs,
-  lineHeight: theme.typography.fontSize.xs,
-  padding: theme.custom.spacing.xxs,
-  textTransform: "capitalize",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: theme.custom.spacing.x3s,
+const Card = styled("div")(({ theme }) => ({
+  padding: theme.custom.spacing.xs,
+  borderRadius: 4,
+  backgroundColor: "#fff",
+  border: `1px solid ${theme.palette.grey[200]}`,
   "& svg": {
-    minWidth: `${theme.typography.fontSize.xs} !important`,
-    height: `${theme.typography.fontSize.xs} !important`,
+    color: theme.typography.color.purpleBlue,
+  },
+  fontSize: theme.typography.fontSize.xxs,
+  "& .font-xxs": {
+    fontSize: ".75rem",
   },
 }));
 
-const CourseCard = ({ name, duration }) => {
+const InfoLine = styled("div")(({ theme, small }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: small ? theme.custom.spacing.xxs2 / 2 : theme.custom.spacing.xxs2,
+  fontSize: small ? ".75rem" : "inherit",
+  "& svg": {
+    width: small ? "20px" : "",
+  },
+}));
+
+const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+const CourseCard = ({
+  name,
+  duration,
+  techs,
+  startDate,
+  weekDays,
+  teacher,
+}) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
   const durationInHours = duration * lessonsInOneMonth * lessonLength;
   return (
-    <CardStyled>
-      <CardContent
-        sx={{
-          padding: 0,
-          color: theme.typography.color.darkBlue,
-          position: "relative",
-          "&:last-child": {
-            padding: 0,
-          },
-        }}
-      >
-        <div className="flex flex-col gap-md">
-          <div className="flex flex-col justify-between">
-            <EditButton
-              color="grey"
-              className="align-self-end"
-              sx={{ maxWidth: "max-content" }}
-            >
-              <Icons.Edit />
-              <span>Редактировать</span>
-            </EditButton>
-            <span>{name}</span>
+    <Card>
+      <div className="flex flex-col gap-xs">
+        <img src={courseImage} alt="Course" />
+        <div className="flex justify-between items-center">
+          <div>
+            <div>{name}</div>
+            <div className="font-xxs">{techs[0]}</div>
           </div>
-          <div className="flex flex-col gap-xxs">
-            <div className="flex items-center gap-x4s">
-              <Icons.Clock color="mediumaquamarine" />
-              <span>{durationInHours} часов</span>
-            </div>
-            <div className="flex items-end justify-between">
-              <div className="flex items-center gap-x4s">
-                <Icons.Notebook color="mediumaquamarine" />
-                <span
-                  style={{
-                    fontSize: theme.typography.fontSize.xxs,
-                  }}
-                >
-                  Программа курса
-                </span>
-              </div>
-              <CardButton
-                variant="contained"
-                color="aqua"
-                sx={{ borderRadius: "5px", padding: "5px" }}
-              >
-                Открыть
-              </CardButton>
-            </div>
-          </div>
+          <Icons.MenuDots />
         </div>
-      </CardContent>
-    </CardStyled>
+        <Divider />
+        <div className="flex flex-col gap-8">
+          <InfoLine>
+            <Icons.Calendar />
+            <div>Дата начала: {format(startDate, "dd.mm.yyyy")}</div>
+          </InfoLine>
+          <InfoLine>
+            <Icons.Calendar />
+            <div>Дата завершения: {format(startDate, "dd.mm.yyyy")}</div>
+          </InfoLine>
+          <InfoLine>
+            <Icons.Calendar />
+            <div>
+              Дни урока:{" "}
+              {weekDays.map(
+                (weekDay, i) =>
+                  `${weekDaysText[weekDay]}${
+                    i < weekDays.length - 1 ? ", " : ""
+                  }`
+              )}
+            </div>
+          </InfoLine>
+        </div>
+        <Divider />
+        <InfoLine>
+          <Icons.SchoolAcademicCap />
+          <div>Учитель: {teacher}</div>
+        </InfoLine>
+        <div className="flex gap-xs">
+          <InfoLine small>
+            <Icons.SchoolAcademicCap />
+            <div>{duration} месяцев</div>
+          </InfoLine>
+          <InfoLine small>
+            <Icons.SchoolAcademicCap />
+            <div>2 кабинет</div>
+          </InfoLine>
+          <InfoLine small>
+            <Icons.SchoolAcademicCap />
+            <div>10</div>
+          </InfoLine>
+        </div>
+      </div>
+    </Card>
   );
 };
 

@@ -133,7 +133,7 @@ const Sidebar = () => {
         </div>
         <div className={styles["logout"]}>
           <MenuAction color="grey" backgroundColor="#F9FAFB">
-            {isOpen && <div>Забота о клиентах 24/7</div>}
+            {isOpen && <div>Сл. поддержки 24/7</div>}
           </MenuAction>
           <MenuAction color="crimson" backgroundColor="#FDF3F2">
             <Icons.Logout />

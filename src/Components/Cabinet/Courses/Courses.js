@@ -92,6 +92,7 @@ export function createCourse({
   tags = ["certificate", "best"],
   duration = 3, // in months
   startDate = new Date(2024, 4, 3),
+  endDate = new Date(2024, 7, 3),
 } = {}) {
   return {
     id,
@@ -105,6 +106,7 @@ export function createCourse({
     tags,
     duration,
     startDate,
+    endDate,
   };
 }
 

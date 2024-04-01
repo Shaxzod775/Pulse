@@ -19,6 +19,7 @@ import { ReactComponent as Diploma } from "./svgs/diploma.svg";
 import { ReactComponent as SchoolAcademicCap } from "./svgs/schoolAcademicCap.svg";
 import { ReactComponent as Group } from "./svgs/group.svg";
 import { ReactComponent as Logout } from "./svgs/logout.svg";
+import { ReactComponent as MenuDots } from "./svgs/menuDots.svg";
 
 export const Icons = {
   ArrowD,
@@ -42,4 +43,5 @@ export const Icons = {
   SchoolAcademicCap,
   Group,
   Logout,
+  MenuDots,
 };
