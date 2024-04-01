@@ -21,6 +21,18 @@ import Courses from "./Courses/Courses";
 
 export const theme = createTheme({
   palette: {
+    purpleBlue: {
+      main: "#6574D8",
+      light: "#8A9BD8",
+      dark: "#6574D8",
+      contrastText: "#ffffff",
+    },
+    crimson: {
+      main: "#FF2D55",
+      light: "#FFC0CC",
+      dark: "#FF2D55",
+      contrastText: "#ffffff",
+    },
     aqua: {
       main: "#00988F",
       light: "#00988F",
@@ -308,7 +320,7 @@ const Cabinet = () => {
               <Route path={routes.DASHBOARD} element={<Dashboard />} />
               <Route path={routes.COURSES} element={<Courses />} />
               <Route path={routes.GROUPS} element={<Groups />} />
-              <Route path={routes.LEADS} element={<div>Leads</div>} />
+              <Route path={routes.TEACHERS} element={<div>Leads</div>} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />
               <Route path={routes.STUDENTS} element={<div>Students</div>} />
               <Route

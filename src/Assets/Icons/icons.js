@@ -15,6 +15,10 @@ import { ReactComponent as Notification } from "./svgs/notification.svg";
 import { ReactComponent as AnnaAvatar } from "./svgs/Avatars/Anna.svg";
 import { ReactComponent as SquareDoubleArrowLeft } from "./svgs/squareDoubleArrowLeft.svg";
 import { ReactComponent as Dashboard } from "./svgs/dashboard.svg";
+import { ReactComponent as Diploma } from "./svgs/diploma.svg";
+import { ReactComponent as SchoolAcademicCap } from "./svgs/schoolAcademicCap.svg";
+import { ReactComponent as Group } from "./svgs/group.svg";
+import { ReactComponent as Logout } from "./svgs/logout.svg";
 
 export const Icons = {
   ArrowD,
@@ -34,4 +38,8 @@ export const Icons = {
   AnnaAvatar,
   SquareDoubleArrowLeft,
   Dashboard,
+  Diploma,
+  SchoolAcademicCap,
+  Group,
+  Logout,
 };

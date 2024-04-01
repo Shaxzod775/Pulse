@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, CardContent, styled } from "@mui/material";
+import { Button, CardContent, CardMedia, styled } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, CardStyled } from "../../Cabinet";
+import courseImage from "../../../../Assets/Images/course.png";
 
 const CardButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.xxs,
