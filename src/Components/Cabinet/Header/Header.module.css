@@ -1,11 +1,11 @@
 .header {
-  margin: 20px 20px 0px 0px;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 15px 28px;
   background-color: #fff; /* Adjust the color to match your design */
-  box-shadow: 0 4px 20px 4px rgba(0, 0, 0, 0.05); /* Just a suggestion for shadow */
   border-radius: 20px;
 }
 

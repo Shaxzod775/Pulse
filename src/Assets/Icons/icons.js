@@ -14,6 +14,7 @@ import { ReactComponent as Search } from "./svgs/search.svg";
 import { ReactComponent as Notification } from "./svgs/notification.svg";
 import { ReactComponent as AnnaAvatar } from "./svgs/Avatars/Anna.svg";
 import { ReactComponent as SquareDoubleArrowLeft } from "./svgs/squareDoubleArrowLeft.svg";
+import { ReactComponent as Dashboard } from "./svgs/dashboard.svg";
 
 export const Icons = {
   ArrowD,
@@ -32,4 +33,5 @@ export const Icons = {
   Notification,
   AnnaAvatar,
   SquareDoubleArrowLeft,
+  Dashboard,
 };

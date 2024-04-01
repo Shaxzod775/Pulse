@@ -15,10 +15,11 @@ import {
   Iso,
   KeyboardDoubleArrowLeftOutlined,
 } from "@mui/icons-material";
-import { IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
+import { Icons } from "../../../Assets/Icons/icons";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,60 +33,57 @@ const Sidebar = () => {
   return (
     <div className={`${styles["sidebar"]} ${isOpen && styles["open"]}`}>
       <div className={styles["logo"]}>
-        <Link to={routes.HOME}>ITEC</Link>
+        <Link to={routes.HOME}>
+          <Icons.Logo />
+        </Link>
+      </div>
+      <div
+        className={styles["double-arrow"]}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? (
+          <Icons.SquareDoubleArrowLeft />
+        ) : (
+          <Icons.SquareDoubleArrowLeft />
+        )}
       </div>
       <div className={styles["menu-items"]}>
-        <div
-          className={`${styles["menu-item"]} ${styles["double-arrow"]}`}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <IconButton color="inherit">
-            {isOpen ? (
-              <KeyboardDoubleArrowLeftOutlined />
-            ) : (
-              <KeyboardDoubleArrowRightOutlined />
-            )}
-          </IconButton>
-        </div>
         <Link
           to={routes.CABINET + routes.DASHBOARD}
           className={styles["menu-item"]}
         >
-          <PaidOutlined />
-          {isOpen && <Typography marginLeft="1rem">Dashboard</Typography>}
+          <Icons.Dashboard />
+          {isOpen && <div>Dashboard</div>}
+        </Link>
+
+        <Link
+          to={routes.CABINET + routes.COURSES}
+          className={styles["menu-item"]}
+        >
+          <DescriptionOutlined />
+          {isOpen && <div>Учителя</div>}
+        </Link>
+        <Link
+          to={routes.CABINET + routes.COURSES}
+          className={styles["menu-item"]}
+        >
+          <DescriptionOutlined />
+          {isOpen && <div>Ученики</div>}
         </Link>
         <Link
           to={routes.CABINET + routes.GROUPS}
           className={styles["menu-item"]}
         >
           <PeopleAltOutlined />
-          {isOpen && <Typography marginLeft="1rem">Groups</Typography>}
+          {isOpen && <div>Группы</div>}
         </Link>
-        <div className={styles["menu-item"]}>
-          <CalendarMonthOutlined />
-        </div>
-        <div className={styles["menu-item"]}>
-          <SchoolOutlined />
-        </div>
         <Link
-          to={routes.CABINET + routes.COURSES}
+          to={routes.CABINET + routes.GROUPS}
           className={styles["menu-item"]}
         >
-          <DescriptionOutlined />
-          {isOpen && <Typography marginLeft="1rem">Courses</Typography>}
+          <PeopleAltOutlined />
+          {isOpen && <div>Курсы</div>}
         </Link>
-        <div className={styles["menu-item"]}>
-          <PersonOutlineOutlined />
-        </div>
-        <div className={styles["menu-item"]}>
-          <MoveToInboxOutlined />
-        </div>
-        <div className={styles["menu-item"]}>
-          <CameraAltOutlined />
-        </div>
-        <div className={styles["menu-item"]}>
-          <SettingsOutlined />
-        </div>
       </div>
       <div className={styles["logout"]}>
         <LogoutOutlined />

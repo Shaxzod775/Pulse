@@ -302,24 +302,24 @@ const Cabinet = () => {
         <Sidebar />
         <div className={styles["cabinet-main"]}>
           <Header />
-          <div className={styles["cabinet-content"]}>
-            <ThemeProvider theme={theme}>
-              <Routes>
-                <Route path={routes.DASHBOARD} element={<Dashboard />} />
-                <Route path={routes.COURSES} element={<Courses />} />
-                <Route path={routes.GROUPS} element={<Groups />} />
-                <Route path={routes.LEADS} element={<div>Leads</div>} />
-                <Route path={routes.PERSONAL} element={<div>Personal</div>} />
-                <Route path={routes.STUDENTS} element={<div>Students</div>} />
-                <Route
-                  path="*"
-                  element={
-                    <Navigate to={routes.CABINET + routes.DASHBOARD} replace />
-                  }
-                />
-              </Routes>
-            </ThemeProvider>
-          </div>
+          {/* <div className={styles["cabinet-content"]}> */}
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path={routes.DASHBOARD} element={<Dashboard />} />
+              <Route path={routes.COURSES} element={<Courses />} />
+              <Route path={routes.GROUPS} element={<Groups />} />
+              <Route path={routes.LEADS} element={<div>Leads</div>} />
+              <Route path={routes.PERSONAL} element={<div>Personal</div>} />
+              <Route path={routes.STUDENTS} element={<div>Students</div>} />
+              <Route
+                path="*"
+                element={
+                  <Navigate to={routes.CABINET + routes.DASHBOARD} replace />
+                }
+              />
+            </Routes>
+          </ThemeProvider>
+          {/* </div> */}
         </div>
       </div>
     </>
