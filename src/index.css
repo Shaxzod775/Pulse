@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
 
+/* For Internet Explorer and Edge */
 body {
   margin: 0;
   font-family: "Rubik", sans-serif;

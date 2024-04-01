@@ -94,7 +94,7 @@ export const theme = createTheme({
 });
 
 export const Root = styled("div")(({ theme }) => ({
-  width: `calc(100vw - ${
+  maxWidth: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
   fontFamily: "Rubik",
