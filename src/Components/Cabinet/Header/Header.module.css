@@ -1,18 +1,12 @@
 .header {
-  height: 50px;
+  margin: 20px 20px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 15px 28px;
   background-color: #fff; /* Adjust the color to match your design */
   box-shadow: 0 4px 20px 4px rgba(0, 0, 0, 0.05); /* Just a suggestion for shadow */
-  border-radius: 0 0 25px 25px;
-}
-
-.header-fullname {
-  color: #1c274c;
-  font-size: 1.2rem; /* Adjust the size as needed */
-  font-weight: bold;
+  border-radius: 20px;
 }
 
 .header-right {
@@ -24,9 +18,10 @@
 .header-search {
   display: flex;
   align-items: center;
-  background-color: #f0f0f0; /* Adjust the color to match your design */
-  padding: 5px 10px;
+  background-color: #f6f8fb; /* Adjust the color to match your design */
+  padding: 10px;
   border-radius: 20px; /* Adjust the border-radius to match your design */
+  color: #a2a2c2;
 }
 
 .header-search-input {
@@ -34,11 +29,34 @@
   border: none;
   outline: none;
   margin-left: 8px;
+  padding: 0;
 }
 
-.header-icon {
-  color: #1c274c; /* Adjust the color to match your design */
-  cursor: pointer;
+.avatar {
+  display: flex;
+  gap: 13px;
+}
+
+.avatar div {
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-text {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.avatar .name {
+  color: #1f2937;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4rem;
+}
+
+.avatar .title {
+  color: #6b7280;
+  font-size: 1rem;
 }
 
 /* Additional styles for hover effects or responsive behavior can be added as needed */

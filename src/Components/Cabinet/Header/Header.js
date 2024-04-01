@@ -8,28 +8,37 @@ import {
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { Toolbar } from "@mui/material";
+import { Icon, IconButton, Toolbar } from "@mui/material";
 import * as routes from "../../../Constants/routes";
+import { Icons } from "../../../Assets/Icons/icons";
 
 const Header = () => {
   return (
-    <Toolbar className={styles["header"]}>
-      <span className={styles["header-fullname"]}>Привет Александр</span>
+    <div className={styles["header"]}>
+      <Icons.LogoFull />
       <div className={styles["header-right"]}>
         <div className={styles["header-search"]}>
-          <SearchIcon className={styles["header-icon"]} />
+          <Icons.Search />
           <input
             className={styles["header-search-input"]}
             placeholder="Поиск..."
           />
         </div>
-        <LanguageIcon className={styles["header-icon"]} />
-        <NotificationsIcon className={styles["header-icon"]} />
-        <Link to={routes.SIGN_IN} style={{ display: "flex" }}>
-          <AccountCircleIcon className={styles["header-icon"]} />
+        <IconButton>
+          <Icons.Notification />
+        </IconButton>
+
+        <Link to={routes.SIGN_IN} style={{ textDecoration: "none" }}>
+          <div className={styles["avatar"]}>
+            <Icons.AnnaAvatar />
+            <div className={styles["avatar-text"]}>
+              <span className={styles["name"]}>Anna Sergeyevna</span>
+              <span className={styles["title"]}>Директор</span>
+            </div>
+          </div>
         </Link>
       </div>
-    </Toolbar>
+    </div>
   );
 };
 

@@ -8,6 +8,12 @@ import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
 import { ReactComponent as Delete } from "./svgs/delete.svg";
+import { ReactComponent as LogoFull } from "./svgs/logoFull.svg";
+import { ReactComponent as Logo } from "./svgs/logo.svg";
+import { ReactComponent as Search } from "./svgs/search.svg";
+import { ReactComponent as Notification } from "./svgs/notification.svg";
+import { ReactComponent as AnnaAvatar } from "./svgs/Avatars/Anna.svg";
+import { ReactComponent as SquareDoubleArrowLeft } from "./svgs/squareDoubleArrowLeft.svg";
 
 export const Icons = {
   ArrowD,
@@ -20,4 +26,10 @@ export const Icons = {
   UsersGroupRounded,
   AcademicCap,
   Delete,
+  LogoFull,
+  Logo,
+  Search,
+  Notification,
+  AnnaAvatar,
+  SquareDoubleArrowLeft,
 };
