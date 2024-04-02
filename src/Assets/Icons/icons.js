@@ -20,6 +20,11 @@ import { ReactComponent as SchoolAcademicCap } from "./svgs/schoolAcademicCap.sv
 import { ReactComponent as Group } from "./svgs/group.svg";
 import { ReactComponent as Logout } from "./svgs/logout.svg";
 import { ReactComponent as MenuDots } from "./svgs/menuDots.svg";
+import { ReactComponent as CalendarContained } from "./svgs/calendarContained.svg";
+import { ReactComponent as ClockDashed } from "./svgs/clockDashed.svg";
+import { ReactComponent as CalendarDateContained } from "./svgs/calendarDateContained.svg";
+import { ReactComponent as ClockContained } from "./svgs/clockContained.svg";
+import { ReactComponent as Door } from "./svgs/door.svg";
 
 export const Icons = {
   ArrowD,
@@ -44,4 +49,9 @@ export const Icons = {
   Group,
   Logout,
   MenuDots,
+  CalendarContained,
+  ClockDashed,
+  CalendarDateContained,
+  ClockContained,
+  Door,
 };

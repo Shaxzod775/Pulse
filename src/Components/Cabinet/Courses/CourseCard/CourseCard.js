@@ -56,15 +56,15 @@ const CourseCard = ({
         <Divider />
         <div className="flex flex-col gap-8">
           <InfoLine>
-            <Icons.Calendar />
+            <Icons.CalendarContained />
             <div>Дата начала: {format(startDate, "dd.mm.yyyy")}</div>
           </InfoLine>
           <InfoLine>
-            <Icons.Calendar />
+            <Icons.ClockDashed />
             <div>Дата завершения: {format(startDate, "dd.mm.yyyy")}</div>
           </InfoLine>
           <InfoLine>
-            <Icons.Calendar />
+            <Icons.CalendarDateContained />
             <div>
               Дни урока:{" "}
               {weekDays.map(
@@ -83,15 +83,15 @@ const CourseCard = ({
         </InfoLine>
         <div className="flex gap-xs">
           <InfoLine small>
-            <Icons.SchoolAcademicCap />
+            <Icons.ClockContained />
             <div>{duration} месяцев</div>
           </InfoLine>
           <InfoLine small>
-            <Icons.SchoolAcademicCap />
+            <Icons.Door />
             <div>2 кабинет</div>
           </InfoLine>
           <InfoLine small>
-            <Icons.SchoolAcademicCap />
+            <Icons.Group />
             <div>10</div>
           </InfoLine>
         </div>
