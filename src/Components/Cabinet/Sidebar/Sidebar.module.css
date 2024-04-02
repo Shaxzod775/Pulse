@@ -20,13 +20,13 @@
   font-size: 24px;
   font-weight: bold;
   /* display: none; */
-  width: 0;
+  /* width: 0;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; */
 }
-.sidebar.open .logo {
+/* .sidebar.open .logo {
   width: auto;
-}
+} */
 .logo a {
   text-decoration: none;
   color: inherit;
@@ -34,15 +34,22 @@
 
 .double-arrow {
   position: absolute;
-  /* right: -12px; */
+  right: -12px;
   top: 50px;
   cursor: pointer;
-  transform: rotateY(180deg) scale(1.5);
+  /* transform: rotateY(180deg); */
   transition: all 0.3s ease-in-out;
+  overflow: visible;
+}
+.double-arrow svg {
+  /* transform: scale(1.5); */
 }
 .sidebar.open .double-arrow {
-  transform: rotateY(0deg);
+  /* transform: rotateY(0deg); */
   right: -12px;
+}
+.sidebar.open .double-arrow svg {
+  /* transform: scale(1); */
 }
 
 .menu-items {

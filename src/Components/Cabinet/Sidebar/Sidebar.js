@@ -15,7 +15,7 @@ import {
   Iso,
   KeyboardDoubleArrowLeftOutlined,
 } from "@mui/icons-material";
-import { ThemeProvider, Typography, styled } from "@mui/material";
+import { Collapse, ThemeProvider, Typography, styled } from "@mui/material";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
@@ -31,9 +31,12 @@ const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
-  gap: "10px",
+  // gap: "10px",
   backgroundColor: theme.palette[color].contrastText,
   color: theme.palette[color].main,
+  "& .text": {
+    paddingLeft: "10px",
+  },
   "&:hover": {
     backgroundColor: theme.palette[color].contrastText,
     color: theme.palette[color].light,
@@ -42,6 +45,9 @@ const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
 
 const MenuLink = styled(NavLink)(({ theme, color = "purpleGrey" }) => ({
   ...menuItemStyles({ theme, color }),
+  "& div": {
+    whiteSpace: "nowrap",
+  },
   "&.active": {
     backgroundColor: theme.palette[color].main,
     color: theme.palette[color].contrastText,
@@ -56,6 +62,9 @@ const MenuAction = styled("div")(
     color: theme.palette[color].main,
     justifyContent: "center",
     backgroundColor: backgroundColor,
+    "& div": {
+      whiteSpace: "nowrap",
+    },
     "&:hover": {
       backgroundColor: theme.palette[color].light,
     },
@@ -103,11 +112,14 @@ const Sidebar = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className={`${styles["sidebar"]} ${isOpen && styles["open"]}`}>
-        <div className={styles["logo"]}>
-          <Link to={routes.HOME}>
-            <Icons.Logo />
-          </Link>
-        </div>
+        <Collapse orientation="horizontal" in={isOpen}>
+          <div className={styles["logo"]}>
+            <Link to={routes.HOME}>
+              <Icons.Logo />
+            </Link>
+          </div>
+        </Collapse>
+
         <div
           className={styles["double-arrow"]}
           onClick={() => setIsOpen(!isOpen)}
@@ -127,17 +139,23 @@ const Sidebar = () => {
               key={i}
             >
               <menuLink.icon />
-              {isOpen && <div>{menuLink.text}</div>}
+              <Collapse orientation="horizontal" in={isOpen}>
+                <div className="text">{menuLink.text}</div>
+              </Collapse>
             </MenuLink>
           ))}
         </div>
         <div className={styles["logout"]}>
           <MenuAction color="grey" backgroundColor="#F9FAFB">
-            {isOpen && <div>Сл. поддержки 24/7</div>}
+            <Collapse orientation="horizontal" in={isOpen}>
+              <div className="text">Поддержка 24/7</div>
+            </Collapse>
           </MenuAction>
           <MenuAction color="crimson" backgroundColor="#FDF3F2">
             <Icons.Logout />
-            {isOpen && <div>Log out</div>}
+            <Collapse orientation="horizontal" in={isOpen}>
+              <div className="text">Log out</div>
+            </Collapse>
           </MenuAction>
         </div>
       </div>

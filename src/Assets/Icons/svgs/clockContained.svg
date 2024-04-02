@@ -1,0 +1,16 @@
+<svg width="18.000000" height="18.000000" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip73_13252">
+			<rect id="Bold Duotone / Time / Clock Circle" width="18.000000" height="18.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip73_13252)">
+		<g opacity="0.500000">
+			<path id="Vector" d="M16.5 9C16.5 13.14 13.14 16.5 9 16.5C4.85 16.5 1.5 13.14 1.5 9C1.5 4.85 4.85 1.5 9 1.5C13.14 1.5 16.5 4.85 16.5 9Z" fill="currentColor" fill-opacity="1.000000" fill-rule="evenodd"/>
+		</g>
+		<path id="Vector" d="M9 5.43C9.31 5.43 9.56 5.68 9.56 6L9.56 8.76L11.27 10.47C11.49 10.69 11.49 11.05 11.27 11.27C11.05 11.49 10.69 11.49 10.47 11.27L8.6 9.39C8.49 9.29 8.43 9.14 8.43 9L8.43 6C8.43 5.68 8.68 5.43 9 5.43Z" fill="currentColor" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>
