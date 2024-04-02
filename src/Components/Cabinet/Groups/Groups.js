@@ -16,6 +16,7 @@ import {
   Root,
   Title,
   TextFieldStyled,
+  SelectStyled,
 } from "../Cabinet";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -206,10 +207,13 @@ const Groups = () => {
                     style={{ boxSizing: "content-box", paddingRight: "8px" }}
                     color="#E5E7EB"
                   />
-                  <InputBase sx={{ color: theme.typography.color.darkBlue }} />
+                  <InputBase
+                    sx={{ color: theme.typography.color.darkBlue }}
+                    placeholder="Поиск по ученику..."
+                  />
                 </div>
               </HeaderDiv>
-              <div>2</div>
+              <SelectStyled />
               <div>3</div>
             </div>
           </div>
