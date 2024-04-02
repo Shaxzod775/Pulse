@@ -289,6 +289,9 @@ const Groups = () => {
             </ButtonStyled>
           </div>
         </div>
+        {/* <Paper
+          sx={{ borderRadius: "20px", padding: "32px", boxShadow: "none" }}
+        > */}
         <Grid
           container
           justifyContent="center"
@@ -301,6 +304,7 @@ const Groups = () => {
             </Grid>
           ))}
         </Grid>
+        {/* </Paper> */}
       </Main>
 
       <NewCourseDialog

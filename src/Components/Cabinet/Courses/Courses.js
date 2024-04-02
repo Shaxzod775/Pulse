@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Button, Grid, IconButton, Typography, styled } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Typography,
+  styled,
+} from "@mui/material";
 import {
   theme,
   ButtonStyled,
@@ -7,6 +15,7 @@ import {
   Main,
   Root,
   Title,
+  SelectStyled,
 } from "../Cabinet";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -14,6 +23,18 @@ import { v4 as uuidv4 } from "uuid";
 import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
+
+const headerItemStyles = ({ theme }) => ({
+  borderRadius: "10px",
+  backgroundColor: "#fff",
+  border: "1px solid #E5E7EB",
+});
+
+const HeaderDiv = styled("div")(({ theme }) => ({
+  borderRadius: "10px",
+  backgroundColor: "#fff",
+  border: "1px solid #E5E7EB",
+}));
 
 const DialogButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.sm,
@@ -172,40 +193,38 @@ const Courses = () => {
   return (
     <Root>
       <Main>
-        <ContentHeader>
-          <IconButton
-            sx={{
-              "&": {
-                borderRadius: "10px",
-              },
-              backgroundColor: "#fff",
-              border: "1px solid #E5E7EB",
-            }}
-          >
-            <Icons.ArrowL />
-          </IconButton>
-          <Title>Курсы</Title>
-          <div className="flex items-center gap-sm">
+        <div className="flex items-stretch justify-between">
+          <div className="flex items-center gap-md">
+            <IconButton sx={headerItemStyles}>
+              <Icons.ArrowL />
+            </IconButton>
+            <Title>Курсы</Title>
+          </div>
+
+          <div className="flex items-stretch gap-sm">
             <ButtonStyled
               variant="contained"
-              color="aqua"
+              color="purpleBlue"
               onClick={handleClickOpen}
             >
-              Создать +
+              <div className="flex items-center gap-xs">
+                <Icons.AddCircle />
+                <span>Создать курс</span>
+              </div>
             </ButtonStyled>
           </div>
-        </ContentHeader>
+        </div>
         <Grid
           container
           justifyContent="center"
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
-          {/* {courses.map((course, i) => (
+          {courses.map((course, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
               <CourseCard {...courses[i]} />
             </Grid>
-          ))} */}
+          ))}
         </Grid>
       </Main>
 

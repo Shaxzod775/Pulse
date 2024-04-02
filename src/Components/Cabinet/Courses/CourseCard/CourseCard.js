@@ -1,9 +1,19 @@
 import React from "react";
-import { Button, CardContent, CardMedia, Divider, styled } from "@mui/material";
+import {
+  Button,
+  CardContent,
+  CardMedia,
+  Divider,
+  Typography,
+  styled,
+} from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, CardStyled } from "../../Cabinet";
-import courseImage from "../../../../Assets/Images/Group.png";
+import { theme, CardStyled, ButtonStyled } from "../../Cabinet";
+import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
+import { auto } from "@popperjs/core";
+import { borderRadius } from "@mui/system";
+import { NumericFormat } from "react-number-format";
 
 const Card = styled("div")(({ theme }) => ({
   padding: theme.custom.spacing.xs,
@@ -22,10 +32,11 @@ const Card = styled("div")(({ theme }) => ({
 const InfoLine = styled("div")(({ theme, small }) => ({
   display: "flex",
   alignItems: "center",
-  gap: small ? theme.custom.spacing.xxs2 / 2 : theme.custom.spacing.xxs2,
+  gap: small ? "3px" : "5px",
   fontSize: small ? ".75rem" : "inherit",
   "& svg": {
-    width: small ? "20px" : "",
+    width: small ? "20px" : "24px",
+    height: auto,
   },
 }));
 
@@ -38,6 +49,7 @@ const CourseCard = ({
   startDate,
   weekDays,
   teacher,
+  price,
 }) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
@@ -45,56 +57,40 @@ const CourseCard = ({
   return (
     <Card>
       <div className="flex flex-col gap-xs">
-        <img src={courseImage} alt="Course" />
+        <img src={courseImage} alt="Group" />
         <div className="flex justify-between items-center">
-          <div>
-            <div>{name}</div>
-            <div className="font-xxs">{techs[0]}</div>
-          </div>
+          <Typography fontSize={theme.typography.fontSize.sm}>
+            {name}
+          </Typography>
           <Icons.MenuDots />
         </div>
         <Divider />
-        <div className="flex flex-col gap-8">
-          <InfoLine>
-            <Icons.CalendarContained />
-            <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
-          </InfoLine>
-          <InfoLine>
-            <Icons.ClockDashed />
-            <div>Дата завершения: {format(startDate, "dd.MM.yyyy")}</div>
-          </InfoLine>
-          <InfoLine>
-            <Icons.CalendarDateContained />
-            <div>
-              Дни урока:{" "}
-              {weekDays.map(
-                (weekDay, i) =>
-                  `${weekDaysText[weekDay]}${
-                    i < weekDays.length - 1 ? ", " : ""
-                  }`
-              )}
-            </div>
-          </InfoLine>
-        </div>
-        <Divider />
-        <InfoLine>
-          <Icons.SchoolAcademicCap />
-          <div>Учитель: {teacher}</div>
-        </InfoLine>
         <div className="flex gap-xs">
-          <InfoLine small>
+          <InfoLine>
             <Icons.ClockContained />
             <div>{duration} месяцев</div>
           </InfoLine>
-          <InfoLine small>
-            <Icons.Door />
-            <div>2 кабинет</div>
-          </InfoLine>
-          <InfoLine small>
+          <InfoLine>
             <Icons.Group />
-            <div>10</div>
+            <div>222</div>
           </InfoLine>
         </div>
+        <ButtonStyled
+          variant="contained"
+          color="purpleBlue"
+          sx={{ borderRadius: "20px" }}
+        >
+          <div className="flex items-center gap-xs">
+            <Typography fontSize={theme.typography.fontSize.xs}>
+              <NumericFormat
+                value={price}
+                displayType="text" // Set to "input" if you want an input field
+                thousandSeparator=" "
+              />{" "}
+              UZS
+            </Typography>
+          </div>
+        </ButtonStyled>
       </div>
     </Card>
   );

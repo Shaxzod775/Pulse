@@ -108,6 +108,8 @@ export const theme = createTheme({
 });
 
 export const Root = styled("div")(({ theme }) => ({
+  width: "100%",
+  "& *": { fontFamily: "Poppins, Rubik, sans-serif" },
   maxWidth: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
