@@ -1,119 +1,95 @@
 import React from "react";
-import { Button, Card, CardActions, CardContent, styled } from "@mui/material";
+import { Button, CardContent, CardMedia, Divider, styled } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, CardStyled, Title } from "../../Cabinet";
+import { theme, CardStyled } from "../../Cabinet";
+import groupImage from "../../../../Assets/Images/Group.png";
+import { format, weeksToDays } from "date-fns";
 
-const CardTag = styled("span")(({ theme, color = "orange" }) => ({
-  borderRadius: theme.custom.spacing.xs,
-  paddingTop: theme.custom.spacing.x3s,
-  paddingBottom: theme.custom.spacing.x3s,
-  paddingRight: theme.custom.spacing.xxs,
-  paddingLeft: theme.custom.spacing.xxs,
-  backgroundColor: theme.palette[color].light,
-  color: theme.palette[color].main,
+const Card = styled("div")(({ theme }) => ({
+  padding: theme.custom.spacing.xs,
+  borderRadius: 4,
+  backgroundColor: "#fff",
+  border: `1px solid ${theme.palette.grey[200]}`,
+  "& svg": {
+    color: theme.typography.color.purpleBlue,
+  },
+  fontSize: theme.typography.fontSize.xxs,
+  "& .font-xxs": {
+    fontSize: ".75rem",
+  },
 }));
 
-const CardButton = styled(Button)(({ theme }) => ({
-  width: "100%",
-  borderRadius: theme.shape.borderRadius,
-  font: "inherit",
-  fontSize: theme.typography.fontSize.xs,
-  lineHeight: theme.typography.fontSize.xs,
-  padding: theme.custom.spacing.xxs,
-  textTransform: "capitalize",
+const InfoLine = styled("div")(({ theme, small }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
-  gap: theme.custom.spacing.x3s,
+  gap: small ? theme.custom.spacing.xxs2 / 2 : theme.custom.spacing.xxs2,
+  fontSize: small ? ".75rem" : "inherit",
   "& svg": {
-    width: theme.typography.fontSize.xs,
-    height: "auto",
+    width: small ? "20px" : "",
   },
-  boxShadow: "none",
-  "&:hover": { boxShadow: "none" },
 }));
 
-const GroupCard = ({ info = { state: "archive" } }) => {
-  console.log(info);
-  const tags = [
-    { color: "green", text: "Активна" },
-    { color: "orange", text: "Набор" },
-    { color: "grey", text: "Архив" },
-  ];
+const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-  const getTagInfo = (item) => {
-    const state = info.state;
-    return state === "active"
-      ? tags[0][item]
-      : state === "collection"
-      ? tags[1][item]
-      : state === "archive"
-      ? tags[2][item]
-      : tags[2][item];
-  };
+const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
+  const lessonsInOneMonth = 12;
+  const lessonLength = 2; // in hours
+  const durationInHours = duration * lessonsInOneMonth * lessonLength;
   return (
-    <CardStyled>
-      <CardContent
-        sx={{
-          padding: 0,
-          paddingBottom: `${theme.custom.spacing.md2}px`,
-          color: theme.typography.color.darkBlue,
-        }}
-      >
-        <div className="flex flex-col gap-sm">
-          <div className="flex items-center justify-between">
-            <Title
-              sx={{
-                fontSize: theme.typography.fontSize.sm,
-              }}
-            >
-              GR011-62
-            </Title>
-            <CardTag color={getTagInfo("color")}>{getTagInfo("text")}</CardTag>
+    <Card>
+      <div className="flex flex-col gap-xs">
+        <img src={groupImage} alt="Group" />
+        <div className="flex justify-between items-center">
+          <div>
+            <div>{name}</div>
+            <div className="font-xxs">{techs[0]}</div>
           </div>
-          <div className="flex justify-between">
-            <div className="flex items-center gap-x4s">
-              <Icons.DateStart />
-              <span>12.08.2022</span>
-            </div>
-            <div className="flex items-center gap-x4s">
-              <Icons.DateEnd />
-              <span>10.10.2022</span>
-            </div>
-          </div>
-          <div className="flex flex-col gap-xs">
-            <div className="flex justify-between">
-              <div className="flex items-center gap-x4s">
-                <Icons.Notebook />
-                <span>Python</span>
-              </div>
-              <div className="flex items-center gap-x4s">
-                <Icons.Clock />
-                <span>14:00-16:00</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-x4s">
-              <Icons.Calendar />
-              <span>Пн, Ср, Пт</span>
-            </div>
-            <div className="flex items-center gap-x4s">
-              <Icons.UsersGroupRounded />
-              <span>8 человек</span>
-            </div>
-            <div className="flex items-center gap-x4s">
-              <Icons.AcademicCap />
-              <span>Филиппов Александр</span>
-            </div>
-          </div>
+          <Icons.MenuDots />
         </div>
-      </CardContent>
-      <CardActions sx={{ padding: 0 }}>
-        <CardButton variant="contained" color="purpleGrey">
-          <Icons.Edit />
-          <span>Редактировать</span>
-        </CardButton>
-      </CardActions>
-    </CardStyled>
+        <Divider />
+        <div className="flex flex-col gap-8">
+          <InfoLine>
+            <Icons.CalendarContained />
+            <div>Дата начала: {format(startDate, "dd.mm.yyyy")}</div>
+          </InfoLine>
+          <InfoLine>
+            <Icons.ClockDashed />
+            <div>Дата завершения: {format(startDate, "dd.mm.yyyy")}</div>
+          </InfoLine>
+          <InfoLine>
+            <Icons.CalendarDateContained />
+            <div>
+              Дни урока:{" "}
+              {weekDays.map(
+                (weekDay, i) =>
+                  `${weekDaysText[weekDay]}${
+                    i < weekDays.length - 1 ? ", " : ""
+                  }`
+              )}
+            </div>
+          </InfoLine>
+        </div>
+        <Divider />
+        <InfoLine>
+          <Icons.SchoolAcademicCap />
+          <div>Учитель: {teacher}</div>
+        </InfoLine>
+        <div className="flex gap-xs">
+          <InfoLine small>
+            <Icons.ClockContained />
+            <div>{duration} месяцев</div>
+          </InfoLine>
+          <InfoLine small>
+            <Icons.Door />
+            <div>2 кабинет</div>
+          </InfoLine>
+          <InfoLine small>
+            <Icons.Group />
+            <div>10</div>
+          </InfoLine>
+        </div>
+      </div>
+    </Card>
   );
 };
 

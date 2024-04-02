@@ -139,6 +139,9 @@ export const Root = styled("div")(({ theme }) => ({
   "& .items-end": {
     alignItems: "end",
   },
+  "& .items-stretch": {
+    alignItems: "stretch",
+  },
   "& .justify-between": {
     justifyContent: "space-between",
   },
@@ -157,7 +160,6 @@ export const Root = styled("div")(({ theme }) => ({
   "& .justify-self-end": {
     justifySelf: "end",
   },
-
   "& .gap-x4s": {
     gap: theme.custom.spacing.x4s,
   },
@@ -182,6 +184,9 @@ export const Root = styled("div")(({ theme }) => ({
   "& .gap-lg": {
     gap: theme.custom.spacing.lg,
   },
+  "& .full-height": {
+    height: "100%",
+  },
   "& .full-width": {
     width: "100%",
   },
@@ -203,6 +208,21 @@ export const Root = styled("div")(({ theme }) => ({
   "& .col-end-3": {
     gridColumnEnd: "3",
   },
+  "& .p-xxs2": {
+    padding: theme.custom.spacing.xxs2,
+  },
+  "& .p-r-xxs2": {
+    paddingRight: theme.custom.spacing.xxs2,
+  },
+  "& .p-l-xxs2": {
+    paddingLeft: theme.custom.spacing.xxs2,
+  },
+  "& .p-d-xxs2": {
+    paddingDown: theme.custom.spacing.xxs2,
+  },
+  "& .p-t-xxs2": {
+    paddingTop: theme.custom.spacing.xxs2,
+  },
 }));
 
 export const Main = styled("div")(({ theme }) => ({
@@ -220,7 +240,7 @@ export const ContentHeader = styled("div")(({ theme }) => ({
 export const Title = styled("h1")(({ theme }) => ({
   margin: "0",
   color: theme.typography.color.darkBlue,
-  fontSize: theme.typography.fontSize.lg,
+  fontSize: theme.typography.fontSize.md,
   fontWeight: "1000",
 }));
 
@@ -265,7 +285,7 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   font: "inherit",
   fontSize: theme.typography.fontSize.sm,
   lineHeight: theme.typography.fontSize.sm,
-  padding: theme.custom.spacing.xs,
+  padding: "7.5px 34px",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },

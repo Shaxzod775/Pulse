@@ -1,4 +1,5 @@
-import { ReactComponent as ArrowD } from "./svgs/arrowDown.svg";
+import { ReactComponent as ArrowD } from "./svgs/arrowD.svg";
+import { ReactComponent as ArrowL } from "./svgs/arrowL.svg";
 import { ReactComponent as Edit } from "./svgs/edit.svg";
 import { ReactComponent as DateStart } from "./svgs/dateStart.svg";
 import { ReactComponent as DateEnd } from "./svgs/dateEnd.svg";
@@ -25,9 +26,11 @@ import { ReactComponent as ClockDashed } from "./svgs/clockDashed.svg";
 import { ReactComponent as CalendarDateContained } from "./svgs/calendarDateContained.svg";
 import { ReactComponent as ClockContained } from "./svgs/clockContained.svg";
 import { ReactComponent as Door } from "./svgs/door.svg";
+import { ReactComponent as AddCircle } from "./svgs/addCircle.svg";
 
 export const Icons = {
   ArrowD,
+  ArrowL,
   Edit,
   DateStart,
   DateEnd,
@@ -54,4 +57,5 @@ export const Icons = {
   CalendarDateContained,
   ClockContained,
   Door,
+  AddCircle,
 };

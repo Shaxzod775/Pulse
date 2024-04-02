@@ -2,7 +2,7 @@ import React from "react";
 import { Button, CardContent, CardMedia, Divider, styled } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, CardStyled } from "../../Cabinet";
-import courseImage from "../../../../Assets/Images/course.png";
+import courseImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 
 const Card = styled("div")(({ theme }) => ({
@@ -57,11 +57,11 @@ const CourseCard = ({
         <div className="flex flex-col gap-8">
           <InfoLine>
             <Icons.CalendarContained />
-            <div>Дата начала: {format(startDate, "dd.mm.yyyy")}</div>
+            <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
           </InfoLine>
           <InfoLine>
             <Icons.ClockDashed />
-            <div>Дата завершения: {format(startDate, "dd.mm.yyyy")}</div>
+            <div>Дата завершения: {format(startDate, "dd.MM.yyyy")}</div>
           </InfoLine>
           <InfoLine>
             <Icons.CalendarDateContained />

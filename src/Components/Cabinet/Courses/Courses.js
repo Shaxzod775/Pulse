@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, styled } from "@mui/material";
+import { Button, Grid, IconButton, Typography, styled } from "@mui/material";
 import {
   theme,
   ButtonStyled,
@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
+import { Icons } from "../../../Assets/Icons/icons";
 
 const DialogButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.sm,
@@ -164,7 +165,7 @@ const Courses = () => {
     setCourses([...courses, newCourse]);
   };
 
-  const handleAddDelete = (idToDelete) => {
+  const handleDeleteCourse = (idToDelete) => {
     setCourses(courses.filter((course) => course.id !== idToDelete));
   };
 
@@ -172,6 +173,17 @@ const Courses = () => {
     <Root>
       <Main>
         <ContentHeader>
+          <IconButton
+            sx={{
+              "&": {
+                borderRadius: "10px",
+              },
+              backgroundColor: "#fff",
+              border: "1px solid #E5E7EB",
+            }}
+          >
+            <Icons.ArrowL />
+          </IconButton>
           <Title>Курсы</Title>
           <div className="flex items-center gap-sm">
             <ButtonStyled
@@ -189,11 +201,11 @@ const Courses = () => {
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
-          {courses.map((course, i) => (
+          {/* {courses.map((course, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
               <CourseCard {...courses[i]} />
             </Grid>
-          ))}
+          ))} */}
         </Grid>
       </Main>
 
