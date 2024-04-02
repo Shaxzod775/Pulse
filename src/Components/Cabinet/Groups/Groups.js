@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import {
   Button,
+  ButtonBase,
   Grid,
   IconButton,
   InputBase,
+  List,
+  ListItem,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Paper,
+  Select,
   TextField,
   Typography,
   styled,
@@ -24,6 +32,8 @@ import { v4 as uuidv4 } from "uuid";
 import GroupCard from "./GroupCard/GroupCard";
 import NewCourseDialog from "../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
+import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
+import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
 
 const DialogButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.custom.spacing.sm,
@@ -200,7 +210,7 @@ const Groups = () => {
               <Icons.ArrowL />
             </IconButton>
             <Title>Группы</Title>
-            <div className="flex items-stretch gap-sm full-height">
+            <div className="flex items-stretch gap-xxs full-height">
               <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
                 <div className="flex items-center">
                   <Icons.Search
@@ -213,8 +223,56 @@ const Groups = () => {
                   />
                 </div>
               </HeaderDiv>
-              <SelectStyled />
-              <div>3</div>
+
+              <HeaderDiv
+                sx={{ position: "relative" }}
+                className="flex items-stretch full-height p-xxs2"
+              >
+                <label htmlFor="teacher-select" className="full-height">
+                  <Typography color="#b4b7c3">Учителя</Typography>
+                </label>
+                <SelectStyled
+                  id="teacher-select"
+                  autoWidth
+                  IconComponent={Icons.ArrowDBold}
+                  defaultValue={0}
+                >
+                  <MenuItem value={0}>Все</MenuItem>
+                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
+                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
+                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                </SelectStyled>
+              </HeaderDiv>
+              <HeaderDiv
+                sx={{ position: "relative" }}
+                className="flex items-stretch full-height p-xxs2"
+              >
+                <label
+                  htmlFor="teacher-select"
+                  className="flex items-center full-height"
+                >
+                  <Icons.NotebookBookmark color="#b4b7c3" />
+                </label>
+                <SelectStyled
+                  id="teacher-select"
+                  autoWidth
+                  IconComponent={Icons.ArrowDBold}
+                  defaultValue={0}
+                >
+                  <MenuItem value={0}>Все</MenuItem>
+                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
+                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
+                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                </SelectStyled>
+              </HeaderDiv>
+
+              {/* <CustomSelect
+                menuItems={[
+                  "Eshmatov Toshmat",
+                  "Aliyev Shohrux",
+                  "Azizova Aziza",
+                ]}
+              /> */}
             </div>
           </div>
 

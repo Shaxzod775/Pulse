@@ -1,9 +1,11 @@
 import { ReactComponent as ArrowD } from "./svgs/arrowD.svg";
+import { ReactComponent as ArrowDBold } from "./svgs/arrowD.svg";
 import { ReactComponent as ArrowL } from "./svgs/arrowL.svg";
 import { ReactComponent as Edit } from "./svgs/edit.svg";
 import { ReactComponent as DateStart } from "./svgs/dateStart.svg";
 import { ReactComponent as DateEnd } from "./svgs/dateEnd.svg";
 import { ReactComponent as Notebook } from "./svgs/notebook.svg";
+import { ReactComponent as NotebookBookmark } from "./svgs/notebookBookmark.svg";
 import { ReactComponent as Clock } from "./svgs/clock.svg";
 import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
@@ -30,11 +32,13 @@ import { ReactComponent as AddCircle } from "./svgs/addCircle.svg";
 
 export const Icons = {
   ArrowD,
+  ArrowDBold,
   ArrowL,
   Edit,
   DateStart,
   DateEnd,
   Notebook,
+  NotebookBookmark,
   Clock,
   Calendar,
   UsersGroupRounded,

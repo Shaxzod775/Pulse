@@ -253,6 +253,37 @@ export const InputLabelStyled = styled(InputLabel)(({ theme }) => ({
 }));
 
 export const SelectStyled = styled(Select)(({ theme }) => ({
+  font: "inherit",
+  fontSize: theme.typography.fontSize.sm,
+  lineHeight: theme.typography.fontSize.sm,
+  color: theme.palette.darkBlue.main,
+  display: "flex",
+  alignItems: "center",
+  "& .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input":
+    {
+      padding: "0",
+      paddingLeft: theme.custom.spacing.xxs2,
+      paddingRight: theme.custom.spacing.x3s,
+      display: "flex",
+      alignItems: "center",
+      width: "min-content",
+      minHeight: theme.typography.fontSize.sm,
+      height: "100%",
+    },
+  "& .MuiSelect-icon.MuiSelect-iconOutlined": {
+    position: "static",
+    width: theme.typography.fontSize.sm,
+    height: "auto",
+    color: "#9CA3AF",
+    // strokeWidth: "2px", not working... small problem for future me
+  },
+  "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+    {
+      border: "none",
+    },
+}));
+
+export const SelectStyledOld = styled(Select)(({ theme }) => ({
   backgroundColor: "white",
   borderRadius: theme.shape.borderRadius,
   font: "inherit",
