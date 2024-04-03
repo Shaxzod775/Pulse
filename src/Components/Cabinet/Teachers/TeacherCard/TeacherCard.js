@@ -40,60 +40,61 @@ const InfoLine = styled("div")(({ theme, small }) => ({
   },
 }));
 
-const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+// const TypographyMine = ({ children, ...otherProps } = (
+//   <Typography fontFamily="Poppins" {...otherProps}>
+//     {children}
+//   </Typography>
+// ));
 
-const CourseCard = ({
-  name,
-  duration,
-  techs,
-  startDate,
-  weekDays,
-  teacher,
-  price,
-}) => {
-  const lessonsInOneMonth = 12;
-  const lessonLength = 2; // in hours
-  const durationInHours = duration * lessonsInOneMonth * lessonLength;
+const CardText = styled(Typography)(
+  ({ theme, fontFamily = "Poppins, Rubik, sans-serif" }) => ({
+    fontFamily: fontFamily,
+    fontSize: theme.typography.fontSize.xxs,
+    lineHeight: "normal",
+  })
+);
+
+const TeacherCard = () => {
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
-        <img src={courseImage} alt="Group" />
-        <div className="flex justify-between items-center">
-          <Typography fontSize={theme.typography.fontSize.sm}>
-            {name}
-          </Typography>
+        <div className="flex justify-between items-start">
+          <div className="flex gap-xxs2 items-stretch">
+            <Icons.AnnaAvatar />
+            <div className="flex flex-col justify-around">
+              <CardText>Eshmatov Toshmat</CardText>
+              <CardText color="gray">Front-end, UI/UX</CardText>
+            </div>
+          </div>
           <Icons.MenuDots />
         </div>
         <Divider />
+        <InfoLine>
+          <Icons.Phone />
+          <CardText>+998 (98) 765-43-21</CardText>
+        </InfoLine>
         <div className="flex gap-xs">
           <InfoLine>
-            <Icons.ClockContained />
-            <div>{duration} месяцев</div>
+            <Icons.Documents />
+            <CardText>Групп: 6</CardText>
           </InfoLine>
           <InfoLine>
             <Icons.Group />
-            <div>222</div>
+            <CardText>222</CardText>
           </InfoLine>
         </div>
-        <ButtonStyled
-          variant="contained"
-          color="purpleBlue"
-          sx={{ borderRadius: "20px" }}
-        >
-          <div className="flex items-center gap-xs">
-            <Typography fontSize={theme.typography.fontSize.xs}>
-              <NumericFormat
-                value={price}
-                displayType="text" // Set to "input" if you want an input field
-                thousandSeparator=" "
-              />{" "}
-              UZS
-            </Typography>
-          </div>
-        </ButtonStyled>
+        <InfoLine>
+          <Icons.CalendarDateContained />
+          <CardText>01.01.2024</CardText>
+        </InfoLine>
+        <Divider />
+        <InfoLine>
+          <Icons.Location />
+          <CardText>IT Park Tashkent</CardText>
+        </InfoLine>
       </div>
     </Card>
   );
 };
 
-export default CourseCard;
+export default TeacherCard;

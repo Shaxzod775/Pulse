@@ -18,6 +18,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 import Courses from "./Courses/Courses";
+import Teachers from "./Teachers/Teachers";
 
 export const theme = createTheme({
   palette: {
@@ -379,7 +380,7 @@ const Cabinet = () => {
               <Route path={routes.DASHBOARD} element={<Dashboard />} />
               <Route path={routes.COURSES} element={<Courses />} />
               <Route path={routes.GROUPS} element={<Groups />} />
-              <Route path={routes.TEACHERS} element={<div>Leads</div>} />
+              <Route path={routes.TEACHERS} element={<Teachers />} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />
               <Route path={routes.STUDENTS} element={<div>Students</div>} />
               <Route

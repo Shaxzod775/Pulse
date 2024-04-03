@@ -29,6 +29,9 @@ import { ReactComponent as CalendarDateContained } from "./svgs/calendarDateCont
 import { ReactComponent as ClockContained } from "./svgs/clockContained.svg";
 import { ReactComponent as Door } from "./svgs/door.svg";
 import { ReactComponent as AddCircle } from "./svgs/addCircle.svg";
+import { ReactComponent as Phone } from "./svgs/phone.svg";
+import { ReactComponent as Documents } from "./svgs/documents.svg";
+import { ReactComponent as Location } from "./svgs/location.svg";
 
 export const Icons = {
   ArrowD,
@@ -62,4 +65,7 @@ export const Icons = {
   ClockContained,
   Door,
   AddCircle,
+  Phone,
+  Documents,
+  Location,
 };

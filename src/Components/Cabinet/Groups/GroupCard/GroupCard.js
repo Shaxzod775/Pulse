@@ -6,8 +6,8 @@ import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 
 const Card = styled("div")(({ theme }) => ({
-  padding: theme.custom.spacing.xs,
-  borderRadius: 4,
+  padding: "14px",
+  borderRadius: 10,
   backgroundColor: "#fff",
   border: `1px solid ${theme.palette.grey[200]}`,
   "& svg": {
@@ -37,7 +37,7 @@ const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
   const durationInHours = duration * lessonsInOneMonth * lessonLength;
   return (
     <Card>
-      <div className="flex flex-col gap-xs">
+      <div className="flex flex-col gap-xxs">
         <img src={groupImage} alt="Group" />
         <div className="flex justify-between items-center">
           <div>
