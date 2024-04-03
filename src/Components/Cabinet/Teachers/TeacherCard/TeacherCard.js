@@ -59,7 +59,7 @@ const TeacherCard = () => {
     <Card>
       <div className="flex flex-col gap-xxs">
         <div className="flex justify-between items-start">
-          <div className="flex gap-xxs2 items-stretch">
+          <div className="flex gap-xxs2 items-center">
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
               <CardText>Eshmatov Toshmat</CardText>

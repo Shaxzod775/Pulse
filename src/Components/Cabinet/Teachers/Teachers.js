@@ -132,6 +132,8 @@ const Teachers = () => {
     createTeacher({ name: teachers[2], duration: 6 }),
     createTeacher({ name: teachers[0], groups: 12 }),
     createTeacher({ name: teachers[1], duration: 4 }),
+    createTeacher({ name: teachers[0], groups: 12 }),
+    createTeacher({ name: teachers[1], duration: 4 }),
   ]);
 
   const handleClickOpen = () => {
@@ -181,7 +183,7 @@ const Teachers = () => {
               onClick={handleClickOpen}
             >
               <div className="flex items-center gap-xs">
-                <Icons.AddCircle />
+                <Icons.UserAdd />
                 <span>добавить учителя</span>
               </div>
             </ButtonStyled>
@@ -197,7 +199,7 @@ const Teachers = () => {
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
           {groups.map((group, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
+            <Grid item xs="auto" md="auto" lg={2.4} key={i}>
               <TeacherCard {...groups[i]} />
             </Grid>
           ))}

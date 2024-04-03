@@ -9,6 +9,7 @@ import { ReactComponent as NotebookBookmark } from "./svgs/notebookBookmark.svg"
 import { ReactComponent as Clock } from "./svgs/clock.svg";
 import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
+import { ReactComponent as UserAdd } from "./svgs/userAdd.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
 import { ReactComponent as Delete } from "./svgs/delete.svg";
 import { ReactComponent as LogoFull } from "./svgs/logoFull.svg";
@@ -45,6 +46,7 @@ export const Icons = {
   Clock,
   Calendar,
   UsersGroupRounded,
+  UserAdd,
   AcademicCap,
   Delete,
   LogoFull,

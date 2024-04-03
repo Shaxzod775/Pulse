@@ -319,7 +319,7 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   font: "inherit",
   fontSize: theme.typography.fontSize.sm,
   lineHeight: theme.typography.fontSize.sm,
-  padding: "7.5px 34px",
+  padding: "11px",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
