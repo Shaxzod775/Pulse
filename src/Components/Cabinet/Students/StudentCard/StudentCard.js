@@ -35,6 +35,7 @@ const InfoLine = styled("div")(({ theme, small }) => ({
   gap: small ? "3px" : "5px",
   fontSize: small ? ".75rem" : "inherit",
   "& svg": {
+    minWidth: "20px",
     width: small ? "20px" : "24px",
     height: auto,
   },
@@ -48,7 +49,7 @@ const CardText = styled(Typography)(
   })
 );
 
-const TeacherCard = () => {
+const StudentCard = () => {
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
@@ -56,7 +57,7 @@ const TeacherCard = () => {
           <div className="flex gap-xxs2 items-center">
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <CardText>Eshmatov Toshmat</CardText>
+              <CardText>Azizova Aziza</CardText>
               <CardText color="gray">Front-end, UI/UX</CardText>
             </div>
           </div>
@@ -64,31 +65,52 @@ const TeacherCard = () => {
         </div>
         <Divider />
         <InfoLine>
+          <Icons.Group />
+          <CardText>Группа: Front-end GR1214-21</CardText>
+        </InfoLine>
+        <InfoLine>
           <Icons.Phone />
           <CardText>+998 (98) 765-43-21</CardText>
         </InfoLine>
-        <div className="flex gap-xs">
-          <InfoLine>
-            <Icons.Documents />
-            <CardText>Групп: 6</CardText>
-          </InfoLine>
-          <InfoLine>
-            <Icons.Group />
-            <CardText>222</CardText>
-          </InfoLine>
-        </div>
         <InfoLine>
-          <Icons.CalendarDateContained />
-          <CardText>01.01.2024</CardText>
+          <Icons.Messages />
+          <CardText>example@gmail.com</CardText>
         </InfoLine>
         <Divider />
-        <InfoLine>
-          <Icons.Location />
-          <CardText>IT Park Tashkent</CardText>
+        <InfoLine small>
+          <Icons.Documents />
+          <CardText>Учитель: Eshmatov Toshmat</CardText>
         </InfoLine>
+        <div className="flex gap-xxs">
+          <InfoLine small>
+            <Icons.ClockDashed />
+            <CardText>01.01.2024</CardText>
+          </InfoLine>
+          <InfoLine small>
+            <Icons.CalendarDateContained />
+            <CardText>01.07.2024</CardText>
+          </InfoLine>
+        </div>
+        <ButtonStyled
+          variant="contained"
+          color="purpleBlueLight"
+          sx={{ borderRadius: "20px", padding: "8px" }}
+        >
+          <InfoLine small>
+            <Icons.Wallet style={{ color: "inherit" }} />
+            <CardText>
+              <NumericFormat
+                value={1212000}
+                displayType="text" // Set to "input" if you want an input field
+                thousandSeparator=" "
+              />{" "}
+              UZS
+            </CardText>
+          </InfoLine>
+        </ButtonStyled>
       </div>
     </Card>
   );
 };
 
-export default TeacherCard;
+export default StudentCard;

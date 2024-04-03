@@ -19,11 +19,18 @@ import {
 } from "@mui/material";
 import Courses from "./Courses/Courses";
 import Teachers from "./Teachers/Teachers";
+import Students from "./Students/Students";
 
 export const theme = createTheme({
   palette: {
     purpleBlue: {
       main: "#6574D8",
+      light: "#8A9BD8",
+      dark: "#6574D8",
+      contrastText: "#ffffff",
+    },
+    purpleBlueLight: {
+      main: "#8A9BD8",
       light: "#8A9BD8",
       dark: "#6574D8",
       contrastText: "#ffffff",
@@ -382,7 +389,7 @@ const Cabinet = () => {
               <Route path={routes.GROUPS} element={<Groups />} />
               <Route path={routes.TEACHERS} element={<Teachers />} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />
-              <Route path={routes.STUDENTS} element={<div>Students</div>} />
+              <Route path={routes.STUDENTS} element={<Students />} />
               <Route
                 path="*"
                 element={

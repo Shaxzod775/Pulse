@@ -29,7 +29,7 @@ import {
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
-import TeacherCard from "./TeacherCard/TeacherCard";
+import StudentCard from "./StudentCard/StudentCard";
 import NewCourseDialog from "../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
 
@@ -46,94 +46,49 @@ const HeaderDiv = styled("div")(({ theme }) => ({
 }));
 
 const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
-const techs = [
-  "JavaScript",
-  "Django",
-  "Python",
-  "GitHub",
-  "React",
-  "Node.js",
-  "Ruby on Rails",
-  "Vue.js",
-  "Angular",
-  "Flask",
-  "Express.js",
-  "MongoDB",
-  "PostgreSQL",
-  "AWS",
-  "Heroku",
-  "CSS",
-  "HTML",
-  "TypeScript",
-  "GraphQL",
-];
 
-export function createTeacher({
+export function createStudent({
   id = uuidv4(),
-  name = "Eshmatov Toshmat",
-  contactNumber = "998987654321",
+  name = "Azizova Aziza",
   field = "Front-end",
-  techs = ["React", "Node.js", "Ruby on Rails", "Vue.js"],
-  groups = 3,
-  students = 23,
+  techs = ["React", "UI/UX", "Node.js", "Ruby on Rails", "Vue.js"],
+  contactNumber = "998987654321",
+  email = "example@gmail.com",
+  group = "Front-end GR1214-21",
+  teacher = "Eshmatov Toshmat",
   startDate = new Date(2024, 4, 3),
-  location = "IT Park Tashkent",
+  endDate = new Date(2024, 10, 3),
+  balance = 1120000,
 } = {}) {
   return {
     id,
     name,
-    contactNumber,
     field,
     techs,
-    groups,
-    students,
+    contactNumber,
+    email,
+    group,
+    teacher,
     startDate,
-    location,
+    endDate,
+    balance,
   };
 }
 
-const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
-  props,
-  ref
-) {
-  const { onChange, ...other } = props;
-
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      valueIsNumericString
-    />
-  );
-});
-NumericFormatCustom.propTypes = {
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const Teachers = () => {
+const Students = () => {
   const [open, setOpen] = useState(false);
 
   const [groups, setGroups] = useState([
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[2], groups: 6 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[2], groups: 6 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
+    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
   ]);
 
   const handleClickOpen = () => {
@@ -144,11 +99,11 @@ const Teachers = () => {
     setOpen(false);
   };
 
-  const handleAddTeacher = (newGroup) => {
+  const handleAddStudent = (newGroup) => {
     setGroups([...groups, newGroup]);
   };
 
-  const handleDeleteTeacher = (idToDelete) => {
+  const handleDeleteStudent = (idToDelete) => {
     setGroups(groups.filter((group) => group.id !== idToDelete));
   };
   return (
@@ -159,7 +114,7 @@ const Teachers = () => {
             <IconButton sx={headerItemStyles}>
               <Icons.ArrowL />
             </IconButton>
-            <Title>Учителя</Title>
+            <Title>Ученики</Title>
             <div className="flex items-stretch gap-xxs full-height">
               <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
                 <div className="flex items-center">
@@ -169,7 +124,7 @@ const Teachers = () => {
                   />
                   <InputBase
                     sx={{ color: theme.typography.color.darkBlue }}
-                    placeholder="Поиск по учителю..."
+                    placeholder="Поиск по ученику..."
                   />
                 </div>
               </HeaderDiv>
@@ -184,7 +139,7 @@ const Teachers = () => {
             >
               <div className="flex items-center gap-xs">
                 <Icons.UserAdd />
-                <span>добавить учителя</span>
+                <span>добавить ученика</span>
               </div>
             </ButtonStyled>
           </div>
@@ -200,7 +155,7 @@ const Teachers = () => {
         >
           {groups.map((group, i) => (
             <Grid item xs="auto" md="auto" lg={2.4} key={i}>
-              <TeacherCard {...groups[i]} />
+              <StudentCard {...groups[i]} />
             </Grid>
           ))}
         </Grid>
@@ -210,10 +165,10 @@ const Teachers = () => {
       <NewCourseDialog
         open={open}
         handleClose={handleClose}
-        handleAddCourse={handleAddTeacher}
+        handleAddCourse={handleAddStudent}
       />
     </Root>
   );
 };
 
-export default Teachers;
+export default Students;

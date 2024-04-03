@@ -33,6 +33,8 @@ import { ReactComponent as AddCircle } from "./svgs/addCircle.svg";
 import { ReactComponent as Phone } from "./svgs/phone.svg";
 import { ReactComponent as Documents } from "./svgs/documents.svg";
 import { ReactComponent as Location } from "./svgs/location.svg";
+import { ReactComponent as Messages } from "./svgs/messages.svg";
+import { ReactComponent as Wallet } from "./svgs/wallet.svg";
 
 export const Icons = {
   ArrowD,
@@ -70,4 +72,6 @@ export const Icons = {
   Phone,
   Documents,
   Location,
+  Messages,
+  Wallet,
 };
