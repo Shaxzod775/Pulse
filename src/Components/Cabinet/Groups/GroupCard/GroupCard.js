@@ -32,11 +32,12 @@ const InfoLine = styled("div")(({ theme, small }) => ({
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const GroupCard = ({
-  name,
+  name = "Front-end",
   startDate,
   endDate,
   weekDays = [0, 2, 4],
   teacher = "Eshmatov Toshmat",
+  thumbnail,
 }) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
@@ -44,10 +45,20 @@ const GroupCard = ({
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
-        <img src={groupImage} alt="Group" />
+        <img
+          src={thumbnail ? thumbnail : groupImage}
+          alt="Group"
+          width={"100%"}
+          height={100}
+          style={{
+            objectFit: "cover",
+            objectPosition: "center",
+            borderRadius: "4px",
+          }}
+        />
         <div className="flex justify-between items-center">
           <div>
-            <div>{name}</div>
+            <div>{name !== "" ? name : "Front-end"}</div>
             <div className="font-xxs">{"UI/UX"}</div>
           </div>
           <Icons.MenuDots />

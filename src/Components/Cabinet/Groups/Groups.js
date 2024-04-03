@@ -106,6 +106,7 @@ export function createGroup({
   subject = "Front-end",
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 7, 3),
+  thumbnail = null,
 } = {}) {
   return {
     id,
@@ -113,6 +114,7 @@ export function createGroup({
     subject,
     startDate,
     endDate,
+    thumbnail,
   };
 }
 
@@ -168,6 +170,7 @@ const Groups = () => {
 
   const handleAddGroup = (newGroup) => {
     setGroups([...groups, newGroup]);
+    console.log(newGroup);
   };
 
   const handleDeleteGroup = (idToDelete) => {

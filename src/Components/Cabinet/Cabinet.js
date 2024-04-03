@@ -158,6 +158,9 @@ export const Root = styled("div")(({ theme }) => ({
   "& .items-stretch": {
     alignItems: "stretch",
   },
+  "& .justify-center": {
+    justifyContent: "center",
+  },
   "& .justify-between": {
     justifyContent: "space-between",
   },
