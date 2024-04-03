@@ -201,7 +201,7 @@ const Courses = () => {
             <Title>Курсы</Title>
           </div>
 
-          <div className="flex items-stretch gap-sm">
+          <div className="flex items-center gap-sm">
             <ButtonStyled
               variant="contained"
               color="purpleBlue"

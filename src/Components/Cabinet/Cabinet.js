@@ -35,6 +35,12 @@ export const theme = createTheme({
       dark: "#6574D8",
       contrastText: "#ffffff",
     },
+    greyLight: {
+      main: "#E5E7EB",
+      light: "#E5E7EB",
+      dark: "#706F7C",
+      contrastText: "#000000",
+    },
     crimson: {
       main: "#FF2D55",
       light: "#FFC0CC",
@@ -322,14 +328,19 @@ export const SelectStyledOld = styled(Select)(({ theme }) => ({
 }));
 
 export const ButtonStyled = styled(Button)(({ theme }) => ({
+  minWidth: "10px",
   borderRadius: theme.shape.borderRadius,
   font: "inherit",
-  fontSize: theme.typography.fontSize.sm,
-  lineHeight: theme.typography.fontSize.sm,
-  padding: "11px",
+  fontSize: theme.typography.fontSize.xs,
+  lineHeight: theme.typography.fontSize.xs,
+  padding: "8px",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
+  "& svg": {
+    width: "20px",
+    height: "auto",
+  },
 }));
 
 export const GridContainer = styled("div")(({ theme }) => ({}));

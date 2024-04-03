@@ -131,16 +131,34 @@ const Students = () => {
             </div>
           </div>
 
-          <div className="flex items-stretch gap-sm">
+          <div className="flex items-center gap-sm">
+            <ButtonStyled
+              variant="outlined"
+              color="purpleBlue"
+              onClick={handleClickOpen}
+            >
+              <div className="flex items-center gap-x3s">
+                <Icons.UserAdd />
+                <span>Скачать список</span>
+              </div>
+            </ButtonStyled>
             <ButtonStyled
               variant="contained"
               color="purpleBlue"
               onClick={handleClickOpen}
             >
-              <div className="flex items-center gap-xs">
+              <div className="flex items-center gap-x3s">
                 <Icons.UserAdd />
                 <span>добавить ученика</span>
               </div>
+            </ButtonStyled>
+            <ButtonStyled
+              variant="outlined"
+              color="purpleBlue"
+              onClick={handleClickOpen}
+              sx={{ minWidth: "0" }}
+            >
+              <Icons.MenuDots />
             </ButtonStyled>
           </div>
         </div>

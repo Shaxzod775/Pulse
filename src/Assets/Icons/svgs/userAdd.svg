@@ -8,7 +8,7 @@
 		</clipPath>
 	</defs>
 	<g clip-path="url(#clip2709_9946)">
-		<circle id="Vector" cx="12.000000" cy="6.000000" r="4.000000" fill="#FFFFFF" fill-opacity="1.000000"/>
+		<circle id="Vector" cx="12.000000" cy="6.000000" r="4.000000" fill="currentColor" fill-opacity="1.000000"/>
 		<g opacity="0.500000">
 			<path id="Subtract" d="M18.09 15.03C17.66 15 17.14 15 16.5 15C14.85 15 14.02 15 13.51 15.51C13 16.02 13 16.85 13 18.5C13 19.66 13 20.42 13.18 20.94C12.79 20.98 12.4 21 12 21C8.13 21 5 19.2 5 17C5 14.79 8.13 13 12 13C14.61 13 16.89 13.81 18.09 15.03Z" fill="currentColor" fill-opacity="1.000000" fill-rule="nonzero"/>
 		</g>

@@ -206,9 +206,9 @@ const Groups = () => {
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
-            <IconButton sx={headerItemStyles}>
+            <ButtonStyled variant="outlined" sx={headerItemStyles} color="grey">
               <Icons.ArrowL />
-            </IconButton>
+            </ButtonStyled>
             <Title>Группы</Title>
             <div className="flex items-stretch gap-xxs full-height">
               <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
@@ -223,7 +223,6 @@ const Groups = () => {
                   />
                 </div>
               </HeaderDiv>
-
               <HeaderDiv
                 sx={{ position: "relative" }}
                 className="flex items-stretch full-height p-xxs2"
@@ -276,7 +275,7 @@ const Groups = () => {
             </div>
           </div>
 
-          <div className="flex items-stretch gap-sm">
+          <div className="flex items-center gap-sm">
             <ButtonStyled
               variant="contained"
               color="purpleBlue"

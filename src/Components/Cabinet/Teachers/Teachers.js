@@ -176,13 +176,13 @@ const Teachers = () => {
             </div>
           </div>
 
-          <div className="flex items-stretch gap-sm">
+          <div className="flex items-center gap-sm">
             <ButtonStyled
               variant="contained"
               color="purpleBlue"
               onClick={handleClickOpen}
             >
-              <div className="flex items-center gap-xs">
+              <div className="flex items-center gap-x3s">
                 <Icons.UserAdd />
                 <span>добавить учителя</span>
               </div>
