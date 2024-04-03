@@ -164,6 +164,9 @@ export const Root = styled("div")(({ theme }) => ({
   "& .justify-around": {
     justifyContent: "space-around",
   },
+  "& .justify-end": {
+    justifyContent: "flex-end",
+  },
   "& .align-self-start": {
     alignSelf: "start",
   },
@@ -355,20 +358,20 @@ export const CardStyled = styled(Card)(({ theme }) => ({
 }));
 
 export const TextFieldStyled = styled(TextField)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius,
-  font: "inherit",
   fontSize: theme.typography.fontSize.sm,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
-  "& .MuiInputBase-root .MuiInputBase-input": {
-    padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
-    borderRadius: theme.custom.spacing.xs,
+  "& *": { boxSizing: "content-box" },
+  "& .MuiInputBase-root": {
+    borderRadius: "8px",
+    "& .MuiInputBase-input": {
+      padding: "8px",
+    },
   },
 }));
 
 export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
-  font: "inherit",
   fontSize: theme.typography.fontSize.sm,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
@@ -376,13 +379,16 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
     padding: "0",
   },
   "& .MuiInputBase-root .MuiInputBase-input": {
-    padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
+    fontFamily: "inherit",
+    padding: "8px",
   },
   "& .MuiSvgIcon-root": {
     width: theme.custom.spacing.sm,
     height: "auto",
   },
-  "& .MuiAutocomplete-endAdornment": {},
+  "& .MuiAutocomplete-endAdornment": {
+    top: "6px",
+  },
 }));
 
 const Cabinet = () => {

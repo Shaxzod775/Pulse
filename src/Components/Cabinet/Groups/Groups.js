@@ -30,21 +30,8 @@ import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import GroupCard from "./GroupCard/GroupCard";
-import NewCourseDialog from "../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
-import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
-import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
-
-const DialogButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.custom.spacing.sm,
-  padding: theme.custom.spacing.xxs,
-  font: "inherit",
-  fontSize: theme.typography.fontSize.sm,
-  lineHeight: theme.typography.fontSize.sm,
-  textTransform: "capitalize",
-  boxShadow: "none",
-  "&:hover": { boxShadow: "none" },
-}));
+import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -115,29 +102,15 @@ const techs = [
 
 export function createGroup({
   id = uuidv4(),
-  name = "python",
-  teacher = "Eshmatov Toshmat",
-  price = 1000000,
-  currency = "so'm",
-  weekDays = [0, 2, 4],
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  techs = ["Python", "GitHub", "React", "Node.js", "Ruby on Rails", "Vue.js"],
-  tags = ["certificate", "best"],
-  duration = 3, // in months
+  name = "GR0000-00",
+  subject = "Front-end",
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 7, 3),
 } = {}) {
   return {
     id,
     name,
-    teacher,
-    price,
-    currency,
-    weekDays,
-    description,
-    techs,
-    tags,
-    duration,
+    subject,
     startDate,
     endDate,
   };
@@ -306,10 +279,10 @@ const Groups = () => {
         {/* </Paper> */}
       </Main>
 
-      <NewCourseDialog
+      <NewGroupDialog
         open={open}
         handleClose={handleClose}
-        handleAddCourse={handleAddGroup}
+        handleAddGroup={handleAddGroup}
       />
     </Root>
   );

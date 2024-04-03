@@ -31,10 +31,16 @@ const InfoLine = styled("div")(({ theme, small }) => ({
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
+const GroupCard = ({
+  name,
+  startDate,
+  endDate,
+  weekDays = [0, 2, 4],
+  teacher = "Eshmatov Toshmat",
+}) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
-  const durationInHours = duration * lessonsInOneMonth * lessonLength;
+  // const durationInHours = duration * lessonsInOneMonth * lessonLength;
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
@@ -42,7 +48,7 @@ const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
         <div className="flex justify-between items-center">
           <div>
             <div>{name}</div>
-            <div className="font-xxs">{techs[0]}</div>
+            <div className="font-xxs">{"UI/UX"}</div>
           </div>
           <Icons.MenuDots />
         </div>
@@ -50,11 +56,11 @@ const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
         <div className="flex flex-col gap-8">
           <InfoLine>
             <Icons.CalendarContained />
-            <div>Дата начала: {format(startDate, "dd.mm.yyyy")}</div>
+            <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
           </InfoLine>
           <InfoLine>
             <Icons.ClockDashed />
-            <div>Дата завершения: {format(startDate, "dd.mm.yyyy")}</div>
+            <div>Дата завершения: {format(endDate, "dd.MM.yyyy")}</div>
           </InfoLine>
           <InfoLine>
             <Icons.CalendarDateContained />
@@ -77,7 +83,7 @@ const GroupCard = ({ name, duration, techs, startDate, weekDays, teacher }) => {
         <div className="flex gap-xs">
           <InfoLine small>
             <Icons.ClockContained />
-            <div>{duration} месяцев</div>
+            <div>{3} месяцев</div>
           </InfoLine>
           <InfoLine small>
             <Icons.Door />
