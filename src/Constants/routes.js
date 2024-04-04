@@ -7,3 +7,4 @@ export const TEACHERS = "/teachers";
 export const STUDENTS = "/students";
 export const COURSES = "/courses";
 export const PERSONAL = "/personal";
+export const NEW = "/new";

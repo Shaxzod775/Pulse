@@ -32,6 +32,7 @@ import { v4 as uuidv4 } from "uuid";
 import GroupCard from "./GroupCard/GroupCard";
 import { Icons } from "../../../Assets/Icons/icons";
 import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
+import { useNavigate } from "react-router-dom";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -160,6 +161,12 @@ const Groups = () => {
     createGroup({ name: "Node.js", duration: 3 }),
   ]);
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1); // This navigates one step back in history
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -182,7 +189,12 @@ const Groups = () => {
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
-            <ButtonStyled variant="outlined" sx={headerItemStyles} color="grey">
+            <ButtonStyled
+              variant="outlined"
+              sx={headerItemStyles}
+              color="grey"
+              onClick={goBack}
+            >
               <Icons.ArrowL />
             </ButtonStyled>
             <Title>Группы</Title>

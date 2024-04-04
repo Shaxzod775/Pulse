@@ -1,31 +1,8 @@
 import React, { useState } from "react";
-import {
-  Button,
-  ButtonBase,
-  Grid,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  Select,
-  TextField,
-  Typography,
-  styled,
-} from "@mui/material";
-import {
-  theme,
-  ButtonStyled,
-  ContentHeader,
-  Main,
-  Root,
-  Title,
-  TextFieldStyled,
-  SelectStyled,
-} from "../Cabinet";
+import { Link, useNavigate } from "react-router-dom";
+import * as routes from "../../../Constants/routes";
+import { Grid, IconButton, InputBase, styled } from "@mui/material";
+import { theme, ButtonStyled, Main, Root, Title } from "../Cabinet";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
@@ -68,29 +45,29 @@ const techs = [
   "GraphQL",
 ];
 
-export function createTeacher({
-  id = uuidv4(),
-  name = "Eshmatov Toshmat",
-  contactNumber = "998987654321",
-  field = "Front-end",
-  techs = ["React", "Node.js", "Ruby on Rails", "Vue.js"],
-  groups = 3,
-  students = 23,
-  startDate = new Date(2024, 4, 3),
-  location = "IT Park Tashkent",
-} = {}) {
-  return {
-    id,
-    name,
-    contactNumber,
-    field,
-    techs,
-    groups,
-    students,
-    startDate,
-    location,
-  };
-}
+// export function createTeacher({
+//   id = uuidv4(),
+//   name = "Eshmatov Toshmat",
+//   contactNumber = "998987654321",
+//   field = "Front-end",
+//   techs = ["React", "Node.js", "Ruby on Rails", "Vue.js"],
+//   groups = 3,
+//   students = 23,
+//   startDate = new Date(2024, 4, 3),
+//   location = "IT Park Tashkent",
+// } = {}) {
+//   return {
+//     id,
+//     name,
+//     contactNumber,
+//     field,
+//     techs,
+//     groups,
+//     students,
+//     startDate,
+//     location,
+//   };
+// }
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
   props,
@@ -120,45 +97,25 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const Teachers = () => {
-  const [open, setOpen] = useState(false);
+const Teachers = ({ teachers }) => {
+  const navigate = useNavigate();
 
-  const [groups, setGroups] = useState([
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[2], groups: 6 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[2], groups: 6 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-    createTeacher({ name: teachers[0], groups: 12 }),
-    createTeacher({ name: teachers[1], groups: 4 }),
-  ]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleAddTeacher = (newGroup) => {
-    setGroups([...groups, newGroup]);
-  };
-
-  const handleDeleteTeacher = (idToDelete) => {
-    setGroups(groups.filter((group) => group.id !== idToDelete));
+  const goBack = () => {
+    navigate(-1); // This navigates one step back in history
   };
   return (
     <Root>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
-            <IconButton sx={headerItemStyles}>
+            <ButtonStyled
+              variant="outlined"
+              sx={headerItemStyles}
+              color="grey"
+              onClick={goBack}
+            >
               <Icons.ArrowL />
-            </IconButton>
+            </ButtonStyled>
             <Title>Учителя</Title>
             <div className="flex items-stretch gap-xxs full-height">
               <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
@@ -177,16 +134,21 @@ const Teachers = () => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <ButtonStyled
-              variant="contained"
-              color="purpleBlue"
-              onClick={handleClickOpen}
+            <Link
+              to={routes.CABINET + routes.TEACHERS + routes.NEW}
+              className="link"
             >
-              <div className="flex items-center gap-x3s">
-                <Icons.UserAdd />
-                <span>добавить учителя</span>
-              </div>
-            </ButtonStyled>
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                // onClick={handleClickOpen}
+              >
+                <div className="flex items-center gap-x3s">
+                  <Icons.UserAdd />
+                  <span>добавить учителя</span>
+                </div>
+              </ButtonStyled>
+            </Link>
           </div>
         </div>
         {/* <Paper
@@ -198,20 +160,20 @@ const Teachers = () => {
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
-          {groups.map((group, i) => (
+          {teachers.map((teacher, i) => (
             <Grid item xs="auto" md="auto" lg={2.4} key={i}>
-              <TeacherCard {...groups[i]} />
+              <TeacherCard {...teacher} />
             </Grid>
           ))}
         </Grid>
         {/* </Paper> */}
       </Main>
 
-      <NewCourseDialog
+      {/* <NewCourseDialog
         open={open}
         handleClose={handleClose}
         handleAddCourse={handleAddTeacher}
-      />
+      /> */}
     </Root>
   );
 };

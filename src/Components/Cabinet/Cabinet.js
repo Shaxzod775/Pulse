@@ -20,6 +20,7 @@ import {
 import Courses from "./Courses/Courses";
 import Teachers from "./Teachers/Teachers";
 import Students from "./Students/Students";
+import TeachersRoot from "./Teachers/TeachersRoot";
 
 export const theme = createTheme({
   palette: {
@@ -245,6 +246,10 @@ export const Root = styled("div")(({ theme }) => ({
   "& .p-t-xxs2": {
     paddingTop: theme.custom.spacing.xxs2,
   },
+  "& .link": {
+    textDecoration: "none",
+    fontColor: "inherit",
+  },
 }));
 
 export const Main = styled("div")(({ theme }) => ({
@@ -407,7 +412,7 @@ const Cabinet = () => {
               <Route path={routes.DASHBOARD} element={<Dashboard />} />
               <Route path={routes.COURSES} element={<Courses />} />
               <Route path={routes.GROUPS} element={<Groups />} />
-              <Route path={routes.TEACHERS} element={<Teachers />} />
+              <Route path={routes.TEACHERS + "/*"} element={<TeachersRoot />} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />
               <Route path={routes.STUDENTS} element={<Students />} />
               <Route
