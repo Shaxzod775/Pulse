@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   ButtonBase,
@@ -32,7 +34,6 @@ import { v4 as uuidv4 } from "uuid";
 import StudentCard from "../StudentCard/StudentCard";
 import NewCourseDialog from "../../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { useNavigate } from "react-router-dom";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -76,21 +77,21 @@ export function createStudent({
   };
 }
 
-const StudentsMain = () => {
+const StudentsMain = ({ students }) => {
   const [open, setOpen] = useState(false);
 
-  const [groups, setGroups] = useState([
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-  ]);
+  // const [students, setStudents] = useState([
+  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
+  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
+  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+  // ]);
 
   const navigate = useNavigate();
 
@@ -106,13 +107,13 @@ const StudentsMain = () => {
     setOpen(false);
   };
 
-  const handleAddStudent = (newGroup) => {
-    setGroups([...groups, newGroup]);
-  };
+  // const handleAddStudent = (newGroup) => {
+  //   setGroups([...groups, newGroup]);
+  // };
 
-  const handleDeleteStudent = (idToDelete) => {
-    setGroups(groups.filter((group) => group.id !== idToDelete));
-  };
+  // const handleDeleteStudent = (idToDelete) => {
+  //   setGroups(groups.filter((group) => group.id !== idToDelete));
+  // };
   return (
     <Root>
       <Main>
@@ -154,16 +155,19 @@ const StudentsMain = () => {
                 <span>Скачать список</span>
               </div>
             </ButtonStyled>
-            <ButtonStyled
-              variant="contained"
-              color="purpleBlue"
-              onClick={handleClickOpen}
-            >
-              <div className="flex items-center gap-x3s">
-                <Icons.UserAdd />
-                <span>добавить ученика</span>
-              </div>
-            </ButtonStyled>
+            <Link to={routes.CABINET + routes.STUDENTS + routes.NEW}>
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                onClick={handleClickOpen}
+              >
+                <div className="flex items-center gap-x3s">
+                  <Icons.UserAdd />
+                  <span>добавить ученика</span>
+                </div>
+              </ButtonStyled>
+            </Link>
+
             <ButtonStyled
               variant="outlined"
               color="purpleBlue"
@@ -183,20 +187,20 @@ const StudentsMain = () => {
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
-          {groups.map((group, i) => (
+          {students.map((student, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <StudentCard {...groups[i]} />
+              <StudentCard {...student} />
             </Grid>
           ))}
         </Grid>
         {/* </Paper> */}
       </Main>
 
-      <NewCourseDialog
+      {/* <NewCourseDialog
         open={open}
         handleClose={handleClose}
         handleAddCourse={handleAddStudent}
-      />
+      /> */}
     </Root>
   );
 };

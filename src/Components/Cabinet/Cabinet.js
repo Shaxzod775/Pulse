@@ -21,6 +21,7 @@ import Courses from "./Courses/Courses";
 import TeachersMain from "./Teachers/TeachersMain/TeachersMain";
 import StudentsMain from "./Students/StudentsMain/StudentsMain";
 import Teachers from "./Teachers/Teachers";
+import Students from "./Students/Students";
 
 export const theme = createTheme({
   palette: {
@@ -413,7 +414,7 @@ const Cabinet = () => {
               <Route path={routes.GROUPS} element={<Groups />} />
               <Route path={routes.TEACHERS + "/*"} element={<Teachers />} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />
-              <Route path={routes.STUDENTS} element={<StudentsMain />} />
+              <Route path={routes.STUDENTS + "/*"} element={<Students />} />
               <Route
                 path="*"
                 element={
