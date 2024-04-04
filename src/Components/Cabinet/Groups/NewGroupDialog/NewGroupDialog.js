@@ -87,9 +87,9 @@ const AutocompleteField = styled(TextField)(({ theme }) => ({
 }));
 
 const SquareContainer = styled("div")(
-  ({ theme, width = "100%", height = "160px", bgColor = "#fff", active }) => ({
-    width: width,
-    height: height,
+  ({ theme, width, height = 160, bgColor = "#fff", active }) => ({
+    width: width ? `${width}px` : "100%",
+    height: `${height}px`,
     backgroundColor: bgColor,
     borderRadius: "37px",
     border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
@@ -204,9 +204,10 @@ const NewGroupDialog = ({
                 <Dropzone onDrop={handleImageSelection}>
                   {({ getRootProps, getInputProps, isDragActive }) => (
                     <SquareContainer
-                      className="flex justify-center items-center"
-                      active={isDragActive}
-                      {...getRootProps()}
+                      {...getRootProps({
+                        active: isDragActive,
+                        className: "flex justify-center items-center",
+                      })}
                     >
                       <input {...getInputProps({ id: "file-upload-input" })} />
                       {selectedImage ? (
