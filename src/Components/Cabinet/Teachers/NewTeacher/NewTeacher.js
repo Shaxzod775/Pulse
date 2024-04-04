@@ -1,5 +1,6 @@
 import {
   Button,
+  Chip,
   Divider,
   FormControl,
   FormControlLabel,
@@ -104,6 +105,8 @@ const NewTeacher = () => {
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
+  const [tagFormOpen, setTagFormOpen] = useState(false);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -126,6 +129,16 @@ const NewTeacher = () => {
     // Simulate file input click event
     const fileInput = document.getElementById("file-upload-input");
     fileInput.click();
+  };
+
+  // Function to handle adding a new tag
+  const handleAddTag = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  // Function to handle deletion of a tag
+  const handleDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
   return (
@@ -412,6 +425,66 @@ const NewTeacher = () => {
                   />
                 </div>
               </FormControl>
+              <div className="flex items-center gap-sm">
+                <label>
+                  <FormLabel row>Теги</FormLabel>
+                </label>
+                <div className="flex flex-wrap gap-x3s">
+                  {tags.map((tag, i) => (
+                    <Chip
+                      label={tag}
+                      onDelete={() => handleDeleteTag(tag)}
+                      key={i}
+                      variant="outlined"
+                      color="purpleBlue"
+                      sx={{
+                        borderRadius: "8px",
+                      }}
+                      deleteIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
+                    />
+                  ))}
+                  {tagFormOpen && (
+                    <FormControl variant="outlined">
+                      <TextFieldStyled
+                        autoFocus
+                        required
+                        onBlur={() => {
+                          setTagFormOpen(!tagFormOpen);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            setTagFormOpen(false);
+                            handleAddTag(e.target.value);
+                          }
+                        }}
+                        id="info"
+                        variant="outlined"
+                        sx={{
+                          "& .MuiInputBase-input": {
+                            height: theme.typography.fontSize.xs,
+                            fontSize: theme.typography.fontSize.xs,
+                            lineHeight: theme.typography.fontSize.xs,
+                            padding: "8px 11px !important",
+                            color: "",
+                          },
+                        }}
+                      />
+                    </FormControl>
+                  )}
+                  <Chip
+                    label="+"
+                    variant="outlined"
+                    color="darkBlue"
+                    sx={{
+                      borderRadius: `${theme.custom.spacing.xxs}px`,
+                    }}
+                    onClick={() => setTagFormOpen(!tagFormOpen)}
+                  />
+                </div>
+              </div>
             </div>
           </PaperStyled>
         </div>
