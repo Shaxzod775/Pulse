@@ -366,14 +366,14 @@ export const CardStyled = styled(Card)(({ theme }) => ({
 }));
 
 export const TextFieldStyled = styled(TextField)(({ theme }) => ({
-  fontSize: theme.typography.fontSize.sm,
+  fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
   "& *": { boxSizing: "content-box" },
   "& .MuiInputBase-root": {
     borderRadius: "8px",
     "& .MuiInputBase-input": {
-      padding: "8px",
+      padding: "12px",
     },
   },
 }));
