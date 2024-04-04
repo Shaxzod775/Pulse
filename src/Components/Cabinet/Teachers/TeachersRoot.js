@@ -45,6 +45,11 @@ const TeachersRoot = () => {
     createTeacher({ name: teacherNames[1], groups: 4 }),
     createTeacher({ name: teacherNames[0], groups: 12 }),
     createTeacher({ name: teacherNames[1], groups: 4 }),
+    createTeacher({ name: teacherNames[1], groups: 4 }),
+    createTeacher({ name: teacherNames[2], groups: 6 }),
+    createTeacher({ name: teacherNames[0], groups: 12 }),
+    createTeacher({ name: teacherNames[1], groups: 4 }),
+    createTeacher({ name: teacherNames[0], groups: 12 }),
   ]);
 
   const handleAddTeacher = (newGroup) => {
