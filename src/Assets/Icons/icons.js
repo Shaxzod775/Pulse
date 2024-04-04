@@ -36,6 +36,7 @@ import { ReactComponent as Location } from "./svgs/location.svg";
 import { ReactComponent as Messages } from "./svgs/messages.svg";
 import { ReactComponent as Wallet } from "./svgs/wallet.svg";
 import { ReactComponent as GalleryAdd } from "./svgs/galleryAdd.svg";
+import { ReactComponent as InboxIn } from "./svgs/inboxIn.svg";
 
 export const Icons = {
   ArrowD,
@@ -76,4 +77,5 @@ export const Icons = {
   Messages,
   Wallet,
   GalleryAdd,
+  InboxIn,
 };
