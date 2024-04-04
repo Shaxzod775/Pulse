@@ -184,9 +184,9 @@ const NewGroupDialog = ({
           maxWidth: "957px",
           width: "957px",
         },
-        "& *": {
-          boxSizing: "border-box",
-        },
+        // "& *": {
+        //   boxSizing: "border-box",
+        // },
       }}
     >
       <Root sx={{ width: "100%" }}>

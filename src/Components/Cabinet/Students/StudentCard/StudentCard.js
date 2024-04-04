@@ -91,7 +91,7 @@ const StudentCard = () => {
             <CardText>01.07.2024</CardText>
           </InfoLine>
         </div>
-        <ButtonStyled
+        {/* <ButtonStyled
           variant="contained"
           color="purpleBlueLight"
           sx={{ borderRadius: "20px", padding: "8px" }}
@@ -107,7 +107,7 @@ const StudentCard = () => {
               UZS
             </CardText>
           </InfoLine>
-        </ButtonStyled>
+        </ButtonStyled> */}
       </div>
     </Card>
   );

@@ -148,7 +148,7 @@ const Sidebar = () => {
         <div className={styles["logout"]}>
           <MenuAction color="grey" backgroundColor="#F9FAFB">
             <Collapse orientation="horizontal" in={isOpen}>
-              <div className="text">Поддержка 24/7</div>
+              <div className="text">Забота о клиентах 24/7</div>
             </Collapse>
           </MenuAction>
           <MenuAction color="crimson" backgroundColor="#FDF3F2">

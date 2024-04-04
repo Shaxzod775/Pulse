@@ -369,7 +369,6 @@ export const TextFieldStyled = styled(TextField)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
-  "& *": { boxSizing: "content-box" },
   "& .MuiInputBase-root": {
     borderRadius: "8px",
     "& .MuiInputBase-input": {

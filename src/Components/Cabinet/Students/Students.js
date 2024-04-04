@@ -184,7 +184,7 @@ const Students = () => {
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
           {groups.map((group, i) => (
-            <Grid item xs="auto" md="auto" lg={2.4} key={i}>
+            <Grid item xs="auto" md="auto" lg={3} key={i}>
               <StudentCard {...groups[i]} />
             </Grid>
           ))}
