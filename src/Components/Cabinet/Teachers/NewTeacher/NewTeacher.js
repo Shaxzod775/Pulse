@@ -213,14 +213,23 @@ const NewTeacher = () => {
                       загрузить PNG или JPG размером менее 10 МБ
                     </Typography>
                   </div>
-                  <div>
+                  <div className="flex gap-x3s">
                     <DialogButton
                       onClick={handleUploadClick}
                       variant="contained"
                       color="purpleBlue"
                     >
-                      Загрузить
+                      {selectedImage ? "Изменить" : "Загрузить"}
                     </DialogButton>
+                    {selectedImage && (
+                      <DialogButton
+                        onClick={() => setSelectedImage()}
+                        variant="contained"
+                        color="crimson"
+                      >
+                        Удалить
+                      </DialogButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -377,7 +386,7 @@ const NewTeacher = () => {
               </FormControl>
               <div className="flex items-center gap-sm">
                 <label>
-                  <FormLabel row>Телефон родителей</FormLabel>
+                  <FormLabel row>Телефон близких</FormLabel>
                 </label>
                 <div className="flex gap-xxs">
                   <FormControl fullWidth variant="outlined">

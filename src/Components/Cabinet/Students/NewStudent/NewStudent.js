@@ -213,14 +213,23 @@ const NewStudent = () => {
                       загрузить PNG или JPG размером менее 10 МБ
                     </Typography>
                   </div>
-                  <div>
+                  <div className="flex gap-x3s">
                     <DialogButton
                       onClick={handleUploadClick}
                       variant="contained"
                       color="purpleBlue"
                     >
-                      Загрузить
+                      {selectedImage ? "Изменить" : "Загрузить"}
                     </DialogButton>
+                    {selectedImage && (
+                      <DialogButton
+                        onClick={() => setSelectedImage()}
+                        variant="contained"
+                        color="crimson"
+                      >
+                        Удалить
+                      </DialogButton>
+                    )}
                   </div>
                 </div>
               </div>

@@ -183,7 +183,7 @@ const StudentsMain = ({ students }) => {
     > */}
         <Grid
           container
-          justifyContent="center"
+          justifyContent="start"
           spacing={`${theme.custom.spacing.sm}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >

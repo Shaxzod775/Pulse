@@ -64,7 +64,7 @@ const GroupCard = ({
           <Icons.MenuDots />
         </div>
         <Divider />
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-x3s">
           <InfoLine>
             <Icons.CalendarContained />
             <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
