@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
 import TeachersMain from "./TeachersMain/TeachersMain";
 import NewTeacher from "./NewTeacher/NewTeacher";
+import TeacherProfile from "./TeacherProfile/TeacherProfile";
 
 const teacherNames = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
 
@@ -66,6 +67,7 @@ const Teachers = () => {
         path={routes.HOME}
         element={<TeachersMain teachers={teachers} />}
       />
+      <Route path={routes.PROFILE} element={<TeacherProfile />} />
       <Route path={routes.NEW} element={<NewTeacher />} />
       <Route
         path="*"

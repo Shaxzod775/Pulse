@@ -157,7 +157,7 @@ const TeachersMain = ({ teachers }) => {
         <Grid
           container
           justifyContent="start"
-          spacing={`${theme.custom.spacing.sm}px`}
+          spacing={`${12}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
           {teachers.map((teacher, i) => (

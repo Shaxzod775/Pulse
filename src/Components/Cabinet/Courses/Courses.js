@@ -229,7 +229,7 @@ const Courses = () => {
         <Grid
           container
           justifyContent="start"
-          spacing={`${theme.custom.spacing.sm}px`}
+          spacing={`${12}px`}
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
           {courses.map((course, i) => (
