@@ -1,4 +1,5 @@
 import React from "react";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   CardContent,
@@ -14,6 +15,7 @@ import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
+import { Link } from "react-router-dom";
 
 const Card = styled("div")(({ theme }) => ({
   padding: "14px",
@@ -53,13 +55,18 @@ const TeacherCard = () => {
     <Card>
       <div className="flex flex-col gap-xxs">
         <div className="flex justify-between items-start">
-          <div className="flex gap-xxs2 items-center">
-            <Icons.AnnaAvatar />
-            <div className="flex flex-col justify-around">
-              <CardText>Eshmatov Toshmat</CardText>
-              <CardText color="gray">Front-end, UI/UX</CardText>
+          <Link
+            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+            className="link"
+          >
+            <div className="flex gap-xxs2 items-center">
+              <Icons.AnnaAvatar />
+              <div className="flex flex-col justify-around">
+                <CardText>Eshmatov Toshmat</CardText>
+                <CardText color="gray">Front-end, UI/UX</CardText>
+              </div>
             </div>
-          </div>
+          </Link>
           <Icons.MenuDots />
         </div>
         <Divider />
