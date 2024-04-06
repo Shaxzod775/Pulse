@@ -7,15 +7,20 @@ import {
   Notifications as NotificationsIcon,
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon, IconButton, Toolbar } from "@mui/material";
 import * as routes from "../../../Constants/routes";
 import { Icons } from "../../../Assets/Icons/icons";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles["header"]}>
-      <Icons.LogoFull />
+      <Icons.LogoFull
+        onClick={() => navigate(routes.HOME)}
+        style={{ cursor: "pointer" }}
+      />
+
       <div className={styles["header-right"]}>
         <div className={styles["header-search"]}>
           <Icons.Search />
