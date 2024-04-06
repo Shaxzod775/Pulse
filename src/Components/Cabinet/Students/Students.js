@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
 import NewStudent from "./NewStudent/NewStudent";
+import StudentProfile from "./StudentProfile/StudentProfile";
 
 const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
 
@@ -65,6 +66,7 @@ const Students = () => {
         path={routes.HOME}
         element={<StudentsMain students={students} />}
       />
+      <Route path={routes.PROFILE} element={<StudentProfile />} />
       <Route path={routes.NEW} element={<NewStudent />} />
       <Route
         path="*"

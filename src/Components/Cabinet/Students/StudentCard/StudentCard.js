@@ -14,6 +14,8 @@ import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
+import * as routes from "../../../../Constants/routes";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled("div")(({ theme }) => ({
   padding: "14px",
@@ -50,11 +52,17 @@ const CardText = styled(Typography)(
 );
 
 const StudentCard = () => {
+  const navigate = useNavigate();
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
         <div className="flex justify-between items-start">
-          <div className="flex gap-xxs2 items-center">
+          <div
+            className="flex gap-xxs2 items-center cursor-pointer"
+            onClick={() =>
+              navigate(routes.CABINET + routes.STUDENTS + routes.PROFILE)
+            }
+          >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
               <CardText>Azizova Aziza</CardText>

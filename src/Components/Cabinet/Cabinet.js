@@ -251,6 +251,7 @@ export const Root = styled("div")(({ theme }) => ({
     textDecoration: "none",
     fontColor: "inherit",
   },
+  "& .cursor-pointer": { cursor: "pointer" },
 }));
 
 export const Main = styled("div")(({ theme }) => ({
