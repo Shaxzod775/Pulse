@@ -150,7 +150,7 @@ const Sidebar = () => {
             ❤️
             <Collapse orientation="horizontal" in={isOpen}>
               {/* <div className="text">Забота о клиентах 24/7</div> */}
-              <div>Забота о клиентах 24/7</div>
+              <div>Поддержка 24/7</div>
             </Collapse>
           </MenuAction>
           <MenuAction color="crimson" backgroundColor="#FDF3F2">
