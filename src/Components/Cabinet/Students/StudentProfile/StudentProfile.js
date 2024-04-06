@@ -5,6 +5,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Button,
   Card,
+  Chip,
   Divider,
   InputBase,
   Paper,
@@ -154,18 +155,24 @@ const InfoItem = styled("div")(({ theme }) => ({
   gap: "8px",
   lineHeight: "150%",
   fontFamily: "Poppins, Rubik, sans-serif",
-  "& h5": {
+  "& >   h5": {
     margin: "0",
     color: "#AEB2BA",
     fontSize: "1.125rem",
     fontWeight: "500",
     letterSpacing: ".36px",
   },
-  "& span": {
+  "& > span": {
     color: "#1C0D64",
     fontSize: "1rem",
     letterSpacing: ".32px",
   },
+}));
+
+const SkillChip = styled(Chip)(({ theme }) => ({
+  borderRadius: "8px",
+  padding: "6px 12px",
+  "& .MuiChip-label": { padding: "0" },
 }));
 
 const StudentProfile = () => {
@@ -203,55 +210,83 @@ const StudentProfile = () => {
 
   const persoalInfo = useMemo(
     () => (
-      <div className="flex flex-col gap-sm" style={{ paddingLeft: "20px" }}>
-        <div className="flex items-center gap-xxs">
-          <Icons.UserId color={theme.typography.color.purpleBlue} />
-          <Title fontSize="1.125rem" fontWeight={600}>
-            Информация пользователя
-          </Title>
+      <div className="flex gap-lg" style={{ paddingLeft: "20px" }}>
+        <div className="flex flex-col gap-sm">
+          <div className="flex items-center gap-xxs">
+            <Icons.UserId color={theme.typography.color.purpleBlue} />
+            <Title fontSize="1.125rem" fontWeight={600}>
+              Информация пользователя
+            </Title>
+          </div>
+          <div className="flex gap-lg">
+            <div className="flex flex-col gap-xs">
+              <InfoItem>
+                <h5>Фамилия Имя Очество</h5>
+                <span>Коптлеулов Арслан Алмазович</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Номер телефона</h5>
+                <span>+998(33) 033-15-33</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Дата рождения:</h5>
+                <span>21.08.2002</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Почта:</h5>
+                <span>arslan.koptleulov@abexlab.com</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Паспортные данные:</h5>
+                <span>AB 247325</span>
+              </InfoItem>
+            </div>
+            <div className="flex flex-col gap-xs">
+              <InfoItem>
+                <h5>Скиллы</h5>
+                <div className="flex gap-xxs2">
+                  <SkillChip label={"VIP"} variant="outlined" color="golden" />
+                  <SkillChip
+                    label={"Сын Министра"}
+                    variant="outlined"
+                    color="blue"
+                  />
+                </div>
+              </InfoItem>
+              <InfoItem>
+                <h5>Роль</h5>
+                <span>UX/UI Designer, student</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Адрес проживания:</h5>
+                <span>Ташкент, Яшнабад, Тузель 1, кв 33</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Активная группа:</h5>
+                <span>GR011-62</span>
+              </InfoItem>
+            </div>
+          </div>
         </div>
-
-        <div className="flex gap-lg">
-          <div className="flex flex-col gap-xs">
-            <InfoItem>
-              <h5>Фамилия Имя Очество</h5>
-              <span>Коптлеулов Арслан Алмазович</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Номер телефона</h5>
-              <span>+998(33) 033-15-33</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Дата рождения:</h5>
-              <span>21.08.2002</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Почта:</h5>
-              <span>arslan.koptleulov@abexlab.com</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Паспортные данные:</h5>
-              <span>AB 247325</span>
-            </InfoItem>
+        <div className="flex flex-grow flex-col gap-sm">
+          <div className="flex items-center gap-xxs">
+            <Icons.Wallet color={theme.typography.color.purpleBlue} />
+            <Title fontSize="1.125rem" fontWeight={600}>
+              Платежи
+            </Title>
           </div>
-          <div className="flex flex-col gap-xs">
-            <InfoItem>
-              <h5>Скиллы</h5>
-              <span>Коптлеулов Арслан Алмазович</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Роль</h5>
-              <span>UX/UI Designer, student</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Адрес проживания:</h5>
-              <span>Ташкент, Яшнабад, Тузель 1, кв 33</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Активная группа:</h5>
-              <span>GR011-62</span>
-            </InfoItem>
-          </div>
+          <Paper
+            sx={{
+              borderRadius: "10px",
+              padding: "14px",
+              boxShadow: "none",
+              border: "1px solid #E5E7EB",
+              width: "100%",
+              minHeight: "357px",
+            }}
+          >
+            <div className=""></div>
+          </Paper>
         </div>
       </div>
     ),
@@ -389,7 +424,7 @@ const StudentProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-sm">
+            <div className="flex flex-col gap-md">
               <div className="flex flex-col" style={{ gap: "12px" }}>
                 <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
@@ -408,10 +443,8 @@ const StudentProfile = () => {
                   ))}
                 </div>
                 <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
-                <div style={{ minHeight: "450px" }}>
-                  {tabContents[activeTab]}
-                </div>
               </div>
+              <div style={{ minHeight: "450px" }}>{tabContents[activeTab]}</div>
             </div>
           </div>
         </Paper>

@@ -8,6 +8,7 @@
   padding: 20px;
   transition: all 0.3s ease-in-out;
   color: #1c274c;
+  max-width: var(--sidebar-open-width);
 }
 
 .sidebar.open {

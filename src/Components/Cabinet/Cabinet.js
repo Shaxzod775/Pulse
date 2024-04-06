@@ -37,18 +37,31 @@ export const theme = createTheme({
       dark: "#6574D8",
       contrastText: "#ffffff",
     },
-    greyLight: {
-      main: "#E5E7EB",
-      light: "#E5E7EB",
-      dark: "#706F7C",
-      contrastText: "#000000",
-    },
     crimson: {
       main: "#FF2D55",
       light: "#FFC0CC",
       dark: "#FF2D55",
       contrastText: "#ffffff",
     },
+    golden: {
+      main: "#FC0",
+      light: "#FC0",
+      dark: "#FC0",
+      contrastText: "#ffffff",
+    },
+    blue: {
+      main: "#007AFF",
+      light: "#007AFF",
+      dark: "#007AFF",
+      contrastText: "#ffffff",
+    },
+    greyLight: {
+      main: "#E5E7EB",
+      light: "#E5E7EB",
+      dark: "#706F7C",
+      contrastText: "#000000",
+    },
+
     aqua: {
       main: "#00988F",
       light: "#00988F",

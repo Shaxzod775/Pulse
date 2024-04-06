@@ -5,6 +5,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Button,
   Card,
+  Chip,
   Divider,
   InputBase,
   Paper,
@@ -154,18 +155,24 @@ const InfoItem = styled("div")(({ theme }) => ({
   gap: "8px",
   lineHeight: "150%",
   fontFamily: "Poppins, Rubik, sans-serif",
-  "& h5": {
+  "& > h5": {
     margin: "0",
     color: "#AEB2BA",
     fontSize: "1.125rem",
     fontWeight: "500",
     letterSpacing: ".36px",
   },
-  "& span": {
+  "& > span": {
     color: "#1C0D64",
     fontSize: "1rem",
     letterSpacing: ".32px",
   },
+}));
+
+const SkillChip = styled(Chip)(({ theme }) => ({
+  borderRadius: "8px",
+  padding: "6px 12px",
+  "& .MuiChip-label": { padding: "0" },
 }));
 
 const TeacherProfile = () => {
@@ -231,7 +238,18 @@ const TeacherProfile = () => {
           <div className="flex flex-col gap-xs">
             <InfoItem>
               <h5>Скиллы</h5>
-              <span>Коптлеулов Арслан Алмазович</span>
+              <div className="flex gap-xxs2">
+                <SkillChip
+                  label={"Frontend"}
+                  variant="outlined"
+                  color="purpleBlue"
+                />
+                <SkillChip
+                  label={"UX/UX"}
+                  variant="outlined"
+                  color="purpleBlue"
+                />
+              </div>
             </InfoItem>
             <InfoItem>
               <h5>Роль</h5>
@@ -386,7 +404,7 @@ const TeacherProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-sm">
+            <div className="flex flex-col gap-md">
               <div className="flex flex-col" style={{ gap: "12px" }}>
                 <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
@@ -405,10 +423,8 @@ const TeacherProfile = () => {
                   ))}
                 </div>
                 <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
-                <div style={{ minHeight: "450px" }}>
-                  {tabContents[activeTab]}
-                </div>
               </div>
+              <div style={{ minHeight: "450px" }}>{tabContents[activeTab]}</div>
             </div>
           </div>
         </Paper>
