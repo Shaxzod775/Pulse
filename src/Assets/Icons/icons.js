@@ -39,6 +39,7 @@ import { ReactComponent as GalleryAdd } from "./svgs/galleryAdd.svg";
 import { ReactComponent as InboxIn } from "./svgs/inboxIn.svg";
 import { ReactComponent as ArrowDCircleContained } from "./svgs/arrowDCircleContained.svg";
 import { ReactComponent as PenNewSquare } from "./svgs/penNewSquare.svg";
+import { ReactComponent as UserId } from "./svgs/userId.svg";
 
 export const Icons = {
   ArrowD,
@@ -82,4 +83,5 @@ export const Icons = {
   InboxIn,
   ArrowDCircleContained,
   PenNewSquare,
+  UserId,
 };

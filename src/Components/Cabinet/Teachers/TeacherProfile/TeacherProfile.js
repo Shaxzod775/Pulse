@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ButtonStyled, Main, Root, Title, theme } from "../../Cabinet";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
@@ -8,6 +8,7 @@ import {
   Divider,
   InputBase,
   Paper,
+  ThemeProvider,
   Typography,
   keyframes,
   styled,
@@ -140,12 +141,32 @@ const ProfileTabHeader = styled("div")(
       right: active ? "0%" : "50%",
       bottom: "-14px",
       height: "2px",
-      backgroundColor: theme.palette.purpleBlue.main,
+      backgroundColor: "#6574D8",
       transition: "all .3s ease-in-out",
     },
     "&:hover": { opacity: active ? "" : ".5" },
   })
 );
+
+const InfoItem = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+  lineHeight: "150%",
+  fontFamily: "Poppins, Rubik, sans-serif",
+  "& h5": {
+    margin: "0",
+    color: "#AEB2BA",
+    fontSize: "1.125rem",
+    fontWeight: "500",
+    letterSpacing: ".36px",
+  },
+  "& span": {
+    color: "#1C0D64",
+    fontSize: "1rem",
+    letterSpacing: ".32px",
+  },
+}));
 
 const TeacherProfile = () => {
   const navigate = useNavigate();
@@ -173,6 +194,69 @@ const TeacherProfile = () => {
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
+
+  const persoalInfo = useMemo(
+    () => (
+      <div className="flex flex-col gap-sm" style={{ paddingLeft: "20px" }}>
+        <div className="flex items-center gap-xxs">
+          <Icons.UserId color={theme.typography.color.purpleBlue} />
+          <Title fontSize="1.125rem" fontWeight={600}>
+            Информация пользователя
+          </Title>
+        </div>
+
+        <div className="flex gap-lg">
+          <div className="flex flex-col gap-xs">
+            <InfoItem>
+              <h5>Фамилия Имя Очество</h5>
+              <span>Коптлеулов Арслан Алмазович</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Номер телефона</h5>
+              <span>+998(33) 033-15-33</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Дата рождения:</h5>
+              <span>21.08.2002</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Почта:</h5>
+              <span>arslan.koptleulov@abexlab.com</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Паспортные данные:</h5>
+              <span>AB 247325</span>
+            </InfoItem>
+          </div>
+          <div className="flex flex-col gap-xs">
+            <InfoItem>
+              <h5>Скиллы</h5>
+              <span>Коптлеулов Арслан Алмазович</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Роль</h5>
+              <span>UX/UI Designer, Teacher</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Адрес проживания:</h5>
+              <span>Ташкент, Яшнабад, Тузель 1, кв 33</span>
+            </InfoItem>
+            <InfoItem>
+              <h5>Активная группа:</h5>
+              <span>GR011-62</span>
+            </InfoItem>
+          </div>
+        </div>
+      </div>
+    ),
+    []
+  );
+  const emptyElement = <></>;
+  const tabContents = useMemo(
+    () => [persoalInfo, emptyElement, emptyElement, emptyElement],
+    [persoalInfo]
+  );
+
   return (
     <Root>
       <Main>
@@ -207,7 +291,11 @@ const TeacherProfile = () => {
           </div>
         </div>
         <Paper
-          sx={{ borderRadius: "20px", padding: "16px", boxShadow: "none" }}
+          sx={{
+            borderRadius: "20px",
+            padding: "16px",
+            boxShadow: "none",
+          }}
         >
           <div className="flex flex-col gap-md">
             <div className="flex flex-col gap-x3s">
@@ -300,7 +388,7 @@ const TeacherProfile = () => {
             </div>
             <div className="flex flex-col gap-sm">
               <div className="flex flex-col" style={{ gap: "12px" }}>
-                <div className="flex gap-xs">
+                <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
                       <ProfileTabHeader
@@ -317,8 +405,10 @@ const TeacherProfile = () => {
                   ))}
                 </div>
                 <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
+                <div style={{ minHeight: "450px" }}>
+                  {tabContents[activeTab]}
+                </div>
               </div>
-              <div>content</div>
             </div>
           </div>
         </Paper>

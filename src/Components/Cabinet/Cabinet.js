@@ -265,10 +265,10 @@ export const ContentHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
 }));
 
-export const Title = styled("h1")(({ theme, fontWeight }) => ({
+export const Title = styled("h1")(({ theme, color, fontWeight, fontSize }) => ({
   margin: "0",
-  color: theme.typography.color.darkBlue,
-  fontSize: theme.typography.fontSize.md,
+  color: color ? color : theme.typography.color.darkBlue,
+  fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
   fontWeight: fontWeight ? fontWeight : "1000",
 }));
 
