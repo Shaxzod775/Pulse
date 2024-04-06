@@ -5,9 +5,11 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Button,
   Card,
+  Divider,
   InputBase,
   Paper,
   Typography,
+  keyframes,
   styled,
 } from "@mui/material";
 import * as routes from "../../../../Constants/routes";
@@ -115,9 +117,41 @@ const CardText = styled(Typography)(
   })
 );
 
+const ProfileTabHeader = styled("div")(
+  ({
+    theme,
+    active,
+    fontWeight = 500,
+    fontSize = "1.125rem",
+    fontFamily = "inherit",
+  }) => ({
+    color: active ? "#1C0D64" : "#AEB2BA",
+    fontFamily: fontFamily,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    lineHeight: "150%",
+    position: "relative",
+    transition: "all 0.3s ease-in-out",
+    cursor: active ? "" : "pointer",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      left: active ? "0%" : "50%",
+      right: active ? "0%" : "50%",
+      bottom: "-14px",
+      height: "2px",
+      backgroundColor: theme.palette.purpleBlue.main,
+      transition: "all .3s ease-in-out",
+    },
+    "&:hover": { opacity: active ? "" : ".5" },
+  })
+);
+
 const TeacherProfile = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [activeTab, setActiveTab] = useState(0);
+  const tabsToMap = ["Личная информация", "Группы", "Активность", "Зарплата"];
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -175,7 +209,7 @@ const TeacherProfile = () => {
         <Paper
           sx={{ borderRadius: "20px", padding: "16px", boxShadow: "none" }}
         >
-          <div className="flex flex-col gap-sm">
+          <div className="flex flex-col gap-md">
             <div className="flex flex-col gap-x3s">
               <div>
                 <Dropzone onDrop={handleImageSelection}>
@@ -221,7 +255,7 @@ const TeacherProfile = () => {
                   </div>
                   <div className="flex gap-sm items-center">
                     <div>
-                      <Title>Sakurai Hiro</Title>
+                      <Title fontWeight={600}>Sakurai Hiro</Title>
                       <CardText fontSize={"12px"} color={"#AEB2BA"}>
                         id: 011/256
                       </CardText>
@@ -264,7 +298,28 @@ const TeacherProfile = () => {
                 </div>
               </div>
             </div>
-            <div>2</div>
+            <div className="flex flex-col gap-sm">
+              <div className="flex flex-col" style={{ gap: "12px" }}>
+                <div className="flex gap-xs">
+                  {tabsToMap.map((tab, i) => (
+                    <>
+                      <ProfileTabHeader
+                        active={activeTab === i}
+                        onClick={() => setActiveTab(i)}
+                        key={i}
+                      >
+                        {tab}
+                      </ProfileTabHeader>
+                      {i < tabsToMap.length - 1 && (
+                        <Divider orientation="vertical" flexItem />
+                      )}
+                    </>
+                  ))}
+                </div>
+                <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
+              </div>
+              <div>content</div>
+            </div>
           </div>
         </Paper>
       </Main>
