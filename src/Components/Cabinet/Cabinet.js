@@ -43,6 +43,12 @@ export const theme = createTheme({
       dark: "#FF2D55",
       contrastText: "#ffffff",
     },
+    successGreen: {
+      main: "#34C759",
+      light: "#ACFFC1",
+      dark: "#34C759",
+      contrastText: "#ffffff",
+    },
     golden: {
       main: "#FC0",
       light: "#FC0",

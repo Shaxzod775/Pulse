@@ -8,6 +8,7 @@ import { ReactComponent as Notebook } from "./svgs/notebook.svg";
 import { ReactComponent as NotebookBookmark } from "./svgs/notebookBookmark.svg";
 import { ReactComponent as Clock } from "./svgs/clock.svg";
 import { ReactComponent as Calendar } from "./svgs/calendar.svg";
+import { ReactComponent as CalendarAdd } from "./svgs/calendarAdd.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
 import { ReactComponent as UserAdd } from "./svgs/userAdd.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
@@ -40,6 +41,10 @@ import { ReactComponent as InboxIn } from "./svgs/inboxIn.svg";
 import { ReactComponent as ArrowDCircleContained } from "./svgs/arrowDCircleContained.svg";
 import { ReactComponent as PenNewSquare } from "./svgs/penNewSquare.svg";
 import { ReactComponent as UserId } from "./svgs/userId.svg";
+import { ReactComponent as ChatRoundLine } from "./svgs/chatRoundLine.svg";
+import { ReactComponent as Bill } from "./svgs/bill.svg";
+import { ReactComponent as Mailbox } from "./svgs/mailbox.svg";
+import { ReactComponent as Pen2 } from "./svgs/pen2.svg";
 
 export const Icons = {
   ArrowD,
@@ -52,6 +57,7 @@ export const Icons = {
   NotebookBookmark,
   Clock,
   Calendar,
+  CalendarAdd,
   UsersGroupRounded,
   UserAdd,
   AcademicCap,
@@ -84,4 +90,8 @@ export const Icons = {
   ArrowDCircleContained,
   PenNewSquare,
   UserId,
+  ChatRoundLine,
+  Bill,
+  Mailbox,
+  Pen2,
 };

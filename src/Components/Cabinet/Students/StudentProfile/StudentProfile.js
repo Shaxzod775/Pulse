@@ -17,6 +17,7 @@ import {
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
+import { Height } from "@mui/icons-material";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -175,6 +176,33 @@ const SkillChip = styled(Chip)(({ theme }) => ({
   "& .MuiChip-label": { padding: "0" },
 }));
 
+const PaymentPaper = styled(Paper)(({ theme }) => ({
+  borderRadius: "10px",
+  padding: "8px 10px",
+  boxShadow: "none",
+  width: "100%",
+  color: "#6574D8",
+  backgroundColor: "#EEF0FF",
+}));
+
+const PaymentInfoLine = styled("div")(({ theme }) => ({
+  color: "inherit",
+  display: "flex",
+  gap: "8px",
+  "& svg": {
+    minWidth: "24px",
+    height: "auto",
+  },
+  "& span": {
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "150%",
+    letterSpacing: "0.32px",
+    whiteSpace: "nowrap",
+  },
+}));
+
 const StudentProfile = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -210,7 +238,10 @@ const StudentProfile = () => {
 
   const persoalInfo = useMemo(
     () => (
-      <div className="flex gap-lg" style={{ paddingLeft: "20px" }}>
+      <div
+        className="flex flex-wrap gap-lg"
+        style={{ paddingLeft: "20px", paddingRight: "20px" }}
+      >
         <div className="flex flex-col gap-sm">
           <div className="flex items-center gap-xxs">
             <Icons.UserId color={theme.typography.color.purpleBlue} />
@@ -283,9 +314,111 @@ const StudentProfile = () => {
               border: "1px solid #E5E7EB",
               width: "100%",
               minHeight: "357px",
+              maxWidth: "max-content",
             }}
           >
-            <div className=""></div>
+            <div className="full-height flex flex-col justify-between gap-sm">
+              <div className="flex flex-col gap-xs">
+                <div className="flex">
+                  {["Дата", "Сумма", "Комментарий", "Сотрудник"].map(
+                    (tab, i) => (
+                      <Typography
+                        color="#1F2937"
+                        fontWeight={600}
+                        lineHeight="150%"
+                        fontFamily="Poppins, Rubik, sans-serif"
+                        key={i}
+                        minWidth="9.5rem"
+                        textAlign="center"
+                      >
+                        {tab}
+                      </Typography>
+                    )
+                  )}
+                </div>
+                <Divider />
+                <div className="flex flex-col gap-xs">
+                  <PaymentPaper>
+                    <div className="flex gap-lg items-start">
+                      <PaymentInfoLine>
+                        <Icons.CalendarAdd />
+                        <span>20.02.2024</span>
+                      </PaymentInfoLine>
+                      <PaymentInfoLine>
+                        <Icons.Bill />
+                        <span>1.000.000 UZS</span>
+                      </PaymentInfoLine>
+                      <PaymentInfoLine>
+                        <Icons.Messages />
+                        <span>Click</span>
+                      </PaymentInfoLine>
+                      <div className="flex flex-col items-center gap-xxs2">
+                        <PaymentInfoLine>
+                          <Icons.UserId />
+                          <span>Iroda Ellieva</span>
+                        </PaymentInfoLine>
+                        <Typography
+                          fontSize=".75rem"
+                          fontWeight="500"
+                          letterSpacing=".12px"
+                          color="#ADACF2"
+                        >
+                          20.02/2024 12:25
+                        </Typography>
+                      </div>
+                      <div className="flex gap-xxs2">
+                        <Icons.Mailbox />
+                        <Icons.Pen2 />
+                      </div>
+                    </div>
+                  </PaymentPaper>
+                  <PaymentPaper>
+                    <div className="flex gap-lg items-start">
+                      <PaymentInfoLine>
+                        <Icons.CalendarAdd />
+                        <span>20.02.2024</span>
+                      </PaymentInfoLine>
+                      <PaymentInfoLine>
+                        <Icons.Bill />
+                        <span>1.000.000 UZS</span>
+                      </PaymentInfoLine>
+                      <PaymentInfoLine>
+                        <Icons.Messages />
+                        <span>Click</span>
+                      </PaymentInfoLine>
+                      <div className="flex flex-col items-center gap-xxs2">
+                        <PaymentInfoLine>
+                          <Icons.UserId />
+                          <span>Iroda Ellieva</span>
+                        </PaymentInfoLine>
+                        <Typography
+                          fontSize=".75rem"
+                          fontWeight="500"
+                          letterSpacing=".12px"
+                          color="#ADACF2"
+                        >
+                          20.02/2024 12:25
+                        </Typography>
+                      </div>
+                      <div className="flex gap-xxs2">
+                        <Icons.Mailbox />
+                        <Icons.Pen2 />
+                      </div>
+                    </div>
+                  </PaymentPaper>
+                </div>
+              </div>
+              <ButtonStyled
+                variant="outlined"
+                color="successGreen"
+                sx={{ padding: "6px 10px", borderRadius: "49px" }}
+              >
+                <div className="flex items-center gap-xxs">
+                  <Icons.InboxIn />
+                  <span>Распечатать всю историю</span>
+                </div>
+              </ButtonStyled>
+            </div>
           </Paper>
         </div>
       </div>
