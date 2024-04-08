@@ -361,34 +361,39 @@ const NewStudent = () => {
           <PaperStyled className="full-width">
             <div className="flex flex-col gap-sm">
               <FormControl fullWidth variant="outlined">
-                <div className="flex items-center gap-md">
-                  <label>
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>Email</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth
                     variant="outlined"
                     placeholder="info@gmail.com"
+                    sx={{ maxWidth: "75%" }}
                   />
                 </div>
               </FormControl>
               <FormControl fullWidth variant="outlined">
-                <div className="flex items-center gap-md">
-                  <label>
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>ID/Номер договора</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth
                     variant="outlined"
                     placeholder="Example id: 011/256"
+                    sx={{ maxWidth: "75%" }}
                   />
                 </div>
               </FormControl>
-              <div className="flex items-center gap-sm">
-                <label>
+              <div className="flex items-center justify-between">
+                <label style={{ maxWidth: "25%" }}>
                   <FormLabel row>Телефон родителей</FormLabel>
                 </label>
-                <div className="flex gap-xxs">
+                <div
+                  className="full-width flex gap-xxs"
+                  style={{ maxWidth: "75%" }}
+                >
                   <FormControl fullWidth variant="outlined">
                     <TextFieldStyled
                       variant="outlined"
@@ -398,26 +403,27 @@ const NewStudent = () => {
                   <FormControl fullWidth variant="outlined">
                     <TextFieldStyled
                       variant="outlined"
-                      placeholder="Дополнительный номер"
+                      placeholder="Доп. номер"
                     />
                   </FormControl>
                 </div>
               </div>
               <FormControl fullWidth variant="outlined">
-                <div className="flex items-center gap-md">
-                  <label>
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>Адрес проживания</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth
                     variant="outlined"
                     placeholder="Страна, Город, Место проживания"
+                    style={{ maxWidth: "75%" }}
                   />
                 </div>
               </FormControl>
               <FormControl fullWidth variant="outlined">
-                <div className="flex items-start gap-md">
-                  <label>
+                <div className="flex items-start justify-between">
+                  <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>Комментарий</FormLabel>
                   </label>
                   <TextFieldStyled
@@ -427,6 +433,7 @@ const NewStudent = () => {
                     variant="outlined"
                     placeholder="Комментарий ученика"
                     sx={{
+                      maxWidth: "75%",
                       "& .MuiInputBase-multiline": {
                         padding: "0",
                       },
@@ -434,11 +441,14 @@ const NewStudent = () => {
                   />
                 </div>
               </FormControl>
-              <div className="flex items-center gap-sm">
-                <label>
+              <div className="flex items-center justify-between">
+                <label style={{ maxWidth: "25%" }}>
                   <FormLabel row>Теги</FormLabel>
                 </label>
-                <div className="flex flex-wrap gap-x3s">
+                <div
+                  className="full-width flex flex-wrap gap-x3s"
+                  style={{ maxWidth: "75%" }}
+                >
                   {tags.map((tag, i) => (
                     <Chip
                       label={tag}
