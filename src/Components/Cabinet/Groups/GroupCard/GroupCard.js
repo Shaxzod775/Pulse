@@ -1,7 +1,16 @@
 import React from "react";
-import { Button, CardContent, CardMedia, Divider, styled } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  CardContent,
+  CardMedia,
+  Divider,
+  Menu,
+  MenuItem,
+  styled,
+} from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, CardStyled } from "../../Cabinet";
+import { theme, CardStyled, ButtonStyled } from "../../Cabinet";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 
@@ -31,17 +40,78 @@ const InfoLine = styled("div")(({ theme, small }) => ({
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 8,
+    // marginTop: theme.spacing(1),
+    minWidth: 200,
+    padding: "8px",
+    color: theme.palette.mode === "light" ? "#374151" : theme.palette.grey[300],
+    boxShadow:
+      "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10);",
+    "& .MuiMenu-list": {
+      padding: "0",
+    },
+    "& .MuiMenuItem-root": {
+      all: "unset",
+      padding: "0",
+      a: { textDecoration: "none" },
+      "& .MuiButtonBase-root.MuiButton-root": {
+        width: "100%",
+        borderRadius: "4px",
+        justifyContent: "start",
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        span: { fontSize: "14px", lineHeight: "20px" },
+      },
+      "& .MuiSvgIcon-root": {
+        fontSize: 20,
+        // marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        // backgroundColor: theme.palette.purpleBlue.main,
+      },
+      "&:hover": { all: "unset" },
+    },
+  },
+}));
+
 const GroupCard = ({
+  id,
   name = "Front-end",
   startDate,
   endDate,
   weekDays = [0, 2, 4],
   teacher = "Eshmatov Toshmat",
   thumbnail,
+  handleDeleteGroup,
 }) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
   // const durationInHours = duration * lessonsInOneMonth * lessonLength;
+  // const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Card>
       <div className="flex flex-col gap-xxs">
@@ -61,7 +131,45 @@ const GroupCard = ({
             <div>{name !== "" ? name : "Front-end"}</div>
             <div className="font-xxs">{"UI/UX"}</div>
           </div>
-          <Icons.MenuDots />
+          <IconButton
+            color="purpleBlue"
+            aria-controls={open ? "dots-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            disableElevation
+            onClick={handleClick}
+            sx={{ top: "-8px", right: "-8px" }}
+          >
+            <Icons.MenuDots />
+          </IconButton>
+          <StyledMenu
+            id="demo-customized-menu"
+            MenuListProps={{
+              "aria-labelledby": "demo-customized-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose} disableRipple>
+              {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
+              <ButtonStyled color="purpleBlue">
+                <Icons.Pen />
+                <span>Изменить группу</span>
+              </ButtonStyled>
+              {/* </Link> */}
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <ButtonStyled
+                color="crimson"
+                sx={{ backgroundColor: "#FDF3F2" }}
+                onClick={() => handleDeleteGroup(id)}
+              >
+                <Icons.TrashCan />
+                <span>Удалить группу</span>
+              </ButtonStyled>
+            </MenuItem>
+          </StyledMenu>
         </div>
         <Divider />
         <div className="flex flex-col gap-xxs">

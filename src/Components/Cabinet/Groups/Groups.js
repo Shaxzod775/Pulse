@@ -287,7 +287,7 @@ const Groups = () => {
         >
           {groups.map((group, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <GroupCard {...groups[i]} />
+              <GroupCard {...groups[i]} handleDeleteGroup={handleDeleteGroup} />
             </Grid>
           ))}
         </Grid>
