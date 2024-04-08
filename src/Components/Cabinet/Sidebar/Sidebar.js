@@ -45,6 +45,7 @@ const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
 
 const MenuLink = styled(NavLink)(({ theme, color = "purpleGrey" }) => ({
   ...menuItemStyles({ theme, color }),
+  transition: "all .3s ease-in-out",
   "& div": {
     whiteSpace: "nowrap",
   },
@@ -62,6 +63,7 @@ const MenuAction = styled("div")(
     color: theme.palette[color].main,
     justifyContent: "center",
     backgroundColor: backgroundColor,
+    transition: "all .3s ease-in-out",
     "& div": {
       whiteSpace: "nowrap",
     },
