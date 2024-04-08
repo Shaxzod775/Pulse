@@ -65,7 +65,12 @@ const Teachers = () => {
     <Routes>
       <Route
         path={routes.HOME}
-        element={<TeachersMain teachers={teachers} />}
+        element={
+          <TeachersMain
+            teachers={teachers}
+            handleDeleteTeacher={handleDeleteTeacher}
+          />
+        }
       />
       <Route path={routes.PROFILE} element={<TeacherProfile />} />
       <Route path={routes.NEW} element={<NewTeacher />} />

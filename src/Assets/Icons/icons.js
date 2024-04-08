@@ -45,7 +45,9 @@ import { ReactComponent as UserId } from "./svgs/userId.svg";
 import { ReactComponent as ChatRoundLine } from "./svgs/chatRoundLine.svg";
 import { ReactComponent as Bill } from "./svgs/bill.svg";
 import { ReactComponent as Mailbox } from "./svgs/mailbox.svg";
+import { ReactComponent as Pen } from "./svgs/pen.svg";
 import { ReactComponent as Pen2 } from "./svgs/pen2.svg";
+import { ReactComponent as TrashCan } from "./svgs/trashCan.svg";
 
 export const Icons = {
   ArrowD,
@@ -95,5 +97,7 @@ export const Icons = {
   ChatRoundLine,
   Bill,
   Mailbox,
+  Pen,
   Pen2,
+  TrashCan,
 };

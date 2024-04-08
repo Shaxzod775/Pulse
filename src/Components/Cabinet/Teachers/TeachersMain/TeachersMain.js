@@ -97,7 +97,7 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const TeachersMain = ({ teachers }) => {
+const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -162,7 +162,10 @@ const TeachersMain = ({ teachers }) => {
         >
           {teachers.map((teacher, i) => (
             <Grid item xs="auto" md="auto" lg={2.4} key={i}>
-              <TeacherCard {...teacher} />
+              <TeacherCard
+                {...teacher}
+                handleDeleteTeacher={handleDeleteTeacher}
+              />
             </Grid>
           ))}
         </Grid>

@@ -77,7 +77,7 @@ export function createStudent({
   };
 }
 
-const StudentsMain = ({ students }) => {
+const StudentsMain = ({ students, handleDeleteStudent }) => {
   const [open, setOpen] = useState(false);
 
   // const [students, setStudents] = useState([
@@ -189,7 +189,10 @@ const StudentsMain = ({ students }) => {
         >
           {students.map((student, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <StudentCard {...student} />
+              <StudentCard
+                {...student}
+                handleDeleteStudent={handleDeleteStudent}
+              />
             </Grid>
           ))}
         </Grid>

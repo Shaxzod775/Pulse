@@ -64,7 +64,12 @@ const Students = () => {
     <Routes>
       <Route
         path={routes.HOME}
-        element={<StudentsMain students={students} />}
+        element={
+          <StudentsMain
+            students={students}
+            handleDeleteStudent={handleDeleteStudent}
+          />
+        }
       />
       <Route path={routes.PROFILE} element={<StudentProfile />} />
       <Route path={routes.NEW} element={<NewStudent />} />
