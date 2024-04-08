@@ -143,7 +143,14 @@ const NewTeacher = () => {
 
   return (
     <Root>
-      <Main>
+      <Main
+        sx={{
+          fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
+          "& *": {
+            fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
+          },
+        }}
+      >
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
             <ButtonStyled
