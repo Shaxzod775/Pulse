@@ -132,7 +132,7 @@ export const theme = createTheme({
       xxs2: 8,
       xxs: 10,
       xs2: 12,
-      xs: 15,
+      xs: 14,
       sm: 20,
       md2: 27,
       md: 30,
@@ -217,6 +217,9 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .gap-xs": {
     gap: theme.custom.spacing.xs,
+  },
+  "& .gap-xs2": {
+    gap: theme.custom.spacing.xs2,
   },
   "& .gap-sm": {
     gap: theme.custom.spacing.sm,

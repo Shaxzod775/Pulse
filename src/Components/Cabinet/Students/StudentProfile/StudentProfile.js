@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   Chip,
+  Grid,
   Divider,
   InputBase,
   Paper,
@@ -203,6 +204,121 @@ const PaymentInfoLine = styled("div")(({ theme }) => ({
   },
 }));
 
+const GroupsCard = ({ status = "active" }) => {
+  // status from ["active", "archive", "completed"]
+  const statusTexts = ["Активен", "Архивный", "Завершен"];
+  const GroupCardInfoLine = useMemo(
+    () =>
+      styled("div")(({ theme }) => ({
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        "& > svg": {
+          color:
+            status === "completed"
+              ? "#6B7280"
+              : theme.typography.color.purpleBlue,
+        },
+        "& > div > .MuiTypography-root:first-of-type": {
+          fontSize: ".875rem",
+          fontWeight: "600",
+          fontFamily: "inherit",
+          color: "#AEB2BA",
+        },
+        "& > div > .MuiTypography-root:nth-of-type(2)": {
+          fontSize: ".875rem",
+          fontFamily: "inherit",
+          color:
+            status === "completed" ? "grey" : theme.typography.color.purpleBlue,
+        },
+      })),
+    [status]
+  );
+  return (
+    <Paper
+      sx={{
+        borderRadius: "20px",
+        padding: "14px",
+        boxShadow: "none",
+        border: "1px solid #E5E7EB",
+        // width: "100%",
+        // minHeight: "357px",
+        // maxWidth: "max-content",
+      }}
+    >
+      <div className="flex flex-col gap-xs">
+        <div className="flex justify-between items-start">
+          <div className="flex flex-col gap-xxs2">
+            <Typography fontWeight={600} fontFamily="inherit">
+              GR011-62
+            </Typography>
+            <Typography
+              fontSize=".75rem"
+              fontWeight={500}
+              color="#AEB2BA"
+              fontFamily="inherit"
+            >
+              UX/UI - Четные дни: 15:00
+            </Typography>
+          </div>
+          <div>
+            <Icons.MenuDots />
+          </div>
+        </div>
+        <Divider />
+        <div className="flex flex-col gap-xs">
+          <GroupCardInfoLine>
+            <Icons.CalendarAdd />
+            <div>
+              <Typography>Дата добавления: </Typography>
+              <Typography>20.02.2024</Typography>
+            </div>
+          </GroupCardInfoLine>
+          <GroupCardInfoLine>
+            <Icons.CalendarAdd />
+            <div>
+              <Typography>Дата завершения: </Typography>
+              <Typography>20.08.2024</Typography>
+            </div>
+          </GroupCardInfoLine>
+          <GroupCardInfoLine>
+            <Icons.CalendarAdd />
+            <div>
+              <Typography>Дата активации:</Typography>
+              <Typography>20.02.2024</Typography>
+            </div>
+          </GroupCardInfoLine>
+          <GroupCardInfoLine>
+            <Icons.Bill />
+            <div>
+              <Typography>Стоимость для студента:</Typography>
+              <Typography>1.000.000 UZS</Typography>
+            </div>
+          </GroupCardInfoLine>
+        </div>
+        <ButtonStyled
+          fullWidth
+          variant="outlined"
+          color={status === "active" ? "successGreen" : "grey"}
+          sx={{ padding: "6px 10px", borderRadius: "49px" }}
+        >
+          <div className="flex items-center gap-xxs2">
+            <Icons.Wallet />
+            <span>
+              Статус:{" "}
+              {status === "active"
+                ? statusTexts[0]
+                : status === "archive"
+                ? statusTexts[1]
+                : statusTexts[2]}
+            </span>
+          </div>
+        </ButtonStyled>
+      </div>
+    </Paper>
+  );
+};
+
 const StudentProfile = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -236,7 +352,7 @@ const StudentProfile = () => {
     navigate(-1); // This navigates one step back in history
   };
 
-  const persoalInfo = useMemo(
+  const persoalInfoContent = useMemo(
     () => (
       <div
         className="flex flex-wrap gap-lg"
@@ -355,7 +471,7 @@ const StudentProfile = () => {
                       <div className="flex flex-col items-center gap-xxs2">
                         <PaymentInfoLine>
                           <Icons.UserId />
-                          <span>Iroda Ellieva</span>
+                          <span>Iroda Elliyeva</span>
                         </PaymentInfoLine>
                         <Typography
                           fontSize=".75rem"
@@ -425,10 +541,67 @@ const StudentProfile = () => {
     ),
     []
   );
+
+  const groupsContent = useMemo(
+    () => (
+      <div
+        className="flex flex-wrap gap-lg"
+        style={{ paddingLeft: "20px", paddingRight: "20px" }}
+      >
+        <Grid
+          container
+          justifyContent="start"
+          spacing={`${12}px`}
+          marginBottom={`${theme.custom.spacing.sm}px`}
+        >
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="active" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="archive" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="completed" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <Button
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+                padding: "14px",
+                boxShadow: "none",
+                border: "1px solid #E5E7EB",
+              }}
+              color="purpleBlue"
+            >
+              <div className="full-width full-height flex flex-col items-center justify-center gap-sm">
+                <Icons.AddCircleContained
+                  width="72px"
+                  height="72px"
+                  color={theme.typography.color.purpleBlue}
+                />
+                <Typography
+                  maxWidth="150px"
+                  fontWeight={600}
+                  color={theme.typography.color.purpleBlue}
+                  textAlign="center"
+                >
+                  Добавить в новую группу
+                </Typography>
+              </div>
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    ),
+    []
+  );
+
   const emptyElement = <></>;
   const tabContents = useMemo(
-    () => [persoalInfo, emptyElement, emptyElement, emptyElement],
-    [persoalInfo]
+    () => [persoalInfoContent, groupsContent, emptyElement, emptyElement],
+    [persoalInfoContent]
   );
 
   return (
@@ -558,7 +731,7 @@ const StudentProfile = () => {
               </div>
             </div>
             <div className="flex flex-col gap-md">
-              <div className="flex flex-col" style={{ gap: "12px" }}>
+              <div className="flex flex-col gap-xs2">
                 <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
