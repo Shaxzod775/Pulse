@@ -505,7 +505,7 @@ const StudentProfile = () => {
                       <div className="flex flex-col items-center gap-xxs2">
                         <PaymentInfoLine>
                           <Icons.UserId />
-                          <span>Iroda Ellieva</span>
+                          <span>Iroda Elliyeva</span>
                         </PaymentInfoLine>
                         <Typography
                           fontSize=".75rem"
