@@ -16,6 +16,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 import {
   theme,
   ButtonStyled,
@@ -43,6 +44,7 @@ const customMenuProps = {
   sx: {
     top: "10px",
     "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
+      minWidth: "240px",
       boxShadow:
         "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
     },
@@ -66,11 +68,12 @@ const customMenuProps = {
   },
 };
 
-const ArrowIconNonTransform = styled(({ isUp }) => (
-  <>{isUp ? <Icons.ArrowUBold /> : <Icons.ArrowDBold />}</>
-))({
-  transform: "none !important",
-});
+const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  padding: "0 8px 0 0",
+  "&.Mui-checked": {
+    color: "grey",
+  },
+}));
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -138,6 +141,7 @@ const techs = [
   "TypeScript",
   "GraphQL",
 ];
+const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
 export function createGroup({
   id = uuidv4(),
@@ -188,6 +192,18 @@ NumericFormatCustom.propTypes = {
 const Groups = () => {
   const [anchorTeacher, setAnchorTeacher] = useState(null);
   const [anchorCourse, setAnchorCourse] = useState(null);
+  const [selectedCourses, setSelectedCourses] = React.useState([]);
+
+  const handleChangeCourse = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCourses(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   const handleClickTeacherSelect = (e) => {
     setAnchorTeacher(e.currentTarget);
   };
@@ -350,14 +366,25 @@ const Groups = () => {
                   className="flex items-center full-height"
                 >
                   <Icons.NotebookBookmark color="#b4b7c3" />
+                  <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
+                    {selectedCourses.length < 1 && "Все"}
+                  </span>
                 </label>
                 <SelectStyled
                   id="teacher-select"
                   autoWidth
+                  multiple
+                  value={selectedCourses}
+                  onChange={handleChangeCourse}
+                  renderValue={(selected) => {
+                    if (selected.length > 1) {
+                      return "..."; // Render "..." if multiple courses are selected
+                    }
+                    return selected;
+                  }}
                   IconComponent={
                     Boolean(anchorCourse) ? Icons.ArrowUBold : Icons.ArrowDBold
                   }
-                  defaultValue={0}
                   onClose={handleCloseCourseSelect}
                   MenuProps={{
                     ...customMenuProps,
@@ -369,10 +396,15 @@ const Groups = () => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  <MenuItem value={0}>Все</MenuItem>
-                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                  {courses.map((course, i) => (
+                    <MenuItem value={course} key={i}>
+                      <CustomCheckbox
+                        checked={selectedCourses.indexOf(course) > -1}
+                      />
+                      <ListItemText primary={course} />
+                      {/* {course} */}
+                    </MenuItem>
+                  ))}
                 </SelectStyled>
               </HeaderDiv>
             </div>

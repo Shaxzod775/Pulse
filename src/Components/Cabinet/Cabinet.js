@@ -307,29 +307,31 @@ export const InputLabelStyled = styled(InputLabel)(({ theme }) => ({
 }));
 
 export const SelectStyled = styled(Select)(({ theme }) => ({
-  font: "inherit",
+  fontFamily: "inherit",
   fontSize: theme.typography.fontSize.sm,
   lineHeight: theme.typography.fontSize.sm,
   color: theme.palette.darkBlue.main,
   display: "flex",
   alignItems: "center",
-  "& .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input":
-    {
-      padding: "0",
-      paddingLeft: theme.custom.spacing.xxs2,
-      paddingRight: theme.custom.spacing.x3s,
-      display: "flex",
-      alignItems: "center",
-      width: "min-content",
-      minHeight: theme.typography.fontSize.sm,
-      height: "100%",
-    },
-  "& .MuiSelect-icon.MuiSelect-iconOutlined": {
+  "& .MuiSelect-select.MuiInputBase-input": {
+    fontSize: "1rem",
+    padding: "0",
+    paddingLeft: theme.custom.spacing.xxs2,
+    paddingRight: theme.custom.spacing.x3s,
+    display: "flex",
+    alignItems: "center",
+    width: "min-content",
+    minHeight: theme.typography.fontSize.sm,
+    height: "100%",
+  },
+  "& .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input": {
+    paddingRight: theme.custom.spacing.x3s,
+  },
+  "& .MuiSelect-icon": {
     position: "static",
     width: theme.typography.fontSize.sm,
     height: "auto",
     color: "#9CA3AF",
-    // strokeWidth: "2px", not working... small problem for future me
   },
   "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
     {
