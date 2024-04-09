@@ -356,7 +356,7 @@ const StudentProfile = () => {
     () => (
       <div
         className="flex flex-wrap gap-lg"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
+        style={{ padding: "0 20px 20px 20px" }}
       >
         <div className="flex flex-col gap-sm">
           <div className="flex items-center gap-xxs">
@@ -430,7 +430,8 @@ const StudentProfile = () => {
               border: "1px solid #E5E7EB",
               width: "100%",
               minHeight: "357px",
-              maxWidth: "max-content",
+              // maxWidth: "max-content",
+              flexGrow: "1",
             }}
           >
             <div className="full-height flex flex-col justify-between gap-sm">
@@ -455,32 +456,34 @@ const StudentProfile = () => {
                 <Divider />
                 <div className="flex flex-col gap-xs">
                   <PaymentPaper>
-                    <div className="flex gap-lg items-start">
-                      <PaymentInfoLine>
-                        <Icons.CalendarAdd />
-                        <span>20.02.2024</span>
-                      </PaymentInfoLine>
-                      <PaymentInfoLine>
-                        <Icons.Bill />
-                        <span>1.000.000 UZS</span>
-                      </PaymentInfoLine>
-                      <PaymentInfoLine>
-                        <Icons.Messages />
-                        <span>Click</span>
-                      </PaymentInfoLine>
-                      <div className="flex flex-col items-center gap-xxs2">
+                    <div className="flex justify-between">
+                      <div className="flex gap-lg items-start">
                         <PaymentInfoLine>
-                          <Icons.UserId />
-                          <span>Iroda Elliyeva</span>
+                          <Icons.CalendarAdd />
+                          <span>20.02.2024</span>
                         </PaymentInfoLine>
-                        <Typography
-                          fontSize=".75rem"
-                          fontWeight="500"
-                          letterSpacing=".12px"
-                          color="#ADACF2"
-                        >
-                          20.02/2024 12:25
-                        </Typography>
+                        <PaymentInfoLine>
+                          <Icons.Bill />
+                          <span>1.000.000 UZS</span>
+                        </PaymentInfoLine>
+                        <PaymentInfoLine>
+                          <Icons.Messages />
+                          <span>Click</span>
+                        </PaymentInfoLine>
+                        <div className="flex flex-col items-center gap-xxs2">
+                          <PaymentInfoLine>
+                            <Icons.UserId />
+                            <span>Iroda Elliyeva</span>
+                          </PaymentInfoLine>
+                          <Typography
+                            fontSize=".75rem"
+                            fontWeight="500"
+                            letterSpacing=".12px"
+                            color="#ADACF2"
+                          >
+                            20.02/2024 12:25
+                          </Typography>
+                        </div>
                       </div>
                       <div className="flex gap-xxs2">
                         <Icons.Mailbox />
@@ -489,32 +492,34 @@ const StudentProfile = () => {
                     </div>
                   </PaymentPaper>
                   <PaymentPaper>
-                    <div className="flex gap-lg items-start">
-                      <PaymentInfoLine>
-                        <Icons.CalendarAdd />
-                        <span>20.02.2024</span>
-                      </PaymentInfoLine>
-                      <PaymentInfoLine>
-                        <Icons.Bill />
-                        <span>1.000.000 UZS</span>
-                      </PaymentInfoLine>
-                      <PaymentInfoLine>
-                        <Icons.Messages />
-                        <span>Click</span>
-                      </PaymentInfoLine>
-                      <div className="flex flex-col items-center gap-xxs2">
+                    <div className="flex justify-between">
+                      <div className="flex gap-lg items-start">
                         <PaymentInfoLine>
-                          <Icons.UserId />
-                          <span>Iroda Elliyeva</span>
+                          <Icons.CalendarAdd />
+                          <span>20.02.2024</span>
                         </PaymentInfoLine>
-                        <Typography
-                          fontSize=".75rem"
-                          fontWeight="500"
-                          letterSpacing=".12px"
-                          color="#ADACF2"
-                        >
-                          20.02/2024 12:25
-                        </Typography>
+                        <PaymentInfoLine>
+                          <Icons.Bill />
+                          <span>1.000.000 UZS</span>
+                        </PaymentInfoLine>
+                        <PaymentInfoLine>
+                          <Icons.Messages />
+                          <span>Click</span>
+                        </PaymentInfoLine>
+                        <div className="flex flex-col items-center gap-xxs2">
+                          <PaymentInfoLine>
+                            <Icons.UserId />
+                            <span>Iroda Elliyeva</span>
+                          </PaymentInfoLine>
+                          <Typography
+                            fontSize=".75rem"
+                            fontWeight="500"
+                            letterSpacing=".12px"
+                            color="#ADACF2"
+                          >
+                            20.02/2024 12:25
+                          </Typography>
+                        </div>
                       </div>
                       <div className="flex gap-xxs2">
                         <Icons.Mailbox />

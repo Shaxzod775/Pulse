@@ -107,6 +107,20 @@ const NewStudent = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstNameHelperText, setFirstNameHelperText] = useState("");
+  const [lastNameHelperText, setLastNameHelperText] = useState("");
+
+  const handleChange = (event, setter, setHelperText) => {
+    const { value } = event.target;
+    if (/^[a-zA-Z]*$/.test(value)) {
+      setter(value);
+      setHelperText("");
+    } else {
+      setHelperText("Только латинские буквы!");
+    }
+  };
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -248,12 +262,53 @@ const NewStudent = () => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="First name"
+                        value={firstName}
+                        helperText={firstNameHelperText}
+                        onChange={(event) =>
+                          handleChange(
+                            event,
+                            setFirstName,
+                            setFirstNameHelperText
+                          )
+                        }
                       />
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Last name"
+                        value={lastName}
+                        helperText={lastNameHelperText}
+                        onChange={(event) =>
+                          handleChange(
+                            event,
+                            setLastName,
+                            setLastNameHelperText
+                          )
+                        }
+                      />
+                    </FormControl>
+                  </div>
+                </div>
+                <Divider />
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Номер телефона:</FormLabel>
+                  </label>
+                  <div
+                    className="full-width flex gap-xxs"
+                    style={{ maxWidth: "75%" }}
+                  >
+                    <FormControl fullWidth variant="outlined">
+                      <TextFieldStyled
+                        variant="outlined"
+                        placeholder="Номер телефона"
+                      />
+                    </FormControl>
+                    <FormControl fullWidth variant="outlined">
+                      <TextFieldStyled
+                        variant="outlined"
+                        placeholder="Доп. номер"
                       />
                     </FormControl>
                   </div>
@@ -286,7 +341,7 @@ const NewStudent = () => {
                   </FormControl>
                 </div>
                 <Divider />
-                <div className="flex gap-xxs">
+                <div className="flex gap-lg">
                   <div>
                     <FormControl fullWidth variant="outlined">
                       <label htmlFor="date-start">
@@ -305,39 +360,30 @@ const NewStudent = () => {
                   </div>
                   <div>
                     <label>
-                      <FormLabel>Номер телефона</FormLabel>
+                      <FormLabel>ID или Свидетельство о рождении</FormLabel>
                     </label>
                     <div className="flex gap-xxs">
-                      <FormControl fullWidth variant="outlined">
+                      <FormControl
+                        fullWidth
+                        variant="outlined"
+                        sx={{ maxWidth: "25%" }}
+                      >
                         <TextFieldStyled
                           variant="outlined"
-                          placeholder="Номер телефона"
+                          placeholder="Серия"
                         />
                       </FormControl>
-                      <FormControl fullWidth variant="outlined">
+                      <FormControl
+                        fullWidth
+                        variant="outlined"
+                        sx={{ maxWidth: "75%" }}
+                      >
                         <TextFieldStyled
                           variant="outlined"
-                          placeholder="Доп. номер"
+                          placeholder="Номер паспорта"
                         />
                       </FormControl>
                     </div>
-                  </div>
-                </div>
-                <Divider />
-                <div className="flex items-center gap-sm">
-                  <label>
-                    <FormLabel row>ID или Метрика</FormLabel>
-                  </label>
-                  <div className="flex gap-xxs">
-                    <FormControl variant="outlined">
-                      <TextFieldStyled variant="outlined" placeholder="Серия" />
-                    </FormControl>
-                    <FormControl fullWidth variant="outlined">
-                      <TextFieldStyled
-                        variant="outlined"
-                        placeholder="Номер пасспорта"
-                      />
-                    </FormControl>
                   </div>
                 </div>
                 <Divider />
@@ -408,42 +454,25 @@ const NewStudent = () => {
                   </FormControl>
                 </div>
               </div>
-              <FormControl fullWidth variant="outlined">
-                <div className="flex items-center justify-between">
-                  <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Адрес проживания</FormLabel>
-                  </label>
-                  <TextFieldStyled
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Страна, Город, Место проживания"
-                    style={{ maxWidth: "75%" }}
-                  />
-                </div>
-              </FormControl>
-              <FormControl fullWidth variant="outlined">
-                <div className="flex items-start justify-between">
-                  <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Комментарий</FormLabel>
-                  </label>
-                  <TextFieldStyled
-                    fullWidth
-                    multiline
-                    rows={3}
-                    variant="outlined"
-                    placeholder="Комментарий ученика"
-                    sx={{
-                      maxWidth: "75%",
-                      "& .MuiInputBase-multiline": {
-                        padding: "0",
-                      },
-                    }}
-                  />
-                </div>
-              </FormControl>
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Теги</FormLabel>
+                  <FormLabel row>Имя и Фамилия родителя</FormLabel>
+                </label>
+                <div
+                  className="full-width flex gap-xxs"
+                  style={{ maxWidth: "75%" }}
+                >
+                  <FormControl fullWidth variant="outlined">
+                    <TextFieldStyled variant="outlined" placeholder="Имя" />
+                  </FormControl>
+                  <FormControl fullWidth variant="outlined">
+                    <TextFieldStyled variant="outlined" placeholder="Фамилия" />
+                  </FormControl>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <label style={{ maxWidth: "25%" }}>
+                  <FormLabel row>Добавить тег:</FormLabel>
                 </label>
                 <div
                   className="full-width flex flex-wrap gap-x3s"
@@ -504,6 +533,26 @@ const NewStudent = () => {
                   />
                 </div>
               </div>
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-start justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Описание</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    fullWidth
+                    multiline
+                    rows={3}
+                    variant="outlined"
+                    placeholder="Описание ученика"
+                    sx={{
+                      maxWidth: "75%",
+                      "& .MuiInputBase-multiline": {
+                        padding: "0",
+                      },
+                    }}
+                  />
+                </div>
+              </FormControl>
             </div>
           </PaperStyled>
         </div>

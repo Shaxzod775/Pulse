@@ -404,6 +404,11 @@ export const TextFieldStyled = styled(TextField)(({ theme }) => ({
       padding: "12px",
     },
   },
+  "& .MuiFormHelperText-root": {
+    color: "crimson",
+    fontSize: ".8rem",
+    margin: "2px 0 -10px 12px",
+  },
 }));
 
 export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
