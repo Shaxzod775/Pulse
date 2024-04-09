@@ -66,6 +66,12 @@ const customMenuProps = {
   },
 };
 
+const ArrowIconNonTransform = styled(({ isUp }) => (
+  <>{isUp ? <Icons.ArrowUBold /> : <Icons.ArrowDBold />}</>
+))({
+  transform: "none !important",
+});
+
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#fff",
@@ -309,7 +315,9 @@ const Groups = () => {
                 <SelectStyled
                   id="teacher-select"
                   autoWidth
-                  IconComponent={Icons.ArrowDBold}
+                  IconComponent={
+                    Boolean(anchorTeacher) ? Icons.ArrowUBold : Icons.ArrowDBold
+                  }
                   defaultValue={0}
                   onClose={handleCloseTeacherSelect}
                   MenuProps={{
@@ -317,6 +325,9 @@ const Groups = () => {
                     anchorEl: anchorTeacher,
                     open: Boolean(anchorTeacher),
                     onClose: handleCloseTeacherSelect,
+                  }}
+                  sx={{
+                    "& > svg": { transform: "none !important" },
                   }}
                 >
                   <MenuItem value={0}>Все</MenuItem>
@@ -343,7 +354,9 @@ const Groups = () => {
                 <SelectStyled
                   id="teacher-select"
                   autoWidth
-                  IconComponent={Icons.ArrowDBold}
+                  IconComponent={
+                    Boolean(anchorCourse) ? Icons.ArrowUBold : Icons.ArrowDBold
+                  }
                   defaultValue={0}
                   onClose={handleCloseCourseSelect}
                   MenuProps={{
@@ -351,6 +364,9 @@ const Groups = () => {
                     anchorEl: anchorCourse,
                     open: Boolean(anchorCourse),
                     onClose: handleCloseCourseSelect,
+                  }}
+                  sx={{
+                    "& > svg": { transform: "none !important" },
                   }}
                 >
                   <MenuItem value={0}>Все</MenuItem>

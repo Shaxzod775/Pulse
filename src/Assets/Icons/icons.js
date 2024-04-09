@@ -1,5 +1,6 @@
 import { ReactComponent as ArrowD } from "./svgs/arrowD.svg";
-import { ReactComponent as ArrowDBold } from "./svgs/arrowD.svg";
+import { ReactComponent as ArrowDBold } from "./svgs/arrowDBold.svg";
+import { ReactComponent as ArrowUBold } from "./svgs/arrowUBold.svg";
 import { ReactComponent as ArrowL } from "./svgs/arrowL.svg";
 import { ReactComponent as Edit } from "./svgs/edit.svg";
 import { ReactComponent as DateStart } from "./svgs/dateStart.svg";
@@ -52,6 +53,7 @@ import { ReactComponent as TrashCan } from "./svgs/trashCan.svg";
 export const Icons = {
   ArrowD,
   ArrowDBold,
+  ArrowUBold,
   ArrowL,
   Edit,
   DateStart,
