@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   ButtonBase,
@@ -34,6 +34,37 @@ import { Icons } from "../../../Assets/Icons/icons";
 import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
 import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
+
+const customMenuProps = {
+  // onClick: (e) => e.stopPropagation(),
+  // MenuListProps: {
+  //   onClik: (e) => e.stopPropagation(),
+  // },
+  sx: {
+    top: "10px",
+    "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
+      boxShadow:
+        "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
+    },
+    "& .MuiList-root.MuiMenu-list": {
+      padding: "8px",
+
+      "& .MuiButtonBase-root.MuiMenuItem-root": {
+        padding: "8px",
+        borderRadius: "4px",
+      },
+    },
+  },
+  elevation: 0,
+  anchorOrigin: {
+    vertical: "bottom",
+    horizontal: "right",
+  },
+  transformOrigin: {
+    vertical: "top",
+    horizontal: "right",
+  },
+};
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -149,6 +180,23 @@ NumericFormatCustom.propTypes = {
 };
 
 const Groups = () => {
+  const [anchorTeacher, setAnchorTeacher] = useState(null);
+  const [anchorCourse, setAnchorCourse] = useState(null);
+  const handleClickTeacherSelect = (e) => {
+    setAnchorTeacher(e.currentTarget);
+  };
+  const handleCloseTeacherSelect = (e) => {
+    e.stopPropagation();
+    setAnchorTeacher(null);
+  };
+  const handleClickCourseSelect = (e) => {
+    setAnchorCourse(e.currentTarget);
+  };
+  const handleCloseCourseSelect = (e) => {
+    e.stopPropagation();
+    setAnchorCourse(null);
+  };
+
   const [open, setOpen] = useState(false);
 
   const [groups, setGroups] = useState([
@@ -185,6 +233,34 @@ const Groups = () => {
     setGroups(groups.filter((group) => group.id !== idToDelete));
   };
 
+  useEffect(
+    () => {
+      const handleClickOutside = (event) => {
+        if (
+          anchorTeacher &&
+          !anchorTeacher.parentElement.contains(event.target)
+        ) {
+          handleCloseTeacherSelect();
+        } else if (anchorCourse && !anchorCourse.contains(event.target)) {
+          handleCloseCourseSelect();
+        }
+      };
+      // const handleClickInside = (event) => {}
+
+      document.addEventListener("mousedown", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    },
+    [
+      // anchorTeacher,
+      // handleCloseTeacherSelect,
+      // anchorCourse,
+      // handleCloseCourseSelect,
+    ]
+  );
+
   const options = [
     { value: "option1", label: "Option 1" },
     { value: "option2", label: "Option 2" },
@@ -219,8 +295,13 @@ const Groups = () => {
                 </div>
               </HeaderDiv>
               <HeaderDiv
-                sx={{ position: "relative" }}
+                sx={{
+                  position: "relative",
+                  cursor: "pointer",
+                  label: { cursor: "pointer" },
+                }}
                 className="flex items-stretch full-height p-xxs2"
+                onClick={handleClickTeacherSelect}
               >
                 <label htmlFor="teacher-select" className="full-height">
                   <Typography color="#b4b7c3">Учителя</Typography>
@@ -230,6 +311,13 @@ const Groups = () => {
                   autoWidth
                   IconComponent={Icons.ArrowDBold}
                   defaultValue={0}
+                  onClose={handleCloseTeacherSelect}
+                  MenuProps={{
+                    ...customMenuProps,
+                    anchorEl: anchorTeacher,
+                    open: Boolean(anchorTeacher),
+                    onClose: handleCloseTeacherSelect,
+                  }}
                 >
                   <MenuItem value={0}>Все</MenuItem>
                   <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
@@ -238,11 +326,16 @@ const Groups = () => {
                 </SelectStyled>
               </HeaderDiv>
               <HeaderDiv
-                sx={{ position: "relative" }}
+                sx={{
+                  position: "relative",
+                  cursor: "pointer",
+                  label: { cursor: "pointer" },
+                }}
                 className="flex items-stretch full-height p-xxs2"
+                onClick={handleClickCourseSelect}
               >
                 <label
-                  htmlFor="teacher-select"
+                  htmlFor="course-select"
                   className="flex items-center full-height"
                 >
                   <Icons.NotebookBookmark color="#b4b7c3" />
@@ -252,6 +345,13 @@ const Groups = () => {
                   autoWidth
                   IconComponent={Icons.ArrowDBold}
                   defaultValue={0}
+                  onClose={handleCloseCourseSelect}
+                  MenuProps={{
+                    ...customMenuProps,
+                    anchorEl: anchorCourse,
+                    open: Boolean(anchorCourse),
+                    onClose: handleCloseCourseSelect,
+                  }}
                 >
                   <MenuItem value={0}>Все</MenuItem>
                   <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
@@ -259,14 +359,6 @@ const Groups = () => {
                   <MenuItem value={3}>Azizova Aziza</MenuItem>
                 </SelectStyled>
               </HeaderDiv>
-
-              <CustomSelect
-                menuItems={[
-                  "Eshmatov Toshmat",
-                  "Aliyev Shohrux",
-                  "Azizova Aziza",
-                ]}
-              />
             </div>
           </div>
 
@@ -301,11 +393,11 @@ const Groups = () => {
         {/* </Paper> */}
       </Main>
 
-      <NewGroupDialog
+      {/* <NewGroupDialog
         open={open}
         handleClose={handleClose}
         handleAddGroup={handleAddGroup}
-      />
+      /> */}
     </Root>
   );
 };
