@@ -115,7 +115,7 @@ const NewTeacher = () => {
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
     if (/^[a-zA-Z]*$/.test(value)) {
-      setter(value);
+      setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
       setHelperText("");
     } else {
       setHelperText("Только латинские буквы!");
