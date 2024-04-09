@@ -70,8 +70,12 @@ const customMenuProps = {
 
 const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   padding: "0 8px 0 0",
+  color: "grey",
   "&.Mui-checked": {
     color: "grey",
+  },
+  "&:hover": {
+    backgroundColor: "transparent", // remove hover background color
   },
 }));
 
@@ -441,11 +445,11 @@ const Groups = () => {
         {/* </Paper> */}
       </Main>
 
-      {/* <NewGroupDialog
+      <NewGroupDialog
         open={open}
         handleClose={handleClose}
         handleAddGroup={handleAddGroup}
-      /> */}
+      />
     </Root>
   );
 };
