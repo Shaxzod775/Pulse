@@ -161,7 +161,6 @@ const StudentCard = ({ id, handleDeleteStudent }) => {
             <MenuItem onClick={handleClose} disableRipple>
               <ButtonStyled
                 color="crimson"
-                sx={{ backgroundColor: "#FDF3F2" }}
                 onClick={() => handleDeleteStudent(id)}
               >
                 <Icons.TrashCan />

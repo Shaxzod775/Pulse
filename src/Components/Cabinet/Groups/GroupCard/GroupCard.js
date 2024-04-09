@@ -162,7 +162,6 @@ const GroupCard = ({
             <MenuItem onClick={handleClose} disableRipple>
               <ButtonStyled
                 color="crimson"
-                sx={{ backgroundColor: "#FDF3F2" }}
                 onClick={() => handleDeleteGroup(id)}
               >
                 <Icons.TrashCan />

@@ -14,9 +14,9 @@ import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
 import { styled } from "@mui/system";
 
 const Root = styled("div")(({ theme }) => ({
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #E5E7EB",
+  position: "relative",
+  color: theme.typography.color.darkBlue,
+  height: "100%",
 }));
 
 const CustomSelect = ({ menuItems }) => {
@@ -34,18 +34,25 @@ const CustomSelect = ({ menuItems }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [open]); // Re-add listener on open state change
   return (
-    <Root
-      ref={rootRef}
-      sx={{
-        position: "relative",
-        color: theme.typography.color.darkBlue,
-        cursor: "pointer",
-      }}
-      className="flex items-stretch full-height p-xxs2"
-      onClick={() => setOpen(!open)}
-    >
-      <div className="flex">
-        <label htmlFor="teacher-select" className="full-height">
+    <Root ref={rootRef}>
+      <Paper
+        className="flex"
+        onClick={() => setOpen(!open)}
+        sx={{
+          height: "100%",
+          borderRadius: "10px",
+          backgroundColor: "#fff",
+          border: "1px solid #E5E7EB",
+          boxShadow: "none",
+          padding: "8px",
+          cursor: "pointer",
+        }}
+      >
+        <label
+          htmlFor="teacher-select"
+          className="full-height"
+          style={{ cursor: "pointer" }}
+        >
           <Typography color="#b4b7c3">Учителя</Typography>
         </label>
         <Typography paddingLeft="8px" paddingRight="8px">
@@ -55,7 +62,7 @@ const CustomSelect = ({ menuItems }) => {
           color="#b4b7c3"
           width={theme.typography.fontSize.sm}
         />
-      </div>
+      </Paper>
 
       <div
         style={{
@@ -68,7 +75,7 @@ const CustomSelect = ({ menuItems }) => {
           zIndex: "1",
         }}
       >
-        <Collapse in={open}>
+        <Collapse in={open} timeout={100}>
           <Paper
             sx={{
               minMidth: "fit-content",

@@ -161,7 +161,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           marginBottom={`${theme.custom.spacing.sm}px`}
         >
           {teachers.map((teacher, i) => (
-            <Grid item xs="auto" md="auto" lg={2.4} key={i}>
+            <Grid item xs="auto" md="auto" lg={3} key={i}>
               <TeacherCard
                 {...teacher}
                 handleDeleteTeacher={handleDeleteTeacher}

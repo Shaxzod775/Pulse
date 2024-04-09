@@ -33,6 +33,7 @@ import GroupCard from "./GroupCard/GroupCard";
 import { Icons } from "../../../Assets/Icons/icons";
 import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
+import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -184,6 +185,12 @@ const Groups = () => {
     setGroups(groups.filter((group) => group.id !== idToDelete));
   };
 
+  const options = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+  ];
+
   return (
     <Root>
       <Main>
@@ -253,13 +260,13 @@ const Groups = () => {
                 </SelectStyled>
               </HeaderDiv>
 
-              {/* <CustomSelect
+              <CustomSelect
                 menuItems={[
                   "Eshmatov Toshmat",
                   "Aliyev Shohrux",
                   "Azizova Aziza",
                 ]}
-              /> */}
+              />
             </div>
           </div>
 
