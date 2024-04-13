@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import { Grid, IconButton, InputBase, Paper, styled } from "@mui/material";
-import { theme, ButtonStyled, Main, Root, Title } from "../../Cabinet";
+import { theme, ButtonStyled, Main, Root, Title } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";

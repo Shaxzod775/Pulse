@@ -10,7 +10,7 @@ import {
   styled,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, CardStyled, ButtonStyled } from "../../Cabinet";
+import { theme, CardStyled, ButtonStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 

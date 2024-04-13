@@ -11,7 +11,7 @@ import {
   styled,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, CardStyled, ButtonStyled } from "../../Cabinet";
+import { theme, CardStyled, ButtonStyled } from "../../CabinetStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";

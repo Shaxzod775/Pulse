@@ -21,7 +21,7 @@ import {
   TextFieldStyled,
   Title,
   theme,
-} from "../../Cabinet";
+} from "../../CabinetStyles";
 import { Link, useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 

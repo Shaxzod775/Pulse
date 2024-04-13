@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { theme } from "../../Cabinet";
+import { theme } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
 import { styled } from "@mui/system";

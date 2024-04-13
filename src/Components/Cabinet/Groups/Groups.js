@@ -26,7 +26,7 @@ import {
   Title,
   TextFieldStyled,
   SelectStyled,
-} from "../Cabinet";
+} from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";

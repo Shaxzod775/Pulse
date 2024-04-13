@@ -20,7 +20,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
 import { Icons } from "../../../Assets/Icons/icons";
-import { theme } from "../Cabinet";
+import { theme } from "../CabinetStyles";
 
 const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
   padding: "10px",

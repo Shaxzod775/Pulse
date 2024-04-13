@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ButtonStyled, Main, Root, Title, theme } from "../../Cabinet";
+import { ButtonStyled, Main, Root, Title, theme } from "../../CabinetStyles";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {

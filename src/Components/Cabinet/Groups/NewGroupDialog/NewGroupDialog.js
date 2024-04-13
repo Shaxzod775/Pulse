@@ -22,7 +22,7 @@ import {
   TextFieldStyled,
   AutocompleteStyled,
   SelectStyled,
-} from "../../Cabinet";
+} from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
