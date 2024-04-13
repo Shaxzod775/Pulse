@@ -115,7 +115,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   //   setGroups(groups.filter((group) => group.id !== idToDelete));
   // };
   return (
-    <Root>
+    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
@@ -178,25 +178,38 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             </ButtonStyled>
           </div>
         </div>
-        {/* <Paper
-      sx={{ borderRadius: "20px", padding: "32px", boxShadow: "none" }}
-    > */}
-        <Grid
-          container
-          justifyContent="start"
-          spacing={`${12}px`}
-          marginBottom={`${theme.custom.spacing.sm}px`}
+        <Paper
+          sx={{
+            borderRadius: "20px",
+            height: "90%",
+            padding: "32px",
+            boxShadow: "none",
+          }}
         >
-          {students.map((student, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <StudentCard
-                {...student}
-                handleDeleteStudent={handleDeleteStudent}
-              />
+          <div
+            style={{
+              maxHeight: "100%",
+              paddingRight: "32px",
+              overflowY: "scroll",
+            }}
+          >
+            <Grid
+              container
+              justifyContent="start"
+              spacing={`${12}px`}
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {students.map((student, i) => (
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                  <StudentCard
+                    {...student}
+                    handleDeleteStudent={handleDeleteStudent}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        {/* </Paper> */}
+          </div>
+        </Paper>
       </Main>
 
       {/* <NewCourseDialog

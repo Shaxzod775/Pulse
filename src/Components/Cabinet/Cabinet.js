@@ -148,7 +148,6 @@ export const Root = styled("div")(({ theme }) => ({
   maxWidth: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
-  maxHeight: "calc(100% - 122px)",
   fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
   "& *": {
     fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",

@@ -294,7 +294,7 @@ const Groups = () => {
   ];
 
   return (
-    <Root>
+    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
@@ -427,22 +427,38 @@ const Groups = () => {
             </ButtonStyled>
           </div>
         </div>
-        {/* <Paper
-          sx={{ borderRadius: "20px", padding: "32px", boxShadow: "none" }}
-        > */}
-        <Grid
-          container
-          justifyContent="start"
-          spacing={`${12}px`}
-          marginBottom={`${theme.custom.spacing.sm}px`}
+        <Paper
+          sx={{
+            borderRadius: "20px",
+            height: "90%",
+            padding: "32px",
+            boxShadow: "none",
+          }}
         >
-          {groups.map((group, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <GroupCard {...groups[i]} handleDeleteGroup={handleDeleteGroup} />
+          <div
+            style={{
+              maxHeight: "100%",
+              paddingRight: "32px",
+              overflowY: "scroll",
+            }}
+          >
+            <Grid
+              container
+              justifyContent="start"
+              spacing={`${12}px`}
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {groups.map((group, i) => (
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                  <GroupCard
+                    {...groups[i]}
+                    handleDeleteGroup={handleDeleteGroup}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        {/* </Paper> */}
+          </div>
+        </Paper>
       </Main>
 
       <NewGroupDialog

@@ -104,7 +104,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
     navigate(-1); // This navigates one step back in history
   };
   return (
-    <Root sx={{ flexGrow: "1", display: "flex" }}>
+    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
@@ -151,12 +151,18 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             </Link>
           </div>
         </div>
-        <Paper sx={{ height: "90%", padding: "32px", boxShadow: "none" }}>
+        <Paper
+          sx={{
+            borderRadius: "20px",
+            height: "90%",
+            padding: "32px",
+            boxShadow: "none",
+          }}
+        >
           <div
             style={{
               maxHeight: "100%",
               paddingRight: "32px",
-              paddingBottom: "-32px",
               overflowY: "scroll",
             }}
           >

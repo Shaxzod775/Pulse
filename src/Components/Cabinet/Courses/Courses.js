@@ -6,6 +6,7 @@ import {
   InputBase,
   MenuItem,
   Typography,
+  Paper,
   styled,
 } from "@mui/material";
 import {
@@ -198,7 +199,7 @@ const Courses = () => {
   };
 
   return (
-    <Root>
+    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
@@ -226,18 +227,35 @@ const Courses = () => {
             </ButtonStyled>
           </div>
         </div>
-        <Grid
-          container
-          justifyContent="start"
-          spacing={`${12}px`}
-          marginBottom={`${theme.custom.spacing.sm}px`}
+        <Paper
+          sx={{
+            borderRadius: "20px",
+            height: "90%",
+            padding: "32px",
+            boxShadow: "none",
+          }}
         >
-          {courses.map((course, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <CourseCard {...courses[i]} />
+          <div
+            style={{
+              maxHeight: "100%",
+              paddingRight: "32px",
+              overflowY: "scroll",
+            }}
+          >
+            <Grid
+              container
+              justifyContent="start"
+              spacing={`${12}px`}
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {courses.map((course, i) => (
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                  <CourseCard {...courses[i]} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          </div>
+        </Paper>
       </Main>
 
       <NewCourseDialog
