@@ -148,9 +148,23 @@ export const Root = styled("div")(({ theme }) => ({
   maxWidth: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
+  maxHeight: "calc(100% - 122px)",
   fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
   "& *": {
     fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
+  },
+  "& *::-webkit-scrollbar": {
+    width: "12px",
+  },
+  "& *::-webkit-scrollbar-track": {
+    borderRadius: "6px",
+    backgroundColor: "#b8c2ff",
+  },
+  "& *::-webkit-scrollbar-thumb": {
+    borderRadius: "8px",
+    border: "4px solid transparent",
+    backgroundClip: "content-box",
+    backgroundColor: "#fff",
   },
   "& .flex": {
     display: "flex",

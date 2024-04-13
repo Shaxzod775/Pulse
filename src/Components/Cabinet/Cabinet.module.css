@@ -25,3 +25,19 @@
   display: flex;
   justify-content: center;
 }
+
+.cabinet::-webkit-scrollbar {
+  width: 12px;
+}
+
+.cabinet::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background-color: #b8c2ff;
+}
+
+.cabinet::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+  background-color: #fff;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
-import { Grid, IconButton, InputBase, styled } from "@mui/material";
+import { Grid, IconButton, InputBase, Paper, styled } from "@mui/material";
 import { theme, ButtonStyled, Main, Root, Title } from "../../Cabinet";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -104,7 +104,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
     navigate(-1); // This navigates one step back in history
   };
   return (
-    <Root>
+    <Root sx={{ flexGrow: "1", display: "flex" }}>
       <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
@@ -151,25 +151,32 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             </Link>
           </div>
         </div>
-        {/* <Paper
-      sx={{ borderRadius: "20px", padding: "32px", boxShadow: "none" }}
-    > */}
-        <Grid
-          container
-          justifyContent="start"
-          spacing={`${12}px`}
-          marginBottom={`${theme.custom.spacing.sm}px`}
-        >
-          {teachers.map((teacher, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <TeacherCard
-                {...teacher}
-                handleDeleteTeacher={handleDeleteTeacher}
-              />
+        <Paper sx={{ height: "90%", padding: "32px", boxShadow: "none" }}>
+          <div
+            style={{
+              maxHeight: "100%",
+              paddingRight: "32px",
+              paddingBottom: "-32px",
+              overflowY: "scroll",
+            }}
+          >
+            <Grid
+              container
+              justifyContent="start"
+              spacing={`${12}px`}
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {teachers.map((teacher, i) => (
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                  <TeacherCard
+                    {...teacher}
+                    handleDeleteTeacher={handleDeleteTeacher}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        {/* </Paper> */}
+          </div>
+        </Paper>
       </Main>
 
       {/* <NewCourseDialog

@@ -6,6 +6,22 @@
   box-sizing: border-box;
 }
 
+/* *::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background-color: #b8c2ff;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+  background-color: #fff;
+} */
+
 /* For Internet Explorer and Edge */
 body {
   margin: 0;
