@@ -439,7 +439,7 @@ const Groups = () => {
             style={{
               maxHeight: "100%",
               paddingRight: "32px",
-              overflowY: "scroll",
+              overflowY: "auto",
             }}
           >
             <Grid

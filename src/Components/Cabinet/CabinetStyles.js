@@ -4,9 +4,10 @@ import {
   InputLabel,
   Select,
   Button,
-  Card,
+  Card as GridCard,
   TextField,
   Autocomplete,
+  Menu,
 } from "@mui/material";
 
 export const theme = createTheme({
@@ -382,15 +383,6 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const CardStyled = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  padding: theme.custom.spacing.sm,
-  boxShadow: "none",
-  fontSize: theme.typography.fontSize.xs,
-  fontWeight: 600,
-  border: "2px solid #E5E5E5",
-}));
-
 export const TextFieldStyled = styled(TextField)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.md,
@@ -426,5 +418,55 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
   },
   "& .MuiAutocomplete-endAdornment": {
     top: "6px",
+  },
+}));
+
+export const MenuStyled = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 8,
+    // marginTop: theme.spacing(1),
+    minWidth: 200,
+    padding: "8px",
+    color: theme.palette.mode === "light" ? "#374151" : theme.palette.grey[300],
+    boxShadow:
+      "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10);",
+    "& .MuiMenu-list": {
+      padding: "0",
+    },
+    "& .MuiMenuItem-root": {
+      all: "unset",
+      padding: "0",
+      a: { textDecoration: "none" },
+      "& .MuiButtonBase-root.MuiButton-root": {
+        width: "100%",
+        borderRadius: "4px",
+        justifyContent: "start",
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        span: { fontSize: "14px", lineHeight: "20px" },
+      },
+      "& .MuiSvgIcon-root": {
+        fontSize: 20,
+        // marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        // backgroundColor: theme.palette.purpleBlue.main,
+      },
+      "&:hover": { all: "unset" },
+    },
   },
 }));

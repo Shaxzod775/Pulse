@@ -239,7 +239,7 @@ const Courses = () => {
             style={{
               maxHeight: "100%",
               paddingRight: "32px",
-              overflowY: "scroll",
+              overflowY: "auto",
             }}
           >
             <Grid
@@ -250,7 +250,10 @@ const Courses = () => {
             >
               {courses.map((course, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <CourseCard {...courses[i]} />
+                  <CourseCard
+                    {...courses[i]}
+                    handleDeleteCourse={handleDeleteCourse}
+                  />
                 </Grid>
               ))}
             </Grid>

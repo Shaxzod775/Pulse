@@ -80,19 +80,6 @@ export function createStudent({
 const StudentsMain = ({ students, handleDeleteStudent }) => {
   const [open, setOpen] = useState(false);
 
-  // const [students, setStudents] = useState([
-  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-  //   createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-  //   createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-  //   createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-  // ]);
-
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -106,14 +93,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const handleAddStudent = (newGroup) => {
-  //   setGroups([...groups, newGroup]);
-  // };
-
-  // const handleDeleteStudent = (idToDelete) => {
-  //   setGroups(groups.filter((group) => group.id !== idToDelete));
-  // };
   return (
     <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
@@ -190,7 +169,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             style={{
               maxHeight: "100%",
               paddingRight: "32px",
-              overflowY: "scroll",
+              overflowY: "auto",
             }}
           >
             <Grid

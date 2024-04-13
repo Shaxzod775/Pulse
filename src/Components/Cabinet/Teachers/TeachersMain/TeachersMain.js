@@ -45,30 +45,6 @@ const techs = [
   "GraphQL",
 ];
 
-// export function createTeacher({
-//   id = uuidv4(),
-//   name = "Eshmatov Toshmat",
-//   contactNumber = "998987654321",
-//   field = "Front-end",
-//   techs = ["React", "Node.js", "Ruby on Rails", "Vue.js"],
-//   groups = 3,
-//   students = 23,
-//   startDate = new Date(2024, 4, 3),
-//   location = "IT Park Tashkent",
-// } = {}) {
-//   return {
-//     id,
-//     name,
-//     contactNumber,
-//     field,
-//     techs,
-//     groups,
-//     students,
-//     startDate,
-//     location,
-//   };
-// }
-
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
   props,
   ref
@@ -163,7 +139,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             style={{
               maxHeight: "100%",
               paddingRight: "32px",
-              overflowY: "scroll",
+              overflowY: "auto",
             }}
           >
             <Grid
