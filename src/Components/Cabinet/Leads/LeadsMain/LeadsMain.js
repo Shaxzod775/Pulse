@@ -370,43 +370,41 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
             </ButtonStyled> */}
           </div>
         </div>
-        <Paper
+        {/* <Paper
           sx={{
             borderRadius: "20px",
             height: "90%",
             padding: "32px",
             boxShadow: "none",
           }}
+        > */}
+        <div
+          style={{
+            maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
+          }}
         >
-          <div
-            style={{
-              maxHeight: "100%",
-              paddingRight: "32px",
-              overflowY: "auto",
-            }}
+          <Grid
+            container
+            justifyContent="start"
+            spacing={`${12}px`}
+            marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            <Grid
-              container
-              justifyContent="start"
-              spacing={`${12}px`}
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {["inProgress", "dead", "new", "recycled"].map(
-                (leadStatus, i) => (
-                  <Grid item xs="auto" md="auto" lg={3} key={i}>
-                    <StatusTitle status={leadStatus} leadsAmount={5} />
-                  </Grid>
-                )
-              )}
-              {leads.map((lead, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
-                  {/* <div>LEAD CARD</div> */}
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </Paper>
+            {["inProgress", "dead", "new", "recycled"].map((leadStatus, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <StatusTitle status={leadStatus} leadsAmount={5} />
+              </Grid>
+            ))}
+            {leads.map((lead, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
+                {/* <div>LEAD CARD</div> */}
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        {/* </Paper> */}
       </Main>
     </Root>
   );
