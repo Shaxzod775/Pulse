@@ -44,7 +44,7 @@ export const theme = createTheme({
     },
     blue: {
       main: "#007AFF",
-      light: "#007AFF",
+      light: "#DBE7FF",
       dark: "#007AFF",
       contrastText: "#ffffff",
     },
@@ -54,11 +54,22 @@ export const theme = createTheme({
       dark: "#706F7C",
       contrastText: "#000000",
     },
-
     aqua: {
       main: "#00988F",
       light: "#00988F",
       dark: "#00988F",
+      contrastText: "#ffffff",
+    },
+    darkOrange: {
+      main: "#FF9500",
+      light: "#FFF0DB",
+      dark: "#FF9500",
+      contrastText: "#ffffff",
+    },
+    seaBlue: {
+      main: "#30B0C7",
+      light: "#D4F9FF",
+      dark: "#30B0C7",
       contrastText: "#ffffff",
     },
     darkBlue: {

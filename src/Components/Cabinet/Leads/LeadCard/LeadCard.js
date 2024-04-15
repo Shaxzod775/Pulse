@@ -9,6 +9,7 @@ import {
   MenuItem,
   IconButton,
   styled,
+  Chip,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
@@ -29,7 +30,31 @@ const CardText = styled(Typography)(
   })
 );
 
-const LeadCard = ({ id, handleDeleteLead }) => {
+const StatusChip = styled((props) => <Chip {...props} />)(
+  ({ theme, status }) => ({
+    width: "max-content",
+    padding: "8px 10px",
+    borderRadius: "8px",
+    backgroundColor:
+      status === "recycled"
+        ? theme.palette.seaBlue.light
+        : status === "dead"
+        ? theme.palette.blue.light
+        : theme.palette.orange.light,
+    "& .MuiChip-label": {
+      color:
+        status === "recycled"
+          ? theme.palette.seaBlue.main
+          : status === "dead"
+          ? theme.palette.blue.main
+          : theme.palette.orange.main,
+      padding: "0",
+      letterSpacing: "0.32px",
+    },
+  })
+);
+
+const LeadCard = ({ id, name, status, handleDeleteLead }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -39,9 +64,17 @@ const LeadCard = ({ id, handleDeleteLead }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const statusLabel =
+    status === "recycled"
+      ? "Recycled"
+      : status === "dead"
+      ? "Dead"
+      : status === "inProgress"
+      ? "In Progress"
+      : "Other";
   return (
     <Card>
-      <div className="flex flex-col gap-xxs">
+      <div className="flex flex-col gap-sm">
         <div className="flex justify-between items-start">
           <div
             className="flex gap-xxs2 items-stretch cursor-pointer"
@@ -51,7 +84,7 @@ const LeadCard = ({ id, handleDeleteLead }) => {
           >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <CardText>Azizova Aziza</CardText>
+              <CardText>{name}</CardText>
               <CardText color="#AEB2BA">Today 12:40</CardText>
             </div>
           </div>
@@ -104,6 +137,7 @@ const LeadCard = ({ id, handleDeleteLead }) => {
           <CardText>example@gmail.com</CardText>
         </InfoLine>
         <Divider />
+        <StatusChip label={statusLabel} status={status} />
       </div>
     </Card>
   );
