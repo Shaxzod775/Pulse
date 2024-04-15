@@ -50,6 +50,7 @@ import { ReactComponent as Pen } from "./svgs/pen.svg";
 import { ReactComponent as Pen2 } from "./svgs/pen2.svg";
 import { ReactComponent as TrashCan } from "./svgs/trashCan.svg";
 import { ReactComponent as Circle } from "./svgs/circle.svg";
+import { ReactComponent as SquareArrowLeftUp } from "./svgs/squareArrowLeftUp.svg";
 
 export const Icons = {
   ArrowD,
@@ -104,4 +105,5 @@ export const Icons = {
   Pen2,
   TrashCan,
   Circle,
+  SquareArrowLeftUp,
 };

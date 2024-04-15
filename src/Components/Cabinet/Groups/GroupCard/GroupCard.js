@@ -8,6 +8,7 @@ import {
   Menu,
   MenuItem,
   styled,
+  Typography,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
@@ -19,6 +20,7 @@ import {
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
+import { Link } from "react-router-dom";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -63,44 +65,57 @@ const GroupCard = ({
             <div>{name !== "" ? name : "Front-end"}</div>
             <div className="font-xxs">{"UI/UX"}</div>
           </div>
-          <IconButton
-            color="purpleBlue"
-            aria-controls={open ? "dots-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            disableElevation
-            onClick={handleClick}
-            sx={{ top: "-8px", right: "-8px" }}
+          <div
+            className="flex items-center gap-x3s"
+            style={{ marginRight: "-8px" }}
           >
-            <Icons.MenuDots />
-          </IconButton>
-          <MenuStyled
-            id="demo-customized-menu"
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose} disableRipple>
-              {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
-              <ButtonStyled color="purpleBlue">
-                <Icons.Pen />
-                <span>Изменить группу</span>
-              </ButtonStyled>
-              {/* </Link> */}
-            </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
-              <ButtonStyled
-                color="crimson"
-                onClick={() => handleDeleteGroup(id)}
-              >
-                <Icons.TrashCan />
-                <span>Удалить группу</span>
-              </ButtonStyled>
-            </MenuItem>
-          </MenuStyled>
+            <Link className="link">
+              {/* <ButtonStyled> */}
+              <div className="flex items-center gap-x3s">
+                <Icons.SquareArrowLeftUp />
+                <Typography>Открыть</Typography>
+              </div>
+              {/* </ButtonStyled> */}
+            </Link>
+            <IconButton
+              color="purpleBlue"
+              aria-controls={open ? "dots-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              disableElevation
+              onClick={handleClick}
+              // sx={{ right: "-8px" }}
+            >
+              <Icons.MenuDots />
+            </IconButton>
+            <MenuStyled
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} disableRipple>
+                {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
+                <ButtonStyled color="purpleBlue">
+                  <Icons.Pen />
+                  <span>Изменить группу</span>
+                </ButtonStyled>
+                {/* </Link> */}
+              </MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                <ButtonStyled
+                  color="crimson"
+                  onClick={() => handleDeleteGroup(id)}
+                >
+                  <Icons.TrashCan />
+                  <span>Удалить группу</span>
+                </ButtonStyled>
+              </MenuItem>
+            </MenuStyled>
+          </div>
         </div>
         <Divider />
         <div className="flex flex-col gap-xxs">

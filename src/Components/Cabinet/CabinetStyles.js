@@ -286,7 +286,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .link": {
     textDecoration: "none",
-    fontColor: "inherit",
+    color: "inherit",
   },
   "& .cursor-pointer": { cursor: "pointer" },
 }));
