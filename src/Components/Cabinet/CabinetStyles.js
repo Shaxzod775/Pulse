@@ -123,6 +123,16 @@ export const theme = createTheme({
   shape: {
     borderRadius: 12,
   },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Poppins, Rubik, sans-serif",
+          fontWeight: "500",
+        },
+      },
+    },
+  },
   custom: {
     sidebarOpenWidth: 250,
     spacing: {
@@ -147,6 +157,8 @@ export const Root = styled("div")(({ theme }) => ({
   maxWidth: `calc(100vw - ${
     theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
   }px)`,
+  fontWeight: "500",
+  "& *": { fontWeight: "500" },
   fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
   "& *": {
     fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
@@ -295,7 +307,7 @@ export const Main = styled("div")(({ theme }) => ({
   width: "100%",
   display: "flex",
   flexDirection: "column",
-  gap: theme.custom.spacing.md,
+  gap: "36px",
 }));
 
 export const ContentHeader = styled("div")(({ theme }) => ({

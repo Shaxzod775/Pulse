@@ -30,7 +30,7 @@ const GroupCard = ({
   startDate,
   endDate,
   weekDays = [0, 2, 4],
-  teacher = "Eshmatov Toshmat",
+  teacher = "Arslan Koptleulov",
   thumbnail,
   handleDeleteGroup,
 }) => {
@@ -53,7 +53,7 @@ const GroupCard = ({
           src={thumbnail ? thumbnail : groupImage}
           alt="Group"
           width={"100%"}
-          height={100}
+          height={127}
           style={{
             objectFit: "cover",
             objectPosition: "center",
@@ -62,8 +62,10 @@ const GroupCard = ({
         />
         <div className="flex justify-between items-center">
           <div>
-            <div>{name !== "" ? name : "Front-end"}</div>
-            <div className="font-xxs">{"UI/UX"}</div>
+            <Typography fontWeight={600}>
+              {name !== "" ? name : "GR000-00"}
+            </Typography>
+            <Typography className="font-xxs">{"UI/UX"}</Typography>
           </div>
           <div
             className="flex items-center gap-x3s"

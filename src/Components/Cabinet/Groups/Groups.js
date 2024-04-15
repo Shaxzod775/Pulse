@@ -123,7 +123,12 @@ function TagCheckbox({
   );
 }
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teachers = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 const techs = [
   "JavaScript",
   "Django",
@@ -226,14 +231,14 @@ const Groups = () => {
   const [open, setOpen] = useState(false);
 
   const [groups, setGroups] = useState([
-    createGroup({ name: "Javascript", duration: 3 }),
-    createGroup({ name: "Python", duration: 3 }),
-    createGroup({ name: "Node.js", duration: 3 }),
-    createGroup({ name: "Front-end", duration: 6 }),
-    createGroup({ name: "Back-end", duration: 9 }),
-    createGroup({ name: "Javascript", duration: 3 }),
-    createGroup({ name: "Python", duration: 3 }),
-    createGroup({ name: "Node.js", duration: 3 }),
+    createGroup({ name: "GR011-62", duration: 3 }),
+    createGroup({ name: "GR011-61", duration: 3 }),
+    createGroup({ name: "GR011-63", duration: 3 }),
+    createGroup({ name: "GR011-64", duration: 6 }),
+    createGroup({ name: "GR011-65", duration: 9 }),
+    createGroup({ name: "GR011-66", duration: 3 }),
+    createGroup({ name: "GR011-67", duration: 3 }),
+    createGroup({ name: "GR011-68", duration: 3 }),
   ]);
 
   const navigate = useNavigate();
@@ -350,10 +355,11 @@ const Groups = () => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  <MenuItem value={0}>Все</MenuItem>
-                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                  {teachers.map((teacher, i) => (
+                    <MenuItem value={i} key={i}>
+                      {teacher}
+                    </MenuItem>
+                  ))}
                 </SelectStyled>
               </HeaderDiv>
               <HeaderDiv
@@ -450,7 +456,8 @@ const Groups = () => {
             <Grid
               container
               justifyContent="start"
-              spacing={`${12}px`}
+              rowSpacing={"14px"}
+              columnSpacing={"32px"}
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {groups.map((group, i) => (
