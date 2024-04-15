@@ -4,7 +4,9 @@ import * as routes from "../../../../Constants/routes";
 import {
   Button,
   ButtonBase,
+  Card,
   Checkbox,
+  Chip,
   Grid,
   IconButton,
   InputBase,
@@ -34,6 +36,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { Icons } from "../../../../Assets/Icons/icons";
 import LeadCard from "../LeadCard/LeadCard";
+import { BorderColor, Widgets } from "@mui/icons-material";
 
 const customMenuProps = {
   // onClick: (e) => e.stopPropagation(),
@@ -89,6 +92,64 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   backgroundColor: "#fff",
   border: "1px solid #E5E7EB",
 }));
+
+const statusTitleCardStyles = ({ theme, colorMain }) => ({
+  padding: "10px",
+  borderRadius: "10px",
+  boxShadow: "none",
+  border: "1px solid",
+  borderColor: colorMain,
+  "& svg": {
+    width: "12px !important",
+    height: "12px !important",
+    circle: {
+      r: "4",
+    },
+  },
+  "& .MuiChip-root": {
+    width: "max-content",
+    padding: "8px 10px",
+    borderRadius: "8px",
+    backgroundColor: "#E5E7EB",
+    ".MuiChip-label": {
+      padding: "0",
+      fontSize: ".875rem",
+      letterSpacing: "0.14px",
+      color: "#6B7280",
+    },
+  },
+});
+const StatusTitle = ({ status, leadsAmount }) => {
+  const colorMain =
+    status === "recycled"
+      ? theme.palette.seaBlue.main
+      : status === "dead"
+      ? theme.palette.blue.main
+      : status === "new"
+      ? theme.palette.golden.main
+      : theme.palette.orange.main;
+  return (
+    <Card sx={statusTitleCardStyles({ status, colorMain })}>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-xxs2">
+          <Icons.Circle color={colorMain} />
+          <Typography>
+            {status === "recycled"
+              ? "Recycled"
+              : status === "dead"
+              ? "Dead"
+              : status === "inProgress"
+              ? "In Progress"
+              : status === "new"
+              ? "New"
+              : "Other"}
+          </Typography>
+        </div>
+        <Chip label={`${leadsAmount} leads`} />
+      </div>
+    </Card>
+  );
+};
 
 const statuses = [
   "Активные студенты",
@@ -330,6 +391,13 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
               spacing={`${12}px`}
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
+              {["inProgress", "dead", "new", "recycled"].map(
+                (leadStatus, i) => (
+                  <Grid item xs="auto" md="auto" lg={3} key={i}>
+                    <StatusTitle status={leadStatus} leadsAmount={5} />
+                  </Grid>
+                )
+              )}
               {leads.map((lead, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
                   <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
