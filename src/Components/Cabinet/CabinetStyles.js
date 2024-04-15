@@ -280,6 +280,7 @@ export const Root = styled("div")(({ theme }) => ({
 }));
 
 export const Main = styled("div")(({ theme }) => ({
+  width: "100%",
   display: "flex",
   flexDirection: "column",
   gap: theme.custom.spacing.md,

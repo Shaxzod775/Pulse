@@ -23,6 +23,7 @@ import StudentsMain from "./Students/StudentsMain/StudentsMain";
 import Teachers from "./Teachers/Teachers";
 import Students from "./Students/Students";
 import { theme } from "./CabinetStyles";
+import Leads from "./Leads/Leads";
 
 const Cabinet = () => {
   return (
@@ -36,6 +37,7 @@ const Cabinet = () => {
             <Routes>
               <Route path={routes.DASHBOARD} element={<Dashboard />} />
               <Route path={routes.COURSES} element={<Courses />} />
+              <Route path={routes.LEADS + "/*"} element={<Leads />} />
               <Route path={routes.GROUPS} element={<Groups />} />
               <Route path={routes.TEACHERS + "/*"} element={<Teachers />} />
               <Route path={routes.PERSONAL} element={<div>Personal</div>} />

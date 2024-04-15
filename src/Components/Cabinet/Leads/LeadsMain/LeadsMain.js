@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   ButtonBase,
+  Checkbox,
   Grid,
   IconButton,
   InputBase,
@@ -16,7 +19,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
 import {
   theme,
   ButtonStyled,
@@ -26,15 +28,11 @@ import {
   Title,
   TextFieldStyled,
   SelectStyled,
-} from "../CabinetStyles";
+} from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
-import GroupCard from "./GroupCard/GroupCard";
-import { Icons } from "../../../Assets/Icons/icons";
-import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
-import { useNavigate } from "react-router-dom";
-import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
+import { Icons } from "../../../../Assets/Icons/icons";
 
 const customMenuProps = {
   // onClick: (e) => e.stopPropagation(),
@@ -91,112 +89,38 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   border: "1px solid #E5E7EB",
 }));
 
-function TagCheckbox({
-  children,
-  selected,
-  setSelected,
-  variant,
-  ...otherProps
-}) {
-  //I will just seperate variant from other props so it does't interfere with dynamic variant
-  const handleClick = () => {
-    setSelected(!selected);
-  };
-
-  return (
-    <Button
-      variant={selected ? "contained" : "outlined"}
-      onClick={handleClick}
-      sx={{
-        boxSizing: "border-box",
-        boxShadow: "none",
-        "&:hover": { boxShadow: "none" },
-        minWidth: "unset",
-        padding: "6px",
-        lineHeight: "inherit",
-        border: `${selected ? `1px solid ${theme.palette.darkBlue.main}` : ""}`,
-      }}
-      {...otherProps}
-    >
-      {children}
-    </Button>
-  );
-}
-
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
-const techs = [
-  "JavaScript",
-  "Django",
-  "Python",
-  "GitHub",
-  "React",
-  "Node.js",
-  "Ruby on Rails",
-  "Vue.js",
-  "Angular",
-  "Flask",
-  "Express.js",
-  "MongoDB",
-  "PostgreSQL",
-  "AWS",
-  "Heroku",
-  "CSS",
-  "HTML",
-  "TypeScript",
-  "GraphQL",
+const statuses = [
+  "Активные студенты",
+  "Закончившие курс",
+  "Оплатившие",
+  "Должники",
+  "Ушли после пробных",
+  "Замороженные ученики",
+  "Не добавлены в группу",
 ];
 const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
-export function createGroup({
-  id = uuidv4(),
-  name = "GR0000-00",
-  subject = "Front-end",
-  startDate = new Date(2024, 4, 3),
-  endDate = new Date(2024, 7, 3),
-  thumbnail = null,
-} = {}) {
-  return {
-    id,
-    name,
-    subject,
-    startDate,
-    endDate,
-    thumbnail,
+const LeadsMain = ({ leads, handleDeleteLead }) => {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1); // This navigates one step back in history
   };
-}
 
-const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
-  props,
-  ref
-) {
-  const { onChange, ...other } = props;
-
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      valueIsNumericString
-    />
-  );
-});
-NumericFormatCustom.propTypes = {
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const Groups = () => {
-  const [anchorTeacher, setAnchorTeacher] = useState(null);
+  const [anchorStatus, setAnchorStatus] = useState(null);
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [anchorCourse, setAnchorCourse] = useState(null);
-  const [selectedCourses, setSelectedCourses] = React.useState([]);
+  const [selectedCourses, setSelectedCourses] = useState([]);
+
+  const handleChangeStatus = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedStatuses(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
 
   const handleChangeCourse = (event) => {
     const {
@@ -208,12 +132,12 @@ const Groups = () => {
     );
   };
 
-  const handleClickTeacherSelect = (e) => {
-    setAnchorTeacher(e.currentTarget);
+  const handleClickStatusSelect = (e) => {
+    setAnchorStatus(e.currentTarget);
   };
-  const handleCloseTeacherSelect = (e) => {
+  const handleCloseStatusSelect = (e) => {
     e.stopPropagation();
-    setAnchorTeacher(null);
+    setAnchorStatus(null);
   };
   const handleClickCourseSelect = (e) => {
     setAnchorCourse(e.currentTarget);
@@ -222,76 +146,6 @@ const Groups = () => {
     e.stopPropagation();
     setAnchorCourse(null);
   };
-
-  const [open, setOpen] = useState(false);
-
-  const [groups, setGroups] = useState([
-    createGroup({ name: "Javascript", duration: 3 }),
-    createGroup({ name: "Python", duration: 3 }),
-    createGroup({ name: "Node.js", duration: 3 }),
-    createGroup({ name: "Front-end", duration: 6 }),
-    createGroup({ name: "Back-end", duration: 9 }),
-    createGroup({ name: "Javascript", duration: 3 }),
-    createGroup({ name: "Python", duration: 3 }),
-    createGroup({ name: "Node.js", duration: 3 }),
-  ]);
-
-  const navigate = useNavigate();
-
-  const goBack = () => {
-    navigate(-1); // This navigates one step back in history
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleAddGroup = (newGroup) => {
-    setGroups([...groups, newGroup]);
-    console.log(newGroup);
-  };
-
-  const handleDeleteGroup = (idToDelete) => {
-    setGroups(groups.filter((group) => group.id !== idToDelete));
-  };
-
-  useEffect(
-    () => {
-      const handleClickOutside = (event) => {
-        if (
-          anchorTeacher &&
-          !anchorTeacher.parentElement.contains(event.target)
-        ) {
-          handleCloseTeacherSelect();
-        } else if (anchorCourse && !anchorCourse.contains(event.target)) {
-          handleCloseCourseSelect();
-        }
-      };
-      // const handleClickInside = (event) => {}
-
-      document.addEventListener("mousedown", handleClickOutside);
-
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    },
-    [
-      // anchorTeacher,
-      // handleCloseTeacherSelect,
-      // anchorCourse,
-      // handleCloseCourseSelect,
-    ]
-  );
-
-  const options = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
 
   return (
     <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
@@ -306,20 +160,8 @@ const Groups = () => {
             >
               <Icons.ArrowL />
             </ButtonStyled>
-            <Title>Группы</Title>
+            <Title>Лиды</Title>
             <div className="flex items-stretch gap-xxs full-height">
-              <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
-                <div className="flex items-center">
-                  <Icons.Search
-                    style={{ boxSizing: "content-box", paddingRight: "8px" }}
-                    color="#E5E7EB"
-                  />
-                  <InputBase
-                    sx={{ color: theme.typography.color.darkBlue }}
-                    placeholder="Поиск по ученику..."
-                  />
-                </div>
-              </HeaderDiv>
               <HeaderDiv
                 sx={{
                   position: "relative",
@@ -327,33 +169,56 @@ const Groups = () => {
                   label: { cursor: "pointer" },
                 }}
                 className="flex items-stretch full-height p-xxs2"
-                onClick={handleClickTeacherSelect}
+                onClick={handleClickStatusSelect}
               >
-                <label htmlFor="teacher-select" className="full-height">
-                  <Typography color="#b4b7c3">Учителя</Typography>
+                <label
+                  htmlFor="course-select"
+                  className="flex items-center full-height"
+                >
+                  <Typography color="#b4b7c3">Статус</Typography>
+                  <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
+                    {(selectedStatuses.length < 1 ||
+                      selectedStatuses.length === statuses.length) &&
+                      "Все"}
+                  </span>
                 </label>
                 <SelectStyled
-                  id="teacher-select"
+                  id="status-select"
                   autoWidth
+                  multiple
+                  value={selectedStatuses}
+                  onChange={handleChangeStatus}
+                  renderValue={(selected) => {
+                    if (selected.length > 1) {
+                      if (selected.length === statuses.length) {
+                        return "";
+                      }
+                      return "..."; // Render "..." if multiple courses are selected
+                    }
+                    return selected;
+                  }}
                   IconComponent={
-                    Boolean(anchorTeacher) ? Icons.ArrowUBold : Icons.ArrowDBold
+                    Boolean(anchorStatus) ? Icons.ArrowUBold : Icons.ArrowDBold
                   }
-                  defaultValue={0}
-                  onClose={handleCloseTeacherSelect}
+                  onClose={handleCloseCourseSelect}
                   MenuProps={{
                     ...customMenuProps,
-                    anchorEl: anchorTeacher,
-                    open: Boolean(anchorTeacher),
-                    onClose: handleCloseTeacherSelect,
+                    anchorEl: anchorStatus,
+                    open: Boolean(anchorStatus),
+                    onClose: handleCloseStatusSelect,
                   }}
                   sx={{
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  <MenuItem value={0}>Все</MenuItem>
-                  <MenuItem value={1}>Eshmatov Toshmat</MenuItem>
-                  <MenuItem value={2}>Aliyev Shohrux</MenuItem>
-                  <MenuItem value={3}>Azizova Aziza</MenuItem>
+                  {statuses.map((status, i) => (
+                    <MenuItem value={status} key={i}>
+                      <CustomCheckbox
+                        checked={selectedStatuses.indexOf(status) > -1}
+                      />
+                      <ListItemText primary={status} />
+                    </MenuItem>
+                  ))}
                 </SelectStyled>
               </HeaderDiv>
               <HeaderDiv
@@ -420,16 +285,27 @@ const Groups = () => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <ButtonStyled
-              variant="contained"
-              color="purpleBlue"
-              onClick={handleClickOpen}
-            >
-              <div className="flex items-center gap-xs">
-                <Icons.AddCircle />
-                <span>Создать группу</span>
+            <ButtonStyled variant="outlined" color="purpleBlue">
+              <div className="flex items-center gap-x3s">
+                <Icons.InboxIn />
+                <span>Скачать список</span>
               </div>
             </ButtonStyled>
+            <Link to={routes.CABINET + routes.LEADS + routes.NEW}>
+              <ButtonStyled variant="contained" color="purpleBlue">
+                <div className="flex items-center gap-x3s">
+                  <Icons.UserAdd />
+                  <span>добавить лида</span>
+                </div>
+              </ButtonStyled>
+            </Link>
+            {/* <ButtonStyled
+              variant="outlined"
+              color="purpleBlue"
+              sx={{ minWidth: "0" }}
+            >
+              <Icons.MenuDots />
+            </ButtonStyled> */}
           </div>
         </div>
         <Paper
@@ -453,26 +329,18 @@ const Groups = () => {
               spacing={`${12}px`}
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
-              {groups.map((group, i) => (
+              {leads.map((lead, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <GroupCard
-                    {...groups[i]}
-                    handleDeleteGroup={handleDeleteGroup}
-                  />
+                  {/* <StudentCard {...lead} handleDeleteLead={handleDeleteLead} /> */}
+                  <div>LEAD CARD</div>
                 </Grid>
               ))}
             </Grid>
           </div>
         </Paper>
       </Main>
-
-      <NewGroupDialog
-        open={open}
-        handleClose={handleClose}
-        handleAddGroup={handleAddGroup}
-      />
     </Root>
   );
 };
 
-export default Groups;
+export default LeadsMain;

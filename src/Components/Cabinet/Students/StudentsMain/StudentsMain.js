@@ -47,52 +47,13 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   border: "1px solid #E5E7EB",
 }));
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
-
-export function createStudent({
-  id = uuidv4(),
-  name = "Azizova Aziza",
-  field = "Front-end",
-  techs = ["React", "UI/UX", "Node.js", "Ruby on Rails", "Vue.js"],
-  contactNumber = "998987654321",
-  email = "example@gmail.com",
-  group = "Front-end GR1214-21",
-  teacher = "Eshmatov Toshmat",
-  startDate = new Date(2024, 4, 3),
-  endDate = new Date(2024, 10, 3),
-  balance = 1120000,
-} = {}) {
-  return {
-    id,
-    name,
-    field,
-    techs,
-    contactNumber,
-    email,
-    group,
-    teacher,
-    startDate,
-    endDate,
-    balance,
-  };
-}
-
 const StudentsMain = ({ students, handleDeleteStudent }) => {
-  const [open, setOpen] = useState(false);
-
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
@@ -124,22 +85,14 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <ButtonStyled
-              variant="outlined"
-              color="purpleBlue"
-              onClick={handleClickOpen}
-            >
+            <ButtonStyled variant="outlined" color="purpleBlue">
               <div className="flex items-center gap-x3s">
                 <Icons.InboxIn />
                 <span>Скачать список</span>
               </div>
             </ButtonStyled>
             <Link to={routes.CABINET + routes.STUDENTS + routes.NEW}>
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                onClick={handleClickOpen}
-              >
+              <ButtonStyled variant="contained" color="purpleBlue">
                 <div className="flex items-center gap-x3s">
                   <Icons.UserAdd />
                   <span>добавить ученика</span>
@@ -150,7 +103,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             <ButtonStyled
               variant="outlined"
               color="purpleBlue"
-              onClick={handleClickOpen}
               sx={{ minWidth: "0" }}
             >
               <Icons.MenuDots />
@@ -190,12 +142,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
           </div>
         </Paper>
       </Main>
-
-      {/* <NewCourseDialog
-        open={open}
-        handleClose={handleClose}
-        handleAddCourse={handleAddStudent}
-      /> */}
     </Root>
   );
 };

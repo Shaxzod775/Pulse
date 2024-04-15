@@ -76,7 +76,7 @@ const Teachers = () => {
       <Route path={routes.NEW} element={<NewTeacher />} />
       <Route
         path="*"
-        element={<Navigate to={routes.CABINET + routes.DASHBOARD} replace />}
+        element={<Navigate to={routes.CABINET + routes.TEACHERS} replace />}
       />
     </Routes>
   );

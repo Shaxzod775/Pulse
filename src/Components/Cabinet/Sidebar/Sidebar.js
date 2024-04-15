@@ -109,6 +109,11 @@ const Sidebar = () => {
       icon: Icons.Notebook,
       text: "Курсы",
     },
+    {
+      link: routes.CABINET + routes.LEADS,
+      icon: Icons.Group,
+      text: "Лиды",
+    },
   ];
 
   return (
