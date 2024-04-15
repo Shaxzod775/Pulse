@@ -106,6 +106,7 @@ export const theme = createTheme({
       darkBlue: "#1C274C",
       mediumaquamarine: "#89CCB5",
       aqua: "#00988F",
+      lightGrey: "#AEB2BA",
     },
   },
   shape: {

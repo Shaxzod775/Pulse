@@ -33,6 +33,7 @@ import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { Icons } from "../../../../Assets/Icons/icons";
+import LeadCard from "../LeadCard/LeadCard";
 
 const customMenuProps = {
   // onClick: (e) => e.stopPropagation(),
@@ -331,8 +332,8 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
             >
               {leads.map((lead, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  {/* <StudentCard {...lead} handleDeleteLead={handleDeleteLead} /> */}
-                  <div>LEAD CARD</div>
+                  <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
+                  {/* <div>LEAD CARD</div> */}
                 </Grid>
               ))}
             </Grid>

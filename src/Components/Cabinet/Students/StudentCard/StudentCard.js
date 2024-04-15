@@ -52,7 +52,7 @@ const StudentCard = ({ id, handleDeleteStudent }) => {
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
               <CardText>Azizova Aziza</CardText>
-              <CardText color="gray">Front-end, UI/UX</CardText>
+              <CardText color="#AEB2BA">Front-end, UI/UX</CardText>
             </div>
           </div>
           <IconButton

@@ -1,29 +1,24 @@
 import React from "react";
-import * as routes from "../../../../Constants/routes";
 import {
   Button,
-  IconButton,
   CardContent,
   CardMedia,
   Divider,
   Typography,
   Menu,
   MenuItem,
+  IconButton,
   styled,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  theme,
-  CardStyled,
-  ButtonStyled,
-  MenuStyled,
-} from "../../CabinetStyles";
+import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
+import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 
 const CardText = styled(Typography)(
@@ -34,7 +29,7 @@ const CardText = styled(Typography)(
   })
 );
 
-const TeacherCard = ({ id, handleDeleteTeacher }) => {
+const LeadCard = ({ id, handleDeleteLead }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -48,23 +43,18 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
     <Card>
       <div className="flex flex-col gap-xxs">
         <div className="flex justify-between items-start">
-          {/* <Link
-            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
-            className="link"
-          > */}
           <div
-            className="flex gap-xxs2 items-center cursor-pointer"
+            className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
-              navigate(routes.CABINET + routes.TEACHERS + routes.PROFILE)
+              navigate(routes.CABINET + routes.LEADS + routes.PROFILE)
             }
           >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <CardText>Eshmatov Toshmat</CardText>
-              <CardText color="#AEB2BA">Front-end, UI/UX</CardText>
+              <CardText>Azizova Aziza</CardText>
+              <CardText color="#AEB2BA">Today 12:40</CardText>
             </div>
           </div>
-          {/* </Link> */}
           <IconButton
             color="purpleBlue"
             aria-controls={open ? "dots-menu" : undefined}
@@ -86,7 +76,7 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose} disableRipple>
-              <Link to={routes.CABINET + routes.TEACHERS + routes.PROFILE}>
+              <Link to={routes.CABINET + routes.LEADS + routes.PROFILE}>
                 <ButtonStyled color="purpleBlue">
                   <Icons.Pen />
                   <span>Изменить профиль</span>
@@ -96,7 +86,7 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
             <MenuItem onClick={handleClose} disableRipple>
               <ButtonStyled
                 color="crimson"
-                onClick={() => handleDeleteTeacher(id)}
+                onClick={() => handleDeleteLead(id)}
               >
                 <Icons.TrashCan />
                 <span>Удалить из списка</span>
@@ -109,28 +99,14 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
           <Icons.Phone />
           <CardText>+998 (98) 765-43-21</CardText>
         </InfoLine>
-        <div className="flex gap-xs">
-          <InfoLine>
-            <Icons.Documents />
-            <CardText>Групп: 6</CardText>
-          </InfoLine>
-          <InfoLine>
-            <Icons.Group />
-            <CardText>222</CardText>
-          </InfoLine>
-        </div>
         <InfoLine>
-          <Icons.CalendarDateContained />
-          <CardText>01.01.2024</CardText>
+          <Icons.Messages />
+          <CardText>example@gmail.com</CardText>
         </InfoLine>
         <Divider />
-        <InfoLine>
-          <Icons.Location />
-          <CardText>IT Park Tashkent</CardText>
-        </InfoLine>
       </div>
     </Card>
   );
 };
 
-export default TeacherCard;
+export default LeadCard;
