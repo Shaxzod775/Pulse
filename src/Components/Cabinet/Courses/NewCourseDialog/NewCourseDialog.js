@@ -31,7 +31,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   borderRadius: theme.custom.spacing.xxs,
   border:
     variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
-  padding: theme.custom.spacing.xxs,
+  padding: "10px 40px",
   font: "inherit",
   fontWeight: "400",
   textTransform: "capitalize",
@@ -373,8 +373,11 @@ const NewCourseDialog = ({
                     </SquareContainer>
                   )}
                 </Dropzone>
-                <div className="full-width flex gap-md">
-                  <div className="full-width full-height">
+                <div className="full-width flex justify-between gap-sm">
+                  <div
+                    className="full-width full-height"
+                    style={{ width: "60%" }}
+                  >
                     <Title fontSize="1.375rem" letterSpacing="0.32px">
                       Обложка группы
                     </Title>
@@ -387,7 +390,10 @@ const NewCourseDialog = ({
                       загрузить PNG или JPG размером менее 10 МБ
                     </Typography>
                   </div>
-                  <div className="flex flex-col gap-xxs">
+                  <div
+                    className="flex flex-col gap-xxs"
+                    style={{ width: "40%" }}
+                  >
                     <DialogButton
                       onClick={handleUploadClick}
                       variant="contained"
@@ -399,9 +405,9 @@ const NewCourseDialog = ({
                       <DialogButton
                         onClick={() => setSelectedImage()}
                         variant="outlined"
-                        color="crimson"
+                        color="purpleBlue"
                       >
-                        Удалить
+                        Удалить обложку
                       </DialogButton>
                     )}
                   </div>

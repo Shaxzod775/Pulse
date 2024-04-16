@@ -83,10 +83,9 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   borderRadius: theme.custom.spacing.xxs,
   border:
     variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
-  padding: theme.custom.spacing.xxs,
+  padding: "10px 40px",
   font: "inherit",
-  fontSize: theme.typography.fontSize.sm,
-  lineHeight: theme.typography.fontSize.sm,
+  fontWeight: "400",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
@@ -415,9 +414,9 @@ const NewGroupDialog = ({
                       <DialogButton
                         onClick={() => setSelectedImage()}
                         variant="outlined"
-                        color="crimson"
+                        color="purpleBlue"
                       >
-                        Удалить
+                        Удалить обложку
                       </DialogButton>
                     )}
                   </div>
