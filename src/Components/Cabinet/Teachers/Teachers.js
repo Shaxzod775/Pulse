@@ -6,7 +6,12 @@ import TeachersMain from "./TeachersMain/TeachersMain";
 import NewTeacher from "./NewTeacher/NewTeacher";
 import TeacherProfile from "./TeacherProfile/TeacherProfile";
 
-const teacherNames = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teacherNames = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 
 export function createTeacher({
   id = uuidv4(),
@@ -39,18 +44,18 @@ const Teachers = () => {
     createTeacher({ name: teacherNames[0], groups: 12 }),
     createTeacher({ name: teacherNames[1], groups: 4 }),
     createTeacher({ name: teacherNames[2], groups: 6 }),
+    createTeacher({ name: teacherNames[3], groups: 12 }),
+    createTeacher({ name: teacherNames[1], groups: 4 }),
+    createTeacher({ name: teacherNames[2], groups: 6 }),
+    createTeacher({ name: teacherNames[3], groups: 12 }),
+    createTeacher({ name: teacherNames[1], groups: 4 }),
     createTeacher({ name: teacherNames[0], groups: 12 }),
     createTeacher({ name: teacherNames[1], groups: 4 }),
+    createTeacher({ name: teacherNames[3], groups: 4 }),
     createTeacher({ name: teacherNames[2], groups: 6 }),
     createTeacher({ name: teacherNames[0], groups: 12 }),
     createTeacher({ name: teacherNames[1], groups: 4 }),
-    createTeacher({ name: teacherNames[0], groups: 12 }),
-    createTeacher({ name: teacherNames[1], groups: 4 }),
-    createTeacher({ name: teacherNames[1], groups: 4 }),
-    createTeacher({ name: teacherNames[2], groups: 6 }),
-    createTeacher({ name: teacherNames[0], groups: 12 }),
-    createTeacher({ name: teacherNames[1], groups: 4 }),
-    createTeacher({ name: teacherNames[0], groups: 12 }),
+    createTeacher({ name: teacherNames[3], groups: 12 }),
   ]);
 
   const handleAddTeacher = (newGroup) => {

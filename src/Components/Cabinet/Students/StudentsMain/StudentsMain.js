@@ -32,7 +32,6 @@ import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import StudentCard from "../StudentCard/StudentCard";
-import NewCourseDialog from "../../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../../Assets/Icons/icons";
 
 const headerItemStyles = ({ theme }) => ({

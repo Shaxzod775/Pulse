@@ -22,7 +22,12 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   border: "1px solid #E5E7EB",
 }));
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teachers = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 const techs = [
   "JavaScript",
   "Django",
@@ -149,7 +154,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {teachers.map((teacher, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <Grid item xs="auto" md="auto" lg={2.4} key={i}>
                   <TeacherCard
                     {...teacher}
                     handleDeleteTeacher={handleDeleteTeacher}

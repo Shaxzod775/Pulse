@@ -201,7 +201,7 @@ NumericFormatCustom.propTypes = {
 const Groups = () => {
   const [anchorTeacher, setAnchorTeacher] = useState(null);
   const [anchorCourse, setAnchorCourse] = useState(null);
-  const [selectedCourses, setSelectedCourses] = React.useState([]);
+  const [selectedCourses, setSelectedCourses] = useState([]);
 
   const handleChangeCourse = (event) => {
     const {

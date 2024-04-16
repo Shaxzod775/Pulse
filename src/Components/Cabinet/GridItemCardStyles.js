@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
 
 export const Card = styled("div")(({ theme }) => ({
+  height: "100%",
   padding: "14px",
   borderRadius: 10,
   backgroundColor: "#fff",

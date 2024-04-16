@@ -6,7 +6,12 @@ import * as routes from "../../../Constants/routes";
 import NewStudent from "./NewStudent/NewStudent";
 import StudentProfile from "./StudentProfile/StudentProfile";
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teachers = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 
 export function createStudent({
   id = uuidv4(),

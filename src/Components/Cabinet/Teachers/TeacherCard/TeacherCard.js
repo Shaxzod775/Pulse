@@ -26,15 +26,7 @@ import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { Link, useNavigate } from "react-router-dom";
 
-const CardText = styled(Typography)(
-  ({ theme, fontFamily = "Poppins, Rubik, sans-serif" }) => ({
-    fontFamily: fontFamily,
-    fontSize: theme.typography.fontSize.xxs,
-    lineHeight: "normal",
-  })
-);
-
-const TeacherCard = ({ id, handleDeleteTeacher }) => {
+const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -60,8 +52,12 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
           >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <CardText>Eshmatov Toshmat</CardText>
-              <CardText color="#AEB2BA">Front-end, UI/UX</CardText>
+              <Typography fontWeight={600} letterSpacing="0.48px">
+                {name}
+              </Typography>
+              <Typography color="#AEB2BA" fontWeight={400}>
+                Front-end, UI/UX
+              </Typography>
             </div>
           </div>
           {/* </Link> */}
@@ -89,7 +85,7 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
               <Link to={routes.CABINET + routes.TEACHERS + routes.PROFILE}>
                 <ButtonStyled color="purpleBlue">
                   <Icons.Pen />
-                  <span>Изменить профиль</span>
+                  <Typography fontWeight={400}>Изменить профиль</Typography>
                 </ButtonStyled>
               </Link>
             </MenuItem>
@@ -99,7 +95,7 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
                 onClick={() => handleDeleteTeacher(id)}
               >
                 <Icons.TrashCan />
-                <span>Удалить из списка</span>
+                <Typography fontWeight={400}>Удалить из списка</Typography>
               </ButtonStyled>
             </MenuItem>
           </MenuStyled>
@@ -107,26 +103,26 @@ const TeacherCard = ({ id, handleDeleteTeacher }) => {
         <Divider />
         <InfoLine>
           <Icons.Phone />
-          <CardText>+998 (98) 765-43-21</CardText>
+          <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
         </InfoLine>
         <div className="flex gap-xs">
           <InfoLine>
             <Icons.Documents />
-            <CardText>Групп: 6</CardText>
+            <Typography fontWeight={400}>Групп: 6</Typography>
           </InfoLine>
           <InfoLine>
             <Icons.Group />
-            <CardText>222</CardText>
+            <Typography>222</Typography>
           </InfoLine>
         </div>
         <InfoLine>
           <Icons.CalendarDateContained />
-          <CardText>01.01.2024</CardText>
+          <Typography>01.01.2024</Typography>
         </InfoLine>
         <Divider />
         <InfoLine>
           <Icons.Location />
-          <CardText>IT Park Tashkent</CardText>
+          <Typography>IT Park Tashkent</Typography>
         </InfoLine>
       </div>
     </Card>

@@ -127,6 +127,7 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
+          fontSize: "inherit",
           fontFamily: "Poppins, Rubik, sans-serif",
           fontWeight: "500",
         },
@@ -483,6 +484,7 @@ export const MenuStyled = styled((props) => (
         gap: "8px",
         alignItems: "center",
         span: { fontSize: "14px", lineHeight: "20px" },
+        ".MuiTypography-root": { fontSize: "14px", lineHeight: "20px" },
       },
       "& .MuiSvgIcon-root": {
         fontSize: 20,
