@@ -8,8 +8,10 @@ import {
   TextField,
   Autocomplete,
   Menu,
+  FormControl,
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
+import { BorderColor } from "@mui/icons-material";
 
 export const theme = createTheme({
   palette: {
@@ -410,14 +412,23 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   },
 }));
 
+export const FormControlStyled = styled(FormControl)(({ theme }) => ({
+  border: "1px solid #E5E7EB",
+  borderRadius: "8px",
+}));
+
 export const TextFieldStyled = styled(TextField)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
   "& .MuiInputBase-root": {
-    borderRadius: "8px",
-    "& .MuiInputBase-input": {
+    minHeight: "50px",
+    ".MuiInputBase-input": {
       padding: "12px",
+    },
+    ".MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #E5E7EB",
+      boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08)",
     },
   },
   "& .MuiFormHelperText-root": {
@@ -429,22 +440,27 @@ export const TextFieldStyled = styled(TextField)(({ theme }) => ({
 
 export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
-  fontSize: theme.typography.fontSize.sm,
+  fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.md,
   color: "inherit",
   "& .MuiInputBase-root": {
+    minHeight: "50px",
     padding: "0",
-  },
-  "& .MuiInputBase-root .MuiInputBase-input": {
-    fontFamily: "inherit",
-    padding: "8px",
+    ".MuiInputBase-input": {
+      fontFamily: "inherit",
+      padding: "8px",
+    },
+    ".MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #E5E7EB",
+      boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08)",
+    },
   },
   "& .MuiSvgIcon-root": {
     width: theme.custom.spacing.sm,
     height: "auto",
   },
   "& .MuiAutocomplete-endAdornment": {
-    top: "6px",
+    top: "10px",
   },
 }));
 

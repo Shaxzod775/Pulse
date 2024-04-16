@@ -77,6 +77,7 @@ const FormLabel = styled(Typography)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   lineHeight: "normal",
   paddingBottom: "12px",
+  letterSpacing: "0.32px",
   fontWeight: "600",
 }));
 
@@ -181,8 +182,8 @@ const NewGroupDialog = ({
         fontFamily: "Rubik",
         "& .MuiPaper-root.MuiDialog-paper": {
           borderRadius: `${theme.custom.spacing.sm}px`,
-          maxWidth: "957px",
-          width: "957px",
+          maxWidth: "924px",
+          width: "924px",
         },
         // "& *": {
         //   boxSizing: "border-box",
@@ -241,8 +242,8 @@ const NewGroupDialog = ({
                   </div>
                 </div>
               </div>
-              <div className="full-width flex gap-sm">
-                <div className="flex flex-grow flex-col gap-sm">
+              <div className="full-width flex justify-between gap-sm">
+                <div className="flex flex-col gap-sm" style={{ width: "40%" }}>
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="name">
                       <FormLabel>Название группы*</FormLabel>
@@ -296,7 +297,7 @@ const NewGroupDialog = ({
                     />
                   </FormControl>
                 </div>
-                <div className="flex flex-grow gap-sm">
+                <div className="flex gap-sm" style={{ width: "60%" }}>
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="date-start">
                       <FormLabel>Дата начала</FormLabel>
