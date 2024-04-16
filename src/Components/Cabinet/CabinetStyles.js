@@ -426,11 +426,12 @@ export const TextFieldStyled = styled(TextField)(({ theme }) => ({
     borderRadius: "8px",
     ".MuiInputBase-input": {
       padding: "12px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
     },
-    ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:active .MuiOutlinedInput-notchedOutline":
+    ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
       {
-        border: "1px solid #E5E7EB",
-        boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08)",
+        border: "1px solid #E5E7EB !important",
+        boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
       },
   },
   "& .MuiFormHelperText-root": {
@@ -452,10 +453,10 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
       fontFamily: "inherit",
       padding: "12px",
     },
-    ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:active .MuiOutlinedInput-notchedOutline":
+    ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
       {
-        border: "1px solid #E5E7EB",
-        boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08)",
+        border: "1px solid #E5E7EB !important",
+        boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
       },
   },
   "& .MuiSvgIcon-root": {

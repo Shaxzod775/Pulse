@@ -7,7 +7,9 @@ import {
   DialogContent,
   FormControl,
   InputAdornment,
+  InputBase,
   MenuItem,
+  OutlinedInput,
   Select,
   TextField,
   Typography,
@@ -58,6 +60,23 @@ const rainbowCycle = keyframes`
   }
 `;
 
+const timeInputStyles = {
+  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+    textAlign: "center",
+    fontWeight: "500",
+    height: "100%",
+    width: "100%",
+    "::placeholder": { color: "#D1D5DB", opacity: "1" },
+  },
+  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+    "-webkit-appearance": "none",
+    margin: 0,
+  },
+  "& input[type=number]": {
+    "-moz-appearance": "textfield",
+  },
+};
+
 const DialogButton = styled(Button)(({ theme }) => ({
   minWidth: "150px",
   borderRadius: theme.custom.spacing.xxs,
@@ -69,8 +88,6 @@ const DialogButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
-
-const subjects = ["Front-end", "Back-end", "UI/UX", "Flutter", "IT English"];
 
 const FormLabel = styled(Typography)(({ theme }) => ({
   padding: "0",
@@ -85,6 +102,10 @@ const FormLabel = styled(Typography)(({ theme }) => ({
 const AutocompleteField = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-root": {
     borderRadius: "8px",
+    ".MuiInputBase-input": {
+      padding: "12px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
   },
 }));
 
@@ -135,7 +156,7 @@ function TagCheckbox({
         boxShadow: "none",
         "&:hover": { boxShadow: "none" },
         minWidth: "44px",
-        minWidth: "44px",
+        minHeight: "44px",
         padding: "10px",
         lineHeight: "inherit",
         border: `${
@@ -163,6 +184,13 @@ function TagCheckbox({
 }
 
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+const subjects = ["Front-end", "Back-end", "UI/UX", "Flutter", "IT English"];
+const teacherNames = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 
 const NewGroupDialog = ({
   open,
@@ -172,12 +200,15 @@ const NewGroupDialog = ({
 }) => {
   const [name, changeName, resetName] = useInput("");
   const [subject, changeSubject, resetSubject] = useInput(null);
+  const [teacher, changeTeacher, resetTeacher] = useInput(null);
   const [room, changeRoom, resetRoom] = useInput(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [selectedWeekDays, setSelectedWeekDays] = useState(
     weekDays.map(() => false)
   );
+  const [hoursNumber, setHoursNumber] = useState("");
+  const [minutesNumber, setMinutesNumber] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageSelection = (acceptedFiles) => {
@@ -201,6 +232,16 @@ const NewGroupDialog = ({
     // Simulate file input click event
     const fileInput = document.getElementById("file-upload-input");
     fileInput.click();
+  };
+
+  // Function to handle change in subject selection
+  const handleSubjectChange = (event, newValue) => {
+    changeSubject({ target: { value: newValue } });
+  };
+
+  // Function to handle change in teacher selection
+  const handleTeacherChange = (event, newValue) => {
+    changeTeacher({ target: { value: newValue } });
   };
 
   // Function to handle change in start date
@@ -233,6 +274,42 @@ const NewGroupDialog = ({
     setSelectedWeekDays(updatedSelectedWeekDays);
   };
 
+  // Function to handle change in hours
+  const handleHoursChange = (event) => {
+    let inputValue = parseInt(event.target.value, 10);
+
+    // Ensure the value is between 0 and 23
+    if (isNaN(inputValue) || inputValue < 0) inputValue = 0;
+    if (inputValue > 23) inputValue = 23;
+
+    // Add leading zero for numbers less than 10
+    if (inputValue >= 0 && inputValue < 10) {
+      inputValue = `0${inputValue}`;
+    } else {
+      inputValue = `${inputValue}`;
+    }
+
+    setHoursNumber(inputValue);
+  };
+
+  // Function to handle change in minutes
+  const handleMinutesChange = (event) => {
+    let inputValue = parseInt(event.target.value, 10);
+
+    // Ensure the value is between 0 and 59
+    if (isNaN(inputValue) || inputValue < 0) inputValue = 0;
+    if (inputValue > 59) inputValue = 59;
+
+    // Add leading zero for numbers less than 10
+    if (inputValue >= 0 && inputValue < 10) {
+      inputValue = `0${inputValue}`;
+    } else {
+      inputValue = `${inputValue}`;
+    }
+
+    setMinutesNumber(inputValue);
+  };
+
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -249,13 +326,13 @@ const NewGroupDialog = ({
       startDate: startDate
         ? !isNaN(startDate.getTime())
           ? startDate
-          : new Date(2024, 1, 4)
-        : new Date(2024, 1, 4),
+          : new Date(2024, 3, 2)
+        : new Date(2024, 3, 2),
       endDate: endDate
         ? !isNaN(endDate.getTime())
           ? endDate
-          : new Date(2024, 1, 4)
-        : new Date(2024, 1, 4),
+          : new Date(2024, 3, 2)
+        : new Date(2024, 3, 2),
       thumbnail,
     });
     handleAddGroup(newGroup);
@@ -340,7 +417,11 @@ const NewGroupDialog = ({
                     <label htmlFor="name">
                       <FormLabel>Название группы*</FormLabel>
                     </label>
-                    <TextFieldStyled id="name" variant="outlined" />
+                    <TextFieldStyled
+                      id="name"
+                      variant="outlined"
+                      placeholder="Name"
+                    />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="subject">
@@ -349,12 +430,13 @@ const NewGroupDialog = ({
                     <AutocompleteStyled
                       options={subjects}
                       value={subject}
-                      // onChange={handleTeacherChange}
+                      onChange={handleSubjectChange}
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}
                           id="subject"
                           variant="outlined"
+                          placeholder="Выберите предмет"
                         />
                       )}
                       popupIcon={
@@ -378,6 +460,7 @@ const NewGroupDialog = ({
                           {...params}
                           id="teacher"
                           variant="outlined"
+                          placeholder="Выберите кабинет"
                         />
                       )}
                       popupIcon={
@@ -420,23 +503,95 @@ const NewGroupDialog = ({
                       />
                     </FormControl>
                   </div>
-
                   <div>
                     <label htmlFor="week-days">
                       <FormLabel>Дни недели:</FormLabel>
                     </label>
-                    <div className="flex gap-xxs">
-                      {weekDays.map((weekDay, i) => (
-                        <TagCheckbox
-                          key={i}
-                          color="purpleBlue"
-                          selected={selectedWeekDays[i]}
-                          onClick={() => handleSelectWeekDays(i)}
-                        >
-                          {weekDay}
-                        </TagCheckbox>
-                      ))}
+                    <div className="flex gap-sm">
+                      <div className="flex items-start gap-xxs">
+                        {weekDays.map((weekDay, i) => (
+                          <TagCheckbox
+                            key={i}
+                            color="purpleBlue"
+                            selected={selectedWeekDays[i]}
+                            onClick={() => handleSelectWeekDays(i)}
+                          >
+                            {weekDay}
+                          </TagCheckbox>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-xxs2">
+                        <FormControl variant="outlined">
+                          <Box
+                            sx={{
+                              aspectRatio: 1,
+                              maxWidth: "50px",
+                              maxHeight: "50px",
+                            }}
+                          >
+                            <TextFieldStyled
+                              type="number"
+                              id="name"
+                              variant="outlined"
+                              placeholder="00"
+                              value={hoursNumber}
+                              onChange={handleHoursChange}
+                              sx={timeInputStyles}
+                            />
+                          </Box>
+                        </FormControl>
+                        <Typography color="#D1D5DB">:</Typography>
+                        <FormControl variant="outlined">
+                          <Box
+                            sx={{
+                              aspectRatio: 1,
+                              maxWidth: "50px",
+                              maxHeight: "50px",
+                            }}
+                          >
+                            <TextFieldStyled
+                              type="number"
+                              id="name"
+                              variant="outlined"
+                              placeholder="00"
+                              value={minutesNumber}
+                              onChange={handleMinutesChange}
+                              sx={timeInputStyles}
+                            />
+                          </Box>
+                        </FormControl>
+                      </div>
                     </div>
+                  </div>
+                  <div style={{ maxWidth: "66.66%" }}>
+                    <FormControl fullWidth variant="outlined">
+                      <label htmlFor="subject">
+                        <FormLabel>Выберите учителя</FormLabel>
+                      </label>
+                      <AutocompleteStyled
+                        options={teacherNames}
+                        value={teacher}
+                        onChange={handleTeacherChange}
+                        renderInput={(params) => (
+                          <AutocompleteField
+                            {...params}
+                            id="subject"
+                            variant="outlined"
+                            placeholder="Выберите учителя"
+                          />
+                        )}
+                        popupIcon={
+                          <Icons.ArrowD
+                            color={theme.typography.color.darkBlue}
+                          />
+                        }
+                        clearIcon={
+                          <Icons.Delete
+                            color={theme.typography.color.darkBlue}
+                          />
+                        }
+                      />
+                    </FormControl>
                   </div>
                 </div>
               </div>
