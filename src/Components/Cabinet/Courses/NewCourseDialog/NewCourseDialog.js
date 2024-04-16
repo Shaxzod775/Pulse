@@ -7,6 +7,7 @@ import {
   FormControl,
   InputAdornment,
   TextField,
+  Typography,
   duration,
   styled,
 } from "@mui/material";
@@ -22,16 +23,30 @@ import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { createCourse } from "../Courses";
 import useInput from "../../../../hooks/useInput";
+import Dropzone from "react-dropzone";
 
-const DialogButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.custom.spacing.sm,
+const DialogButton = styled(Button)(({ theme, variant, color }) => ({
+  minHeight: "44px",
+  minWidth: "150px",
+  borderRadius: theme.custom.spacing.xxs,
+  border:
+    variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
   padding: theme.custom.spacing.xxs,
   font: "inherit",
-  fontSize: theme.typography.fontSize.sm,
-  lineHeight: theme.typography.fontSize.sm,
+  fontWeight: "400",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
+}));
+
+const FormLabel = styled(Typography)(({ theme }) => ({
+  padding: "0",
+  color: theme.typography.color.darkBlue,
+  fontSize: theme.typography.fontSize.xs,
+  lineHeight: "normal",
+  paddingBottom: "12px",
+  letterSpacing: "0.32px",
+  fontWeight: "600",
 }));
 
 function TagCheckbox({
@@ -65,6 +80,32 @@ function TagCheckbox({
     </Button>
   );
 }
+
+const SquareContainer = styled("div")(
+  ({ theme, width, height = 160, bgColor = "#fff", active }) => ({
+    width: width ? `${width}px` : "100%",
+    height: `${height}px`,
+    backgroundColor: bgColor,
+    borderRadius: "12px",
+    border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
+    overflow: "hidden",
+
+    "& img": {
+      // Set image to cover the entire container
+      width: "100%",
+      height: "100%",
+      objectFit: "cover", // This resizes the image to fit the container
+
+      // Maintain aspect ratio and prevent overflow
+      objectPosition: "center", // Center the image within the container
+    },
+
+    // animation: `${rainbowCycle} 6s ${
+    //   active ? "infinite" : "1"
+    // } alternate ease-in-out`,
+    // animationDelay: active ? "0s" : "3s", // Control animation timing
+  })
+);
 
 const teachers = [
   "Коптлеулов Арслан",
@@ -118,7 +159,7 @@ const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
           },
         });
       }}
-      thousandSeparator
+      thousandSeparator=" "
       valueIsNumericString
     />
   );
@@ -148,9 +189,32 @@ const NewCourseDialog = ({
   });
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
-  const [startDate, setStartDate] = useState(null); // State for start date
-  // State for end date - Calculated based on start date and duration
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageSelection = (acceptedFiles) => {
+    // Assuming acceptedFiles is an array containing file objects
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0]; // Get the first file
+      if (file && file.type.startsWith("image/")) {
+        // Check if it's an image
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setSelectedImage(event.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.error("Please upload an image file.");
+      }
+    }
+  };
+
+  const handleUploadClick = () => {
+    // Simulate file input click event
+    const fileInput = document.getElementById("file-upload-input");
+    fileInput.click();
+  };
 
   // Function to handle selecting week days
   const handleSelectWeekDays = (index) => {
@@ -190,16 +254,19 @@ const NewCourseDialog = ({
     const newStartDate = new Date(inputDate);
     if (!isNaN(newStartDate.getTime())) {
       setStartDate(newStartDate);
-
-      // Calculate end date based on selected duration and new start date
-      if (durationChosen.number > 0) {
-        const newEndDate = new Date(newStartDate);
-        newEndDate.setMonth(newStartDate.getMonth() + durationChosen.number);
-        setEndDate(newEndDate);
-      }
     } else {
       // Handle invalid input date here
       setStartDate(null);
+    }
+  };
+  // Function to handle change in start date
+  const handleEndDateChange = (event) => {
+    const inputDate = event.target.value;
+    const newEndDate = new Date(inputDate);
+    if (!isNaN(newEndDate.getTime())) {
+      setEndDate(newEndDate);
+    } else {
+      // Handle invalid input date here
       setEndDate(null);
     }
   };
@@ -268,11 +335,10 @@ const NewCourseDialog = ({
         onSubmit: (e) => handleSubmit(e),
       }}
       sx={{
-        fontFamily: "Rubik",
         "& .MuiPaper-root.MuiDialog-paper": {
           borderRadius: `${theme.custom.spacing.sm}px`,
-          maxWidth: "957px",
-          width: "957px",
+          maxWidth: "614px",
+          width: "614px",
         },
         // "& *": {
         //   boxSizing: "border-box",
@@ -282,275 +348,80 @@ const NewCourseDialog = ({
       <Root sx={{ width: "100%" }}>
         <DialogContent
           sx={{
-            fontFamily: "Rubik",
-            padding: `${theme.custom.spacing.xlg}px`,
+            padding: `${theme.custom.spacing.lg}px`,
             width: "100%",
           }}
         >
-          <div className="flex flex-col gap-md">
-            {/* DIALOG TITLE */}
-            <Title
-              sx={{
-                fontSize: theme.typography.fontSize.md,
-                color: theme.typography.color.aqua,
-              }}
-            >
-              Новый курс
-            </Title>
+          <div className="flex flex-col gap-sm">
             {/* MAIN CONTENT OF DIALOG */}
-            <div className="full-width flex justify-between gap-sm">
-              {/* LEFT COLUMN */}
+            <div className="full-width flex flex-col gap-lg">
               <div className="full-width flex flex-col gap-sm">
-                <FormControl fullWidth variant="outlined" required>
-                  <label htmlFor="course-name">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
+                <Dropzone onDrop={handleImageSelection}>
+                  {({ getRootProps, getInputProps, isDragActive }) => (
+                    <SquareContainer
+                      {...getRootProps({
+                        active: isDragActive,
+                        className: "flex justify-center items-center",
+                      })}
                     >
-                      Название курса
-                    </Title>
-                  </label>
-                  <TextFieldStyled
-                    id="course-name"
-                    variant="outlined"
-                    value={name}
-                    onChange={changeName}
-                  />
-                </FormControl>
-                <div>
-                  <label htmlFor="week-days">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
-                    >
-                      Дни недели:
-                    </Title>
-                  </label>
-                  <div className="flex gap-xxs">
-                    {weekDays.map((weekDay, i) => (
-                      <TagCheckbox
-                        key={i}
-                        color="darkBlue"
-                        selected={selectedWeekDays[i]}
-                        onClick={() => handleSelectWeekDays(i)}
-                      >
-                        {weekDay}
-                      </TagCheckbox>
-                    ))}
-                  </div>
-                </div>
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="teacher">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
-                    >
-                      Преподаватель
-                    </Title>
-                  </label>
-                  <AutocompleteStyled
-                    options={teachers}
-                    value={teacher}
-                    onChange={handleTeacherChange}
-                    renderInput={(params) => (
-                      <TextField {...params} id="teacher" variant="outlined" />
-                    )}
-                    popupIcon={
-                      <Icons.ArrowD color={theme.typography.color.darkBlue} />
-                    }
-                    clearIcon={
-                      <Icons.Delete color={theme.typography.color.darkBlue} />
-                    }
-                  />
-                </FormControl>
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="techs">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
-                    >
-                      Стек Технологий
-                    </Title>
-                  </label>
-                  <div className="flex flex-col gap-x3s">
-                    <AutocompleteStyled
-                      multiple
-                      options={techs}
-                      value={selectedTechs}
-                      onChange={handleAutocompleteChange}
-                      renderInput={(params) => (
-                        <TextField {...params} id="techs" variant="outlined" />
+                      <input {...getInputProps({ id: "file-upload-input" })} />
+                      {selectedImage ? (
+                        <img src={selectedImage} alt="Uploaded" />
+                      ) : (
+                        <Icons.GalleryAdd />
                       )}
-                      renderTags={() => null}
-                      popupIcon={
-                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
-                      }
-                      clearIcon={
-                        <Icons.Delete color={theme.typography.color.darkBlue} />
-                      }
-                    />
-                    <div className="flex flex-wrap gap-x3s">
-                      {selectedTechs.map((tech, i) => (
-                        <Chip
-                          label={tech}
-                          onDelete={handleDeleteTech(tech)}
-                          key={i}
-                          variant="outlined"
-                          color="darkBlue"
-                          sx={{
-                            borderRadius: `${theme.custom.spacing.xxs}px`,
-                          }}
-                          deleteIcon={
-                            <Icons.Delete
-                              color={theme.typography.color.darkBlue}
-                            />
-                          }
-                        />
-                      ))}
-                    </div>
+                    </SquareContainer>
+                  )}
+                </Dropzone>
+                <div className="full-width flex gap-md">
+                  <div className="full-width full-height">
+                    <Title fontSize="1.375rem" letterSpacing="0.32px">
+                      Обложка группы
+                    </Title>
+                    <Typography
+                      color="#AEB2BA"
+                      fontSize=".8rem"
+                      fontWeight={400}
+                    >
+                      Мы рекомендуем изображения не менее 322 x 179px, вы можете
+                      загрузить PNG или JPG размером менее 10 МБ
+                    </Typography>
                   </div>
-                </FormControl>
-              </div>
-              {/* RIGHT COLUMN */}
-              <div className="full-width flex flex-col gap-sm">
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="price">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
+                  <div className="flex flex-col gap-xxs">
+                    <DialogButton
+                      onClick={handleUploadClick}
+                      variant="contained"
+                      color="purpleBlue"
                     >
-                      Введите цену
-                    </Title>
-                  </label>
-                  <TextFieldStyled
-                    id="price"
-                    variant="outlined"
-                    value={price}
-                    onChange={changePrice}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">so'm</InputAdornment>
-                      ),
-                      inputComponent: NumericFormatCustom,
-                    }}
-                  />
-                </FormControl>
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="description">
-                    <Title
-                      sx={{
-                        fontSize: theme.typography.fontSize.sm2,
-                        paddingBottom: `${theme.custom.spacing.xs2}px`,
-                      }}
-                    >
-                      Описание курса
-                    </Title>
-                  </label>
-                  <TextFieldStyled
-                    id="description"
-                    variant="outlined"
-                    value={description}
-                    onChange={changeDescription}
-                    multiline
-                    rows={4}
-                    sx={{
-                      "& .MuiInputBase-multiline": {
-                        padding: `${theme.custom.spacing.xxs}px ${theme.custom.spacing.sm}px`,
-                        "&.MuiInputBase-root .MuiInputBase-input": {
-                          padding: "0",
-                        },
-                      },
-                    }}
-                  />
-                </FormControl>
-                <div>
-                  <Title
-                    sx={{
-                      fontSize: theme.typography.fontSize.sm2,
-                      paddingBottom: `${theme.custom.spacing.xs2}px`,
-                    }}
-                  >
-                    Теги
-                  </Title>
-                  <div className="flex flex-wrap gap-x3s">
-                    {tags.map((tag, i) => (
-                      <Chip
-                        label={tag}
-                        onDelete={() => handleDeleteTag(tag)}
-                        key={i}
+                      {selectedImage ? "Изменить" : "Загрузить"}
+                    </DialogButton>
+                    {selectedImage && (
+                      <DialogButton
+                        onClick={() => setSelectedImage()}
                         variant="outlined"
-                        color="darkBlue"
-                        sx={{
-                          borderRadius: `${theme.custom.spacing.xxs}px`,
-                        }}
-                        deleteIcon={
-                          <Icons.Delete
-                            color={theme.typography.color.darkBlue}
-                          />
-                        }
-                      />
-                    ))}
-                    {tagFormOpen && (
-                      <FormControl variant="outlined">
-                        <TextFieldStyled
-                          autoFocus
-                          required
-                          onBlur={() => {
-                            setTagFormOpen(!tagFormOpen);
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              setTagFormOpen(false);
-                              handleAddTag(e.target.value);
-                            }
-                          }}
-                          id="info"
-                          variant="outlined"
-                          sx={{
-                            "& .MuiInputBase-input": {
-                              height: theme.typography.fontSize.xs,
-                              fontSize: theme.typography.fontSize.xs,
-                              lineHeight: theme.typography.fontSize.xs,
-                              padding: "8px 11px !important",
-                              color: "",
-                            },
-                          }}
-                        />
-                      </FormControl>
+                        color="crimson"
+                      >
+                        Удалить
+                      </DialogButton>
                     )}
-                    <Chip
-                      label="+"
-                      variant="outlined"
-                      color="darkBlue"
-                      sx={{
-                        borderRadius: `${theme.custom.spacing.xxs}px`,
-                      }}
-                      onClick={() => setTagFormOpen(!tagFormOpen)}
-                    />
                   </div>
                 </div>
-                <div className="full-width flex flex-col justify-between gap-xxs">
+              </div>
+              <div className="flex flex-col gap-xs">
+                <FormControl fullWidth variant="outlined">
+                  <label htmlFor="name">
+                    <FormLabel>Название группы*</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    id="name"
+                    variant="outlined"
+                    placeholder="Name"
+                  />
+                </FormControl>
+                <div className="flex gap-sm">
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="date-start">
-                      <Title
-                        sx={{
-                          fontSize: theme.typography.fontSize.sm2,
-                          paddingBottom: `${theme.custom.spacing.xs2}px`,
-                        }}
-                      >
-                        Начало курса
-                      </Title>
+                      <FormLabel>Дата начала</FormLabel>
                     </label>
                     <TextFieldStyled
                       id="date-start"
@@ -563,66 +434,54 @@ const NewCourseDialog = ({
                     />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
-                    <label htmlFor="date-end">
-                      <Title
-                        sx={{
-                          fontSize: theme.typography.fontSize.sm2,
-                          paddingBottom: `${theme.custom.spacing.xs2}px`,
-                        }}
-                      >
-                        Конец курса
-                      </Title>
+                    <label htmlFor="date-start">
+                      <FormLabel>Дата завершения</FormLabel>
                     </label>
                     <TextFieldStyled
-                      id="date-end"
+                      id="date-start"
                       variant="outlined"
                       type="date"
-                      disabled
                       value={endDate ? endDate.toISOString().split("T")[0] : ""}
+                      onChange={handleEndDateChange}
                     />
                   </FormControl>
-                  <div className="flex flex-wrap gap-x3s">
-                    {durations.map((duration, i) => (
-                      <Chip
-                        label={duration.text}
-                        key={i}
-                        variant={`${
-                          duration.number === durationChosen.number
-                            ? "contained"
-                            : "outlined"
-                        }`}
-                        color="aqua"
-                        sx={{
-                          borderRadius: `${theme.custom.spacing.xxs}px`,
-                          "&:focus": {
-                            boxShadow: "none",
-                          },
-                        }}
-                        onClick={() => handleDurationChange(duration)}
-                      />
-                    ))}
-                  </div>
                 </div>
+                <FormControl fullWidth variant="outlined">
+                  <label htmlFor="price">
+                    <FormLabel>Стоимость курса</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    id="price"
+                    variant="outlined"
+                    value={price}
+                    onChange={changePrice}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">so'm</InputAdornment>
+                      ),
+                      placeholder: "Введите стоимость в UZS",
+                      inputComponent: NumericFormatCustom,
+                    }}
+                  />
+                </FormControl>
               </div>
             </div>
 
             {/* DIALOG ACTIONS */}
-            <div className="full-width flex justify-between gap-sm">
-              <DialogButton
-                type="submit"
-                variant="contained"
-                color="aqua"
-                fullWidth
-              >
-                Сохранить
-              </DialogButton>
+            <div className="full-width flex justify-center gap-sm">
               <DialogButton
                 onClick={handleClose}
                 variant="outlined"
-                color="aqua"
-                fullWidth
+                color="purpleBlue"
               >
                 Отмена
+              </DialogButton>
+              <DialogButton
+                type="submit"
+                variant="contained"
+                color="purpleBlue"
+              >
+                Сохранить
               </DialogButton>
             </div>
           </div>

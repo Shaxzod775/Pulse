@@ -77,9 +77,12 @@ const timeInputStyles = {
   },
 };
 
-const DialogButton = styled(Button)(({ theme }) => ({
+const DialogButton = styled(Button)(({ theme, variant, color }) => ({
+  minHeight: "44px",
   minWidth: "150px",
   borderRadius: theme.custom.spacing.xxs,
+  border:
+    variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
   padding: theme.custom.spacing.xxs,
   font: "inherit",
   fontSize: theme.typography.fontSize.sm,
@@ -348,7 +351,6 @@ const NewGroupDialog = ({
         onSubmit: (e) => handleSubmit(e),
       }}
       sx={{
-        fontFamily: "Rubik",
         "& .MuiPaper-root.MuiDialog-paper": {
           borderRadius: `${theme.custom.spacing.sm}px`,
           maxWidth: "924px",
@@ -362,12 +364,11 @@ const NewGroupDialog = ({
       <Root sx={{ width: "100%" }}>
         <DialogContent
           sx={{
-            fontFamily: "Rubik",
             padding: `${theme.custom.spacing.lg}px`,
             width: "100%",
           }}
         >
-          <div className="flex flex-col gap-md">
+          <div className="flex flex-col gap-lg">
             {/* MAIN CONTENT OF DIALOG */}
             <div className="flex flex-col gap-sm">
               <div className="full-width flex justify-between gap-sm">
@@ -390,7 +391,9 @@ const NewGroupDialog = ({
                 </Dropzone>
                 <div className="full-width flex flex-col">
                   <div className="full-width full-height">
-                    <Title>Обложка группы</Title>
+                    <Title fontSize="1.375rem" letterSpacing="0.32px">
+                      Обложка группы
+                    </Title>
                     <Typography
                       color="#AEB2BA"
                       fontSize={".8rem"}

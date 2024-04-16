@@ -9,6 +9,7 @@ import {
   Autocomplete,
   Menu,
   FormControl,
+  Typography,
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
 import { BorderColor } from "@mui/icons-material";
@@ -320,12 +321,14 @@ export const ContentHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
 }));
 
-export const Title = styled("h1")(({ theme, color, fontWeight, fontSize }) => ({
-  margin: "0",
-  color: color ? color : theme.typography.color.darkBlue,
-  fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
-  fontWeight: fontWeight ? fontWeight : "1000",
-}));
+export const Title = styled(Typography)(
+  ({ theme, color, fontWeight, fontSize }) => ({
+    margin: "0",
+    color: color ? color : theme.typography.color.darkBlue,
+    fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
+    fontWeight: fontWeight ? fontWeight : "1000",
+  })
+);
 
 export const InputLabelStyled = styled(InputLabel)(({ theme }) => ({
   color: theme.typography.color.darkBlue,
