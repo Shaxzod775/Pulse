@@ -181,7 +181,7 @@ const NewCourseDialog = ({
   );
   const [teacher, changeTeacher, resetTeacher] = useInput(null);
   const [selectedTechs, setSelectedTechs] = useState([]);
-  const [price, changePrice, resetPrice] = useInput(0);
+  const [price, changePrice, resetPrice] = useInput("");
   const [description, changeDescription, resetDescription] = useInput("");
   const [durationChosen, setDurationChosen] = useState({
     number: 0,
