@@ -246,8 +246,16 @@ const NewGroupDialog = ({
     const newGroup = createGroup({
       name,
       subject,
-      startDate,
-      endDate,
+      startDate: startDate
+        ? !isNaN(startDate.getTime())
+          ? startDate
+          : new Date(2024, 1, 4)
+        : new Date(2024, 1, 4),
+      endDate: endDate
+        ? !isNaN(endDate.getTime())
+          ? endDate
+          : new Date(2024, 1, 4)
+        : new Date(2024, 1, 4),
       thumbnail,
     });
     handleAddGroup(newGroup);
