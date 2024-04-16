@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Box,
   Button,
   Chip,
   Dialog,
@@ -113,6 +114,56 @@ const SquareContainer = styled("div")(
   })
 );
 
+function TagCheckbox({
+  children,
+  selected,
+  setSelected,
+  variant,
+  ...otherProps
+}) {
+  //I will just seperate variant from other props so it does't interfere with dynamic variant
+  const handleClick = () => {
+    setSelected(!selected);
+  };
+
+  return (
+    <Button
+      variant={selected ? "contained" : "outlined"}
+      onClick={handleClick}
+      sx={{
+        boxSizing: "border-box",
+        boxShadow: "none",
+        "&:hover": { boxShadow: "none" },
+        minWidth: "44px",
+        minWidth: "44px",
+        padding: "10px",
+        lineHeight: "inherit",
+        border: `${
+          selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
+        }`,
+        borderRadius: "10px",
+        textTransform: "none",
+        fontSize: "1rem",
+      }}
+      {...otherProps}
+    >
+      <Box
+        sx={{
+          aspectRatio: 1,
+          lineHeight: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {children}
+      </Box>
+    </Button>
+  );
+}
+
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+
 const NewGroupDialog = ({
   open,
   handleClose,
@@ -124,6 +175,9 @@ const NewGroupDialog = ({
   const [room, changeRoom, resetRoom] = useInput(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [selectedWeekDays, setSelectedWeekDays] = useState(
+    weekDays.map(() => false)
+  );
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageSelection = (acceptedFiles) => {
@@ -149,6 +203,36 @@ const NewGroupDialog = ({
     fileInput.click();
   };
 
+  // Function to handle change in start date
+  const handleStartDateChange = (event) => {
+    const inputDate = event.target.value;
+    const newStartDate = new Date(inputDate);
+    if (!isNaN(newStartDate.getTime())) {
+      setStartDate(newStartDate);
+    } else {
+      // Handle invalid input date here
+      setStartDate(null);
+    }
+  };
+  // Function to handle change in start date
+  const handleEndDateChange = (event) => {
+    const inputDate = event.target.value;
+    const newEndDate = new Date(inputDate);
+    if (!isNaN(newEndDate.getTime())) {
+      setEndDate(newEndDate);
+    } else {
+      // Handle invalid input date here
+      setEndDate(null);
+    }
+  };
+
+  // Function to handle selecting week days
+  const handleSelectWeekDays = (index) => {
+    const updatedSelectedWeekDays = [...selectedWeekDays];
+    updatedSelectedWeekDays[index] = !updatedSelectedWeekDays[index];
+    setSelectedWeekDays(updatedSelectedWeekDays);
+  };
+
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -162,8 +246,8 @@ const NewGroupDialog = ({
     const newGroup = createGroup({
       name,
       subject,
-      startDate: Date(2024, 1, 1),
-      endDate: Date(2024, 1, 1),
+      startDate,
+      endDate,
       thumbnail,
     });
     handleAddGroup(newGroup);
@@ -297,35 +381,55 @@ const NewGroupDialog = ({
                     />
                   </FormControl>
                 </div>
-                <div className="flex gap-sm" style={{ width: "60%" }}>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="date-start">
-                      <FormLabel>Дата начала</FormLabel>
+                <div className="flex flex-col gap-sm" style={{ width: "60%" }}>
+                  <div className="flex gap-sm">
+                    <FormControl fullWidth variant="outlined">
+                      <label htmlFor="date-start">
+                        <FormLabel>Дата начала</FormLabel>
+                      </label>
+                      <TextFieldStyled
+                        id="date-start"
+                        variant="outlined"
+                        type="date"
+                        value={
+                          startDate ? startDate.toISOString().split("T")[0] : ""
+                        }
+                        onChange={handleStartDateChange}
+                      />
+                    </FormControl>
+                    <FormControl fullWidth variant="outlined">
+                      <label htmlFor="date-start">
+                        <FormLabel>Дата завершения</FormLabel>
+                      </label>
+                      <TextFieldStyled
+                        id="date-start"
+                        variant="outlined"
+                        type="date"
+                        value={
+                          endDate ? endDate.toISOString().split("T")[0] : ""
+                        }
+                        onChange={handleEndDateChange}
+                      />
+                    </FormControl>
+                  </div>
+
+                  <div>
+                    <label htmlFor="week-days">
+                      <FormLabel>Дни недели:</FormLabel>
                     </label>
-                    <TextFieldStyled
-                      id="date-start"
-                      variant="outlined"
-                      type="date"
-                      // value={
-                      //   startDate ? startDate.toISOString().split("T")[0] : ""
-                      // }
-                      // onChange={handleStartDateChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="date-start">
-                      <FormLabel>Дата завершения</FormLabel>
-                    </label>
-                    <TextFieldStyled
-                      id="date-start"
-                      variant="outlined"
-                      type="date"
-                      // value={
-                      //   startDate ? startDate.toISOString().split("T")[0] : ""
-                      // }
-                      // onChange={handleStartDateChange}
-                    />
-                  </FormControl>
+                    <div className="flex gap-xxs">
+                      {weekDays.map((weekDay, i) => (
+                        <TagCheckbox
+                          key={i}
+                          color="purpleBlue"
+                          selected={selectedWeekDays[i]}
+                          onClick={() => handleSelectWeekDays(i)}
+                        >
+                          {weekDay}
+                        </TagCheckbox>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
