@@ -19,6 +19,8 @@ import { ReactComponent as Logo } from "./svgs/logo.svg";
 import { ReactComponent as Search } from "./svgs/search.svg";
 import { ReactComponent as Notification } from "./svgs/notification.svg";
 import { ReactComponent as AnnaAvatar } from "./svgs/Avatars/Anna.svg";
+import { ReactComponent as ArslanAvatar } from "./svgs/Avatars/Arslan.svg";
+import { ReactComponent as MariyaAvatar } from "./svgs/Avatars/Mariya.svg";
 import { ReactComponent as SquareDoubleArrowLeft } from "./svgs/squareDoubleArrowLeft.svg";
 import { ReactComponent as Dashboard } from "./svgs/dashboard.svg";
 import { ReactComponent as Diploma } from "./svgs/diploma.svg";
@@ -74,6 +76,8 @@ export const Icons = {
   Search,
   Notification,
   AnnaAvatar,
+  ArslanAvatar,
+  MariyaAvatar,
   SquareDoubleArrowLeft,
   Dashboard,
   Diploma,

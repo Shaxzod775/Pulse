@@ -52,7 +52,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             }
           >
             <div className="flex items-start justify-between">
-              <img
+              {/* <img
                 src={arslanAvatar}
                 alt="Arslan"
                 width={50}
@@ -62,7 +62,8 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
                   objectPosition: "center",
                   borderRadius: "10px",
                 }}
-              />
+              /> */}
+              <Icons.ArslanAvatar />
             </div>
             <div className="flex flex-col justify-around">
               <Typography fontWeight={600} letterSpacing="0.48px">
