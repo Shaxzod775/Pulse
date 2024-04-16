@@ -48,7 +48,7 @@ const GroupCard = ({
   };
   return (
     <Card>
-      <div className="flex flex-col gap-xxs">
+      <div className="flex flex-col gap-xs">
         <img
           src={thumbnail ? thumbnail : groupImage}
           alt="Group"

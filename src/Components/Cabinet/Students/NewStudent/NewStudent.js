@@ -187,9 +187,9 @@ const NewStudent = () => {
             </DialogButton>
           </div>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="flex justify-between gap-md">
           <PaperStyled className="full-width">
-            <div className="flex flex-col gap-sm">
+            <div className="flex flex-col gap-md">
               <div
                 className="flex gap-sm"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
@@ -252,7 +252,7 @@ const NewStudent = () => {
                   Персональная информация
                 </Title>
               </div>
-              <div className="flex flex-col gap-sm">
+              <div className="flex flex-col gap-md">
                 <div>
                   <label>
                     <FormLabel>Имя и Фамилия</FormLabel>
@@ -405,7 +405,7 @@ const NewStudent = () => {
             </div>
           </PaperStyled>
           <PaperStyled className="full-width">
-            <div className="flex flex-col gap-sm">
+            <div className="flex flex-col gap-md">
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>

@@ -20,6 +20,7 @@ import {
 } from "../../CabinetStyles";
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
+import arslanAvatar from "../../../../Assets/Images/Avatars/Arslan.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
@@ -38,24 +39,36 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
   };
   return (
     <Card>
-      <div className="flex flex-col gap-xxs">
+      <div className="flex flex-col gap-xs">
         <div className="flex justify-between items-start">
           {/* <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link"
           > */}
           <div
-            className="flex gap-xxs2 items-center cursor-pointer"
+            className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
               navigate(routes.CABINET + routes.TEACHERS + routes.PROFILE)
             }
           >
-            <Icons.AnnaAvatar />
+            <div className="flex items-start justify-between">
+              <img
+                src={arslanAvatar}
+                alt="Arslan"
+                width={50}
+                height={"auto"}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
             <div className="flex flex-col justify-around">
               <Typography fontWeight={600} letterSpacing="0.48px">
                 {name}
               </Typography>
-              <Typography color="#AEB2BA" fontWeight={400}>
+              <Typography color="#AEB2BA" fontWeight={400} fontSize="0.875rem">
                 Front-end, UI/UX
               </Typography>
             </div>

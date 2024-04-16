@@ -388,7 +388,8 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
           <Grid
             container
             justifyContent="start"
-            spacing={`${12}px`}
+            rowSpacing={`${12}px`}
+            columnSpacing={"32px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
             {["inProgress", "dead", "new", "recycled"].map((leadStatus, i) => (

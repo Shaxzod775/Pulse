@@ -406,7 +406,7 @@ const TeacherProfile = () => {
             </div>
             <div className="flex flex-col gap-md">
               <div className="flex flex-col" style={{ gap: "12px" }}>
-                <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
+                <div className="flex gap-sm" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
                       <ProfileTabHeader

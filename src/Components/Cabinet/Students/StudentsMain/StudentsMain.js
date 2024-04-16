@@ -130,7 +130,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {students.map((student, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <Grid item xs="auto" md="auto" lg={2.4} key={i}>
                   <StudentCard
                     {...student}
                     handleDeleteStudent={handleDeleteStudent}

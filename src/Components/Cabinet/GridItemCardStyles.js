@@ -9,7 +9,7 @@ export const Card = styled("div")(({ theme }) => ({
   "& svg": {
     color: theme.typography.color.purpleBlue,
   },
-  fontSize: theme.typography.fontSize.xxs,
+  fontSize: theme.typography.fontSize.xs,
   "& .font-xxs": {
     fontSize: ".75rem",
   },
@@ -19,7 +19,7 @@ export const InfoLine = styled("div")(({ theme, small }) => ({
   display: "flex",
   alignItems: "center",
   gap: small ? "3px" : "5px",
-  fontSize: small ? ".75rem" : "inherit",
+  fontSize: small ? ".875rem" : "inherit",
   "& svg": {
     width: small ? "20px" : "24px",
     height: "auto",

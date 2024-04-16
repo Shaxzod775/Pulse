@@ -66,7 +66,12 @@ function TagCheckbox({
   );
 }
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teachers = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 const techs = [
   "JavaScript",
   "Django",

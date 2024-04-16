@@ -22,14 +22,6 @@ import { NumericFormat } from "react-number-format";
 import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 
-const CardText = styled(Typography)(
-  ({ theme, fontFamily = "Poppins, Rubik, sans-serif" }) => ({
-    fontFamily: fontFamily,
-    fontSize: theme.typography.fontSize.xxs,
-    lineHeight: "normal",
-  })
-);
-
 const StatusChip = styled((props) => <Chip {...props} />)(
   ({ theme, status }) => ({
     width: "max-content",
@@ -84,8 +76,10 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
           >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <CardText>{name}</CardText>
-              <CardText color="#AEB2BA">Today 12:40</CardText>
+              <Typography fontWeight={600}>{name}</Typography>
+              <Typography color="#AEB2BA" fontSize="0.875rem" fontWeight={400}>
+                Today 12:40
+              </Typography>
             </div>
           </div>
           <IconButton
@@ -130,11 +124,11 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
         <Divider />
         <InfoLine>
           <Icons.Phone />
-          <CardText>+998 (98) 765-43-21</CardText>
+          <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
         </InfoLine>
         <InfoLine>
           <Icons.Messages />
-          <CardText>example@gmail.com</CardText>
+          <Typography fontWeight={400}>example@gmail.com</Typography>
         </InfoLine>
         <Divider />
         <StatusChip label={statusLabel} status={status} />

@@ -737,7 +737,7 @@ const StudentProfile = () => {
             </div>
             <div className="flex flex-col gap-md">
               <div className="flex flex-col gap-xs2">
-                <div className="flex gap-xs" style={{ paddingLeft: "20px" }}>
+                <div className="flex gap-sm" style={{ paddingLeft: "20px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
                       <ProfileTabHeader

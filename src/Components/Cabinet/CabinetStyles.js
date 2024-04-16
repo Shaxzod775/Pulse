@@ -9,6 +9,7 @@ import {
   Autocomplete,
   Menu,
 } from "@mui/material";
+import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
 
 export const theme = createTheme({
   palette: {
@@ -135,7 +136,7 @@ export const theme = createTheme({
     },
   },
   custom: {
-    sidebarOpenWidth: 250,
+    sidebarOpenWidth: SIDEBAR_OPEN_WIDTH,
     spacing: {
       x4s: 3,
       x3s: 5,
@@ -156,7 +157,7 @@ export const Root = styled("div")(({ theme }) => ({
   width: "100%",
   "& *": { fontFamily: "Poppins, Rubik, sans-serif" },
   maxWidth: `calc(100vw - ${
-    theme.custom.sidebarOpenWidth + theme.custom.spacing.sm * 2
+    theme.custom.sidebarOpenWidth + 32 + theme.custom.spacing.sm
   }px)`,
   fontWeight: "500",
   "& *": { fontWeight: "500" },

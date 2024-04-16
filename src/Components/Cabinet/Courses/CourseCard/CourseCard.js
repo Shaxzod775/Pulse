@@ -51,12 +51,10 @@ const CourseCard = ({
 
   return (
     <Card>
-      <div className="flex flex-col gap-xxs">
+      <div className="flex flex-col gap-xs">
         <img src={courseImage} alt="Group" />
         <div className="flex justify-between items-center">
-          <Typography fontSize={theme.typography.fontSize.sm}>
-            {name}
-          </Typography>
+          <Typography fontWeight={600}>{name}</Typography>
           <IconButton
             color="purpleBlue"
             aria-controls={open ? "dots-menu" : undefined}
@@ -64,7 +62,7 @@ const CourseCard = ({
             aria-expanded={open ? "true" : undefined}
             disableElevation
             onClick={handleClick}
-            sx={{ top: "-8px", right: "-8px" }}
+            sx={{ right: "-8px", marginY: "-8px" }}
           >
             <Icons.MenuDots />
           </IconButton>
@@ -109,11 +107,11 @@ const CourseCard = ({
         </div>
         <ButtonStyled
           variant="contained"
-          color="purpleBlue"
+          color="purpleBlueLight"
           sx={{ borderRadius: "20px" }}
         >
           <div className="flex items-center gap-xs">
-            <Typography fontSize={theme.typography.fontSize.xs}>
+            <Typography letterSpacing="0.32px">
               <NumericFormat
                 value={price}
                 displayType="text" // Set to "input" if you want an input field

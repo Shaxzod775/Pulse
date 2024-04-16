@@ -1,4 +1,6 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   CardContent,
@@ -14,22 +16,13 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
+import mariyaAvatar from "../../../../Assets/Images/Avatars/Mariya.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
-import * as routes from "../../../../Constants/routes";
-import { Link, useNavigate } from "react-router-dom";
 
-const CardText = styled(Typography)(
-  ({ theme, fontFamily = "Poppins, Rubik, sans-serif" }) => ({
-    fontFamily: fontFamily,
-    fontSize: theme.typography.fontSize.xxs,
-    lineHeight: "normal",
-  })
-);
-
-const StudentCard = ({ id, handleDeleteStudent }) => {
+const StudentCard = ({ id, name, handleDeleteStudent }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -41,18 +34,39 @@ const StudentCard = ({ id, handleDeleteStudent }) => {
   };
   return (
     <Card>
-      <div className="flex flex-col gap-xxs">
+      <div className="flex flex-col gap-xs">
         <div className="flex justify-between items-start">
           <div
-            className="flex gap-xxs2 items-center cursor-pointer"
+            className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
               navigate(routes.CABINET + routes.STUDENTS + routes.PROFILE)
             }
           >
-            <Icons.AnnaAvatar />
+            <div className="flex items-start justify-between">
+              <img
+                src={mariyaAvatar}
+                alt="Mariya"
+                width={50}
+                height={"auto"}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+
             <div className="flex flex-col justify-around">
-              <CardText>Azizova Aziza</CardText>
-              <CardText color="#AEB2BA">Front-end, UI/UX</CardText>
+              <Typography
+                fontSize="1rem"
+                fontWeight={600}
+                letterSpacing="0.32px"
+              >
+                {name}
+              </Typography>
+              <Typography color="#AEB2BA" fontSize="0.875rem" fontWeight={400}>
+                Front-end, UI/UX
+              </Typography>
             </div>
           </div>
           <IconButton
@@ -97,29 +111,29 @@ const StudentCard = ({ id, handleDeleteStudent }) => {
         <Divider />
         <InfoLine>
           <Icons.Group />
-          <CardText>Группа: Front-end GR1214-21</CardText>
+          <Typography>Группа: UI/UX GR1214-21</Typography>
         </InfoLine>
         <InfoLine>
           <Icons.Phone />
-          <CardText>+998 (98) 765-43-21</CardText>
+          <Typography>+998 (98) 765-43-21</Typography>
         </InfoLine>
         <InfoLine>
           <Icons.Messages />
-          <CardText>example@gmail.com</CardText>
+          <Typography>example@gmail.com</Typography>
         </InfoLine>
         <Divider />
         <InfoLine small>
           <Icons.Documents />
-          <CardText>Учитель: Eshmatov Toshmat</CardText>
+          <Typography>Учитель: Eshmatov Toshmat</Typography>
         </InfoLine>
         <div className="flex gap-xxs">
           <InfoLine small>
             <Icons.ClockDashed />
-            <CardText>01.01.2024</CardText>
+            <Typography>01.01.2024</Typography>
           </InfoLine>
           <InfoLine small>
             <Icons.CalendarDateContained />
-            <CardText>01.07.2024</CardText>
+            <Typography>01.07.2024</Typography>
           </InfoLine>
         </div>
         {/* <ButtonStyled

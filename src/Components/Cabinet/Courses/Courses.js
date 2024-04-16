@@ -81,7 +81,12 @@ function TagCheckbox({
   );
 }
 
-const teachers = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const teachers = [
+  "Коптлеулов Арслан",
+  "Илья Стародубцев",
+  "Азиз Мамаджонов",
+  "Мухаммад Матчонов",
+];
 const techs = [
   "JavaScript",
   "Django",
@@ -245,7 +250,7 @@ const Courses = () => {
             <Grid
               container
               justifyContent="start"
-              spacing={`${12}px`}
+              spacing={`32px`}
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {courses.map((course, i) => (

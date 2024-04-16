@@ -6,16 +6,11 @@ import * as routes from "../../../Constants/routes";
 import NewStudent from "./NewStudent/NewStudent";
 import StudentProfile from "./StudentProfile/StudentProfile";
 
-const teachers = [
-  "Коптлеулов Арслан",
-  "Илья Стародубцев",
-  "Азиз Мамаджонов",
-  "Мухаммад Матчонов",
-];
+const studentNames = ["Madina Azizova", "Mariya Ivanova"];
 
 export function createStudent({
   id = uuidv4(),
-  name = "Azizova Aziza",
+  name = "Aziza Azizova",
   field = "Front-end",
   techs = ["React", "UI/UX", "Node.js", "Ruby on Rails", "Vue.js"],
   contactNumber = "998987654321",
@@ -43,16 +38,16 @@ export function createStudent({
 
 const Students = () => {
   const [students, setStudents] = useState([
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[0], group: "Front-end GR1214-21" }),
-    createStudent({ name: teachers[1], group: "Front-end GR1214-22" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
-    createStudent({ name: teachers[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: studentNames[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: studentNames[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: studentNames[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: studentNames[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: studentNames[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: studentNames[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: studentNames[0], group: "Front-end GR1214-21" }),
+    createStudent({ name: studentNames[1], group: "Front-end GR1214-22" }),
+    createStudent({ name: studentNames[2], group: "Front-end GR1214-23" }),
+    createStudent({ name: studentNames[2], group: "Front-end GR1214-23" }),
   ]);
 
   console.log(students);

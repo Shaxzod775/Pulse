@@ -1,4 +1,4 @@
-export const SIDEBAR_OPEN_WIDTH = 250;
+export const SIDEBAR_OPEN_WIDTH = 248;
 export const SPACING_XS = 15;
 export const SPACING_SM = 20;
 export const SPACING_MD = 30;
