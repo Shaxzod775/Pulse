@@ -70,44 +70,57 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
               </Typography>
             </div>
           </div>
-          <IconButton
-            color="purpleBlue"
-            aria-controls={open ? "dots-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            disableElevation
-            onClick={handleClick}
-            sx={{ top: "-8px", right: "-8px" }}
-          >
-            <Icons.MenuDots />
-          </IconButton>
-          <MenuStyled
-            id="demo-customized-menu"
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
+          <div
+            className="flex items-center justify-between gap-x3s"
+            style={{
+              marginTop: "-8px",
+              marginRight: "-8px",
             }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
           >
-            <MenuItem onClick={handleClose} disableRipple>
-              <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}>
-                <ButtonStyled color="purpleBlue">
-                  <Icons.Pen />
-                  <span>Изменить профиль</span>
+            <Link
+              to={routes.CABINET + routes.STUDENTS + routes.PROFILE}
+              className="link flex items-center justify-center"
+            >
+              <Icons.SquareArrowLeftUp />
+            </Link>
+            <IconButton
+              color="purpleBlue"
+              aria-controls={open ? "dots-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              disableElevation
+              onClick={handleClick}
+            >
+              <Icons.MenuDots />
+            </IconButton>
+            <MenuStyled
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} disableRipple>
+                <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}>
+                  <ButtonStyled color="purpleBlue">
+                    <Icons.Pen />
+                    <span>Изменить профиль</span>
+                  </ButtonStyled>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                <ButtonStyled
+                  color="crimson"
+                  onClick={() => handleDeleteStudent(id)}
+                >
+                  <Icons.TrashCan />
+                  <span>Удалить из списка</span>
                 </ButtonStyled>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
-              <ButtonStyled
-                color="crimson"
-                onClick={() => handleDeleteStudent(id)}
-              >
-                <Icons.TrashCan />
-                <span>Удалить из списка</span>
-              </ButtonStyled>
-            </MenuItem>
-          </MenuStyled>
+              </MenuItem>
+            </MenuStyled>
+          </div>
         </div>
         <Divider />
         <InfoLine>

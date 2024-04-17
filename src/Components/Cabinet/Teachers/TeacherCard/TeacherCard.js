@@ -134,10 +134,18 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
           <Typography>01.01.2024</Typography>
         </InfoLine>
         <Divider />
-        <InfoLine>
-          <Icons.Location />
-          <Typography>IT Park Tashkent</Typography>
-        </InfoLine>
+        <div className="flex justify-between items-center">
+          <InfoLine>
+            <Icons.Location />
+            <Typography>IT Park Tashkent</Typography>
+          </InfoLine>
+          <Link
+            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+            className="link flex items-center justify-center"
+          >
+            <Icons.SquareArrowLeftUp />
+          </Link>
+        </div>
       </div>
     </Card>
   );
