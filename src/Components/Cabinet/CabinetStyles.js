@@ -325,7 +325,8 @@ export const Title = styled(Typography)(
   ({ theme, color, fontWeight, fontSize }) => ({
     margin: "0",
     color: color ? color : theme.typography.color.darkBlue,
-    fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
+    // fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
+    fontSize: "1.375rem",
     fontWeight: fontWeight ? fontWeight : "1000",
   })
 );

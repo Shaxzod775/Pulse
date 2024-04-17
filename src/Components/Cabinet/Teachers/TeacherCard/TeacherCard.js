@@ -39,7 +39,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
   };
   return (
     <Card>
-      <div className="flex flex-col gap-xs">
+      <div className="full-height flex flex-col justify-between gap-xs">
         <div className="flex justify-between items-start">
           {/* <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
@@ -114,37 +114,39 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             </MenuItem>
           </MenuStyled>
         </div>
-        <Divider />
-        <InfoLine>
-          <Icons.Phone />
-          <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
-        </InfoLine>
-        <div className="flex gap-xs">
+        <div className="flex flex-col gap-xs">
+          <Divider />
           <InfoLine>
-            <Icons.Documents />
-            <Typography fontWeight={400}>Групп: 6</Typography>
+            <Icons.Phone />
+            <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
           </InfoLine>
+          <div className="flex gap-xs">
+            <InfoLine>
+              <Icons.Documents />
+              <Typography fontWeight={400}>Групп: 6</Typography>
+            </InfoLine>
+            <InfoLine>
+              <Icons.Group />
+              <Typography>222</Typography>
+            </InfoLine>
+          </div>
           <InfoLine>
-            <Icons.Group />
-            <Typography>222</Typography>
+            <Icons.CalendarDateContained />
+            <Typography>01.01.2024</Typography>
           </InfoLine>
-        </div>
-        <InfoLine>
-          <Icons.CalendarDateContained />
-          <Typography>01.01.2024</Typography>
-        </InfoLine>
-        <Divider />
-        <div className="flex justify-between items-center">
-          <InfoLine>
-            <Icons.Location />
-            <Typography>IT Park Tashkent</Typography>
-          </InfoLine>
-          <Link
-            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
-            className="link flex items-center justify-center"
-          >
-            <Icons.SquareArrowLeftUp />
-          </Link>
+          <Divider />
+          <div className="flex justify-between items-center">
+            <InfoLine>
+              <Icons.Location />
+              <Typography>IT Park Tashkent</Typography>
+            </InfoLine>
+            <Link
+              to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+              className="link flex items-center justify-center"
+            >
+              <Icons.SquareArrowLeftUp />
+            </Link>
+          </div>
         </div>
       </div>
     </Card>

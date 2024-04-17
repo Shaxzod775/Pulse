@@ -206,7 +206,7 @@ const TeacherProfile = () => {
 
   const persoalInfo = useMemo(
     () => (
-      <div className="flex flex-col gap-sm" style={{ paddingLeft: "20px" }}>
+      <div className="flex flex-col gap-sm">
         <div className="flex items-center gap-xxs">
           <Icons.UserId color={theme.typography.color.purpleBlue} />
           <Title fontSize="1.125rem" fontWeight={600}>
@@ -290,7 +290,17 @@ const TeacherProfile = () => {
             >
               <Icons.ArrowL />
             </ButtonStyled>
-            <Title>Профиль учителя</Title>
+            <div className="flex flex-col">
+              <Title>Профиль учителя</Title>
+              <div className="flex items-center gap-x3s">
+                <Typography fontSize="0.75rem">Учителя</Typography>
+                <Icons.ArrowL
+                  width="1rem"
+                  style={{ transform: "rotate(180deg)" }}
+                />
+                <Typography fontSize="0.75rem">Профиль учителя</Typography>
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center gap-sm">
@@ -408,7 +418,7 @@ const TeacherProfile = () => {
             </div>
             <div className="flex flex-col gap-md">
               <div className="flex flex-col" style={{ gap: "12px" }}>
-                <div className="flex gap-sm" style={{ paddingLeft: "20px" }}>
+                <div className="flex gap-sm" style={{ paddingLeft: "30px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
                       <ProfileTabHeader
@@ -426,7 +436,15 @@ const TeacherProfile = () => {
                 </div>
                 <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
               </div>
-              <div style={{ minHeight: "450px" }}>{tabContents[activeTab]}</div>
+              <div
+                style={{
+                  minHeight: "450px",
+                  paddingRight: "30px",
+                  paddingLeft: "30px",
+                }}
+              >
+                {tabContents[activeTab]}
+              </div>
             </div>
           </div>
         </Paper>

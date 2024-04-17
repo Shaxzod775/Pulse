@@ -170,7 +170,17 @@ const NewStudent = () => {
             >
               <Icons.ArrowL />
             </ButtonStyled>
-            <Title>Добавить ученика</Title>
+            <div className="flex flex-col">
+              <Title>Добавить ученика</Title>
+              <div className="flex items-center gap-x3s">
+                <Typography fontSize="0.75rem">Ученики</Typography>
+                <Icons.ArrowL
+                  width="1rem"
+                  style={{ transform: "rotate(180deg)" }}
+                />
+                <Typography fontSize="0.75rem">Добавить ученика</Typography>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-sm">
             <DialogButton

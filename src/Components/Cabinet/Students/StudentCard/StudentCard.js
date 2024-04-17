@@ -122,51 +122,36 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
             </MenuStyled>
           </div>
         </div>
-        <Divider />
-        <InfoLine>
-          <Icons.Group />
-          <Typography>Группа: UI/UX GR1214-21</Typography>
-        </InfoLine>
-        <InfoLine>
-          <Icons.Phone />
-          <Typography>+998 (98) 765-43-21</Typography>
-        </InfoLine>
-        <InfoLine>
-          <Icons.Messages />
-          <Typography>example@gmail.com</Typography>
-        </InfoLine>
-        <Divider />
-        <InfoLine small>
-          <Icons.Documents />
-          <Typography>Учитель: Eshmatov Toshmat</Typography>
-        </InfoLine>
-        <div className="flex gap-xxs">
-          <InfoLine small>
-            <Icons.ClockDashed />
-            <Typography>01.01.2024</Typography>
+        <div className="flex flex-col gap-xs">
+          <Divider />
+          <InfoLine>
+            <Icons.Group />
+            <Typography>Группа: UI/UX GR1214-21</Typography>
           </InfoLine>
-          <InfoLine small>
-            <Icons.CalendarDateContained />
-            <Typography>01.07.2024</Typography>
+          <InfoLine>
+            <Icons.Phone />
+            <Typography>+998 (98) 765-43-21</Typography>
           </InfoLine>
+          <InfoLine>
+            <Icons.Messages />
+            <Typography>example@gmail.com</Typography>
+          </InfoLine>
+          <Divider />
+          <InfoLine small>
+            <Icons.Documents />
+            <Typography>Учитель: Eshmatov Toshmat</Typography>
+          </InfoLine>
+          <div className="flex gap-xxs">
+            <InfoLine small>
+              <Icons.ClockDashed />
+              <Typography>01.01.2024</Typography>
+            </InfoLine>
+            <InfoLine small>
+              <Icons.CalendarDateContained />
+              <Typography>01.07.2024</Typography>
+            </InfoLine>
+          </div>
         </div>
-        {/* <ButtonStyled
-          variant="contained"
-          color="purpleBlueLight"
-          sx={{ borderRadius: "20px", padding: "8px" }}
-        >
-          <InfoLine small>
-            <Icons.Wallet style={{ color: "inherit" }} />
-            <CardText>
-              <NumericFormat
-                value={1212000}
-                displayType="text" // Set to "input" if you want an input field
-                thousandSeparator=" "
-              />{" "}
-              UZS
-            </CardText>
-          </InfoLine>
-        </ButtonStyled> */}
       </div>
     </Card>
   );

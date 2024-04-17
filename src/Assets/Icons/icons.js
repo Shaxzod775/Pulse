@@ -53,6 +53,9 @@ import { ReactComponent as Pen2 } from "./svgs/pen2.svg";
 import { ReactComponent as TrashCan } from "./svgs/trashCan.svg";
 import { ReactComponent as Circle } from "./svgs/circle.svg";
 import { ReactComponent as SquareArrowLeftUp } from "./svgs/squareArrowLeftUp.svg";
+import { ReactComponent as Graph } from "./svgs/graph.svg";
+import { ReactComponent as ChartSquare } from "./svgs/chartSquare.svg";
+import { ReactComponent as Settings } from "./svgs/settings.svg";
 
 export const Icons = {
   ArrowD,
@@ -110,4 +113,7 @@ export const Icons = {
   TrashCan,
   Circle,
   SquareArrowLeftUp,
+  Graph,
+  ChartSquare,
+  Settings,
 };

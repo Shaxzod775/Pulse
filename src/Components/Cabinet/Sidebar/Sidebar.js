@@ -90,9 +90,9 @@ const Sidebar = () => {
       text: "Dashboard",
     },
     {
-      link: routes.CABINET + routes.TEACHERS,
-      icon: Icons.Diploma,
-      text: "Учителя",
+      link: routes.CABINET + routes.LEADS,
+      icon: Icons.Group,
+      text: "Лиды",
     },
     {
       link: routes.CABINET + routes.STUDENTS,
@@ -110,9 +110,29 @@ const Sidebar = () => {
       text: "Курсы",
     },
     {
-      link: routes.CABINET + routes.LEADS,
-      icon: Icons.Group,
-      text: "Лиды",
+      link: routes.CABINET + routes.TEACHERS,
+      icon: Icons.Diploma,
+      text: "Учителя",
+    },
+    {
+      link: routes.CABINET + routes.PERSONAL,
+      icon: Icons.Wallet,
+      text: "Финансы",
+    },
+    {
+      link: routes.CABINET + routes.PERSONAL,
+      icon: Icons.ChartSquare,
+      text: "Отчеты",
+    },
+    {
+      link: routes.CABINET + routes.PERSONAL,
+      icon: Icons.Graph,
+      text: "Активность",
+    },
+    {
+      link: routes.CABINET + routes.PERSONAL,
+      icon: Icons.Settings,
+      text: "Настройки",
     },
   ];
 

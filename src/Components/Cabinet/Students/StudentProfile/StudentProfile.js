@@ -356,10 +356,7 @@ const StudentProfile = () => {
 
   const persoalInfoContent = useMemo(
     () => (
-      <div
-        className="flex flex-wrap gap-lg"
-        style={{ padding: "0 20px 20px 20px" }}
-      >
+      <div className="flex flex-wrap gap-lg">
         <div className="flex flex-col gap-sm">
           <div className="flex items-center gap-xxs">
             <Icons.UserId color={theme.typography.color.purpleBlue} />
@@ -403,8 +400,11 @@ const StudentProfile = () => {
                 </div>
               </InfoItem>
               <InfoItem>
-                <h5>Роль</h5>
-                <span>UX/UI Designer, student</span>
+                <h5>Номер родителей</h5>
+                <span className="flex gap-xxs2">
+                  <span>+998(33) 033-15-33</span>
+                  <span>+998(33) 033-15-33</span>
+                </span>
               </InfoItem>
               <InfoItem>
                 <h5>Адрес проживания:</h5>
@@ -413,6 +413,10 @@ const StudentProfile = () => {
               <InfoItem>
                 <h5>Активная группа:</h5>
                 <span>GR011-62</span>
+              </InfoItem>
+              <InfoItem>
+                <h5>Описание:</h5>
+                <span>Ребенок гений</span>
               </InfoItem>
             </div>
           </div>
@@ -551,10 +555,7 @@ const StudentProfile = () => {
 
   const groupsContent = useMemo(
     () => (
-      <div
-        className="flex flex-wrap gap-lg"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      <div className="flex flex-wrap gap-lg">
         <Grid
           container
           justifyContent="start"
@@ -624,7 +625,17 @@ const StudentProfile = () => {
             >
               <Icons.ArrowL />
             </ButtonStyled>
-            <Title>Профиль ученика</Title>
+            <div className="flex flex-col">
+              <Title>Профиль ученика</Title>
+              <div className="flex items-center gap-x3s">
+                <Typography fontSize="0.75rem">Ученики</Typography>
+                <Icons.ArrowL
+                  width="1rem"
+                  style={{ transform: "rotate(180deg)" }}
+                />
+                <Typography fontSize="0.75rem">Профиль ученика</Typography>
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center gap-sm">
@@ -739,7 +750,7 @@ const StudentProfile = () => {
             </div>
             <div className="flex flex-col gap-md">
               <div className="flex flex-col gap-xs2">
-                <div className="flex gap-sm" style={{ paddingLeft: "20px" }}>
+                <div className="flex gap-sm" style={{ paddingLeft: "30px" }}>
                   {tabsToMap.map((tab, i) => (
                     <>
                       <ProfileTabHeader
@@ -757,7 +768,15 @@ const StudentProfile = () => {
                 </div>
                 <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
               </div>
-              <div style={{ minHeight: "450px" }}>{tabContents[activeTab]}</div>
+              <div
+                style={{
+                  minHeight: "450px",
+                  paddingRight: "30px",
+                  paddingLeft: "30px",
+                }}
+              >
+                {tabContents[activeTab]}
+              </div>
             </div>
           </div>
         </Paper>
