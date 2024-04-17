@@ -89,7 +89,7 @@ const CourseCard = ({
                 {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
                 <ButtonStyled color="purpleBlue">
                   <Icons.Pen />
-                  <span>Изменить группу</span>
+                  <span>Изменить курс</span>
                 </ButtonStyled>
                 {/* </Link> */}
               </MenuItem>
@@ -99,7 +99,7 @@ const CourseCard = ({
                   onClick={() => handleDeleteCourse(id)}
                 >
                   <Icons.TrashCan />
-                  <span>Удалить группу</span>
+                  <span>Удалить курс</span>
                 </ButtonStyled>
               </MenuItem>
             </MenuStyled>
