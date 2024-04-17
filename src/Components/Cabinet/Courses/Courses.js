@@ -112,30 +112,22 @@ const techs = [
 export function createCourse({
   id = uuidv4(),
   name = "python",
-  teacher = "Eshmatov Toshmat",
   price = 1000000,
   currency = "so'm",
-  weekDays = [0, 2, 4],
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  techs = ["Python", "GitHub", "React", "Node.js", "Ruby on Rails", "Vue.js"],
-  tags = ["certificate", "best"],
   duration = 3, // in months
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 7, 3),
+  thumbnail = null,
 } = {}) {
   return {
     id,
     name,
-    teacher,
     price,
     currency,
-    weekDays,
-    description,
-    techs,
-    tags,
     duration,
     startDate,
     endDate,
+    thumbnail,
   };
 }
 

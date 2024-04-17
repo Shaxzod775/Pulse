@@ -22,6 +22,7 @@ import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
+import { Link } from "react-router-dom";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -29,11 +30,8 @@ const CourseCard = ({
   id,
   name,
   duration,
-  techs,
-  startDate,
-  weekDays,
-  teacher,
   price,
+  thumbnail,
   handleDeleteCourse,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,47 +50,60 @@ const CourseCard = ({
   return (
     <Card>
       <div className="flex flex-col gap-xs">
-        <img src={courseImage} alt="Group" />
+        <img src={thumbnail ? thumbnail : courseImage} alt="Group" />
         <div className="flex justify-between items-center">
           <Typography fontWeight={600}>{name}</Typography>
-          <IconButton
-            color="purpleBlue"
-            aria-controls={open ? "dots-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            disableElevation
-            onClick={handleClick}
-            sx={{ right: "-8px", marginY: "-8px" }}
+          <div
+            className="flex items-center gap-x3s"
+            style={{ marginRight: "-8px" }}
           >
-            <Icons.MenuDots />
-          </IconButton>
-          <MenuStyled
-            id="demo-customized-menu"
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose} disableRipple>
-              {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
-              <ButtonStyled color="purpleBlue">
-                <Icons.Pen />
-                <span>Изменить курс</span>
-              </ButtonStyled>
-              {/* </Link> */}
-            </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
-              <ButtonStyled
-                color="crimson"
-                onClick={() => handleDeleteCourse(id)}
-              >
-                <Icons.TrashCan />
-                <span>Удалить курс</span>
-              </ButtonStyled>
-            </MenuItem>
-          </MenuStyled>
+            <Link className="link">
+              {/* <ButtonStyled> */}
+              <div className="flex items-center gap-x3s">
+                <Icons.SquareArrowLeftUp />
+                <Typography>Открыть</Typography>
+              </div>
+              {/* </ButtonStyled> */}
+            </Link>
+            <IconButton
+              color="purpleBlue"
+              aria-controls={open ? "dots-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              disableElevation
+              onClick={handleClick}
+              // sx={{ right: "-8px" }}
+            >
+              <Icons.MenuDots />
+            </IconButton>
+            <MenuStyled
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} disableRipple>
+                {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
+                <ButtonStyled color="purpleBlue">
+                  <Icons.Pen />
+                  <span>Изменить группу</span>
+                </ButtonStyled>
+                {/* </Link> */}
+              </MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                <ButtonStyled
+                  color="crimson"
+                  onClick={() => handleDeleteCourse(id)}
+                >
+                  <Icons.TrashCan />
+                  <span>Удалить группу</span>
+                </ButtonStyled>
+              </MenuItem>
+            </MenuStyled>
+          </div>
         </div>
         <Divider />
         <div className="flex gap-xs">

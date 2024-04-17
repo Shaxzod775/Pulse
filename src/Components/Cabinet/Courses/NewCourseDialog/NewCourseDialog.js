@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Chip,
@@ -31,7 +31,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   borderRadius: theme.custom.spacing.xxs,
   border:
     variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
-  padding: "10px 40px",
+  padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
   textTransform: "capitalize",
@@ -169,6 +169,19 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+function calculateMonthDifference(startDate, endDate) {
+  // Handle invalid dates or missing values
+  if (!startDate || !endDate) {
+    return 0; // Or handle it differently as needed
+  }
+
+  const yearsDifference = endDate.getFullYear() - startDate.getFullYear();
+  const monthsDifference = endDate.getMonth() - startDate.getMonth();
+
+  // Floor the month difference considering years difference
+  return monthsDifference + yearsDifference * 12;
+}
+
 const NewCourseDialog = ({
   open,
   handleClose,
@@ -176,19 +189,7 @@ const NewCourseDialog = ({
   ...otherProps
 }) => {
   const [name, changeName, resetName] = useInput("");
-  const [selectedWeekDays, setSelectedWeekDays] = useState(
-    weekDays.map(() => false)
-  );
-  const [teacher, changeTeacher, resetTeacher] = useInput(null);
-  const [selectedTechs, setSelectedTechs] = useState([]);
   const [price, changePrice, resetPrice] = useInput("");
-  const [description, changeDescription, resetDescription] = useInput("");
-  const [durationChosen, setDurationChosen] = useState({
-    number: 0,
-    text: "",
-  });
-  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
-  const [tagFormOpen, setTagFormOpen] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -216,38 +217,6 @@ const NewCourseDialog = ({
     fileInput.click();
   };
 
-  // Function to handle selecting week days
-  const handleSelectWeekDays = (index) => {
-    const updatedSelectedWeekDays = [...selectedWeekDays];
-    updatedSelectedWeekDays[index] = !updatedSelectedWeekDays[index];
-    setSelectedWeekDays(updatedSelectedWeekDays);
-  };
-
-  // Function to handle change in teacher selection
-  const handleTeacherChange = (event, newValue) => {
-    changeTeacher({ target: { value: newValue } });
-  };
-
-  // Function to handle change in autocomplete techs selection
-  const handleAutocompleteChange = (event, newValue) => {
-    setSelectedTechs(newValue);
-  };
-
-  // Function to handle deletion of selected tech
-  const handleDeleteTech = (techToDelete) => () => {
-    setSelectedTechs(selectedTechs.filter((tech) => tech !== techToDelete));
-  };
-
-  // Function to handle adding a new tag
-  const handleAddTag = (tag) => {
-    setTags([...tags, tag]);
-  };
-
-  // Function to handle deletion of a tag
-  const handleDeleteTag = (tagToDelete) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
-  };
-
   // Function to handle change in start date
   const handleStartDateChange = (event) => {
     const inputDate = event.target.value;
@@ -271,35 +240,10 @@ const NewCourseDialog = ({
     }
   };
 
-  // Function to handle change in duration selection
-  const handleDurationChange = (duration) => {
-    const newEndDate = calculateEndDate(startDate, duration);
-    setDurationChosen(duration);
-    setEndDate(newEndDate);
-  };
-
-  // Function to calculate end date based on selected duration and start date
-  const calculateEndDate = (startDate, duration) => {
-    if (startDate && duration.number > 0) {
-      const endDate = new Date(startDate);
-      endDate.setMonth(endDate.getMonth() + duration.number);
-      return endDate;
-    }
-    return null;
-  };
-
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    const chosenDays = selectedWeekDays.reduce(
-      (daysAccumulator, isDaySelected, dayIndex) => {
-        if (isDaySelected) {
-          daysAccumulator.push(dayIndex);
-        }
-        return daysAccumulator;
-      },
-      []
-    );
+    const monthsDifference = calculateMonthDifference(startDate, endDate);
     // id,
     // name,
     // teacher,
@@ -312,16 +256,14 @@ const NewCourseDialog = ({
     // duration,
     // startDate,
     const newCourse = createCourse({
-      name,
-      teacher,
-      price,
-      weekDays: chosenDays,
-      description,
-      techs: selectedTechs,
-      tags,
-      duration: durationChosen.number,
-      startDate,
+      name: name,
+      price: price,
+      duration: monthsDifference,
+      startDate: startDate,
+      endDate: endDate,
+      thumbnail: selectedImage,
     });
+    console.log(newCourse);
     handleAddCourse(newCourse);
     handleClose();
   };
@@ -376,7 +318,7 @@ const NewCourseDialog = ({
                 <div className="full-width flex justify-between gap-sm">
                   <div
                     className="full-width full-height"
-                    style={{ width: "60%" }}
+                    style={{ width: "55%" }}
                   >
                     <Title fontSize="1.375rem" letterSpacing="0.32px">
                       Обложка группы
@@ -422,6 +364,8 @@ const NewCourseDialog = ({
                     id="name"
                     variant="outlined"
                     placeholder="Name"
+                    value={name}
+                    onChange={changeName}
                   />
                 </FormControl>
                 <div className="flex gap-sm">
