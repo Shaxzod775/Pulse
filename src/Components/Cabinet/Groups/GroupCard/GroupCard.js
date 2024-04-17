@@ -27,10 +27,13 @@ const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 const GroupCard = ({
   id,
   name = "Front-end",
+  subject,
   startDate,
   endDate,
   weekDays = [0, 2, 4],
   teacher = "Arslan Koptleulov",
+  duration,
+  roomNumber,
   thumbnail,
   handleDeleteGroup,
 }) => {
@@ -65,7 +68,9 @@ const GroupCard = ({
             <Typography fontWeight={600}>
               {name !== "" ? name : "GR000-00"}
             </Typography>
-            <Typography className="font-xxs">{"UI/UX"}</Typography>
+            <Typography className="font-xxs">
+              {subject !== "" ? subject : "UI/UX"}
+            </Typography>
           </div>
           <div
             className="flex items-center gap-x3s"
@@ -150,11 +155,11 @@ const GroupCard = ({
         <div className="flex gap-xs">
           <InfoLine small>
             <Icons.ClockContained />
-            <div>{3} месяцев</div>
+            <div>{duration} месяцев</div>
           </InfoLine>
           <InfoLine small>
             <Icons.Door />
-            <div>2 кабинет</div>
+            <div>{roomNumber} кабинет</div>
           </InfoLine>
           <InfoLine small>
             <Icons.Group />

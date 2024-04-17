@@ -169,7 +169,7 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-function calculateMonthDifference(startDate, endDate) {
+export function calculateMonthDifference(startDate, endDate) {
   // Handle invalid dates or missing values
   if (!startDate || !endDate) {
     return 0; // Or handle it differently as needed

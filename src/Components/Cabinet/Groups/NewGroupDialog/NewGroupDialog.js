@@ -32,6 +32,7 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
+import { calculateMonthDifference } from "../../Courses/NewCourseDialog/NewCourseDialog";
 
 const rainbowCycle = keyframes`
   0% {
@@ -246,6 +247,11 @@ const NewGroupDialog = ({
     changeTeacher({ target: { value: newValue } });
   };
 
+  // Function to handle change in room selection
+  const handleRoomChange = (event, newValue) => {
+    changeRoom({ target: { value: newValue } });
+  };
+
   // Function to handle change in start date
   const handleStartDateChange = (event) => {
     const inputDate = event.target.value;
@@ -321,10 +327,17 @@ const NewGroupDialog = ({
     // startDate,
     // endDate,
     // thumbnail,
-    const thumbnail = selectedImage;
+    const weekDays = selectedWeekDays.reduce((acc, val, index) => {
+      if (val) {
+        acc.push(index);
+      }
+      return acc;
+    }, []);
+    const duration = calculateMonthDifference(startDate, endDate);
     const newGroup = createGroup({
       name,
       subject,
+      teacher,
       startDate: startDate
         ? !isNaN(startDate.getTime())
           ? startDate
@@ -335,7 +348,10 @@ const NewGroupDialog = ({
           ? endDate
           : new Date(2024, 3, 2)
         : new Date(2024, 3, 2),
-      thumbnail,
+      duration,
+      roomNumber: room,
+      weekDays: weekDays,
+      thumbnail: selectedImage,
     });
     handleAddGroup(newGroup);
     handleClose();
@@ -432,6 +448,8 @@ const NewGroupDialog = ({
                       id="name"
                       variant="outlined"
                       placeholder="Name"
+                      value={name}
+                      onChange={changeName}
                     />
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
@@ -464,8 +482,8 @@ const NewGroupDialog = ({
                     </label>
                     <AutocompleteStyled
                       options={["1", "2", "3", "4", "5", "6"]}
-                      // value={"1"}
-                      // onChange={handleTeacherChange}
+                      value={room}
+                      onChange={handleRoomChange}
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}

@@ -156,16 +156,24 @@ export function createGroup({
   id = uuidv4(),
   name = "GR0000-00",
   subject = "Front-end",
+  teacher = "Arslan Koptleulov",
+  weekDays = [0, 1, 2],
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 7, 3),
+  roomNumber = "0",
+  duration = 0,
   thumbnail = null,
 } = {}) {
   return {
     id,
     name,
     subject,
+    teacher,
+    weekDays,
     startDate,
     endDate,
+    roomNumber,
+    duration,
     thumbnail,
   };
 }
