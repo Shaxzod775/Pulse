@@ -160,7 +160,7 @@ export function createGroup({
   weekDays = [0, 1, 2],
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 7, 3),
-  roomNumber = "0",
+  roomNumber = "11",
   duration = 0,
   thumbnail = null,
 } = {}) {
