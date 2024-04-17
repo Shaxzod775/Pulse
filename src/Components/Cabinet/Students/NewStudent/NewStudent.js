@@ -188,7 +188,7 @@ const NewStudent = () => {
           </div>
         </div>
         <div className="flex justify-between gap-md">
-          <PaperStyled className="full-width">
+          <PaperStyled className="full-width" sx={{ padding: "30px 52px" }}>
             <div className="flex flex-col gap-md">
               <div
                 className="flex gap-sm"
@@ -404,7 +404,7 @@ const NewStudent = () => {
               </div>
             </div>
           </PaperStyled>
-          <PaperStyled className="full-width">
+          <PaperStyled className="full-width" sx={{ padding: "30px 52px" }}>
             <div className="flex flex-col gap-md">
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
