@@ -32,13 +32,15 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   border: "1px solid #E5E7EB",
 }));
 
-const DialogButton = styled(Button)(({ theme }) => ({
+const DialogButton = styled(Button)(({ theme, variant, color }) => ({
+  minHeight: "44px",
   minWidth: "150px",
   borderRadius: theme.custom.spacing.xxs,
-  padding: theme.custom.spacing.xxs,
+  border:
+    variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
+  padding: "10px 30px",
   font: "inherit",
-  fontSize: theme.typography.fontSize.sm,
-  lineHeight: theme.typography.fontSize.sm,
+  fontWeight: "400",
   textTransform: "capitalize",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },

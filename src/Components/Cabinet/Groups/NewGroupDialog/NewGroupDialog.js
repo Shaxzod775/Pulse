@@ -84,7 +84,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   borderRadius: theme.custom.spacing.xxs,
   border:
     variant === "contained" ? `1px solid ${theme.palette[color].main}` : "",
-  padding: "10px 40px",
+  padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
   textTransform: "capitalize",
