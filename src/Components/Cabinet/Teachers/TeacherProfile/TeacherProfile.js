@@ -210,20 +210,37 @@ const TeacherProfile = () => {
       <div className="flex flex-col gap-sm">
         <div className="flex items-center gap-xxs">
           <Icons.UserId color={theme.typography.color.purpleBlue} />
-          <Title fontSize="1.125rem" fontWeight={600}>
-            Информация пользователя
-          </Title>
+          <Typography fontSize="1.125rem" fontWeight={600}>
+            Информация о пользователе
+          </Typography>
         </div>
 
         <div className="flex gap-lg">
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-xxs2">
             <InfoItem>
               <h5>Фамилия Имя Очество</h5>
               <span>Коптлеулов Арслан Алмазович</span>
             </InfoItem>
             <InfoItem>
               <h5>Номер телефона</h5>
-              <span>+998 (33) 033-15-33</span>
+              <span>
+                <div className="flex items-center gap-xxs2">
+                  <Typography>+998 (33) 033-15-33</Typography>
+                  <Link to="tel:/+998330331533" className="link">
+                    <ButtonStyled
+                      variant="contained"
+                      color="purpleBlueLight"
+                      sx={{
+                        minWidth: "unset",
+                        padding: "10px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <Icons.Call />
+                    </ButtonStyled>
+                  </Link>
+                </div>
+              </span>
             </InfoItem>
             <InfoItem>
               <h5>Дата рождения:</h5>
@@ -231,16 +248,36 @@ const TeacherProfile = () => {
             </InfoItem>
             <InfoItem>
               <h5>Почта:</h5>
-              <span>arslan.koptleulov@abexlab.com</span>
+              <span>
+                <div className="flex items-center gap-xxs2">
+                  <Typography>arslan.koptleulov@abexlab.com</Typography>
+                  <Link
+                    to="mailto:arslan.koptleulov@abexlab.com"
+                    className="link"
+                  >
+                    <ButtonStyled
+                      variant="contained"
+                      color="purpleBlueLight"
+                      sx={{
+                        minWidth: "unset",
+                        padding: "10px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <Icons.Messages />
+                    </ButtonStyled>
+                  </Link>
+                </div>
+              </span>
             </InfoItem>
             <InfoItem>
               <h5>ID или Свидетельство о рождении:</h5>
               <span>AB 247325</span>
             </InfoItem>
           </div>
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-xxs2">
             <InfoItem>
-              <h5>Скиллы</h5>
+              <h5>Теги</h5>
               <div className="flex gap-xxs2">
                 <SkillChip
                   label={"Frontend"}
@@ -325,125 +362,126 @@ const TeacherProfile = () => {
         </div>
         <Paper
           sx={{
-            borderRadius: "20px",
-            padding: "16px",
+            borderRadius: "40px",
+            padding: "40px",
             boxShadow: "none",
           }}
         >
           <div className="flex flex-col gap-md">
             <div className="flex flex-col gap-x3s">
-              <div>
-                <Dropzone onDrop={handleImageSelection}>
-                  {({ getRootProps, getInputProps, isDragActive }) => (
-                    <SquareContainer
-                      {...getRootProps({
-                        active: isDragActive,
-                        className: "flex justify-center items-center",
-                      })}
-                    >
-                      <input {...getInputProps({ id: "file-upload-input" })} />
-                      {selectedImage ? (
-                        <img src={selectedImage} alt="Uploaded" />
-                      ) : (
-                        <div
-                          className="flex flex-col gap-x3s items-center"
-                          style={{ color: "#fff" }}
+              <Card
+                sx={{ padding: "20px", bgcolor: "#F9FAFB", boxShadow: "none" }}
+              >
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-sm">
+                    <div>
+                      <Dropzone onDrop={handleImageSelection}>
+                        {({ getRootProps, getInputProps, isDragActive }) => (
+                          <CircleContainer
+                            {...getRootProps({
+                              active: isDragActive,
+                              className: "flex justify-center items-center",
+                            })}
+                          >
+                            <input
+                              {...getInputProps({ id: "file-upload-input" })}
+                            />
+                            {selectedImage ? (
+                              <img src={selectedImage} alt="Uploaded" />
+                            ) : (
+                              <Icons.GalleryAdd />
+                            )}
+                          </CircleContainer>
+                        )}
+                      </Dropzone>
+                    </div>
+                    <div className="flex gap-sm items-center">
+                      <div>
+                        <Title fontWeight={600}>Sakurai Hiro</Title>
+                        <CardText fontSize={"12px"} color={"#AEB2BA"}>
+                          ID: 011/256
+                        </CardText>
+                        <CardText fontSize={"12px"} color={"#AEB2BA"}>
+                          Дата добавления: 21.03.2024
+                        </CardText>
+                      </div>
+                      <div>
+                        <ButtonStyled
+                          variant="contained"
+                          color="purpleBlueLight"
+                          sx={{ borderRadius: "20px", padding: "8px" }}
                         >
-                          <Icons.ArrowDCircleContained />
-                          <Typography>Add a Banner Image</Typography>
-                          <Typography fontSize={"13px"} fontWeight={700}>
-                            Optimal dimensions 1200 x 600px
-                          </Typography>
-                        </div>
-                      )}
-                    </SquareContainer>
-                  )}
-                </Dropzone>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex gap-sm" style={{ paddingLeft: "57px" }}>
+                          <InfoLine>
+                            <Icons.Wallet style={{ color: "inherit" }} />
+                            <CardText>
+                              <NumericFormat
+                                value={1212000}
+                                displayType="text" // Set to "input" if you want an input field
+                                thousandSeparator=" "
+                              />{" "}
+                              UZS
+                            </CardText>
+                          </InfoLine>
+                        </ButtonStyled>
+                      </div>
+                    </div>
+                  </div>
                   <div>
-                    <CircleContainer
-                      className="flex justify-center items-center"
-                      style={{ marginTop: "-40%" }}
+                    <DialogButton
+                      variant="contained"
+                      color="purpleBlue"
+                      // onClick={handleClickOpen}
                     >
-                      {selectedImage ? (
-                        <img src={selectedImage} alt="Uploaded" />
-                      ) : (
-                        <Icons.GalleryAdd />
-                      )}
-                    </CircleContainer>
-                  </div>
-                  <div className="flex gap-sm items-center">
-                    <div>
-                      <Title fontWeight={600}>Sakurai Hiro</Title>
-                      <CardText fontSize={"12px"} color={"#AEB2BA"}>
-                        ID: 011/256
-                      </CardText>
-                      <CardText fontSize={"12px"} color={"#AEB2BA"}>
-                        Дата добавления: 21.03.2024
-                      </CardText>
-                    </div>
-                    <div>
-                      <ButtonStyled
-                        variant="contained"
-                        color="purpleBlueLight"
-                        sx={{ borderRadius: "20px", padding: "8px" }}
-                      >
-                        <InfoLine>
-                          <Icons.Wallet style={{ color: "inherit" }} />
-                          <CardText>
-                            <NumericFormat
-                              value={1212000}
-                              displayType="text" // Set to "input" if you want an input field
-                              thousandSeparator=" "
-                            />{" "}
-                            UZS
-                          </CardText>
-                        </InfoLine>
-                      </ButtonStyled>
-                    </div>
+                      <div className="flex items-center gap-x3s">
+                        <Icons.PenNewSquare />
+                        <span>Изменить</span>
+                      </div>
+                    </DialogButton>
                   </div>
                 </div>
-                <div>
-                  <DialogButton
-                    variant="contained"
-                    color="purpleBlue"
-                    // onClick={handleClickOpen}
-                  >
-                    <div className="flex items-center gap-x3s">
-                      <Icons.PenNewSquare />
-                      <span>Изменить</span>
-                    </div>
-                  </DialogButton>
-                </div>
-              </div>
+              </Card>
             </div>
             <div className="flex flex-col gap-md">
               <div className="flex flex-col" style={{ gap: "12px" }}>
-                <div className="flex gap-sm" style={{ paddingLeft: "30px" }}>
+                <div className="flex gap-xs">
                   {tabsToMap.map((tab, i) => (
                     <>
-                      <ProfileTabHeader
+                      <ButtonStyled
+                        variant={activeTab === i ? "contained" : "text"}
+                        color="purpleBlueLight"
                         active={activeTab === i}
                         onClick={() => setActiveTab(i)}
                         key={i}
+                        sx={{
+                          minWidth: "unset",
+                          fontSize: "1.125rem",
+                          lineHeight: "150%",
+                          padding: "11px 10px",
+                          borderRadius: "10px",
+                        }}
                       >
                         {tab}
-                      </ProfileTabHeader>
+                      </ButtonStyled>
                       {i < tabsToMap.length - 1 && (
-                        <Divider orientation="vertical" flexItem />
+                        <div className="flex justify-between items-center">
+                          <Icons.Circle
+                            width="6px"
+                            height="6px"
+                            color="#D1D5DB"
+                          />
+                        </div>
+
+                        // <Divider orientation="vertical" flexItem />
                       )}
                     </>
                   ))}
                 </div>
-                <Divider flexItem sx={{ borderBottomWidth: "2px" }} />
               </div>
               <div
                 style={{
                   minHeight: "450px",
-                  paddingRight: "30px",
-                  paddingLeft: "30px",
+                  paddingRight: "20px",
+                  paddingLeft: "20px",
                 }}
               >
                 {tabContents[activeTab]}

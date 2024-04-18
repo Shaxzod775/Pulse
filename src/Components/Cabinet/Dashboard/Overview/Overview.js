@@ -11,7 +11,7 @@ const Overview = () => {
       <StatusCard icon="person_remove" title="Покинули группу" value="53" />
       <StatusCard
         title="Доход за сентябрь"
-        value="4.000.657 UZS"
+        value="4 000 657 UZS"
         change={1.36}
       />
     </div>
