@@ -239,7 +239,7 @@ const NewStudent = () => {
                       fontSize={".8rem"}
                       fontFamily={"Poppins, Rubik, Roboto, sans-serif"}
                     >
-                      Мы рекомендуем изображения не менее 1000 x 1000, вы можете
+                      Мы рекомендуем изображения не менее 1000x1000, вы можете
                       загрузить PNG или JPG размером менее 10 МБ
                     </Typography>
                   </div>
@@ -425,7 +425,7 @@ const NewStudent = () => {
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Email</FormLabel>
+                    <FormLabel row>E-mail</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth

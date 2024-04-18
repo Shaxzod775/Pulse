@@ -78,13 +78,14 @@ const SquareContainer = styled("div")(
 );
 
 const CircleContainer = styled("div")(
-  ({ theme, width, height = 110, bgColor = "#f0f0f0" }) => ({
-    width: `${width ? width : 110}px`,
+  ({ theme, width, height = 116, bgColor = "#f0f0f0" }) => ({
+    width: `${width ? width : 116}px`,
     height: `${height}px`,
     backgroundColor: bgColor,
     borderRadius: `50%`,
     border: "6px solid #FFF",
     overflow: "hidden",
+    cursor: "pointer",
 
     "& img": {
       // Set image to cover the entire container
