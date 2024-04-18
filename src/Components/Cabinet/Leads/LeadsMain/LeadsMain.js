@@ -357,7 +357,7 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
               <ButtonStyled variant="contained" color="purpleBlue">
                 <div className="flex items-center gap-x3s">
                   <Icons.UserAdd />
-                  <span>добавить лида</span>
+                  <span>Добавить лида</span>
                 </div>
               </ButtonStyled>
             </Link>

@@ -407,7 +407,7 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   fontSize: theme.typography.fontSize.xs,
   lineHeight: theme.typography.fontSize.xs,
   padding: "8px",
-  textTransform: "capitalize",
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
   "& svg": {

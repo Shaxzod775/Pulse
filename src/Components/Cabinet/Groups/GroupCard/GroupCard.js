@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   IconButton,
@@ -20,13 +22,12 @@ import {
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
-import { Link } from "react-router-dom";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const GroupCard = ({
   id,
-  name = "Front-end",
+  name = "Frontend",
   subject,
   startDate,
   endDate,
@@ -149,13 +150,24 @@ const GroupCard = ({
         </div>
         <Divider />
         <InfoLine>
-          <Icons.SchoolAcademicCap />
-          <div>Учитель: {teacher}</div>
+          <Link className="link flex gap-x3s">
+            <Icons.SchoolAcademicCap />
+            <div>Учитель: {teacher}</div>
+          </Link>
         </InfoLine>
         <div className="flex gap-xs">
           <InfoLine small>
             <Icons.ClockContained />
-            <div>{duration} месяцев</div>
+            <div>
+              {duration}{" "}
+              {duration % 10 === 1 && duration % 100 !== 11
+                ? "месяц"
+                : duration % 10 >= 2 &&
+                  duration % 10 <= 4 &&
+                  (duration % 100 < 10 || duration % 100 >= 20)
+                ? "месяца"
+                : "месяцев"}
+            </div>
           </InfoLine>
           <InfoLine small>
             <Icons.Door />

@@ -155,7 +155,7 @@ const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 export function createGroup({
   id = uuidv4(),
   name = "GR0000-00",
-  subject = "Front-end",
+  subject = "Frontend",
   teacher = "Arslan Koptleulov",
   weekDays = [0, 1, 2],
   startDate = new Date(2024, 4, 3),

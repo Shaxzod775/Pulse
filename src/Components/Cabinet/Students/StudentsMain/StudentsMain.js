@@ -94,7 +94,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               <ButtonStyled variant="contained" color="purpleBlue">
                 <div className="flex items-center gap-x3s">
                   <Icons.UserAdd />
-                  <span>добавить ученика</span>
+                  <span>Добавить ученика</span>
                 </div>
               </ButtonStyled>
             </Link>
@@ -130,7 +130,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {students.map((student, i) => (
-                <Grid item xs="auto" md="auto" lg={2.4} key={i}>
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
                   <StudentCard
                     {...student}
                     handleDeleteStudent={handleDeleteStudent}

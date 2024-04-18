@@ -126,7 +126,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               >
                 <div className="flex items-center gap-x3s">
                   <Icons.UserAdd />
-                  <span>добавить учителя</span>
+                  <span>Добавить учителя</span>
                 </div>
               </ButtonStyled>
             </Link>
@@ -154,7 +154,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {teachers.map((teacher, i) => (
-                <Grid item xs="auto" md="auto" lg={2.4} key={i}>
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
                   <TeacherCard
                     {...teacher}
                     handleDeleteTeacher={handleDeleteTeacher}

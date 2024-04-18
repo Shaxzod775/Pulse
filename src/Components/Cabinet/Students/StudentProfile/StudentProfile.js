@@ -41,7 +41,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
-  textTransform: "capitalize",
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
@@ -159,7 +159,7 @@ const InfoItem = styled("div")(({ theme }) => ({
   gap: "8px",
   lineHeight: "150%",
   fontFamily: "Poppins, Rubik, sans-serif",
-  "& >   h5": {
+  "& > h5": {
     margin: "0",
     color: "#AEB2BA",
     fontSize: "1.125rem",
@@ -171,6 +171,7 @@ const InfoItem = styled("div")(({ theme }) => ({
     fontSize: "1rem",
     letterSpacing: ".32px",
   },
+  svg: { color: theme.typography.color.purpleBlue },
 }));
 
 const SkillChip = styled(Chip)(({ theme }) => ({
@@ -329,8 +330,8 @@ const StudentProfile = () => {
     "Личная информация",
     "Группы",
     "История звонков",
-    "История",
     "SMS",
+    "История",
   ];
 
   const handleImageSelection = (acceptedFiles) => {
@@ -372,24 +373,38 @@ const StudentProfile = () => {
               </InfoItem>
               <InfoItem>
                 <h5>Номер телефона</h5>
-                <span>+998(33) 033-15-33</span>
+                <span>
+                  <div className="flex gap-xxs2">
+                    <Typography>+998 (33) 033-15-33</Typography>
+                    <Link to="tel:/+998330331533" className="link">
+                      <Icons.Call />
+                    </Link>
+                  </div>
+                </span>
               </InfoItem>
               <InfoItem>
                 <h5>Дата рождения:</h5>
                 <span>21.08.2002</span>
               </InfoItem>
               <InfoItem>
-                <h5>Почта:</h5>
-                <span>arslan.koptleulov@abexlab.com</span>
+                <h5>E-mail:</h5>
+                <span>
+                  <div className="flex gap-xxs2">
+                    <Typography>arslan.koptleulov@abexlab.com</Typography>
+                    <Link to="tel:/+998330331533" className="link">
+                      <Icons.Messages />
+                    </Link>
+                  </div>
+                </span>
               </InfoItem>
               <InfoItem>
-                <h5>Паспортные данные:</h5>
+                <h5>ID или Свидетельство о рождении:</h5>
                 <span>AB 247325</span>
               </InfoItem>
             </div>
             <div className="flex flex-col gap-xs">
               <InfoItem>
-                <h5>Скиллы</h5>
+                <h5>Теги</h5>
                 <div className="flex gap-xxs2">
                   <SkillChip label={"VIP"} variant="outlined" color="golden" />
                   <SkillChip
@@ -401,9 +416,13 @@ const StudentProfile = () => {
               </InfoItem>
               <InfoItem>
                 <h5>Номер родителей</h5>
-                <span className="flex gap-xxs2">
-                  <span>+998(33) 033-15-33</span>
-                  <span>+998(33) 033-15-33</span>
+                <span className="flex flex-col">
+                  <div className="flex gap-xxs2">
+                    <Typography>+998 (33) 033-15-33</Typography>
+                    <Link to="tel:/+998330331533" className="link">
+                      <Icons.Call />
+                    </Link>
+                  </div>
                 </span>
               </InfoItem>
               <InfoItem>
@@ -628,7 +647,9 @@ const StudentProfile = () => {
             <div className="flex flex-col">
               <Title>Профиль ученика</Title>
               <div className="flex items-center gap-x3s">
-                <Typography fontSize="0.75rem">Ученики</Typography>
+                <Link to={routes.CABINET + routes.STUDENTS} className="link">
+                  <Typography fontSize="0.75rem">Ученики</Typography>
+                </Link>
                 <Icons.ArrowL
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
@@ -646,7 +667,7 @@ const StudentProfile = () => {
                 // onClick={handleClickOpen}
               >
                 <div className="flex items-center gap-x3s">
-                  <span>удалить ученика</span>
+                  <span>Удалить ученика</span>
                 </div>
               </DialogButton>
             </Link>
@@ -707,7 +728,7 @@ const StudentProfile = () => {
                     <div>
                       <Title fontWeight={600}>Sakurai Hiro</Title>
                       <CardText fontSize={"12px"} color={"#AEB2BA"}>
-                        id: 011/256
+                        ID: 011/256
                       </CardText>
                       <CardText fontSize={"12px"} color={"#AEB2BA"}>
                         Дата добавления: 21.03.2024
@@ -742,7 +763,7 @@ const StudentProfile = () => {
                   >
                     <div className="flex items-center gap-x3s">
                       <Icons.PenNewSquare />
-                      <span>изменить</span>
+                      <span>Изменить</span>
                     </div>
                   </DialogButton>
                 </div>

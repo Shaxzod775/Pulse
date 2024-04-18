@@ -39,7 +39,8 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
-  textTransform: "capitalize",
+  "&:first-letter": { textTransform: "capitalize" },
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
@@ -222,7 +223,7 @@ const TeacherProfile = () => {
             </InfoItem>
             <InfoItem>
               <h5>Номер телефона</h5>
-              <span>+998(33) 033-15-33</span>
+              <span>+998 (33) 033-15-33</span>
             </InfoItem>
             <InfoItem>
               <h5>Дата рождения:</h5>
@@ -233,7 +234,7 @@ const TeacherProfile = () => {
               <span>arslan.koptleulov@abexlab.com</span>
             </InfoItem>
             <InfoItem>
-              <h5>Паспортные данные:</h5>
+              <h5>ID или Свидетельство о рождении:</h5>
               <span>AB 247325</span>
             </InfoItem>
           </div>
@@ -293,7 +294,9 @@ const TeacherProfile = () => {
             <div className="flex flex-col">
               <Title>Профиль учителя</Title>
               <div className="flex items-center gap-x3s">
-                <Typography fontSize="0.75rem">Учителя</Typography>
+                <Link to={routes.CABINET + routes.TEACHERS} className="link">
+                  <Typography fontSize="0.75rem">Учителя</Typography>
+                </Link>
                 <Icons.ArrowL
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
@@ -314,7 +317,7 @@ const TeacherProfile = () => {
                 // onClick={handleClickOpen}
               >
                 <div className="flex items-center gap-x3s">
-                  <span>удалить учителя</span>
+                  <span>Удалить учителя</span>
                 </div>
               </DialogButton>
             </Link>
@@ -375,7 +378,7 @@ const TeacherProfile = () => {
                     <div>
                       <Title fontWeight={600}>Sakurai Hiro</Title>
                       <CardText fontSize={"12px"} color={"#AEB2BA"}>
-                        id: 011/256
+                        ID: 011/256
                       </CardText>
                       <CardText fontSize={"12px"} color={"#AEB2BA"}>
                         Дата добавления: 21.03.2024
@@ -410,7 +413,7 @@ const TeacherProfile = () => {
                   >
                     <div className="flex items-center gap-x3s">
                       <Icons.PenNewSquare />
-                      <span>изменить</span>
+                      <span>Изменить</span>
                     </div>
                   </DialogButton>
                 </div>

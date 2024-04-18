@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   Chip,
@@ -9,10 +12,10 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  TextField,
   Typography,
   styled,
 } from "@mui/material";
-import React, { useState } from "react";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
   ButtonStyled,
@@ -22,7 +25,6 @@ import {
   Title,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 
 const headerItemStyles = ({ theme }) => ({
@@ -46,7 +48,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
-  textTransform: "capitalize",
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
@@ -173,7 +175,9 @@ const NewStudent = () => {
             <div className="flex flex-col">
               <Title>Добавить ученика</Title>
               <div className="flex items-center gap-x3s">
-                <Typography fontSize="0.75rem">Ученики</Typography>
+                <Link to={routes.CABINET + routes.STUDENTS} className="link">
+                  <Typography fontSize="0.75rem">Ученики</Typography>
+                </Link>
                 <Icons.ArrowL
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
@@ -439,7 +443,7 @@ const NewStudent = () => {
                   <TextFieldStyled
                     fullWidth
                     variant="outlined"
-                    placeholder="Example id: 011/256"
+                    placeholder="Пример: 011/256"
                     sx={{ maxWidth: "75%" }}
                   />
                 </div>
@@ -507,7 +511,7 @@ const NewStudent = () => {
                   ))}
                   {tagFormOpen && (
                     <FormControl variant="outlined">
-                      <TextFieldStyled
+                      <TextField
                         autoFocus
                         required
                         onBlur={() => {
@@ -523,12 +527,30 @@ const NewStudent = () => {
                         id="info"
                         variant="outlined"
                         sx={{
-                          "& .MuiInputBase-input": {
-                            height: theme.typography.fontSize.xs,
-                            fontSize: theme.typography.fontSize.xs,
-                            lineHeight: theme.typography.fontSize.xs,
-                            padding: "8px 11px !important",
-                            color: "",
+                          fontSize: theme.typography.fontSize.xs,
+                          fontWeight: "400",
+                          color: "inherit",
+                          "& .MuiInputBase-root": {
+                            borderRadius: "8px",
+                            ".MuiInputBase-input": {
+                              width: "100px",
+                              padding: "4.5px 12px",
+                              "::placeholder": {
+                                color: "#D1D5DB",
+                                opacity: "1",
+                              },
+                            },
+                            ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+                              {
+                                border: "1px solid #E5E7EB !important",
+                                boxShadow:
+                                  "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                              },
+                          },
+                          "& .MuiFormHelperText-root": {
+                            color: "crimson",
+                            fontSize: ".8rem",
+                            margin: "2px 0 -10px 12px",
                           },
                         }}
                       />

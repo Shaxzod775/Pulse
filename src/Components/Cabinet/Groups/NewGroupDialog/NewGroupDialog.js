@@ -87,7 +87,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
-  textTransform: "capitalize",
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
@@ -187,7 +187,7 @@ function TagCheckbox({
 }
 
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-const subjects = ["Front-end", "Back-end", "UI/UX", "Flutter", "IT English"];
+const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
 const teacherNames = [
   "Коптлеулов Арслан",
   "Илья Стародубцев",

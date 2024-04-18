@@ -66,7 +66,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
                 {name}
               </Typography>
               <Typography color="#AEB2BA" fontSize="0.875rem" fontWeight={400}>
-                Front-end, UI/UX
+                Frontend, UI/UX
               </Typography>
             </div>
           </div>
@@ -129,17 +129,29 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
             <Typography>Группа: UI/UX GR1214-21</Typography>
           </InfoLine>
           <InfoLine>
-            <Icons.Phone />
-            <Typography>+998 (98) 765-43-21</Typography>
+            <Link to="tel:/+998987654321" className="link flex gap-x3s">
+              <Icons.Call />
+
+              <Typography>+998 (98) 765-43-21</Typography>
+            </Link>
           </InfoLine>
           <InfoLine>
-            <Icons.Messages />
-            <Typography>example@gmail.com</Typography>
+            <Link to="mailto:example@gmail.com" className="link flex gap-x3s">
+              <Icons.Messages />
+
+              <Typography>example@gmail.com</Typography>
+            </Link>
           </InfoLine>
           <Divider />
           <InfoLine small>
-            <Icons.Documents />
-            <Typography>Учитель: Eshmatov Toshmat</Typography>
+            <Link
+              to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+              className="link flex gap-x4s"
+            >
+              <Icons.Documents />
+
+              <Typography>Учитель: Arslan Koptleulov</Typography>
+            </Link>
           </InfoLine>
           <div className="flex gap-xxs">
             <InfoLine small>

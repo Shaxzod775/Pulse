@@ -56,6 +56,7 @@ import { ReactComponent as SquareArrowLeftUp } from "./svgs/squareArrowLeftUp.sv
 import { ReactComponent as Graph } from "./svgs/graph.svg";
 import { ReactComponent as ChartSquare } from "./svgs/chartSquare.svg";
 import { ReactComponent as Settings } from "./svgs/settings.svg";
+import { ReactComponent as Call } from "./svgs/call.svg";
 
 export const Icons = {
   ArrowD,
@@ -116,4 +117,5 @@ export const Icons = {
   Graph,
   ChartSquare,
   Settings,
+  Call,
 };

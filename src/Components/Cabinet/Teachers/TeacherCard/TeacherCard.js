@@ -70,7 +70,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
                 {name}
               </Typography>
               <Typography color="#AEB2BA" fontWeight={400} fontSize="0.875rem">
-                Front-end, UI/UX
+                Frontend, UI/UX
               </Typography>
             </div>
           </div>
@@ -117,7 +117,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
         <div className="flex flex-col gap-xs">
           <Divider />
           <InfoLine>
-            <Icons.Phone />
+            <Icons.Call />
             <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
           </InfoLine>
           <div className="flex gap-xs">

@@ -17,7 +17,7 @@ export function createTeacher({
   id = uuidv4(),
   name = "Eshmatov Toshmat",
   contactNumber = "998987654321",
-  field = "Front-end",
+  field = "Frontend",
   techs = ["React", "Node.js", "Ruby on Rails", "Vue.js"],
   groups = 3,
   students = 23,

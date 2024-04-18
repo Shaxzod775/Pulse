@@ -34,7 +34,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   padding: "10px 30px",
   font: "inherit",
   fontWeight: "400",
-  textTransform: "capitalize",
+  textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));

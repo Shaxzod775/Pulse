@@ -10,11 +10,11 @@ const statuses = ["recycled", "dead", "inProgress"];
 export function createLead({
   id = uuidv4(),
   name = "Azizova Aziza",
-  field = "Front-end",
+  field = "Frontend",
   techs = ["React", "UI/UX", "Node.js", "Ruby on Rails", "Vue.js"],
   contactNumber = "998987654321",
   email = "example@gmail.com",
-  group = "Front-end GR1214-21",
+  group = "Frontend GR1214-21",
   teacher = "Eshmatov Toshmat",
   status = statuses[0],
   startDate = new Date(2024, 4, 3),
@@ -41,62 +41,62 @@ const Leads = () => {
   const [leads, setLeads] = useState([
     createLead({
       name: names[0],
-      group: "Front-end GR1214-21",
+      group: "Frontend GR1214-21",
       status: statuses[0],
     }),
     createLead({
       name: names[1],
-      group: "Front-end GR1214-22",
+      group: "Frontend GR1214-22",
       status: statuses[2],
     }),
     createLead({
       name: names[2],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[0],
     }),
     createLead({
       name: names[0],
-      group: "Front-end GR1214-21",
+      group: "Frontend GR1214-21",
       status: statuses[2],
     }),
     createLead({
       name: names[1],
-      group: "Front-end GR1214-22",
+      group: "Frontend GR1214-22",
       status: statuses[2],
     }),
     createLead({
       name: names[2],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[1],
     }),
     createLead({
       name: names[0],
-      group: "Front-end GR1214-21",
+      group: "Frontend GR1214-21",
       status: statuses[2],
     }),
     createLead({
       name: names[1],
-      group: "Front-end GR1214-22",
+      group: "Frontend GR1214-22",
       status: statuses[1],
     }),
     createLead({
       name: names[2],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[0],
     }),
     createLead({
       name: names[0],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[2],
     }),
     createLead({
       name: names[2],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[2],
     }),
     createLead({
       name: names[1],
-      group: "Front-end GR1214-23",
+      group: "Frontend GR1214-23",
       status: statuses[0],
     }),
   ]);

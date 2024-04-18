@@ -109,7 +109,16 @@ const CourseCard = ({
         <div className="flex gap-xs">
           <InfoLine>
             <Icons.ClockContained />
-            <div>{duration} месяцев</div>
+            <div>
+              {duration}{" "}
+              {duration % 10 === 1 && duration % 100 !== 11
+                ? "месяц"
+                : duration % 10 >= 2 &&
+                  duration % 10 <= 4 &&
+                  (duration % 100 < 10 || duration % 100 >= 20)
+                ? "месяца"
+                : "месяцев"}
+            </div>
           </InfoLine>
           <InfoLine>
             <Icons.Group />
