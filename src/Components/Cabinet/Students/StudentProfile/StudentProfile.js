@@ -85,7 +85,7 @@ const SquareContainer = styled("div")(
 );
 
 const CircleContainer = styled("div")(
-  ({ theme, width = 116, height = 116, bgColor = "#f0f0f0" }) => ({
+  ({ theme, width = 116, height = 116, bgColor = "#F9FAFB" }) => ({
     width: `${width}px`,
     height: `${height}px`,
     backgroundColor: bgColor,
