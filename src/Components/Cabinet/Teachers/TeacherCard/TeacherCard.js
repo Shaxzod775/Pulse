@@ -117,8 +117,10 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
         <div className="flex flex-col gap-xs">
           <Divider />
           <InfoLine>
-            <Icons.Call />
-            <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
+            <Link to="tel:/+998987654321" className="link flex gap-x3s">
+              <Icons.Call />
+              <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
+            </Link>
           </InfoLine>
           <div className="flex gap-xs">
             <InfoLine>

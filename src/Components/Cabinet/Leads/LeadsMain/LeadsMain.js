@@ -347,12 +347,6 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <ButtonStyled variant="outlined" color="purpleBlue">
-              <div className="flex items-center gap-x3s">
-                <Icons.InboxIn />
-                <span>Скачать список</span>
-              </div>
-            </ButtonStyled>
             <Link to={routes.CABINET + routes.LEADS + routes.NEW}>
               <ButtonStyled variant="contained" color="purpleBlue">
                 <div className="flex items-center gap-x3s">
@@ -361,6 +355,13 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
                 </div>
               </ButtonStyled>
             </Link>
+            <ButtonStyled variant="outlined" color="purpleBlue">
+              <div className="flex items-center gap-x3s">
+                <Icons.InboxIn />
+                <span>Скачать список</span>
+              </div>
+            </ButtonStyled>
+
             {/* <ButtonStyled
               variant="outlined"
               color="purpleBlue"

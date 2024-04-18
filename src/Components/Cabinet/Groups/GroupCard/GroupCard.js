@@ -22,6 +22,7 @@ import {
 import { Card, InfoLine } from "../../GridItemCardStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
+import { getRussianWord } from "../../../../helpers/helpers";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -150,7 +151,10 @@ const GroupCard = ({
         </div>
         <Divider />
         <InfoLine>
-          <Link className="link flex gap-x3s">
+          <Link
+            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+            className="link flex gap-x3s"
+          >
             <Icons.SchoolAcademicCap />
             <div>Учитель: {teacher}</div>
           </Link>
@@ -175,7 +179,7 @@ const GroupCard = ({
           </InfoLine>
           <InfoLine small>
             <Icons.Group />
-            <div>10</div>
+            <div>10 {getRussianWord(10, "ученик", "ученика", "учеников")}</div>
           </InfoLine>
         </div>
       </div>

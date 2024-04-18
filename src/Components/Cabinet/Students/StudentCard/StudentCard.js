@@ -131,7 +131,6 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
           <InfoLine>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
               <Icons.Call />
-
               <Typography>+998 (98) 765-43-21</Typography>
             </Link>
           </InfoLine>

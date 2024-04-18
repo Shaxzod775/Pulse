@@ -23,6 +23,7 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { Link } from "react-router-dom";
+import { getRussianWord } from "../../../../helpers/helpers";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -111,18 +112,21 @@ const CourseCard = ({
             <Icons.ClockContained />
             <div>
               {duration}{" "}
-              {duration % 10 === 1 && duration % 100 !== 11
+              {getRussianWord(duration, "месяц", "месяца", "месяцев")}
+              {/* {duration % 10 === 1 && duration % 100 !== 11
                 ? "месяц"
                 : duration % 10 >= 2 &&
                   duration % 10 <= 4 &&
                   (duration % 100 < 10 || duration % 100 >= 20)
                 ? "месяца"
-                : "месяцев"}
+                : "месяцев"} */}
             </div>
           </InfoLine>
           <InfoLine>
             <Icons.Group />
-            <div>222</div>
+            <div>
+              222 {getRussianWord(222, "ученик", "ученика", "учеников")}
+            </div>
           </InfoLine>
         </div>
         <ButtonStyled
