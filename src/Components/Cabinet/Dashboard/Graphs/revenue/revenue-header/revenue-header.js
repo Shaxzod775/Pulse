@@ -26,7 +26,7 @@ const RevenueHeader = ({ activeTime, setActiveTime, month, setMonth }) => {
       {/* <p>4.765.000 UZS + 36% (2022)</p> */}
       <div className={styles.headerContent}>
         <div className={styles["value-box"]}>
-          <div className={styles.value}>4.765.000 UZS</div>
+          <div className={styles.value}>4 765 000 UZS</div>
           <div
             className={`${styles.change} ${
               change >= 1 ? styles.increase : styles.decrease
