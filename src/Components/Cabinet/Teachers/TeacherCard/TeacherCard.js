@@ -26,6 +26,7 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { Link, useNavigate } from "react-router-dom";
+import { getRussianWord } from "../../../../helpers/helpers";
 
 const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
   const navigate = useNavigate();
@@ -129,7 +130,9 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             </InfoLine>
             <InfoLine>
               <Icons.Group />
-              <Typography>222</Typography>
+              <Typography>
+                222 {getRussianWord(222, "ученик", "ученика", "учеников")}
+              </Typography>
             </InfoLine>
           </div>
           <InfoLine>
