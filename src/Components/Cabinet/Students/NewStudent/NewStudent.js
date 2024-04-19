@@ -8,6 +8,7 @@ import {
   FormControl,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   InputBase,
   Paper,
   Radio,
@@ -16,6 +17,9 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
   ButtonStyled,
@@ -23,9 +27,16 @@ import {
   Root,
   TextFieldStyled,
   Title,
+  muiTelInputStyles,
+  textFieldStyles,
   theme,
 } from "../../CabinetStyles";
 import Dropzone from "react-dropzone";
+import { MuiTelInput } from "mui-tel-input";
+import { ruRU } from "@mui/x-date-pickers/locales";
+
+const russianLocale =
+  ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -114,9 +125,24 @@ const NewStudent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
   const [firstNameHelperText, setFirstNameHelperText] = useState("");
   const [lastNameHelperText, setLastNameHelperText] = useState("");
   const [middleNameHelperText, setMiddleNameHelperText] = useState("");
+
+  const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
+    // Remove all non-digit characters
+    const digits = newPhone.replace(/\D/g, "");
+
+    // Check if the new phone number starts with "+998" and does not exceed 12 digits
+    if (newPhone.startsWith("+998") && digits.length <= 12) {
+      phoneNumberSetter(newPhone);
+    } else if (digits.length <= 3) {
+      // If the new phone number is "+99" or "+9", reset it to "+998"
+      phoneNumberSetter("+998");
+    }
+  };
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -339,15 +365,31 @@ const NewStudent = () => {
                     style={{ maxWidth: "75%" }}
                   >
                     <FormControl fullWidth variant="outlined">
-                      <TextFieldStyled
+                      <MuiTelInput
                         variant="outlined"
-                        placeholder="Номер телефона"
+                        defaultCountry="UZ"
+                        onlyCountries={["UZ"]}
+                        value={phoneNumber}
+                        onChange={(newPhone) =>
+                          handleChangePhoneNumber(newPhone, setPhoneNumber)
+                        }
+                        sx={muiTelInputStyles({ theme })}
                       />
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
-                      <TextFieldStyled
+                      <MuiTelInput
                         variant="outlined"
-                        placeholder="Доп. номер"
+                        defaultCountry="UZ"
+                        onlyCountries={["UZ"]}
+                        value={additionalPhoneNumber}
+                        helperText="Дополнительный номер"
+                        onChange={(newPhone) =>
+                          handleChangePhoneNumber(
+                            newPhone,
+                            setAdditionalPhoneNumber
+                          )
+                        }
+                        sx={muiTelInputStyles({ theme })}
                       />
                     </FormControl>
                   </div>
@@ -386,15 +428,23 @@ const NewStudent = () => {
                       <label htmlFor="date-start">
                         <FormLabel>Дата рождения</FormLabel>
                       </label>
-                      <TextFieldStyled
-                        id="date-start"
-                        variant="outlined"
-                        type="date"
-                        // value={
-                        //   startDate ? startDate.toISOString().split("T")[0] : ""
-                        // }
-                        // onChange={handleStartDateChange}
-                      />
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        // Define the translations to have the right placeholders (for example `JJJJ` for the year).
+                        localeText={russianLocale}
+                      >
+                        <DatePicker
+                          sx={textFieldStyles({ theme })}
+                          format="DD/MM/YYYY"
+                          slots={{
+                            openPickerIcon: Icons.CalendarContained,
+                            // openPickerButton: ButtonStyled,
+                          }}
+                          slotProps={{
+                            openPickerButton: { color: "purpleBlue" },
+                          }}
+                        />
+                      </LocalizationProvider>
                     </FormControl>
                   </div>
                   <div>
