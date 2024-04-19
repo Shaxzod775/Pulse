@@ -632,7 +632,7 @@ const NewStudent = () => {
                   <Chip
                     label="+"
                     variant="outlined"
-                    color="darkBlue"
+                    color="purpleBlue"
                     sx={{
                       borderRadius: `${theme.custom.spacing.xxs}px`,
                     }}
