@@ -430,7 +430,7 @@ const NewStudent = () => {
                       </label>
                       <LocalizationProvider
                         dateAdapter={AdapterDayjs}
-                        // Define the translations to have the right placeholders (for example `JJJJ` for the year).
+                        // Define the translations to have the right placeholders (for example `ГГГГ` for the year).
                         localeText={russianLocale}
                       >
                         <DatePicker
@@ -438,7 +438,6 @@ const NewStudent = () => {
                           format="DD/MM/YYYY"
                           slots={{
                             openPickerIcon: Icons.CalendarContained,
-                            // openPickerButton: ButtonStyled,
                           }}
                           slotProps={{
                             openPickerButton: { color: "purpleBlue" },
