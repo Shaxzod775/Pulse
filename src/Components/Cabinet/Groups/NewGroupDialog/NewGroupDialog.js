@@ -414,7 +414,7 @@ const NewGroupDialog = ({
                       fontSize={".8rem"}
                       fontFamily={"Poppins, Rubik, Roboto, sans-serif"}
                     >
-                      Мы рекомендуем изображения не менее 322 x 127px, вы можете
+                      Мы рекомендуем изображения не менее 322x127px, вы можете
                       загрузить PNG или JPG размером менее 10 МБ
                     </Typography>
                   </div>

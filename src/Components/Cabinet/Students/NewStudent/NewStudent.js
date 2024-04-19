@@ -113,8 +113,10 @@ const NewStudent = () => {
   const [tagFormOpen, setTagFormOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [middleName, setMiddleName] = useState("");
   const [firstNameHelperText, setFirstNameHelperText] = useState("");
   const [lastNameHelperText, setLastNameHelperText] = useState("");
+  const [middleNameHelperText, setMiddleNameHelperText] = useState("");
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -270,14 +272,32 @@ const NewStudent = () => {
               </div>
               <div className="flex flex-col gap-md">
                 <div>
-                  <label>
-                    <FormLabel>Имя и Фамилия</FormLabel>
-                  </label>
                   <div className="flex gap-xxs">
-                    <FormControl fullWidth variant="outlined">
+                    <FormControl required fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Фамилия *</FormLabel>
+                      </label>
                       <TextFieldStyled
                         variant="outlined"
-                        placeholder="First name"
+                        placeholder="Фамилия"
+                        value={lastName}
+                        helperText={lastNameHelperText}
+                        onChange={(event) =>
+                          handleChange(
+                            event,
+                            setLastName,
+                            setLastNameHelperText
+                          )
+                        }
+                      />
+                    </FormControl>
+                    <FormControl required fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Имя *</FormLabel>
+                      </label>
+                      <TextFieldStyled
+                        variant="outlined"
+                        placeholder="Имя"
                         value={firstName}
                         helperText={firstNameHelperText}
                         onChange={(event) =>
@@ -290,16 +310,19 @@ const NewStudent = () => {
                       />
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Отчество</FormLabel>
+                      </label>
                       <TextFieldStyled
                         variant="outlined"
-                        placeholder="Last name"
-                        value={lastName}
-                        helperText={lastNameHelperText}
+                        placeholder="Отчество"
+                        value={middleName}
+                        helperText={middleNameHelperText}
                         onChange={(event) =>
                           handleChange(
                             event,
-                            setLastName,
-                            setLastNameHelperText
+                            setMiddleName,
+                            setMiddleNameHelperText
                           )
                         }
                       />
