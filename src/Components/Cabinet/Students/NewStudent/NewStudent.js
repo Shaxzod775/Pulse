@@ -17,6 +17,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -34,7 +35,7 @@ import {
 import Dropzone from "react-dropzone";
 import { MuiTelInput } from "mui-tel-input";
 import { ruRU } from "@mui/x-date-pickers/locales";
-
+import { ar, ru } from "date-fns/locale";
 const russianLocale =
   ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
 
@@ -423,23 +424,22 @@ const NewStudent = () => {
                 </div>
                 <Divider />
                 <div className="flex gap-lg">
-                  <div>
+                  <div style={{ maxWidth: "30%" }}>
                     <FormControl fullWidth variant="outlined">
                       <label htmlFor="date-start">
                         <FormLabel>Дата рождения</FormLabel>
                       </label>
                       <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                        // Define the translations to have the right placeholders (for example `ГГГГ` for the year).
-                        localeText={russianLocale}
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={ru}
                       >
                         <DatePicker
                           sx={textFieldStyles({ theme })}
-                          format="DD/MM/YYYY"
                           slots={{
                             openPickerIcon: Icons.CalendarContained,
                           }}
                           slotProps={{
+                            field: { clearable: true },
                             openPickerButton: { color: "purpleBlue" },
                           }}
                         />
