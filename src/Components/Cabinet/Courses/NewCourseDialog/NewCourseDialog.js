@@ -321,7 +321,7 @@ const NewCourseDialog = ({
                     style={{ width: "55%" }}
                   >
                     <Title fontSize="1.375rem" letterSpacing="0.32px">
-                      Обложка группы
+                      Обложка курса
                     </Title>
                     <Typography
                       color="#AEB2BA"
@@ -358,7 +358,7 @@ const NewCourseDialog = ({
               <div className="flex flex-col gap-xs">
                 <FormControl fullWidth variant="outlined">
                   <label htmlFor="name">
-                    <FormLabel>Название группы*</FormLabel>
+                    <FormLabel>Название курса*</FormLabel>
                   </label>
                   <TextFieldStyled
                     id="name"
