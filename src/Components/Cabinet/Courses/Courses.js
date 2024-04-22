@@ -25,6 +25,11 @@ import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
 import { useNavigate } from "react-router-dom";
+import {
+  useCourses,
+  useCoursesDispatch,
+} from "../../../contexts/Courses.context";
+import { addCourse, deleteCourse } from "../../../reducers/courses.reducer";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -48,38 +53,6 @@ const DialogButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
-
-function TagCheckbox({
-  children,
-  selected,
-  setSelected,
-  variant,
-  ...otherProps
-}) {
-  //I will just seperate variant from other props so it does't interfere with dynamic variant
-  const handleClick = () => {
-    setSelected(!selected);
-  };
-
-  return (
-    <Button
-      variant={selected ? "contained" : "outlined"}
-      onClick={handleClick}
-      sx={{
-        boxSizing: "border-box",
-        boxShadow: "none",
-        "&:hover": { boxShadow: "none" },
-        minWidth: "unset",
-        padding: "6px",
-        lineHeight: "inherit",
-        border: `${selected ? `1px solid ${theme.palette.darkBlue.main}` : ""}`,
-      }}
-      {...otherProps}
-    >
-      {children}
-    </Button>
-  );
-}
 
 const teachers = [
   "Коптлеулов Арслан",
@@ -113,20 +86,20 @@ export function createCourse({
   id = uuidv4(),
   name = "python",
   price = 1000000,
-  currency = "so'm",
+  // currency = "so'm",
   duration = 3, // in months
-  startDate = new Date(2024, 4, 3),
-  endDate = new Date(2024, 7, 3),
+  // startDate = new Date(2024, 4, 3),
+  // endDate = new Date(2024, 7, 3),
   thumbnail = null,
 } = {}) {
   return {
     id,
     name,
     price,
-    currency,
+    // currency,
     duration,
-    startDate,
-    endDate,
+    // startDate,
+    // endDate,
     thumbnail,
   };
 }
@@ -162,16 +135,8 @@ NumericFormatCustom.propTypes = {
 const Courses = () => {
   const [open, setOpen] = useState(false);
 
-  const [courses, setCourses] = useState([
-    createCourse({ name: "Javascript", duration: 3 }),
-    createCourse({ name: "Python", duration: 3 }),
-    createCourse({ name: "Node.js", duration: 3 }),
-    createCourse({ name: "Frontend", duration: 6 }),
-    createCourse({ name: "Backend", duration: 9 }),
-    createCourse({ name: "Javascript", duration: 3 }),
-    createCourse({ name: "Python", duration: 3 }),
-    createCourse({ name: "Node.js", duration: 3 }),
-  ]);
+  const { courses } = useCourses();
+  const coursesDispatch = useCoursesDispatch();
 
   const navigate = useNavigate();
 
@@ -188,11 +153,13 @@ const Courses = () => {
   };
 
   const handleAddCourse = (newCourse) => {
-    setCourses([...courses, newCourse]);
+    // setCourses([...courses, newCourse]);
+    coursesDispatch(addCourse(newCourse));
   };
 
   const handleDeleteCourse = (idToDelete) => {
-    setCourses(courses.filter((course) => course.id !== idToDelete));
+    // setCourses(courses.filter((course) => course.id !== idToDelete));
+    coursesDispatch(deleteCourse(idToDelete));
   };
 
   return (
@@ -248,7 +215,7 @@ const Courses = () => {
               {courses.map((course, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
                   <CourseCard
-                    {...courses[i]}
+                    {...course}
                     handleDeleteCourse={handleDeleteCourse}
                   />
                 </Grid>

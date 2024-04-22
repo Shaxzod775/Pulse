@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogContent,
   FormControl,
+  FormLabel,
   InputAdornment,
   TextField,
   Typography,
@@ -26,6 +27,7 @@ import { createCourse } from "../Courses";
 import useInput from "../../../../hooks/useInput";
 import Dropzone from "react-dropzone";
 import { getRussianWord } from "../../../../helpers/helpers";
+import { useCourses } from "../../../../contexts/Courses.context";
 
 const timeInputStyles = {
   minHeight: "unset",
@@ -68,7 +70,7 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   "&:hover": { boxShadow: "none" },
 }));
 
-const FormLabel = styled(Typography)(({ theme }) => ({
+const FormLabelStyled = styled(FormLabel)(({ theme }) => ({
   padding: "0",
   color: theme.typography.color.darkBlue,
   fontSize: theme.typography.fontSize.xs,
@@ -229,12 +231,15 @@ const NewCourseDialog = ({
   handleAddCourse,
   ...otherProps
 }) => {
+  const { allCourseNames } = useCourses();
+
   const [name, changeName, resetName] = useInput("");
   const [price, changePrice, resetPrice] = useInput("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  // const [startDate, setStartDate] = useState(null);
+  // const [endDate, setEndDate] = useState(null);
   const [selectedDuration, setSelectedDuration] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [nameError, setNameError] = useState("");
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -259,28 +264,43 @@ const NewCourseDialog = ({
     fileInput.click();
   };
 
-  // Function to handle change in start date
-  const handleStartDateChange = (event) => {
-    const inputDate = event.target.value;
-    const newStartDate = new Date(inputDate);
-    if (!isNaN(newStartDate.getTime())) {
-      setStartDate(newStartDate);
+  const handleChangeName = (event) => {
+    const newName = event.target.value.trim(); // Trim the new name
+    if (
+      allCourseNames.some(
+        (courseName) =>
+          courseName.trim().toLowerCase() === newName.toLowerCase()
+      )
+    ) {
+      setNameError("Course name must be unique.");
     } else {
-      // Handle invalid input date here
-      setStartDate(null);
+      setNameError("");
     }
+    changeName(event); // Update the name input field value
   };
+
   // Function to handle change in start date
-  const handleEndDateChange = (event) => {
-    const inputDate = event.target.value;
-    const newEndDate = new Date(inputDate);
-    if (!isNaN(newEndDate.getTime())) {
-      setEndDate(newEndDate);
-    } else {
-      // Handle invalid input date here
-      setEndDate(null);
-    }
-  };
+  // const handleStartDateChange = (event) => {
+  //   const inputDate = event.target.value;
+  //   const newStartDate = new Date(inputDate);
+  //   if (!isNaN(newStartDate.getTime())) {
+  //     setStartDate(newStartDate);
+  //   } else {
+  //     // Handle invalid input date here
+  //     setStartDate(null);
+  //   }
+  // };
+  // Function to handle change in start date
+  // const handleEndDateChange = (event) => {
+  //   const inputDate = event.target.value;
+  //   const newEndDate = new Date(inputDate);
+  //   if (!isNaN(newEndDate.getTime())) {
+  //     setEndDate(newEndDate);
+  //   } else {
+  //     // Handle invalid input date here
+  //     setEndDate(null);
+  //   }
+  // };
 
   // Function to handle change in minutes
   const handleDurationChange = (event) => {
@@ -298,27 +318,19 @@ const NewCourseDialog = ({
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    const monthsDifference = calculateMonthDifference(startDate, endDate);
-    // id,
-    // name,
-    // teacher,
-    // price,
-    // currency,
-    // weekDays,
-    // description,
-    // techs,
-    // tags,
-    // duration,
-    // startDate,
+    if (nameError) {
+      return; // Prevent form submission if name is not unique
+    }
+    // const monthsDifference = calculateMonthDifference(startDate, endDate);
     const newCourse = createCourse({
       name: name,
       price: price,
       duration: selectedDuration,
-      startDate: startDate,
-      endDate: endDate,
+      // startDate: startDate,
+      // endDate: endDate,
       thumbnail: selectedImage,
     });
-    console.log(newCourse);
+
     handleAddCourse(newCourse);
     handleClose();
   };
@@ -411,23 +423,26 @@ const NewCourseDialog = ({
                 </div>
               </div>
               <div className="flex flex-col gap-xs">
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="name">
-                    <FormLabel>Название курса*</FormLabel>
-                  </label>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  required
+                  error={nameError}
+                >
+                  <FormLabelStyled>Название курса</FormLabelStyled>
                   <TextFieldStyled
+                    required
                     id="name"
                     variant="outlined"
                     placeholder="Name"
                     value={name}
-                    onChange={changeName}
+                    onChange={handleChangeName}
+                    helperText={nameError}
                   />
                 </FormControl>
                 <div className="flex gap-sm">
-                  <div>
-                    <label htmlFor="price">
-                      <FormLabel>Длительность курса</FormLabel>
-                    </label>
+                  <FormControl required>
+                    <FormLabelStyled>Длительность курса</FormLabelStyled>
                     <div className="flex items-start gap-xxs">
                       {durations.map((duration, i) => (
                         <TagCheckbox
@@ -460,6 +475,7 @@ const NewCourseDialog = ({
                           }
                         >
                           <TextFieldStyled
+                            required
                             type="number"
                             id="name"
                             variant="outlined"
@@ -483,7 +499,7 @@ const NewCourseDialog = ({
                         </Box>
                       </FormControl>
                     </div>
-                  </div>
+                  </FormControl>
                   {/* <FormControl fullWidth variant="outlined">
                     <label htmlFor="date-start">
                       <FormLabel>Дата начала</FormLabel>
@@ -511,11 +527,10 @@ const NewCourseDialog = ({
                     />
                   </FormControl> */}
                 </div>
-                <FormControl fullWidth variant="outlined">
-                  <label htmlFor="price">
-                    <FormLabel>Стоимость курса</FormLabel>
-                  </label>
+                <FormControl fullWidth variant="outlined" required>
+                  <FormLabelStyled>Стоимость курса</FormLabelStyled>
                   <TextFieldStyled
+                    required
                     id="price"
                     variant="outlined"
                     value={price}

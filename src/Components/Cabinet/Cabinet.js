@@ -24,6 +24,7 @@ import Teachers from "./Teachers/Teachers";
 import Students from "./Students/Students";
 import { theme } from "./CabinetStyles";
 import Leads from "./Leads/Leads";
+import { CoursesProvider } from "../../contexts/Courses.context";
 
 const Cabinet = () => {
   return (
@@ -34,21 +35,23 @@ const Cabinet = () => {
           <Header />
           {/* <div className={styles["cabinet-content"]}> */}
           <ThemeProvider theme={theme}>
-            <Routes>
-              <Route path={routes.DASHBOARD} element={<Dashboard />} />
-              <Route path={routes.COURSES} element={<Courses />} />
-              <Route path={routes.LEADS + "/*"} element={<Leads />} />
-              <Route path={routes.GROUPS} element={<Groups />} />
-              <Route path={routes.TEACHERS + "/*"} element={<Teachers />} />
-              <Route path={routes.PERSONAL} element={<div>Personal</div>} />
-              <Route path={routes.STUDENTS + "/*"} element={<Students />} />
-              <Route
-                path="*"
-                element={
-                  <Navigate to={routes.CABINET + routes.DASHBOARD} replace />
-                }
-              />
-            </Routes>
+            <CoursesProvider>
+              <Routes>
+                <Route path={routes.DASHBOARD} element={<Dashboard />} />
+                <Route path={routes.COURSES} element={<Courses />} />
+                <Route path={routes.LEADS + "/*"} element={<Leads />} />
+                <Route path={routes.GROUPS} element={<Groups />} />
+                <Route path={routes.TEACHERS + "/*"} element={<Teachers />} />
+                <Route path={routes.PERSONAL} element={<div>Personal</div>} />
+                <Route path={routes.STUDENTS + "/*"} element={<Students />} />
+                <Route
+                  path="*"
+                  element={
+                    <Navigate to={routes.CABINET + routes.DASHBOARD} replace />
+                  }
+                />
+              </Routes>
+            </CoursesProvider>
           </ThemeProvider>
           {/* </div> */}
         </div>

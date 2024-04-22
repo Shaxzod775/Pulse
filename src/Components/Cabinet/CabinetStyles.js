@@ -118,7 +118,7 @@ export const theme = createTheme({
     },
     color: {
       purpleBlue: "#6574D8",
-      darkBlue: "#1C274C",
+      darkBlue: "#1F2937",
       mediumaquamarine: "#89CCB5",
       aqua: "#00988F",
       lightGrey: "#AEB2BA",

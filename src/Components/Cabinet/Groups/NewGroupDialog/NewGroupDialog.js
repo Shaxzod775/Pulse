@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -33,6 +33,7 @@ import useInput from "../../../../hooks/useInput";
 import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
 import { calculateMonthDifference } from "../../Courses/NewCourseDialog/NewCourseDialog";
+import { useCourses } from "../../../../contexts/Courses.context";
 
 const rainbowCycle = keyframes`
   0% {
@@ -201,8 +202,10 @@ const NewGroupDialog = ({
   handleAddGroup,
   ...otherProps
 }) => {
+  const { courses, findCourseByName, allCourseNames } = useCourses();
+
   const [name, changeName, resetName] = useInput("");
-  const [subject, changeSubject, resetSubject] = useInput(null);
+  const [selectedCourseName, changeSelectedCourseName] = useInput(null);
   const [teacher, changeTeacher, resetTeacher] = useInput(null);
   const [room, changeRoom, resetRoom] = useInput(null);
   const [startDate, setStartDate] = useState(null);
@@ -238,8 +241,8 @@ const NewGroupDialog = ({
   };
 
   // Function to handle change in subject selection
-  const handleSubjectChange = (event, newValue) => {
-    changeSubject({ target: { value: newValue } });
+  const handleCourseChange = (event, newValue) => {
+    changeSelectedCourseName({ target: { value: newValue } });
   };
 
   // Function to handle change in teacher selection
@@ -254,15 +257,33 @@ const NewGroupDialog = ({
 
   // Function to handle change in start date
   const handleStartDateChange = (event) => {
+    // const inputDate = event.target.value;
+    // const newStartDate = new Date(inputDate);
+    // if (!isNaN(newStartDate.getTime())) {
+    //   setStartDate(newStartDate);
+    // } else {
+    //   // Handle invalid input date here
+    //   setStartDate(null);
+    // }
     const inputDate = event.target.value;
     const newStartDate = new Date(inputDate);
     if (!isNaN(newStartDate.getTime())) {
       setStartDate(newStartDate);
+
+      // Find the selected course by its name
+      const selectedCourse = findCourseByName(selectedCourseName);
+      if (selectedCourse) {
+        // Add the duration as months to the start date to calculate the end date
+        const endDate = new Date(newStartDate);
+        endDate.setMonth(newStartDate.getMonth() + selectedCourse.duration);
+        setEndDate(endDate);
+      }
     } else {
       // Handle invalid input date here
       setStartDate(null);
     }
   };
+
   // Function to handle change in start date
   const handleEndDateChange = (event) => {
     const inputDate = event.target.value;
@@ -336,7 +357,7 @@ const NewGroupDialog = ({
     const duration = calculateMonthDifference(startDate, endDate);
     const newGroup = createGroup({
       name,
-      subject,
+      subject: selectedCourseName,
       teacher,
       startDate: startDate
         ? !isNaN(startDate.getTime())
@@ -454,18 +475,18 @@ const NewGroupDialog = ({
                   </FormControl>
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="subject">
-                      <FormLabel>Выбрать предмет</FormLabel>
+                      <FormLabel>Выбрать курс</FormLabel>
                     </label>
                     <AutocompleteStyled
-                      options={subjects}
-                      value={subject}
-                      onChange={handleSubjectChange}
+                      options={allCourseNames}
+                      value={selectedCourseName}
+                      onChange={handleCourseChange}
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}
                           id="subject"
                           variant="outlined"
-                          placeholder="Выберите предмет"
+                          placeholder="Выберите курс"
                         />
                       )}
                       popupIcon={
