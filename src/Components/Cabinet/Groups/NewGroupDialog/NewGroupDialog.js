@@ -587,6 +587,7 @@ const NewGroupDialog = ({
                               value={hoursNumber}
                               onChange={handleHoursChange}
                               sx={timeInputStyles}
+                              autoComplete="off"
                             />
                           </Box>
                         </FormControl>
@@ -607,6 +608,7 @@ const NewGroupDialog = ({
                               value={minutesNumber}
                               onChange={handleMinutesChange}
                               sx={timeInputStyles}
+                              autoComplete="off"
                             />
                           </Box>
                         </FormControl>
