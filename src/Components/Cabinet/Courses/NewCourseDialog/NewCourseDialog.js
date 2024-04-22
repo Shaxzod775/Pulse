@@ -282,6 +282,19 @@ const NewCourseDialog = ({
     }
   };
 
+  // Function to handle change in minutes
+  const handleDurationChange = (event) => {
+    let inputValue = parseInt(event.target.value, 10);
+
+    // Ensure the value is between 0 and 24
+    if (isNaN(inputValue) || inputValue < 0) inputValue = 0;
+    if (inputValue > 24) inputValue = 24;
+
+    inputValue = `${inputValue}`;
+
+    setSelectedDuration(inputValue);
+  };
+
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -420,7 +433,7 @@ const NewCourseDialog = ({
                         <TagCheckbox
                           key={i}
                           color="purpleBlue"
-                          selected={selectedDuration === duration}
+                          selected={selectedDuration == duration}
                           onClick={() => setSelectedDuration(duration)}
                           style={{
                             whiteSpace: "nowrap",
@@ -452,9 +465,7 @@ const NewCourseDialog = ({
                             variant="outlined"
                             placeholder=""
                             value={selectedDuration}
-                            onChange={(e) =>
-                              setSelectedDuration(e.target.value)
-                            }
+                            onChange={handleDurationChange}
                             InputProps={{
                               endAdornment: (
                                 <InputAdornment position="end">
