@@ -300,7 +300,7 @@ const NewCourseDialog = ({
     const newCourse = createCourse({
       name: name,
       price: price,
-      duration: monthsDifference,
+      duration: selectedDuration,
       startDate: startDate,
       endDate: endDate,
       thumbnail: selectedImage,
