@@ -502,7 +502,7 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
     height: "auto",
   },
   "& .MuiAutocomplete-endAdornment": {
-    top: "10px",
+    // top: "10px !important",
   },
 }));
 
