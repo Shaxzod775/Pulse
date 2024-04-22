@@ -476,6 +476,7 @@ const NewCourseDialog = ({
                         >
                           <TextFieldStyled
                             required
+                            autoComplete="off"
                             type="number"
                             id="name"
                             variant="outlined"

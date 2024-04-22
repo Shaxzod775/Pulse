@@ -389,7 +389,7 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
           <Grid
             container
             justifyContent="start"
-            rowSpacing={`${12}px`}
+            rowSpacing={"18px"}
             columnSpacing={"32px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >

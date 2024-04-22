@@ -126,7 +126,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             <Grid
               container
               justifyContent="start"
-              spacing={`${12}px`}
+              columnSpacing={"32px"}
+              rowSpacing={"18px"}
               marginBottom={`${theme.custom.spacing.sm}px`}
             >
               {students.map((student, i) => (
