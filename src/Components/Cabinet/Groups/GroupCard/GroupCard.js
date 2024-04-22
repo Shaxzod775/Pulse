@@ -177,10 +177,14 @@ const GroupCard = ({
             <Icons.Door />
             <div>{roomNumber} кабинет</div>
           </InfoLine>
-          <InfoLine small>
-            <Icons.Group />
-            <div>10 {getRussianWord(10, "ученик", "ученика", "учеников")}</div>
-          </InfoLine>
+          <Link to={routes.CABINET + routes.STUDENTS} className="link">
+            <InfoLine small>
+              <Icons.Group />
+              <div>
+                10 {getRussianWord(10, "ученик", "ученика", "учеников")}
+              </div>
+            </InfoLine>
+          </Link>
         </div>
       </div>
     </Card>

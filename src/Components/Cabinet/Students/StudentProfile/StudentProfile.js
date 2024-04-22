@@ -20,7 +20,7 @@ import {
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
-import { Height } from "@mui/icons-material";
+import { Height, RouteSharp } from "@mui/icons-material";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -602,7 +602,7 @@ const StudentProfile = () => {
               >
                 <div className="flex items-center gap-xxs">
                   <Icons.InboxIn />
-                  <span>Распечатать всю историю</span>
+                  <span>Скачать все платежи</span>
                 </div>
               </ButtonStyled>
             </div>
@@ -729,7 +729,7 @@ const StudentProfile = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex gap-sm">
                     <div>
-                      <Dropzone onDrop={handleImageSelection}>
+                      {/* <Dropzone onDrop={handleImageSelection}>
                         {({ getRootProps, getInputProps, isDragActive }) => (
                           <CircleContainer
                             {...getRootProps({
@@ -747,7 +747,17 @@ const StudentProfile = () => {
                             )}
                           </CircleContainer>
                         )}
-                      </Dropzone>
+                      </Dropzone> */}
+                      <CircleContainer
+                        className="flex justify-center items-center"
+                        sx={{ cursor: "default" }}
+                      >
+                        {selectedImage ? (
+                          <img src={selectedImage} alt="Uploaded" />
+                        ) : (
+                          <Icons.GalleryAdd />
+                        )}
+                      </CircleContainer>
                     </div>
                     <div className="flex gap-sm items-center">
                       <div>
@@ -781,16 +791,21 @@ const StudentProfile = () => {
                     </div>
                   </div>
                   <div>
-                    <DialogButton
-                      variant="contained"
-                      color="purpleBlue"
-                      // onClick={handleClickOpen}
+                    <Link
+                      to={routes.CABINET + routes.STUDENTS + routes.NEW}
+                      className="link"
                     >
-                      <div className="flex items-center gap-x3s">
-                        <Icons.PenNewSquare />
-                        <span>Изменить</span>
-                      </div>
-                    </DialogButton>
+                      <DialogButton
+                        variant="contained"
+                        color="purpleBlue"
+                        // onClick={handleClickOpen}
+                      >
+                        <div className="flex items-center gap-x3s">
+                          <Icons.PenNewSquare />
+                          <span>Изменить</span>
+                        </div>
+                      </DialogButton>
+                    </Link>
                   </div>
                 </div>
               </Card>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   Button,
   Chip,
   Dialog,
@@ -24,6 +25,34 @@ import PropTypes from "prop-types";
 import { createCourse } from "../Courses";
 import useInput from "../../../../hooks/useInput";
 import Dropzone from "react-dropzone";
+import { getRussianWord } from "../../../../helpers/helpers";
+
+const timeInputStyles = {
+  minHeight: "unset",
+  "& .MuiInputBase-root": {
+    minHeight: "unset",
+    // borderRadius: "8px",
+    ".MuiInputBase-input": {
+      padding: "10px",
+      // "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
+  },
+  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+    // padding: "10px",
+    // textAlign: "center",
+    fontWeight: "500",
+    height: "100%",
+    width: "100%",
+    "::placeholder": { color: "#D1D5DB", opacity: "1" },
+  },
+  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+    "-webkit-appearance": "none",
+    margin: 0,
+  },
+  "& input[type=number]": {
+    "-moz-appearance": "textfield",
+  },
+};
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -69,14 +98,30 @@ function TagCheckbox({
         boxSizing: "border-box",
         boxShadow: "none",
         "&:hover": { boxShadow: "none" },
-        minWidth: "unset",
-        padding: "6px",
+        minWidth: "44px",
+        minHeight: "44px",
+        padding: "10px",
         lineHeight: "inherit",
-        border: `${selected ? `1px solid ${theme.palette.darkBlue.main}` : ""}`,
+        border: `${
+          selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
+        }`,
+        borderRadius: "10px",
+        textTransform: "none",
+        fontSize: "1rem",
       }}
       {...otherProps}
     >
-      {children}
+      <Box
+        sx={{
+          // aspectRatio: 1,
+          lineHeight: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {children}
+      </Box>
     </Button>
   );
 }
@@ -134,11 +179,7 @@ const techs = [
   "TypeScript",
   "GraphQL",
 ];
-const durations = [
-  { number: 3, text: "3 месяца" },
-  { number: 6, text: "6 месяцев" },
-  { number: 12, text: "12 месяцев" },
-];
+const durations = [3, 6, 12];
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
@@ -192,6 +233,7 @@ const NewCourseDialog = ({
   const [price, changePrice, resetPrice] = useInput("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [selectedDuration, setSelectedDuration] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageSelection = (acceptedFiles) => {
@@ -369,7 +411,69 @@ const NewCourseDialog = ({
                   />
                 </FormControl>
                 <div className="flex gap-sm">
-                  <FormControl fullWidth variant="outlined">
+                  <div>
+                    <label htmlFor="price">
+                      <FormLabel>Длительность курса</FormLabel>
+                    </label>
+                    <div className="flex items-start gap-xxs">
+                      {durations.map((duration, i) => (
+                        <TagCheckbox
+                          key={i}
+                          color="purpleBlue"
+                          selected={selectedDuration === duration}
+                          onClick={() => setSelectedDuration(duration)}
+                          style={{
+                            whiteSpace: "nowrap",
+                            minWidth: "max-content",
+                          }}
+                        >
+                          {duration}{" "}
+                          {getRussianWord(
+                            duration,
+                            "месяц",
+                            "месяца",
+                            "месяцев"
+                          )}
+                        </TagCheckbox>
+                      ))}
+                      <FormControl variant="outlined">
+                        <Box
+                          sx={
+                            {
+                              // // aspectRatio: 1,
+                              // maxWidth: "30%",
+                              // maxHeight: "100%",
+                            }
+                          }
+                        >
+                          <TextFieldStyled
+                            type="number"
+                            id="name"
+                            variant="outlined"
+                            placeholder=""
+                            value={selectedDuration}
+                            onChange={(e) =>
+                              setSelectedDuration(e.target.value)
+                            }
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  {getRussianWord(
+                                    selectedDuration,
+                                    "месяц",
+                                    "месяца",
+                                    "месяцев"
+                                  )}
+                                </InputAdornment>
+                              ),
+                            }}
+                            sx={timeInputStyles}
+                          />
+                        </Box>
+                      </FormControl>
+                    </div>
+                  </div>
+                  {/* <FormControl fullWidth variant="outlined">
                     <label htmlFor="date-start">
                       <FormLabel>Дата начала</FormLabel>
                     </label>
@@ -394,7 +498,7 @@ const NewCourseDialog = ({
                       value={endDate ? endDate.toISOString().split("T")[0] : ""}
                       onChange={handleEndDateChange}
                     />
-                  </FormControl>
+                  </FormControl> */}
                 </div>
                 <FormControl fullWidth variant="outlined">
                   <label htmlFor="price">
@@ -407,7 +511,7 @@ const NewCourseDialog = ({
                     onChange={changePrice}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">so'm</InputAdornment>
+                        <InputAdornment position="end">UZS</InputAdornment>
                       ),
                       placeholder: "Введите стоимость в UZS",
                       inputComponent: NumericFormatCustom,

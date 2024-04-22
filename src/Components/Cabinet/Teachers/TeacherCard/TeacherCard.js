@@ -127,13 +127,16 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             <InfoLine>
               <Icons.Documents />
               <Typography fontWeight={400}>Групп: 6</Typography>
-            </InfoLine>
-            <InfoLine>
-              <Icons.Group />
-              <Typography>
-                222 {getRussianWord(222, "ученик", "ученика", "учеников")}
-              </Typography>
-            </InfoLine>
+            </InfoLine>{" "}
+            <Link to={routes.CABINET + routes.STUDENTS} className="link">
+              <InfoLine>
+                <Icons.Group />
+
+                <Typography>
+                  222 {getRussianWord(222, "ученик", "ученика", "учеников")}
+                </Typography>
+              </InfoLine>
+            </Link>
           </div>
           <InfoLine>
             <Icons.CalendarDateContained />

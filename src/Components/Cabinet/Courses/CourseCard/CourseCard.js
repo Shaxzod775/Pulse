@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
 import {
   Button,
   CardContent,
@@ -22,7 +24,6 @@ import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
-import { Link } from "react-router-dom";
 import { getRussianWord } from "../../../../helpers/helpers";
 
 const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
@@ -122,12 +123,12 @@ const CourseCard = ({
                 : "месяцев"} */}
             </div>
           </InfoLine>
-          <InfoLine>
-            <Icons.Group />
-            <div>
+          <Link to={routes.CABINET + routes.STUDENTS} className="link">
+            <InfoLine>
+              <Icons.Group />
               222 {getRussianWord(222, "ученик", "ученика", "учеников")}
-            </div>
-          </InfoLine>
+            </InfoLine>
+          </Link>
         </div>
         <ButtonStyled
           variant="contained"
