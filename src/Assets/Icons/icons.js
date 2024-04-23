@@ -57,6 +57,8 @@ import { ReactComponent as Graph } from "./svgs/graph.svg";
 import { ReactComponent as ChartSquare } from "./svgs/chartSquare.svg";
 import { ReactComponent as Settings } from "./svgs/settings.svg";
 import { ReactComponent as Call } from "./svgs/call.svg";
+import { ReactComponent as MaleSymbol } from "./svgs/maleSymbol.svg";
+import { ReactComponent as FemaleSymbol } from "./svgs/femaleSymbol.svg";
 
 export const Icons = {
   ArrowD,
@@ -118,4 +120,6 @@ export const Icons = {
   ChartSquare,
   Settings,
   Call,
+  MaleSymbol,
+  FemaleSymbol,
 };

@@ -464,17 +464,31 @@ const NewStudent = () => {
                         defaultValue="male"
                         aria-labelledby="gender-radios"
                         name="gender-radios"
+                        sx={{
+                          "& > div": { marginRight: "16px" },
+                          "& .MuiFormControlLabel-root": { marginRight: "0" },
+                        }}
                       >
-                        <FormControlLabel
-                          value="male"
-                          control={<RadioStyled />}
-                          label="Мужской"
-                        />
-                        <FormControlLabel
-                          value="female"
-                          control={<RadioStyled />}
-                          label="Женский"
-                        />
+                        <div className="flex items-center gap-xxs2">
+                          <FormControlLabel
+                            value="male"
+                            control={<RadioStyled />}
+                            label="Мужской"
+                          />
+                          <Icons.MaleSymbol
+                            color={theme.typography.color.purpleBlue}
+                          />
+                        </div>
+                        <div className="flex items-center gap-xxs2">
+                          <FormControlLabel
+                            value="female"
+                            control={<RadioStyled />}
+                            label="Женский"
+                          />
+                          <Icons.FemaleSymbol
+                            color={theme.typography.color.purpleBlue}
+                          />
+                        </div>
                       </RadioGroup>
                     </div>
                   </FormControl>
