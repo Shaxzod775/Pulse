@@ -442,7 +442,7 @@ const NewCourseDialog = ({
                 </FormControl>
                 <div className="flex gap-sm">
                   <FormControl required>
-                    <FormLabelStyled>Длительность курса</FormLabelStyled>
+                    <FormLabelStyled>Продолжительность курса</FormLabelStyled>
                     <div className="flex items-start gap-xxs">
                       {durations.map((duration, i) => (
                         <TagCheckbox

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
@@ -36,6 +36,7 @@ import Dropzone from "react-dropzone";
 import { MuiTelInput } from "mui-tel-input";
 import { ruRU } from "@mui/x-date-pickers/locales";
 import { ar, ru } from "date-fns/locale";
+import _ from "lodash"; // lodash library
 const russianLocale =
   ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
 
@@ -131,6 +132,12 @@ const NewStudent = () => {
   const [firstNameHelperText, setFirstNameHelperText] = useState("");
   const [lastNameHelperText, setLastNameHelperText] = useState("");
   const [middleNameHelperText, setMiddleNameHelperText] = useState("");
+  const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
+    { number: "", name: "" },
+    { number: "", name: "" },
+    { number: "", name: "" },
+  ]);
+  const [visibleCount, setVisibleCount] = useState(1);
 
   const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
     // Remove all non-digit characters
@@ -176,6 +183,45 @@ const NewStudent = () => {
     // Simulate file input click event
     const fileInput = document.getElementById("file-upload-input");
     fileInput.click();
+  };
+
+  const handleInputChange = useCallback(
+    _.debounce((index, name, value) => {
+      setParentsPhoneNumbers((values) => {
+        const newValues = [...values];
+        if (name === "name") {
+          newValues[index].name = value;
+        }
+        return newValues;
+      });
+    }, 10),
+    [parentsPhoneNumbers]
+  ); // delay of 10ms
+
+  const handleChangeParentPhoneNumber =
+    // useCallback(
+    //   _.debounce(
+    (index, newPhone) => {
+      // Remove all non-digit characters
+      const digits = newPhone.replace(/\D/g, "");
+      const newValues = [...parentsPhoneNumbers];
+
+      // Check if the new phone number starts with "+998" and does not exceed 12 digits
+      if (newPhone.startsWith("+998") && digits.length <= 12) {
+        newValues[index].number = newPhone;
+        setParentsPhoneNumbers(newValues);
+      } else if (digits.length <= 3) {
+        // If the new phone number is "+99" or "+9", reset it to "+998"
+        newValues[index].number = "+998";
+        setParentsPhoneNumbers(newValues);
+      }
+    };
+  //   , 0),
+  //   [parentsPhoneNumbers]
+  // ); // delay of 10ms
+
+  const handleAddFields = () => {
+    setVisibleCount(visibleCount + 1);
   };
 
   // Function to handle adding a new tag
@@ -520,44 +566,98 @@ const NewStudent = () => {
                   />
                 </div>
               </FormControl>
-              <div className="flex items-center justify-between">
-                <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Телефон родителей</FormLabel>
-                </label>
-                <div
-                  className="full-width flex gap-xxs"
-                  style={{ maxWidth: "75%" }}
-                >
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled
-                      variant="outlined"
-                      placeholder="Номер телефона"
-                    />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled
-                      variant="outlined"
-                      placeholder="Доп. номер"
-                    />
-                  </FormControl>
+              <div className="full-width flex flex-col gap-xs">
+                {/* Render the first item */}
+                {parentsPhoneNumbers[0] && (
+                  <div className="flex items-center justify-between">
+                    <label style={{ maxWidth: "25%" }}>
+                      <FormLabel row>Телефон родителей</FormLabel>
+                    </label>
+                    <div
+                      className="full-width flex gap-xxs"
+                      style={{ maxWidth: "75%" }}
+                    >
+                      <FormControl fullWidth variant="outlined">
+                        <MuiTelInput
+                          variant="outlined"
+                          defaultCountry="UZ"
+                          onlyCountries={["UZ"]}
+                          value={parentsPhoneNumbers[0].number}
+                          onChange={(newPhone) =>
+                            handleChangeParentPhoneNumber(0, newPhone)
+                          }
+                          sx={muiTelInputStyles({ theme })}
+                        />
+                      </FormControl>
+                      <FormControl fullWidth variant="outlined">
+                        <TextFieldStyled
+                          variant="outlined"
+                          placeholder="Имя"
+                          name="name"
+                          value={parentsPhoneNumbers[0].name}
+                          onChange={(event) =>
+                            handleInputChange(
+                              0,
+                              event.target.name,
+                              event.target.value
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                )}
+
+                {/* Render the rest of the items */}
+                {parentsPhoneNumbers
+                  .slice(1, visibleCount)
+                  .map((parentPhoneNumber, index) => (
+                    <div
+                      className="full-width flex gap-xxs"
+                      style={{ marginLeft: "25%", maxWidth: "75%" }}
+                    >
+                      <FormControl fullWidth variant="outlined">
+                        <MuiTelInput
+                          variant="outlined"
+                          defaultCountry="UZ"
+                          onlyCountries={["UZ"]}
+                          value={parentPhoneNumber.number}
+                          onChange={(newPhone) =>
+                            handleChangeParentPhoneNumber(index + 1, newPhone)
+                          }
+                          sx={muiTelInputStyles({ theme })}
+                        />
+                      </FormControl>
+                      <FormControl fullWidth variant="outlined">
+                        <TextFieldStyled
+                          variant="outlined"
+                          placeholder="Имя"
+                          name="name"
+                          value={parentPhoneNumber.name}
+                          onChange={(event) =>
+                            handleInputChange(
+                              index + 1,
+                              event.target.name,
+                              event.target.value
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </div>
+                  ))}
+
+                <div style={{ marginLeft: "25%", maxWidth: "75%" }}>
+                  <DialogButton
+                    variant="outlined"
+                    color="purpleBlue"
+                    onClick={handleAddFields}
+                    disabled={visibleCount >= parentsPhoneNumbers.length}
+                  >
+                    Добавить ещё
+                  </DialogButton>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Имя и Фамилия родителя</FormLabel>
-                </label>
-                <div
-                  className="full-width flex gap-xxs"
-                  style={{ maxWidth: "75%" }}
-                >
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled variant="outlined" placeholder="Имя" />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled variant="outlined" placeholder="Фамилия" />
-                  </FormControl>
-                </div>
-              </div>
+
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
                   <FormLabel row>Добавить тег:</FormLabel>
