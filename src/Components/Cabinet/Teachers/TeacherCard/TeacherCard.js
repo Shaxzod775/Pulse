@@ -12,13 +12,8 @@ import {
   styled,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  theme,
-  CardStyled,
-  ButtonStyled,
-  MenuStyled,
-} from "../../CabinetStyles";
-import { Card, InfoLine } from "../../GridItemCardStyles";
+import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import arslanAvatar from "../../../../Assets/Images/Avatars/Arslan.png";
 import { format, weeksToDays } from "date-fns";
@@ -39,7 +34,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
     setAnchorEl(null);
   };
   return (
-    <Card>
+    <CardStyled>
       <div className="full-height flex flex-col justify-between gap-xs">
         <div className="flex justify-between items-start">
           {/* <Link
@@ -117,37 +112,37 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
         </div>
         <div className="flex flex-col gap-xs">
           <Divider />
-          <InfoLine>
+          <InfoWithIcon>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
               <Icons.Call />
               <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
             </Link>
-          </InfoLine>
+          </InfoWithIcon>
           <div className="flex gap-xs">
-            <InfoLine>
+            <InfoWithIcon>
               <Icons.Documents />
               <Typography fontWeight={400}>Групп: 6</Typography>
-            </InfoLine>{" "}
+            </InfoWithIcon>{" "}
             <Link to={routes.CABINET + routes.STUDENTS} className="link">
-              <InfoLine>
+              <InfoWithIcon>
                 <Icons.Group />
 
                 <Typography>
                   222 {getRussianWord(222, "ученик", "ученика", "учеников")}
                 </Typography>
-              </InfoLine>
+              </InfoWithIcon>
             </Link>
           </div>
-          <InfoLine>
+          <InfoWithIcon>
             <Icons.CalendarDateContained />
             <Typography>01.01.2024</Typography>
-          </InfoLine>
+          </InfoWithIcon>
           <Divider />
           <div className="flex justify-between items-center">
-            <InfoLine>
+            <InfoWithIcon>
               <Icons.Location />
               <Typography>IT Park Tashkent</Typography>
-            </InfoLine>
+            </InfoWithIcon>
             <Link
               to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
               className="link flex items-center justify-center"
@@ -157,7 +152,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
           </div>
         </div>
       </div>
-    </Card>
+    </CardStyled>
   );
 };
 

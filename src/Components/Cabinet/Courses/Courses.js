@@ -191,39 +191,40 @@ const Courses = () => {
             </ButtonStyled>
           </div>
         </div>
-        <Paper
+        {/* <Paper
           sx={{
             borderRadius: "20px",
             height: "90%",
             padding: "32px",
             boxShadow: "none",
           }}
+        > */}
+        <div
+          style={{
+            flexGrow: "1",
+            // maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
+          }}
         >
-          <div
-            style={{
-              maxHeight: "100%",
-              paddingRight: "32px",
-              overflowY: "auto",
-            }}
+          <Grid
+            container
+            justifyContent="start"
+            columnSpacing={"32px"}
+            rowSpacing={"18px"}
+            marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            <Grid
-              container
-              justifyContent="start"
-              columnSpacing={"32px"}
-              rowSpacing={"18px"}
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {courses.map((course, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <CourseCard
-                    {...course}
-                    handleDeleteCourse={handleDeleteCourse}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </Paper>
+            {courses.map((course, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <CourseCard
+                  {...course}
+                  handleDeleteCourse={handleDeleteCourse}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        {/* </Paper> */}
       </Main>
 
       <NewCourseDialog

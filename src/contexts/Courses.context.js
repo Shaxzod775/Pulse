@@ -24,6 +24,55 @@ const initialState = [
     price: 1200000,
     thumbnail: null,
   },
+  {
+    id: uuidv4(),
+    name: "Python 1",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 2",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 3",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 4",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 5",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 6",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
+  {
+    id: uuidv4(),
+    name: "Python 7",
+    duration: 4,
+    price: 1200000,
+    thumbnail: null,
+  },
   // Add more initial courses if needed
 ];
 

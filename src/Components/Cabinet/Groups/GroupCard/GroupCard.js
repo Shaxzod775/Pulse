@@ -13,13 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  theme,
-  CardStyled,
-  ButtonStyled,
-  MenuStyled,
-} from "../../CabinetStyles";
-import { Card, InfoLine } from "../../GridItemCardStyles";
+import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
@@ -52,7 +47,7 @@ const GroupCard = ({
     setAnchorEl(null);
   };
   return (
-    <Card>
+    <CardStyled>
       <div className="flex flex-col gap-xs">
         <img
           src={thumbnail ? thumbnail : groupImage}
@@ -128,15 +123,15 @@ const GroupCard = ({
         </div>
         <Divider />
         <div className="flex flex-col gap-xxs">
-          <InfoLine>
+          <InfoWithIcon>
             <Icons.CalendarContained />
             <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
-          </InfoLine>
-          <InfoLine>
+          </InfoWithIcon>
+          <InfoWithIcon>
             <Icons.ClockDashed />
             <div>Дата завершения: {format(endDate, "dd.MM.yyyy")}</div>
-          </InfoLine>
-          <InfoLine>
+          </InfoWithIcon>
+          <InfoWithIcon>
             <Icons.CalendarDateContained />
             <div>
               Дни урока:{" "}
@@ -147,10 +142,10 @@ const GroupCard = ({
                   }`
               )}
             </div>
-          </InfoLine>
+          </InfoWithIcon>
         </div>
         <Divider />
-        <InfoLine>
+        <InfoWithIcon>
           <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link flex gap-x3s"
@@ -158,9 +153,9 @@ const GroupCard = ({
             <Icons.SchoolAcademicCap />
             <div>Учитель: {teacher}</div>
           </Link>
-        </InfoLine>
+        </InfoWithIcon>
         <div className="flex gap-xs">
-          <InfoLine small>
+          <InfoWithIcon small>
             <Icons.ClockContained />
             <div>
               {duration}{" "}
@@ -172,22 +167,22 @@ const GroupCard = ({
                 ? "месяца"
                 : "месяцев"}
             </div>
-          </InfoLine>
-          <InfoLine small>
+          </InfoWithIcon>
+          <InfoWithIcon small>
             <Icons.Door />
             <div>{roomNumber} кабинет</div>
-          </InfoLine>
+          </InfoWithIcon>
           <Link to={routes.CABINET + routes.STUDENTS} className="link">
-            <InfoLine small>
+            <InfoWithIcon small>
               <Icons.Group />
               <div>
                 10 {getRussianWord(10, "ученик", "ученика", "учеников")}
               </div>
-            </InfoLine>
+            </InfoWithIcon>
           </Link>
         </div>
       </div>
-    </Card>
+    </CardStyled>
   );
 };
 

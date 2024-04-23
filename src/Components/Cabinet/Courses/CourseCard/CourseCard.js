@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Button,
   CardContent,
   CardMedia,
@@ -12,13 +13,8 @@ import {
   styled,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  theme,
-  CardStyled,
-  ButtonStyled,
-  MenuStyled,
-} from "../../CabinetStyles";
-import { Card, InfoLine } from "../../GridItemCardStyles";
+import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
@@ -50,23 +46,17 @@ const CourseCard = ({
   const durationInHours = duration * lessonsInOneMonth * lessonLength;
 
   return (
-    <Card>
-      <div className="flex flex-col gap-xs">
-        <img src={thumbnail ? thumbnail : courseImage} alt="Group" />
-        <div className="flex justify-between items-center">
-          <Typography fontWeight={600}>{name}</Typography>
-          <div
-            className="flex items-center gap-x3s"
-            style={{ marginRight: "-8px" }}
-          >
-            <Link className="link">
-              {/* <ButtonStyled> */}
-              <div className="flex items-center gap-x3s">
-                <Icons.SquareArrowLeftUp />
-                <Typography>Открыть</Typography>
-              </div>
-              {/* </ButtonStyled> */}
-            </Link>
+    <>
+      <CardStyled>
+        <div className="flex flex-col gap-xs">
+          <img
+            src={thumbnail ? thumbnail : courseImage}
+            alt="Group"
+            height={183}
+          />
+          <Box className="flex justify-between items-center" paddingX="7px">
+            <Typography fontWeight={600}>{name}</Typography>
+
             <IconButton
               color="purpleBlue"
               aria-controls={open ? "dots-menu" : undefined}
@@ -74,7 +64,7 @@ const CourseCard = ({
               aria-expanded={open ? "true" : undefined}
               disableElevation
               onClick={handleClick}
-              // sx={{ right: "-8px" }}
+              sx={{ right: "-8px" }}
             >
               <Icons.MenuDots />
             </IconButton>
@@ -105,49 +95,61 @@ const CourseCard = ({
                 </ButtonStyled>
               </MenuItem>
             </MenuStyled>
-          </div>
-        </div>
-        <Divider />
-        <div className="flex gap-xs">
-          <InfoLine>
-            <Icons.ClockContained />
-            <div>
-              {duration}{" "}
-              {getRussianWord(duration, "месяц", "месяца", "месяцев")}
-              {/* {duration % 10 === 1 && duration % 100 !== 11
-                ? "месяц"
-                : duration % 10 >= 2 &&
-                  duration % 10 <= 4 &&
-                  (duration % 100 < 10 || duration % 100 >= 20)
-                ? "месяца"
-                : "месяцев"} */}
+          </Box>
+          <Box className="flex flex-col" paddingX="9px" gap="12px">
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.ClockContained />
+                <Typography>Продолжительность курса</Typography>
+              </InfoWithIcon>
+              <Typography>
+                {duration}{" "}
+                {getRussianWord(duration, "месяц", "месяца", "месяцев")}
+              </Typography>
             </div>
-          </InfoLine>
-          <Link to={routes.CABINET + routes.STUDENTS} className="link">
-            <InfoLine>
-              <Icons.Group />
-              222 {getRussianWord(222, "ученик", "ученика", "учеников")}
-            </InfoLine>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Group />
+                <Typography>
+                  {/* {getRussianWord(222, "Ученик", "Ученика", "Учеников")} */}
+                  Учеников
+                </Typography>
+              </InfoWithIcon>
+              <Link to={routes.CABINET + routes.STUDENTS} className="link">
+                <Typography>222</Typography>
+              </Link>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Group />
+                <Typography>Стоимость</Typography>
+              </InfoWithIcon>
+              <Typography letterSpacing="0.32px">
+                <NumericFormat
+                  value={price}
+                  displayType="text" // Set to "input" if you want an input field
+                  thousandSeparator=" "
+                />{" "}
+                UZS
+              </Typography>
+            </div>
+          </Box>
+          <Link className="link full-width">
+            <ButtonStyled
+              fullWidth
+              variant="contained"
+              color="purpleBlueLight"
+              sx={{ borderRadius: "15px" }}
+            >
+              <div className="flex items-center gap-x3s">
+                <Icons.SquareArrowLeftUp />
+                <Typography>Открыть</Typography>
+              </div>
+            </ButtonStyled>
           </Link>
         </div>
-        <ButtonStyled
-          variant="contained"
-          color="purpleBlueLight"
-          sx={{ borderRadius: "20px" }}
-        >
-          <div className="flex items-center gap-xs">
-            <Typography letterSpacing="0.32px">
-              <NumericFormat
-                value={price}
-                displayType="text" // Set to "input" if you want an input field
-                thousandSeparator=" "
-              />{" "}
-              UZS
-            </Typography>
-          </div>
-        </ButtonStyled>
-      </div>
-    </Card>
+      </CardStyled>
+    </>
   );
 };
 

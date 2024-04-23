@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { Card, InfoLine } from "../../GridItemCardStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
@@ -65,7 +65,7 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
       ? "In Progress"
       : "Other";
   return (
-    <Card>
+    <CardStyled>
       <div className="flex flex-col gap-sm">
         <div className="flex justify-between items-start">
           <div
@@ -123,23 +123,23 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
         </div>
         <Divider />
 
-        <InfoLine>
+        <InfoWithIcon>
           <Link to="tel:/+998987654321" className="link flex gap-x3s">
             <Icons.Call />
             <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
           </Link>
-        </InfoLine>
+        </InfoWithIcon>
 
-        <InfoLine>
+        <InfoWithIcon>
           <Link to="mailto:example@gmail.com" className="link flex gap-x3s">
             <Icons.Messages />
             <Typography fontWeight={400}>example@gmail.com</Typography>
           </Link>
-        </InfoLine>
+        </InfoWithIcon>
         <Divider />
         <StatusChip label={statusLabel} status={status} />
       </div>
-    </Card>
+    </CardStyled>
   );
 };
 
