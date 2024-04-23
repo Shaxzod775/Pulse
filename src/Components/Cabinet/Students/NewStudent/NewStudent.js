@@ -605,7 +605,7 @@ const NewStudent = () => {
                     <TextFieldStyled
                       fullWidth
                       variant="outlined"
-                      placeholder="Страна, Город, Место проживания"
+                      placeholder="Место проживания"
                       sx={{ marginLeft: "25%", maxWidth: "75%" }}
                     />
                     {/* </div> */}
