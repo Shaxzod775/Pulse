@@ -23,6 +23,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
+  AutocompleteField,
+  AutocompleteStyled,
   ButtonStyled,
   Main,
   Root,
@@ -37,6 +39,7 @@ import { MuiTelInput } from "mui-tel-input";
 import { ruRU } from "@mui/x-date-pickers/locales";
 import { ar, ru } from "date-fns/locale";
 import _ from "lodash"; // lodash library
+import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
 const russianLocale =
   ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
 
@@ -122,16 +125,20 @@ const NewStudent = () => {
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
-  const [tagFormOpen, setTagFormOpen] = useState(false);
+
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
+  const [lastName, setLastName] = useState("");
   const [firstNameHelperText, setFirstNameHelperText] = useState("");
   const [lastNameHelperText, setLastNameHelperText] = useState("");
   const [middleNameHelperText, setMiddleNameHelperText] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
+
+  const [city, changeCity] = useAutocompleteInput("");
+  const [district, changeDistrict] = useAutocompleteInput("");
+
   const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
     { number: "", name: "" },
     { number: "", name: "" },
@@ -139,28 +146,8 @@ const NewStudent = () => {
   ]);
   const [visibleCount, setVisibleCount] = useState(1);
 
-  const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
-    // Remove all non-digit characters
-    const digits = newPhone.replace(/\D/g, "");
-
-    // Check if the new phone number starts with "+998" and does not exceed 12 digits
-    if (newPhone.startsWith("+998") && digits.length <= 12) {
-      phoneNumberSetter(newPhone);
-    } else if (digits.length <= 3) {
-      // If the new phone number is "+99" or "+9", reset it to "+998"
-      phoneNumberSetter("+998");
-    }
-  };
-
-  const handleChange = (event, setter, setHelperText) => {
-    const { value } = event.target;
-    if (/^[a-zA-Z]*$/.test(value)) {
-      setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
-      setHelperText("");
-    } else {
-      setHelperText("Только латинские буквы!");
-    }
-  };
+  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
+  const [tagFormOpen, setTagFormOpen] = useState(false);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -185,7 +172,30 @@ const NewStudent = () => {
     fileInput.click();
   };
 
-  const handleInputChange = useCallback(
+  const handleChange = (event, setter, setHelperText) => {
+    const { value } = event.target;
+    if (/^[a-zA-Z]*$/.test(value)) {
+      setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
+      setHelperText("");
+    } else {
+      setHelperText("Только латинские буквы!");
+    }
+  };
+
+  const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
+    // Remove all non-digit characters
+    const digits = newPhone.replace(/\D/g, "");
+
+    // Check if the new phone number starts with "+998" and does not exceed 12 digits
+    if (newPhone.startsWith("+998") && digits.length <= 12) {
+      phoneNumberSetter(newPhone);
+    } else if (digits.length <= 3) {
+      // If the new phone number is "+99" or "+9", reset it to "+998"
+      phoneNumberSetter("+998");
+    }
+  };
+
+  const handleChangeParentName = useCallback(
     _.debounce((index, name, value) => {
       setParentsPhoneNumbers((values) => {
         const newValues = [...values];
@@ -416,6 +426,7 @@ const NewStudent = () => {
                         variant="outlined"
                         defaultCountry="UZ"
                         onlyCountries={["UZ"]}
+                        helperText="Основной номер"
                         value={phoneNumber}
                         onChange={(newPhone) =>
                           handleChangePhoneNumber(newPhone, setPhoneNumber)
@@ -428,8 +439,8 @@ const NewStudent = () => {
                         variant="outlined"
                         defaultCountry="UZ"
                         onlyCountries={["UZ"]}
-                        value={additionalPhoneNumber}
                         helperText="Дополнительный номер"
+                        value={additionalPhoneNumber}
                         onChange={(newPhone) =>
                           handleChangePhoneNumber(
                             newPhone,
@@ -521,20 +532,85 @@ const NewStudent = () => {
                   </div>
                 </div>
                 <Divider />
-                <div>
-                  <FormControl fullWidth variant="outlined">
-                    <div className="flex items-center gap-md">
-                      <label>
+
+                <FormControl fullWidth variant="outlined">
+                  <div className="flex flex-col gap-sm">
+                    <div className="flex items-center">
+                      <label className="full-width" style={{ maxWidth: "25%" }}>
                         <FormLabel row>Адрес проживания</FormLabel>
                       </label>
-                      <TextFieldStyled
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Страна, Город, Место проживания"
-                      />
+                      <div
+                        className="full-width flex gap-xxs"
+                        style={{ maxWidth: "75%" }}
+                      >
+                        <FormControl fullWidth variant="outlined">
+                          <AutocompleteStyled
+                            options={["1", "2", "3", "4"]}
+                            value={city}
+                            onChange={changeCity}
+                            renderInput={(params) => (
+                              <AutocompleteField
+                                {...params}
+                                id="city"
+                                variant="outlined"
+                                placeholder="Город"
+                              />
+                            )}
+                            popupIcon={
+                              <Icons.ArrowD
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                            clearIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        </FormControl>
+                        <FormControl fullWidth variant="outlined">
+                          <AutocompleteStyled
+                            options={["1", "2", "3", "4"]}
+                            value={district}
+                            onChange={changeDistrict}
+                            renderInput={(params) => (
+                              <AutocompleteField
+                                {...params}
+                                id="city"
+                                variant="outlined"
+                                placeholder="Район"
+                                helperText={`${
+                                  city ? "" : "Сначала выберите город"
+                                }`}
+                                // error={!city}
+                              />
+                            )}
+                            disabled={!city}
+                            popupIcon={
+                              <Icons.ArrowD
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                            clearIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        </FormControl>
+                      </div>
                     </div>
-                  </FormControl>
-                </div>
+
+                    {/* <div className="flex gap-xxs" style={{ marginLeft: "25%" }}> */}
+                    <TextFieldStyled
+                      fullWidth
+                      variant="outlined"
+                      placeholder="Страна, Город, Место проживания"
+                      sx={{ marginLeft: "25%", maxWidth: "75%" }}
+                    />
+                    {/* </div> */}
+                  </div>
+                </FormControl>
               </div>
             </div>
           </PaperStyled>
@@ -596,7 +672,7 @@ const NewStudent = () => {
                           name="name"
                           value={parentsPhoneNumbers[0].name}
                           onChange={(event) =>
-                            handleInputChange(
+                            handleChangeParentName(
                               0,
                               event.target.name,
                               event.target.value
@@ -635,7 +711,7 @@ const NewStudent = () => {
                           name="name"
                           value={parentPhoneNumber.name}
                           onChange={(event) =>
-                            handleInputChange(
+                            handleChangeParentName(
                               index + 1,
                               event.target.name,
                               event.target.value

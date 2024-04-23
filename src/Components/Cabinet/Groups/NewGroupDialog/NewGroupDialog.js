@@ -25,6 +25,7 @@ import {
   TextFieldStyled,
   AutocompleteStyled,
   SelectStyled,
+  AutocompleteField,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -101,16 +102,6 @@ const FormLabel = styled(Typography)(({ theme }) => ({
   paddingBottom: "12px",
   letterSpacing: "0.32px",
   fontWeight: "600",
-}));
-
-const AutocompleteField = styled(TextField)(({ theme }) => ({
-  "& .MuiInputBase-root": {
-    borderRadius: "8px",
-    ".MuiInputBase-input": {
-      padding: "12px",
-      "::placeholder": { color: "#D1D5DB", opacity: "1" },
-    },
-  },
 }));
 
 const SquareContainer = styled("div")(

@@ -506,6 +506,20 @@ export const AutocompleteStyled = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 
+export const AutocompleteField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-root": {
+    borderRadius: "8px",
+    ".MuiInputBase-input": {
+      padding: "12px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    fontSize: ".8rem",
+    margin: "2px 0 -10px 12px",
+  },
+}));
+
 export const MenuStyled = styled((props) => (
   <Menu
     elevation={0}
