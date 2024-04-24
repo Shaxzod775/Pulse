@@ -108,39 +108,30 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             </ButtonStyled>
           </div>
         </div>
-        <Paper
-          sx={{
-            borderRadius: "20px",
-            height: "90%",
-            padding: "32px",
-            boxShadow: "none",
+        <div
+          style={{
+            maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
           }}
         >
-          <div
-            style={{
-              maxHeight: "100%",
-              paddingRight: "32px",
-              overflowY: "auto",
-            }}
+          <Grid
+            container
+            justifyContent="start"
+            columnSpacing={"32px"}
+            rowSpacing={"18px"}
+            marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            <Grid
-              container
-              justifyContent="start"
-              columnSpacing={"32px"}
-              rowSpacing={"18px"}
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {students.map((student, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <StudentCard
-                    {...student}
-                    handleDeleteStudent={handleDeleteStudent}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </Paper>
+            {students.map((student, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <StudentCard
+                  {...student}
+                  handleDeleteStudent={handleDeleteStudent}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </Main>
     </Root>
   );
