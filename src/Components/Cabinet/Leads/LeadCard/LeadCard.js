@@ -200,12 +200,10 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
             <Icons.ChatRoundDots />
             <TypographyStyled>Комментарий</TypographyStyled>
           </InfoWithIcon>
-          <Link to="mailto:example@gmail.com" className="link">
-            <TypographyStyled small>
-              Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras
-              sit. Consectetur nulla.
-            </TypographyStyled>
-          </Link>
+          <TypographyStyled small>
+            Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras sit.
+            Consectetur nulla.
+          </TypographyStyled>
         </Box>
         <div className="flex items-center justify-between">
           <InfoWithIcon>
