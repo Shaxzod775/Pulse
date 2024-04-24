@@ -102,7 +102,7 @@ const CourseCard = ({
             <div className="flex justify-between">
               <InfoWithIcon>
                 <Icons.ClockContained />
-                <Typography>Продолжительность курса</Typography>
+                <Typography>Продолжительность</Typography>
               </InfoWithIcon>
               <Typography>
                 {duration}{" "}

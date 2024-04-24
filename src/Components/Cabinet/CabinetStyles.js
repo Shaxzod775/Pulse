@@ -303,6 +303,7 @@ export const Root = styled("div")(({ theme }) => ({
   },
   "& .link": {
     textDecoration: "none",
+    // color: theme.typography.color.purpleBlue,
     color: "inherit",
   },
   "& .cursor-pointer": { cursor: "pointer" },
