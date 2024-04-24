@@ -132,40 +132,31 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             </Link>
           </div>
         </div>
-        <Paper
-          sx={{
-            borderRadius: "20px",
-            height: "90%",
-            padding: "32px",
-            boxShadow: "none",
+        <div
+          style={{
+            maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
           }}
         >
-          <div
-            style={{
-              maxHeight: "100%",
-              paddingRight: "32px",
-              overflowY: "auto",
-            }}
+          <Grid
+            container
+            justifyContent="start"
+            // spacing={`${12}px`}
+            columnSpacing={"32px"}
+            rowSpacing={"18px"}
+            marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            <Grid
-              container
-              justifyContent="start"
-              // spacing={`${12}px`}
-              columnSpacing={"32px"}
-              rowSpacing={"18px"}
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {teachers.map((teacher, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <TeacherCard
-                    {...teacher}
-                    handleDeleteTeacher={handleDeleteTeacher}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </Paper>
+            {teachers.map((teacher, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <TeacherCard
+                  {...teacher}
+                  handleDeleteTeacher={handleDeleteTeacher}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </Main>
 
       {/* <NewCourseDialog

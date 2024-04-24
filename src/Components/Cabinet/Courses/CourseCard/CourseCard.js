@@ -112,10 +112,7 @@ const CourseCard = ({
             <div className="flex justify-between">
               <InfoWithIcon>
                 <Icons.Group />
-                <Typography>
-                  {/* {getRussianWord(222, "Ученик", "Ученика", "Учеников")} */}
-                  Учеников
-                </Typography>
+                <Typography>Учеников</Typography>
               </InfoWithIcon>
               <Link to={routes.CABINET + routes.STUDENTS} className="link">
                 <Typography>222</Typography>
@@ -123,7 +120,7 @@ const CourseCard = ({
             </div>
             <div className="flex justify-between">
               <InfoWithIcon>
-                <Icons.Group />
+                <Icons.Wallet />
                 <Typography>Стоимость</Typography>
               </InfoWithIcon>
               <Typography letterSpacing="0.32px">

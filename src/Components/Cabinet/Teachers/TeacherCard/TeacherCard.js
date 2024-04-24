@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   styled,
+  Box,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
@@ -35,12 +36,11 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
   };
   return (
     <CardStyled>
-      <div className="full-height flex flex-col justify-between gap-xs">
-        <div className="flex justify-between items-start">
-          {/* <Link
-            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
-            className="link"
-          > */}
+      <Box
+        className="full-height flex flex-col justify-between gap-sm"
+        padding="9px"
+      >
+        <Box className="flex justify-between items-start" padding="8px">
           <div
             className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
@@ -70,7 +70,6 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               </Typography>
             </div>
           </div>
-          {/* </Link> */}
           <IconButton
             color="purpleBlue"
             aria-controls={open ? "dots-menu" : undefined}
@@ -109,49 +108,65 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               </ButtonStyled>
             </MenuItem>
           </MenuStyled>
-        </div>
-        <div className="flex flex-col gap-xs">
-          <Divider />
-          <InfoWithIcon>
-            <Link to="tel:/+998987654321" className="link flex gap-x3s">
+        </Box>
+        <Box className="flex flex-col" rowGap="12px">
+          <div className="flex justify-between">
+            <InfoWithIcon>
               <Icons.Call />
-              <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
+              <Typography>Номер</Typography>
+            </InfoWithIcon>
+            <Link to="tel:/+998987654321" className="link flex gap-x3s">
+              <Typography>+998 (98) 765-43-21</Typography>
             </Link>
-          </InfoWithIcon>
-          <div className="flex gap-xs">
+          </div>
+          <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Documents />
-              <Typography fontWeight={400}>Групп: 6</Typography>
-            </InfoWithIcon>{" "}
-            <Link to={routes.CABINET + routes.STUDENTS} className="link">
-              <InfoWithIcon>
-                <Icons.Group />
-
-                <Typography>
-                  222 {getRussianWord(222, "ученик", "ученика", "учеников")}
-                </Typography>
-              </InfoWithIcon>
-            </Link>
-          </div>
-          <InfoWithIcon>
-            <Icons.CalendarDateContained />
-            <Typography>01.01.2024</Typography>
-          </InfoWithIcon>
-          <Divider />
-          <div className="flex justify-between items-center">
-            <InfoWithIcon>
-              <Icons.Location />
-              <Typography>IT Park Tashkent</Typography>
+              <Typography>Количетсво групп</Typography>
             </InfoWithIcon>
-            <Link
-              to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
-              className="link flex items-center justify-center"
-            >
-              <Icons.SquareArrowLeftUp />
+            <Typography>6</Typography>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Group />
+              <Typography>Учеников</Typography>
+            </InfoWithIcon>
+            <Link to={routes.CABINET + routes.STUDENTS} className="link">
+              <Typography>222</Typography>
             </Link>
           </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.CalendarDateContained />
+              <Typography>Дата трудоустройства</Typography>
+            </InfoWithIcon>
+            <Typography>01.01.2024</Typography>
+          </div>
+        </Box>
+        <div className="flex justify-between">
+          <InfoWithIcon>
+            <Icons.Location />
+            <Typography>Филиалы</Typography>
+          </InfoWithIcon>
+          <Typography>IT Park Tashkent</Typography>
         </div>
-      </div>
+        <Link
+          to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+          className="link full-width"
+        >
+          <ButtonStyled
+            fullWidth
+            variant="contained"
+            color="purpleBlueLight"
+            sx={{ borderRadius: "15px" }}
+          >
+            <div className="flex items-center gap-x3s">
+              <Icons.SquareArrowLeftUp />
+              <Typography>Открыть</Typography>
+            </div>
+          </ButtonStyled>
+        </Link>
+      </Box>
     </CardStyled>
   );
 };
