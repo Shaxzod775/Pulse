@@ -1,10 +1,10 @@
 import { Card, styled } from "@mui/material";
 
 export const CardStyled = styled(Card)(({ theme }) => ({
-  "::before": {
-    content: "'UNDER DEV'",
-    color: "red",
-  },
+  // "::before": {
+  //   content: "'UNDER DEV'",
+  //   color: "red",
+  // },
   boxShadow: "none",
   height: "100%",
   padding: "5px",
@@ -14,7 +14,7 @@ export const CardStyled = styled(Card)(({ theme }) => ({
   "& img": {
     objectFit: "cover",
     objectPosition: "center",
-    borderRadius: "15px 15px 0px 0px",
+    // borderRadius: "15px 15px 0px 0px",
   },
   // "& svg": {
   //   color: theme.typography.color.purpleBlue,
@@ -30,7 +30,7 @@ export const InfoWithIcon = styled("div")(
     display: "flex",
     alignItems: "center",
     fontWeight: small ? "" : "600",
-    "& *": { fontWeight: small ? "" : "600" },
+    "& .MuiTypography-root": { fontWeight: small ? "" : "600" },
     gap: small ? "3px" : "5px",
     fontSize: small ? ".875rem" : "inherit",
     "& svg": {

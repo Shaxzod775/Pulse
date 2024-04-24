@@ -59,6 +59,7 @@ import { ReactComponent as Settings } from "./svgs/settings.svg";
 import { ReactComponent as Call } from "./svgs/call.svg";
 import { ReactComponent as MaleSymbol } from "./svgs/maleSymbol.svg";
 import { ReactComponent as FemaleSymbol } from "./svgs/femaleSymbol.svg";
+import { ReactComponent as DividerDot } from "./svgs/dividerDot.svg";
 
 export const Icons = {
   ArrowD,
@@ -122,4 +123,5 @@ export const Icons = {
   Call,
   MaleSymbol,
   FemaleSymbol,
+  DividerDot,
 };

@@ -48,15 +48,17 @@ const CourseCard = ({
   return (
     <>
       <CardStyled>
-        <div className="flex flex-col gap-xs">
+        <Box className="flex flex-col" rowGap="20px">
           <img
             src={thumbnail ? thumbnail : courseImage}
             alt="Group"
             height={183}
+            style={{ borderRadius: "15px 15px 0px 0px" }}
           />
           <Box className="flex justify-between items-center" paddingX="7px">
-            <Typography fontWeight={600}>{name}</Typography>
-
+            <Typography fontWeight={600} fontSize="1.125rem">
+              {name}
+            </Typography>
             <IconButton
               color="purpleBlue"
               aria-controls={open ? "dots-menu" : undefined}
@@ -64,7 +66,7 @@ const CourseCard = ({
               aria-expanded={open ? "true" : undefined}
               disableElevation
               onClick={handleClick}
-              sx={{ right: "-8px" }}
+              sx={{ right: "-8px", marginY: "-8px" }}
             >
               <Icons.MenuDots />
             </IconButton>
@@ -147,7 +149,7 @@ const CourseCard = ({
               </div>
             </ButtonStyled>
           </Link>
-        </div>
+        </Box>
       </CardStyled>
     </>
   );

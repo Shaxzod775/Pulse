@@ -440,39 +440,31 @@ const Groups = () => {
             </ButtonStyled>
           </div>
         </div>
-        <Paper
-          sx={{
-            borderRadius: "20px",
-            height: "90%",
-            padding: "32px",
-            boxShadow: "none",
+
+        <div
+          style={{
+            maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
           }}
         >
-          <div
-            style={{
-              maxHeight: "100%",
-              paddingRight: "32px",
-              overflowY: "auto",
-            }}
+          <Grid
+            container
+            justifyContent="start"
+            rowSpacing={"18px"}
+            columnSpacing={"32px"}
+            marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            <Grid
-              container
-              justifyContent="start"
-              rowSpacing={"18px"}
-              columnSpacing={"32px"}
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {groups.map((group, i) => (
-                <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <GroupCard
-                    {...groups[i]}
-                    handleDeleteGroup={handleDeleteGroup}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </Paper>
+            {groups.map((group, i) => (
+              <Grid item xs="auto" md="auto" lg={3} key={i}>
+                <GroupCard
+                  {...groups[i]}
+                  handleDeleteGroup={handleDeleteGroup}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </Main>
 
       <NewGroupDialog

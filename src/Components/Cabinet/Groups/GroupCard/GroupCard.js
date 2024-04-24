@@ -11,6 +11,7 @@ import {
   MenuItem,
   styled,
   Typography,
+  Box,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
@@ -38,6 +39,8 @@ const GroupCard = ({
   const lessonLength = 2; // in hours
   // const durationInHours = duration * lessonsInOneMonth * lessonLength;
   // const navigate = useNavigate();
+  const lessonsAmount = duration * weekDays.length * 4; // months * lessons in a week * weeks in a month
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -48,124 +51,122 @@ const GroupCard = ({
   };
   return (
     <CardStyled>
-      <div className="flex flex-col gap-xs">
+      <Box className="flex flex-col" rowGap="20px">
         <img
           src={thumbnail ? thumbnail : groupImage}
           alt="Group"
           width={"100%"}
-          height={127}
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-            borderRadius: "4px",
-          }}
+          height={183}
+          style={{ borderRadius: "15px 15px 0px 0px" }}
         />
-        <div className="flex justify-between items-center">
-          <div>
-            <Typography fontWeight={600}>
+        <Box className="flex justify-between items-center" paddingX="7px">
+          <div className="flex gap-xs items-center">
+            <Typography
+              fontSize="1.125rem"
+              fontWeight={600}
+              color={theme.typography.color.darkBlue}
+            >
               {name !== "" ? name : "GR000-00"}
             </Typography>
-            <Typography className="font-xxs">
+            <Icons.DividerDot color="#D1D5DB" />
+            <Typography
+              fontSize="1.125rem"
+              fontWeight={600}
+              color={theme.typography.color.darkBlue}
+            >
               {subject !== "" ? subject : "UI/UX"}
             </Typography>
           </div>
-          <div
-            className="flex items-center gap-x3s"
-            style={{ marginRight: "-8px" }}
+          <IconButton
+            color="purpleBlue"
+            aria-controls={open ? "dots-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            disableElevation
+            onClick={handleClick}
+            sx={{ right: "-8px", marginY: "-8px" }}
           >
-            <Link className="link">
-              {/* <ButtonStyled> */}
-              <div className="flex items-center gap-x3s">
-                <Icons.SquareArrowLeftUp />
-                <Typography>Открыть</Typography>
-              </div>
-              {/* </ButtonStyled> */}
-            </Link>
-            <IconButton
-              color="purpleBlue"
-              aria-controls={open ? "dots-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              disableElevation
-              onClick={handleClick}
-              // sx={{ right: "-8px" }}
-            >
-              <Icons.MenuDots />
-            </IconButton>
-            <MenuStyled
-              id="demo-customized-menu"
-              MenuListProps={{
-                "aria-labelledby": "demo-customized-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose} disableRipple>
-                {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
-                <ButtonStyled color="purpleBlue">
-                  <Icons.Pen />
-                  <span>Изменить группу</span>
-                </ButtonStyled>
-                {/* </Link> */}
-              </MenuItem>
-              <MenuItem onClick={handleClose} disableRipple>
-                <ButtonStyled
-                  color="crimson"
-                  onClick={() => handleDeleteGroup(id)}
-                >
-                  <Icons.TrashCan />
-                  <span>Удалить группу</span>
-                </ButtonStyled>
-              </MenuItem>
-            </MenuStyled>
+            <Icons.MenuDots />
+          </IconButton>
+          <MenuStyled
+            id="demo-customized-menu"
+            MenuListProps={{
+              "aria-labelledby": "demo-customized-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose} disableRipple>
+              {/* <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}> */}
+              <ButtonStyled color="purpleBlue">
+                <Icons.Pen />
+                <span>Изменить группу</span>
+              </ButtonStyled>
+              {/* </Link> */}
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <ButtonStyled
+                color="crimson"
+                onClick={() => handleDeleteGroup(id)}
+              >
+                <Icons.TrashCan />
+                <span>Удалить группу</span>
+              </ButtonStyled>
+            </MenuItem>
+          </MenuStyled>
+        </Box>
+
+        <Box className="flex flex-col" rowGap="12px" paddingX="9px">
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.CalendarContained />
+              <Typography>Дата начала</Typography>
+            </InfoWithIcon>
+            <Typography>{format(startDate, "dd.MM.yyyy")}</Typography>
           </div>
-        </div>
-        <Divider />
-        <div className="flex flex-col gap-xxs">
-          <InfoWithIcon>
-            <Icons.CalendarContained />
-            <div>Дата начала: {format(startDate, "dd.MM.yyyy")}</div>
-          </InfoWithIcon>
-          <InfoWithIcon>
-            <Icons.ClockDashed />
-            <div>Дата завершения: {format(endDate, "dd.MM.yyyy")}</div>
-          </InfoWithIcon>
-          <InfoWithIcon>
-            <Icons.CalendarDateContained />
-            <div>
-              Дни урока:{" "}
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.ClockDashed />
+              <Typography>Дата завершения</Typography>
+            </InfoWithIcon>
+            <Typography>{format(endDate, "dd.MM.yyyy")}</Typography>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.CalendarDateContained />
+              <Typography>Дни урока</Typography>
+            </InfoWithIcon>
+            <Typography>
               {weekDays.map(
                 (weekDay, i) =>
                   `${weekDaysText[weekDay]}${
                     i < weekDays.length - 1 ? ", " : ""
                   }`
               )}
-            </div>
+            </Typography>
+          </div>
+        </Box>
+        <Box className="flex justify-between" paddingX="9px">
+          <InfoWithIcon>
+            <Icons.SchoolAcademicCap />
+            <Typography>Учитель</Typography>
           </InfoWithIcon>
-        </div>
-        <Divider />
-        <InfoWithIcon>
           <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link flex gap-x3s"
           >
-            <Icons.SchoolAcademicCap />
-            <div>Учитель: {teacher}</div>
+            <Typography>{teacher}</Typography>
           </Link>
-        </InfoWithIcon>
-        <div className="flex gap-xs">
+        </Box>
+        <Box className="flex justify-between">
           <InfoWithIcon small>
             <Icons.ClockContained />
             <div>
               {duration}{" "}
-              {duration % 10 === 1 && duration % 100 !== 11
-                ? "месяц"
-                : duration % 10 >= 2 &&
-                  duration % 10 <= 4 &&
-                  (duration % 100 < 10 || duration % 100 >= 20)
-                ? "месяца"
-                : "месяцев"}
+              {getRussianWord(duration, "месяц", "месяца", "месяцев")}/
+              {lessonsAmount}{" "}
+              {getRussianWord(lessonsAmount, "урок", "урока", "уроков")}
             </div>
           </InfoWithIcon>
           <InfoWithIcon small>
@@ -180,8 +181,21 @@ const GroupCard = ({
               </div>
             </InfoWithIcon>
           </Link>
-        </div>
-      </div>
+        </Box>
+        <Link className="link full-width">
+          <ButtonStyled
+            fullWidth
+            variant="contained"
+            color="purpleBlueLight"
+            sx={{ borderRadius: "15px" }}
+          >
+            <div className="flex items-center gap-x3s">
+              <Icons.SquareArrowLeftUp />
+              <Typography>Открыть</Typography>
+            </div>
+          </ButtonStyled>
+        </Link>
+      </Box>
     </CardStyled>
   );
 };
