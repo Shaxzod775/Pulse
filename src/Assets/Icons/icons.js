@@ -10,8 +10,10 @@ import { ReactComponent as NotebookBookmark } from "./svgs/notebookBookmark.svg"
 import { ReactComponent as Clock } from "./svgs/clock.svg";
 import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as CalendarAdd } from "./svgs/calendarAdd.svg";
-import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
+import { ReactComponent as User } from "./svgs/user.svg";
 import { ReactComponent as UserAdd } from "./svgs/userAdd.svg";
+import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
+import { ReactComponent as UserId } from "./svgs/userId.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
 import { ReactComponent as Delete } from "./svgs/delete.svg";
 import { ReactComponent as LogoFull } from "./svgs/logoFull.svg";
@@ -44,7 +46,7 @@ import { ReactComponent as GalleryAdd } from "./svgs/galleryAdd.svg";
 import { ReactComponent as InboxIn } from "./svgs/inboxIn.svg";
 import { ReactComponent as ArrowDCircleContained } from "./svgs/arrowDCircleContained.svg";
 import { ReactComponent as PenNewSquare } from "./svgs/penNewSquare.svg";
-import { ReactComponent as UserId } from "./svgs/userId.svg";
+import { ReactComponent as ChatRoundDots } from "./svgs/chatRoundDots.svg";
 import { ReactComponent as ChatRoundLine } from "./svgs/chatRoundLine.svg";
 import { ReactComponent as Bill } from "./svgs/bill.svg";
 import { ReactComponent as Mailbox } from "./svgs/mailbox.svg";
@@ -60,6 +62,8 @@ import { ReactComponent as Call } from "./svgs/call.svg";
 import { ReactComponent as MaleSymbol } from "./svgs/maleSymbol.svg";
 import { ReactComponent as FemaleSymbol } from "./svgs/femaleSymbol.svg";
 import { ReactComponent as DividerDot } from "./svgs/dividerDot.svg";
+import { ReactComponent as Global } from "./svgs/global.svg";
+import { ReactComponent as Star } from "./svgs/star.svg";
 
 export const Icons = {
   ArrowD,
@@ -74,8 +78,10 @@ export const Icons = {
   Clock,
   Calendar,
   CalendarAdd,
-  UsersGroupRounded,
+  User,
   UserAdd,
+  UsersGroupRounded,
+  UserId,
   AcademicCap,
   Delete,
   LogoFull,
@@ -108,7 +114,7 @@ export const Icons = {
   InboxIn,
   ArrowDCircleContained,
   PenNewSquare,
-  UserId,
+  ChatRoundDots,
   ChatRoundLine,
   Bill,
   Mailbox,
@@ -124,4 +130,6 @@ export const Icons = {
   MaleSymbol,
   FemaleSymbol,
   DividerDot,
+  Global,
+  Star,
 };

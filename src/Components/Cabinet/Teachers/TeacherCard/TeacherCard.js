@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import {
+  CardStyled,
+  InfoWithIcon,
+  TypographyStyled,
+} from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import arslanAvatar from "../../../../Assets/Images/Avatars/Arslan.png";
 import { format, weeksToDays } from "date-fns";
@@ -62,12 +66,16 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               <Icons.ArslanAvatar />
             </div>
             <div className="flex flex-col justify-around">
-              <Typography fontWeight={600} letterSpacing="0.48px">
+              <TypographyStyled fontWeight={600} letterSpacing="0.48px">
                 {name}
-              </Typography>
-              <Typography color="#AEB2BA" fontWeight={400} fontSize="0.875rem">
+              </TypographyStyled>
+              <TypographyStyled
+                color="#AEB2BA"
+                fontWeight={400}
+                fontSize="0.875rem"
+              >
                 Frontend, UI/UX
-              </Typography>
+              </TypographyStyled>
             </div>
           </div>
           <IconButton
@@ -94,7 +102,9 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               <Link to={routes.CABINET + routes.TEACHERS + routes.PROFILE}>
                 <ButtonStyled color="purpleBlue">
                   <Icons.Pen />
-                  <Typography fontWeight={400}>Изменить профиль</Typography>
+                  <TypographyStyled fontWeight={400}>
+                    Изменить профиль
+                  </TypographyStyled>
                 </ButtonStyled>
               </Link>
             </MenuItem>
@@ -104,7 +114,9 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
                 onClick={() => handleDeleteTeacher(id)}
               >
                 <Icons.TrashCan />
-                <Typography fontWeight={400}>Удалить из списка</Typography>
+                <TypographyStyled fontWeight={400}>
+                  Удалить из списка
+                </TypographyStyled>
               </ButtonStyled>
             </MenuItem>
           </MenuStyled>
@@ -113,42 +125,42 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Call />
-              <Typography>Номер</Typography>
+              <TypographyStyled>Номер</TypographyStyled>
             </InfoWithIcon>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
-              <Typography>+998 (98) 765-43-21</Typography>
+              <TypographyStyled small>+998 (98) 765-43-21</TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Documents />
-              <Typography>Количетсво групп</Typography>
+              <TypographyStyled>Количетсво групп</TypographyStyled>
             </InfoWithIcon>
-            <Typography>6</Typography>
+            <TypographyStyled small>6</TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Group />
-              <Typography>Учеников</Typography>
+              <TypographyStyled>Учеников</TypographyStyled>
             </InfoWithIcon>
             <Link to={routes.CABINET + routes.STUDENTS} className="link">
-              <Typography>222</Typography>
+              <TypographyStyled small>222</TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.CalendarDateContained />
-              <Typography>Дата трудоустройства</Typography>
+              <TypographyStyled>Дата трудоустройства</TypographyStyled>
             </InfoWithIcon>
-            <Typography>01.01.2024</Typography>
+            <TypographyStyled small>01.01.2024</TypographyStyled>
           </div>
         </Box>
         <div className="flex justify-between">
           <InfoWithIcon>
             <Icons.Location />
-            <Typography>Филиалы</Typography>
+            <TypographyStyled>Филиалы</TypographyStyled>
           </InfoWithIcon>
-          <Typography>IT Park Tashkent</Typography>
+          <TypographyStyled small>IT Park Tashkent</TypographyStyled>
         </div>
         <Link
           to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
@@ -162,7 +174,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
           >
             <div className="flex items-center gap-x3s">
               <Icons.SquareArrowLeftUp />
-              <Typography>Открыть</Typography>
+              <TypographyStyled>Открыть</TypographyStyled>
             </div>
           </ButtonStyled>
         </Link>

@@ -16,7 +16,11 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import {
+  CardStyled,
+  InfoWithIcon,
+  TypographyStyled,
+} from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import mariyaAvatar from "../../../../Assets/Images/Avatars/Mariya.png";
 import { format, weeksToDays } from "date-fns";
@@ -60,16 +64,20 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
             </div>
 
             <div className="flex flex-col justify-around">
-              <Typography
+              <TypographyStyled
                 fontSize="1rem"
                 fontWeight={600}
                 letterSpacing="0.32px"
               >
                 {name}
-              </Typography>
-              <Typography color="#AEB2BA" fontSize="0.875rem" fontWeight={400}>
+              </TypographyStyled>
+              <TypographyStyled
+                color="#AEB2BA"
+                fontSize="0.875rem"
+                fontWeight={400}
+              >
                 Frontend, UI/UX
-              </Typography>
+              </TypographyStyled>
             </div>
           </div>
           <div
@@ -122,49 +130,49 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Group />
-              <Typography>Группа</Typography>
+              <TypographyStyled>Группа</TypographyStyled>
             </InfoWithIcon>
-            <Typography>UI/UX GR1214-21</Typography>
+            <TypographyStyled small>UI/UX GR1214-21</TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Call />
-              <Typography>Номер</Typography>
+              <TypographyStyled>Номер</TypographyStyled>
             </InfoWithIcon>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
-              <Typography>+998 (98) 765-43-21</Typography>
+              <TypographyStyled small>+998 (98) 765-43-21</TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Messages />
-              <Typography>E-mail</Typography>
+              <TypographyStyled>E-mail</TypographyStyled>
             </InfoWithIcon>
             <Link to="mailto:example@gmail.com" className="link flex gap-x3s">
-              <Typography>example@gmail.com</Typography>
+              <TypographyStyled small>example@gmail.com</TypographyStyled>
             </Link>
           </div>
         </Box>
         <div className="flex justify-between">
           <InfoWithIcon>
             <Icons.Documents />
-            <Typography>Учитель</Typography>
+            <TypographyStyled>Учитель</TypographyStyled>
           </InfoWithIcon>
           <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link flex gap-x4s"
           >
-            <Typography>Arslan Koptleulov</Typography>
+            <TypographyStyled small>Arslan Koptleulov</TypographyStyled>
           </Link>
         </div>
         <div className="flex justify-between">
           <InfoWithIcon>
             <Icons.ClockDashed />
-            <Typography>01.01.2024</Typography>
+            <TypographyStyled>01.01.2024</TypographyStyled>
           </InfoWithIcon>
           <InfoWithIcon>
             <Icons.CalendarDateContained />
-            <Typography>01.07.2024</Typography>
+            <TypographyStyled>01.07.2024</TypographyStyled>
           </InfoWithIcon>
         </div>
         <Link
@@ -179,7 +187,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
           >
             <div className="flex items-center gap-x3s">
               <Icons.SquareArrowLeftUp />
-              <Typography>Открыть</Typography>
+              <TypographyStyled>Открыть</TypographyStyled>
             </div>
           </ButtonStyled>
         </Link>

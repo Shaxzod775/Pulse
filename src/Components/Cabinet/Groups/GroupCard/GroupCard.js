@@ -15,7 +15,11 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import {
+  CardStyled,
+  InfoWithIcon,
+  TypographyStyled,
+} from "../../GridItemCardStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
@@ -61,21 +65,21 @@ const GroupCard = ({
         />
         <Box className="flex justify-between items-center" paddingX="7px">
           <div className="flex gap-xs items-center">
-            <Typography
+            <TypographyStyled
               fontSize="1.125rem"
               fontWeight={600}
               color={theme.typography.color.darkBlue}
             >
               {name !== "" ? name : "GR000-00"}
-            </Typography>
+            </TypographyStyled>
             <Icons.DividerDot color="#D1D5DB" />
-            <Typography
+            <TypographyStyled
               fontSize="1.125rem"
               fontWeight={600}
               color={theme.typography.color.darkBlue}
             >
               {subject !== "" ? subject : "UI/UX"}
-            </Typography>
+            </TypographyStyled>
           </div>
           <IconButton
             color="purpleBlue"
@@ -121,42 +125,55 @@ const GroupCard = ({
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.CalendarContained />
-              <Typography>Дата начала</Typography>
+              <TypographyStyled>Дата начала</TypographyStyled>
             </InfoWithIcon>
-            <Typography>{format(startDate, "dd.MM.yyyy")}</Typography>
+            <TypographyStyled small>
+              {format(startDate, "dd.MM.yyyy")}
+            </TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.ClockDashed />
-              <Typography>Дата завершения</Typography>
+              <TypographyStyled>Дата завершения</TypographyStyled>
             </InfoWithIcon>
-            <Typography>{format(endDate, "dd.MM.yyyy")}</Typography>
+            <TypographyStyled small>
+              {format(endDate, "dd.MM.yyyy")}
+            </TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.CalendarDateContained />
-              <Typography>Дни урока</Typography>
+              <TypographyStyled>Дни урока</TypographyStyled>
             </InfoWithIcon>
-            <Typography>
+            <TypographyStyled small>
               {weekDays.map(
                 (weekDay, i) =>
                   `${weekDaysText[weekDay]}${
                     i < weekDays.length - 1 ? ", " : ""
                   }`
               )}
-            </Typography>
+            </TypographyStyled>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Messages />
+              <TypographyStyled>E-mail</TypographyStyled>
+            </InfoWithIcon>
+            <Link to="mailto:example@gmail.com" className="link">
+              <TypographyStyled small>example@gmail.com</TypographyStyled>
+            </Link>
           </div>
         </Box>
         <Box className="flex justify-between" paddingX="9px">
           <InfoWithIcon>
             <Icons.SchoolAcademicCap />
-            <Typography>Учитель</Typography>
+            <TypographyStyled>Учитель</TypographyStyled>
           </InfoWithIcon>
           <Link
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link flex gap-x3s"
           >
-            <Typography>{teacher}</Typography>
+            <TypographyStyled small>{teacher}</TypographyStyled>
           </Link>
         </Box>
         <Box className="flex justify-between">
@@ -191,7 +208,7 @@ const GroupCard = ({
           >
             <div className="flex items-center gap-x3s">
               <Icons.SquareArrowLeftUp />
-              <Typography>Открыть</Typography>
+              <TypographyStyled>Открыть</TypographyStyled>
             </div>
           </ButtonStyled>
         </Link>

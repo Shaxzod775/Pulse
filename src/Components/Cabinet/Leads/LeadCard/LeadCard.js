@@ -10,10 +10,15 @@ import {
   IconButton,
   styled,
   Chip,
+  Box,
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import {
+  CardStyled,
+  InfoWithIcon,
+  TypographyStyled,
+} from "../../GridItemCardStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
@@ -43,6 +48,17 @@ const StatusChip = styled((props) => <Chip {...props} />)(
       padding: "0",
       letterSpacing: "0.32px",
     },
+    "& .MuiChip-icon": {
+      width: "5px",
+      margin: "0",
+      marginRight: "8px",
+      color:
+        status === "recycled"
+          ? theme.palette.seaBlue.main
+          : status === "dead"
+          ? theme.palette.blue.main
+          : theme.palette.orange.main,
+    },
   })
 );
 
@@ -66,8 +82,8 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
       : "Other";
   return (
     <CardStyled>
-      <div className="flex flex-col gap-sm">
-        <div className="flex justify-between items-start">
+      <Box className="flex flex-col gap-sm" padding="9px">
+        <Box className="flex justify-between items-start" padding="8px">
           <div
             className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
@@ -76,10 +92,10 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
           >
             <Icons.AnnaAvatar />
             <div className="flex flex-col justify-around">
-              <Typography fontWeight={600}>{name}</Typography>
-              <Typography color="#AEB2BA" fontSize="0.875rem" fontWeight={400}>
+              <TypographyStyled fontWeight={600}>{name}</TypographyStyled>
+              <TypographyStyled color="#AEB2BA" fontWeight={400} small>
                 Today 12:40
-              </Typography>
+              </TypographyStyled>
             </div>
           </div>
           <IconButton
@@ -120,25 +136,90 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
               </ButtonStyled>
             </MenuItem>
           </MenuStyled>
+        </Box>
+        <Box className="flex flex-col" rowGap="12px">
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Call />
+              <TypographyStyled>Телефон</TypographyStyled>
+            </InfoWithIcon>
+            <Link to="tel:/+998330331533" className="link">
+              <TypographyStyled small>+998 (33) 033-15-33</TypographyStyled>
+            </Link>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Call />
+              <TypographyStyled>Доп. Телефон</TypographyStyled>
+            </InfoWithIcon>
+            <Link to="tel:/+998330331533" className="link">
+              <TypographyStyled small>+998 (33) 033-15-33</TypographyStyled>
+            </Link>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Messages />
+              <TypographyStyled>E-mail</TypographyStyled>
+            </InfoWithIcon>
+            <Link
+              to="mailto:arslan.koptleulov@abexlab.com"
+              className="link"
+              style={{
+                maxWidth: "60%",
+              }}
+            >
+              <TypographyStyled overflow="hidden" textOverflow="ellipsis" small>
+                arslan.koptleulov@abexlab.com
+              </TypographyStyled>
+            </Link>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.Global />
+              <TypographyStyled>Язык курса</TypographyStyled>
+            </InfoWithIcon>
+            <TypographyStyled small>Узбекский, Русский</TypographyStyled>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.NotebookBookmark />
+              <TypographyStyled>Направление</TypographyStyled>
+            </InfoWithIcon>
+            <TypographyStyled small>FrontEnd, UX/UI</TypographyStyled>
+          </div>
+          <div className="flex justify-between">
+            <InfoWithIcon>
+              <Icons.User />
+              <TypographyStyled>Откуда лид</TypographyStyled>
+            </InfoWithIcon>
+            <TypographyStyled small>Instagram</TypographyStyled>
+          </div>
+        </Box>
+        <Box className="flex flex-col" rowGap="8px">
+          <InfoWithIcon>
+            <Icons.ChatRoundDots />
+            <TypographyStyled>Комментарий</TypographyStyled>
+          </InfoWithIcon>
+          <Link to="mailto:example@gmail.com" className="link">
+            <TypographyStyled small>
+              Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras
+              sit. Consectetur nulla.
+            </TypographyStyled>
+          </Link>
+        </Box>
+        <div className="flex items-center justify-between">
+          <InfoWithIcon>
+            <Icons.Star />
+            <TypographyStyled>Статус</TypographyStyled>
+          </InfoWithIcon>
+          <StatusChip
+            label={statusLabel}
+            status={status}
+            icon={<Icons.Circle />}
+          />
+          {/* <StatusChip icon={<Icons.Circle />} label="Example Chip" /> */}
         </div>
-        <Divider />
-
-        <InfoWithIcon>
-          <Link to="tel:/+998987654321" className="link flex gap-x3s">
-            <Icons.Call />
-            <Typography fontWeight={400}>+998 (98) 765-43-21</Typography>
-          </Link>
-        </InfoWithIcon>
-
-        <InfoWithIcon>
-          <Link to="mailto:example@gmail.com" className="link flex gap-x3s">
-            <Icons.Messages />
-            <Typography fontWeight={400}>example@gmail.com</Typography>
-          </Link>
-        </InfoWithIcon>
-        <Divider />
-        <StatusChip label={statusLabel} status={status} />
-      </div>
+      </Box>
     </CardStyled>
   );
 };
