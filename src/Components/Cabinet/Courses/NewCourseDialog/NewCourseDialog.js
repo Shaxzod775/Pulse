@@ -272,7 +272,7 @@ const NewCourseDialog = ({
           courseName.trim().toLowerCase() === newName.toLowerCase()
       )
     ) {
-      setNameError("Course name must be unique.");
+      setNameError("Название курса должно быть уникальным.");
     } else {
       setNameError("");
     }
