@@ -452,7 +452,7 @@ const NewGroupDialog = ({
                     <TextFieldStyled
                       id="name"
                       variant="outlined"
-                      placeholder="Name"
+                      placeholder="Название"
                       value={name}
                       onChange={changeName}
                     />

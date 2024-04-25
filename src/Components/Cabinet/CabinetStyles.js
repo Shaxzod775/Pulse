@@ -411,8 +411,8 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
-  "& svg": {
-    width: "20px",
+  svg: {
+    // width: "20px",
     height: "auto",
   },
 }));

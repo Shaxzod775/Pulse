@@ -434,7 +434,7 @@ const NewCourseDialog = ({
                     required
                     id="name"
                     variant="outlined"
-                    placeholder="Name"
+                    placeholder="Название"
                     value={name}
                     onChange={handleChangeName}
                     helperText={nameError}
