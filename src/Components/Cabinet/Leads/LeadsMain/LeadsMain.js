@@ -95,7 +95,7 @@ const HeaderDiv = styled("div")(({ theme }) => ({
 
 const statusTitleCardStyles = ({ theme, colorMain }) => ({
   padding: "10px",
-  borderRadius: "10px",
+  borderRadius: "20px",
   boxShadow: "none",
   border: "1px solid",
   borderColor: colorMain,
