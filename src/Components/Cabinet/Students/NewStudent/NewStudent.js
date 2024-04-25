@@ -40,6 +40,12 @@ import { ruRU } from "@mui/x-date-pickers/locales";
 import { ar, ru } from "date-fns/locale";
 import _ from "lodash"; // lodash library
 import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
+import useInput from "../../../../hooks/useInput";
+import {
+  REGIONS,
+  REGION_WITH_DISTRICTS,
+} from "../../../../Constants/usbekistan";
+
 const russianLocale =
   ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
 
@@ -136,8 +142,11 @@ const NewStudent = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
-  const [city, changeCity] = useAutocompleteInput("");
-  const [district, changeDistrict] = useAutocompleteInput("");
+  const [passportSeries, setPassportSeries] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
+
+  const [region, changeRegion, resetRegion] = useAutocompleteInput("");
+  const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
 
   const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
     { number: "", name: "" },
@@ -193,6 +202,24 @@ const NewStudent = () => {
       // If the new phone number is "+99" or "+9", reset it to "+998"
       phoneNumberSetter("+998");
     }
+  };
+
+  const handleChangePassportSeries = (event) => {
+    let input = event.target.value;
+    // Remove non-letter characters and limit to 2 characters
+    input = input.replace(/[^a-zA-Z]/g, "").substring(0, 2);
+    // Convert to uppercase
+    input = input.toUpperCase();
+    // Now you can set the state or do whatever you need with the input
+    setPassportSeries(input);
+  };
+
+  const handleChangePassportNumber = (event) => {
+    let input = event.target.value;
+    // Remove non-digit characters and limit to 7 characters
+    input = input.replace(/[^0-9]/g, "").substring(0, 7);
+    // Now you can set the state or do whatever you need with the input
+    setPassportNumber(input);
   };
 
   const handleChangeParentName = useCallback(
@@ -530,6 +557,8 @@ const NewStudent = () => {
                         <TextFieldStyled
                           variant="outlined"
                           placeholder="Серия"
+                          value={passportSeries}
+                          onChange={handleChangePassportSeries}
                         />
                       </FormControl>
                       <FormControl
@@ -540,6 +569,8 @@ const NewStudent = () => {
                         <TextFieldStyled
                           variant="outlined"
                           placeholder="Номер паспорта"
+                          value={passportNumber}
+                          onChange={handleChangePassportNumber}
                         />
                       </FormControl>
                     </div>
@@ -559,15 +590,18 @@ const NewStudent = () => {
                       >
                         <FormControl fullWidth variant="outlined">
                           <AutocompleteStyled
-                            options={["1", "2", "3", "4"]}
-                            value={city}
-                            onChange={changeCity}
+                            options={REGIONS}
+                            value={region}
+                            onChange={(event, value) => {
+                              changeRegion(event, value);
+                              resetDistrict();
+                            }}
                             renderInput={(params) => (
                               <AutocompleteField
                                 {...params}
                                 id="city"
                                 variant="outlined"
-                                placeholder="Город"
+                                placeholder="Регион"
                               />
                             )}
                             popupIcon={
@@ -584,7 +618,7 @@ const NewStudent = () => {
                         </FormControl>
                         <FormControl fullWidth variant="outlined">
                           <AutocompleteStyled
-                            options={["1", "2", "3", "4"]}
+                            options={REGION_WITH_DISTRICTS[region] || [""]}
                             value={district}
                             onChange={changeDistrict}
                             renderInput={(params) => (
@@ -594,12 +628,12 @@ const NewStudent = () => {
                                 variant="outlined"
                                 placeholder="Район"
                                 helperText={`${
-                                  city ? "" : "Сначала выберите город"
+                                  region ? "" : "Сначала выберите регион"
                                 }`}
                                 // error={!city}
                               />
                             )}
-                            disabled={!city}
+                            disabled={!region}
                             popupIcon={
                               <Icons.ArrowD
                                 color={theme.typography.color.darkBlue}
