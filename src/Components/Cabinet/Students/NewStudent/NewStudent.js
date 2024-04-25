@@ -36,7 +36,6 @@ import {
 } from "../../CabinetStyles";
 import Dropzone from "react-dropzone";
 import { MuiTelInput } from "mui-tel-input";
-import { ruRU } from "@mui/x-date-pickers/locales";
 import { ar, ru } from "date-fns/locale";
 import _ from "lodash"; // lodash library
 import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
@@ -45,9 +44,7 @@ import {
   REGIONS,
   REGION_WITH_DISTRICTS,
 } from "../../../../Constants/usbekistan";
-
-const russianLocale =
-  ruRU.components.MuiLocalizationProvider.defaultProps.localeText;
+import { russianLocale } from "../../../../Constants/dateLocales";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -530,6 +527,7 @@ const NewStudent = () => {
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}
+                        localeText={russianLocale}
                       >
                         <DatePicker
                           sx={textFieldStyles({ theme })}

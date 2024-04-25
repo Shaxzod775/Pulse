@@ -40,6 +40,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ru } from "date-fns/locale";
+import { russianLocale } from "../../../../Constants/dateLocales";
 
 const rainbowCycle = keyframes`
   0% {
@@ -515,6 +516,7 @@ const NewGroupDialog = ({
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}
+                        localeText={russianLocale}
                       >
                         <DatePicker
                           id="date-start"
@@ -547,6 +549,7 @@ const NewGroupDialog = ({
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}
+                        localeText={russianLocale}
                       >
                         <DatePicker
                           id="date-start"

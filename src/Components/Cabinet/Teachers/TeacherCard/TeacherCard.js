@@ -136,7 +136,9 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               <Icons.Documents />
               <TypographyStyled>Количетсво групп</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled small>6</TypographyStyled>
+            <Link to={routes.CABINET + routes.GROUPS} className="link">
+              <TypographyStyled small>6</TypographyStyled>
+            </Link>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
