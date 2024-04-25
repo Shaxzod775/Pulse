@@ -26,6 +26,7 @@ import {
   AutocompleteStyled,
   SelectStyled,
   AutocompleteField,
+  textFieldStyles,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -35,6 +36,10 @@ import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
 import { calculateMonthDifference } from "../../Courses/NewCourseDialog/NewCourseDialog";
 import { useCourses } from "../../../../contexts/Courses.context";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ru } from "date-fns/locale";
 
 const rainbowCycle = keyframes`
   0% {
@@ -247,18 +252,8 @@ const NewGroupDialog = ({
   };
 
   // Function to handle change in start date
-  const handleStartDateChange = (event) => {
-    // const inputDate = event.target.value;
-    // const newStartDate = new Date(inputDate);
-    // if (!isNaN(newStartDate.getTime())) {
-    //   setStartDate(newStartDate);
-    // } else {
-    //   // Handle invalid input date here
-    //   setStartDate(null);
-    // }
-    const inputDate = event.target.value;
-    const newStartDate = new Date(inputDate);
-    if (!isNaN(newStartDate.getTime())) {
+  const handleStartDateChange = (newStartDate) => {
+    if (newStartDate instanceof Date && !isNaN(newStartDate)) {
       setStartDate(newStartDate);
 
       // Find the selected course by its name
@@ -275,11 +270,9 @@ const NewGroupDialog = ({
     }
   };
 
-  // Function to handle change in start date
-  const handleEndDateChange = (event) => {
-    const inputDate = event.target.value;
-    const newEndDate = new Date(inputDate);
-    if (!isNaN(newEndDate.getTime())) {
+  // Function to handle change in end date
+  const handleEndDateChange = (newEndDate) => {
+    if (newEndDate instanceof Date && !isNaN(newEndDate)) {
       setEndDate(newEndDate);
     } else {
       // Handle invalid input date here
@@ -519,21 +512,30 @@ const NewGroupDialog = ({
                       <label htmlFor="date-start">
                         <FormLabel>Дата начала</FormLabel>
                       </label>
-                      <TextFieldStyled
-                        id="date-start"
-                        variant="outlined"
-                        type="date"
-                        value={
-                          startDate ? startDate.toISOString().split("T")[0] : ""
-                        }
-                        onChange={handleStartDateChange}
-                      />
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={ru}
+                      >
+                        <DatePicker
+                          id="date-start"
+                          value={startDate}
+                          onChange={handleStartDateChange}
+                          sx={textFieldStyles({ theme })}
+                          slots={{
+                            openPickerIcon: Icons.CalendarContained,
+                          }}
+                          slotProps={{
+                            field: { clearable: true },
+                            openPickerButton: { color: "purpleBlue" },
+                          }}
+                        />
+                      </LocalizationProvider>
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
                       <label htmlFor="date-start">
                         <FormLabel>Дата завершения</FormLabel>
                       </label>
-                      <TextFieldStyled
+                      {/* <TextFieldStyled
                         id="date-start"
                         variant="outlined"
                         type="date"
@@ -541,7 +543,25 @@ const NewGroupDialog = ({
                           endDate ? endDate.toISOString().split("T")[0] : ""
                         }
                         onChange={handleEndDateChange}
-                      />
+                      /> */}
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={ru}
+                      >
+                        <DatePicker
+                          id="date-start"
+                          value={endDate}
+                          onChange={handleEndDateChange}
+                          sx={textFieldStyles({ theme })}
+                          slots={{
+                            openPickerIcon: Icons.CalendarContained,
+                          }}
+                          slotProps={{
+                            field: { clearable: true },
+                            openPickerButton: { color: "purpleBlue" },
+                          }}
+                        />
+                      </LocalizationProvider>
                     </FormControl>
                   </div>
                   <div>
