@@ -68,6 +68,10 @@ const LeadCard = ({
   name,
   phoneNumber,
   additionalPhoneNumber,
+  email,
+  leadSource,
+  selectedCourseNames,
+  courseLanguages,
   status,
   handleDeleteLead,
 }) => {
@@ -174,14 +178,14 @@ const LeadCard = ({
               <TypographyStyled>E-mail</TypographyStyled>
             </InfoWithIcon>
             <Link
-              to="mailto:arslan.koptleulov@abexlab.com"
+              to={`mailto:${email}`}
               className="link"
               style={{
                 maxWidth: "60%",
               }}
             >
               <TypographyStyled overflow="hidden" textOverflow="ellipsis" small>
-                arslan.koptleulov@abexlab.com
+                {email}
               </TypographyStyled>
             </Link>
           </div>
@@ -190,21 +194,37 @@ const LeadCard = ({
               <Icons.Global />
               <TypographyStyled>Язык курса</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled small>Узбекский, Русский</TypographyStyled>
+            <TypographyStyled
+              maxWidth="50%"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              small
+            >
+              {courseLanguages.join(", ")}
+            </TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.NotebookBookmark />
               <TypographyStyled>Направление</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled small>FrontEnd, UX/UI</TypographyStyled>
+            <TypographyStyled
+              small
+              maxWidth="50%"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {selectedCourseNames.join(", ")}
+            </TypographyStyled>
           </div>
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.User />
               <TypographyStyled>Откуда лид</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled small>Instagram</TypographyStyled>
+            <TypographyStyled small>{leadSource}</TypographyStyled>
           </div>
         </Box>
         <Box className="flex flex-col" rowGap="8px">

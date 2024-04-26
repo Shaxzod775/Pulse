@@ -1,0 +1,43 @@
+export const leadSources = [
+  "Instagram",
+  "Facebook",
+  "Twitter",
+  "LinkedIn",
+  "YouTube",
+  "TikTok",
+  "Сайт",
+  "Email-рассылка",
+  "Рекомендация",
+  "Событие",
+  "Вебинар",
+  "Подкаст",
+  "Холодный звонок",
+  "Органический поиск",
+  "Платная реклама",
+  "Связи с общественностью",
+  "Нетворкинг",
+  "Выставки",
+  "Контент-маркетинг",
+  "Партнерский маркетинг",
+  "Отзывы в сети",
+  "Сарафанное радио",
+  "Другое",
+];
+
+export const languagesFullRu = ["Узбекский", "Русский", "Английский"];
+// export const courseLanguages = ["uz", "ru", "en"];
+// export const courseLanguagesFullRu = {
+//   uz: "Узбекский",
+//   ru: "Русский",
+//   en: "Английский",
+// };
+// export const courseLanguagesFullEn = {
+//   uz: "Uzbek",
+//   ru: "Russian",
+//   en: "English",
+// };
+// export const courseLanguagesFullUz = {
+//   uz: "Uzbek",
+//   ru: "Ruscha",
+//   en: "Inglizcha",
+// };

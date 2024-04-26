@@ -14,6 +14,9 @@ export function createLead({
   phoneNumber = "+998330331533",
   additionalPhoneNumber = "+998330331533",
   email = "example@gmail.com",
+  leadSource = "Instagram",
+  selectedCourseNames = ["Course1", "Course2"],
+  courseLanguages = ["Русский", "Узбекский"],
   group = "GR1214-21",
   status = statuses[0],
 } = {}) {
@@ -24,6 +27,9 @@ export function createLead({
     phoneNumber,
     additionalPhoneNumber,
     email,
+    leadSource,
+    selectedCourseNames,
+    courseLanguages,
     group,
     status,
   };

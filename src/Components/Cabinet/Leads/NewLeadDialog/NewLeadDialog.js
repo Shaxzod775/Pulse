@@ -2,12 +2,14 @@ import React, { useCallback, useMemo, useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   Chip,
   Dialog,
   DialogContent,
   FormControl,
   InputAdornment,
   InputBase,
+  ListItemText,
   MenuItem,
   OutlinedInput,
   Select,
@@ -28,6 +30,9 @@ import {
   AutocompleteField,
   textFieldStyles,
   muiTelInputStyles,
+  customMenuProps,
+  selectStyles,
+  InputBaseStyled,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -44,6 +49,7 @@ import { ru } from "date-fns/locale";
 import { russianLocale } from "../../../../Constants/dateLocales";
 import { MuiTelInput } from "mui-tel-input";
 import _ from "lodash"; // lodash library
+import { languagesFullRu, leadSources } from "../../../../Constants/testData";
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -77,6 +83,8 @@ const teacherNames = [
 ];
 
 const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
+  const { courses, findCourseByName, allCourseNames } = useCourses();
+
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -89,6 +97,11 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+
+  const [leadSource, setLeadSource] = useState("");
+
+  const [selectedCourseNames, setSelectedCourseNames] = useState([]);
+  const [courseLanguages, setCourseLanguages] = useState([]);
 
   const handleChangeName = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -128,6 +141,30 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     [setEmailError]
   );
 
+  const handleLeadSourceChange = (event, newValue) => {
+    setLeadSource(newValue);
+  };
+
+  const handleChangeCourses = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCourseNames(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleChangeCourseLanguages = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCourseLanguages(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -136,6 +173,10 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       name: fullName,
       phoneNumber: phoneNumber,
       additionalPhoneNumber: additionalPhoneNumber,
+      email: email,
+      leadSource: leadSource,
+      selectedCourseNames: selectedCourseNames,
+      courseLanguages: courseLanguages,
     });
     handleAddLead(newLead);
     handleClose();
@@ -255,7 +296,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   </FormControl>
                 </div>
               </div>
-              <div className="flex gap-xxs">
+              <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
                   <label>
                     <FormLabel>E-mail</FormLabel>
@@ -271,12 +312,83 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                     fullWidth
                     variant="outlined"
                     placeholder="info@gmail.com"
-                    sx={{ maxWidth: "75%" }}
+                  />
+                </FormControl>
+                <FormControl required fullWidth variant="outlined">
+                  <label>
+                    <FormLabel>Откуда лид</FormLabel>
+                  </label>
+                  <AutocompleteStyled
+                    options={leadSources}
+                    value={leadSource}
+                    onChange={handleLeadSourceChange}
+                    renderInput={(params) => (
+                      <AutocompleteField
+                        {...params}
+                        id="subject"
+                        variant="outlined"
+                        placeholder=""
+                      />
+                    )}
+                    popupIcon={
+                      <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                    }
+                    clearIcon={
+                      <Icons.Delete color={theme.typography.color.darkBlue} />
+                    }
                   />
                 </FormControl>
               </div>
-              <div className="full-width flex justify-between gap-sm"></div>
-              <div className="full-width flex justify-between gap-sm"></div>
+              <div className="flex gap-lg">
+                <FormControl required fullWidth variant="outlined">
+                  <label>
+                    <FormLabel>Курсы</FormLabel>
+                  </label>
+                  <Select
+                    multiple
+                    value={selectedCourseNames}
+                    onChange={handleChangeCourses}
+                    renderValue={(selected) => selected.join(", ")}
+                    MenuProps={customMenuProps}
+                    sx={selectStyles({ theme })}
+                    input={<InputBaseStyled />}
+                    IconComponent={Icons.ArrowD}
+                  >
+                    {allCourseNames.map((courseName) => (
+                      <MenuItem key={courseName} value={courseName}>
+                        <Checkbox
+                          checked={selectedCourseNames.indexOf(courseName) > -1}
+                        />
+                        <ListItemText primary={courseName} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl required fullWidth variant="outlined">
+                  <label>
+                    <FormLabel>Язык курса</FormLabel>
+                  </label>
+                  <Select
+                    multiple
+                    value={courseLanguages}
+                    onChange={handleChangeCourseLanguages}
+                    renderValue={(selected) => selected.join(", ")}
+                    MenuProps={customMenuProps}
+                    sx={selectStyles({ theme })}
+                    input={<InputBaseStyled />}
+                    IconComponent={Icons.ArrowD}
+                  >
+                    {languagesFullRu.map((language) => (
+                      <MenuItem key={language} value={language}>
+                        <Checkbox
+                          checked={courseLanguages.indexOf(language) > -1}
+                        />
+                        <ListItemText primary={language} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
             </div>
 
             {/* DIALOG ACTIONS */}

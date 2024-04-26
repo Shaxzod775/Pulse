@@ -26,6 +26,7 @@ import {
   Title,
   TextFieldStyled,
   SelectStyled,
+  customMenuProps,
 } from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -35,39 +36,6 @@ import { Icons } from "../../../Assets/Icons/icons";
 import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
 import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
-
-const customMenuProps = {
-  // onClick: (e) => e.stopPropagation(),
-  // MenuListProps: {
-  //   onClik: (e) => e.stopPropagation(),
-  // },
-  sx: {
-    maxHeight: "500px",
-    top: "10px",
-    "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
-      minWidth: "240px",
-      boxShadow:
-        "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
-    },
-    "& .MuiList-root.MuiMenu-list": {
-      padding: "8px",
-
-      "& .MuiButtonBase-root.MuiMenuItem-root": {
-        padding: "8px",
-        borderRadius: "4px",
-      },
-    },
-  },
-  elevation: 0,
-  anchorOrigin: {
-    vertical: "bottom",
-    horizontal: "right",
-  },
-  transformOrigin: {
-    vertical: "top",
-    horizontal: "right",
-  },
-};
 
 const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   padding: "0 8px 0 0",

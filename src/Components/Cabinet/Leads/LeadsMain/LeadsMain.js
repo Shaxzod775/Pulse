@@ -30,6 +30,7 @@ import {
   Title,
   TextFieldStyled,
   SelectStyled,
+  customMenuProps,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -38,39 +39,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
-
-const customMenuProps = {
-  // onClick: (e) => e.stopPropagation(),
-  // MenuListProps: {
-  //   onClik: (e) => e.stopPropagation(),
-  // },
-  sx: {
-    maxHeight: "500px",
-    top: "10px",
-    "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
-      minWidth: "240px",
-      boxShadow:
-        "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
-    },
-    "& .MuiList-root.MuiMenu-list": {
-      padding: "8px",
-
-      "& .MuiButtonBase-root.MuiMenuItem-root": {
-        padding: "8px",
-        borderRadius: "4px",
-      },
-    },
-  },
-  elevation: 0,
-  anchorOrigin: {
-    vertical: "bottom",
-    horizontal: "right",
-  },
-  transformOrigin: {
-    vertical: "top",
-    horizontal: "right",
-  },
-};
+import { leadSources } from "../../../../Constants/testData";
 
 const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   padding: "0 8px 0 0",
@@ -153,31 +122,6 @@ const StatusTitle = ({ status, leadsAmount }) => {
   );
 };
 
-const statuses = [
-  "Instagram",
-  "Facebook",
-  "Twitter",
-  "LinkedIn",
-  "YouTube",
-  "TikTok",
-  "Сайт",
-  "Email-рассылка",
-  "Рекомендация",
-  "Событие",
-  "Вебинар",
-  "Подкаст",
-  "Холодный звонок",
-  "Органический поиск",
-  "Платная реклама",
-  "Связи с общественностью",
-  "Нетворкинг",
-  "Выставки",
-  "Контент-маркетинг",
-  "Партнерский маркетинг",
-  "Отзывы в сети",
-  "Сарафанное радио",
-  "Другое",
-];
 const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
 const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
@@ -268,7 +212,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   <Typography color="#b4b7c3">Статус</Typography>
                   <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
                     {(selectedStatuses.length < 1 ||
-                      selectedStatuses.length === statuses.length) &&
+                      selectedStatuses.length === leadSources.length) &&
                       "Все"}
                   </span>
                 </label>
@@ -280,7 +224,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   onChange={handleChangeStatus}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
-                      if (selected.length === statuses.length) {
+                      if (selected.length === leadSources.length) {
                         return "";
                       }
                       return "..."; // Render "..." if multiple courses are selected
@@ -301,7 +245,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  {statuses.map((status, i) => (
+                  {leadSources.map((status, i) => (
                     <MenuItem value={status} key={i}>
                       <CustomCheckbox
                         checked={selectedStatuses.indexOf(status) > -1}

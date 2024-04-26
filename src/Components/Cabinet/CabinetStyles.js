@@ -10,6 +10,7 @@ import {
   Menu,
   FormControl,
   Typography,
+  InputBase,
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
 import { BorderColor } from "@mui/icons-material";
@@ -340,6 +341,59 @@ export const InputLabelStyled = styled(InputLabel)(({ theme }) => ({
   lineHeight: theme.typography.fontSize.sm,
 }));
 
+export const selectStyles = ({ theme }) => ({
+  minHeight: "50px",
+  borderRadius: "8px",
+  // border: "3px solid #E5E7EB !important",
+  // boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+  "& .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input": {
+    padding: "12px 32px 12px 12px",
+  },
+  "& .MuiSelect-icon": {
+    top: "calc(50% - 11px)",
+    color: theme.typography.color.darkBlue,
+  },
+});
+
+export const InputBaseStyled = styled(InputBase)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    borderRadius: 8,
+    position: "relative",
+    border: "1px solid #E5E7EB",
+    padding: "12px 32px 12px 12px",
+    boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+    // Use the system font instead of the default Roboto font.
+    "&:focus": {
+      // border: "1px solid #E5E7EB",
+      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}));
+
+// export const textFieldStyles = ({ theme }) => ({
+//   fontSize: theme.typography.fontSize.xs,
+//   lineHeight: theme.typography.fontSize.md,
+//   color: "inherit",
+//   "& .MuiInputBase-root": {
+//     minHeight: "50px",
+//     borderRadius: "8px",
+//     ".MuiInputBase-input": {
+//       padding: "12px",
+//       "::placeholder": { color: "#D1D5DB", opacity: "1" },
+//     },
+//     ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+//       {
+//         border: "1px solid #E5E7EB !important",
+//         boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+//       },
+//   },
+//   "& .MuiFormHelperText-root": {
+//     color: "crimson",
+//     fontSize: ".8rem",
+//     margin: "2px 0 -10px 12px",
+//   },
+// });
+
 export const SelectStyled = styled(Select)(({ theme }) => ({
   fontFamily: "inherit",
   fontSize: theme.typography.fontSize.sm,
@@ -520,6 +574,39 @@ export const AutocompleteField = styled(TextField)(({ theme }) => ({
     margin: "2px 0 -10px 12px",
   },
 }));
+
+export const customMenuProps = {
+  // onClick: (e) => e.stopPropagation(),
+  // MenuListProps: {
+  //   onClik: (e) => e.stopPropagation(),
+  // },
+  sx: {
+    maxHeight: "350px",
+    top: "10px",
+    "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
+      minWidth: "240px",
+      boxShadow:
+        "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
+    },
+    "& .MuiList-root.MuiMenu-list": {
+      padding: "8px",
+
+      "& .MuiButtonBase-root.MuiMenuItem-root": {
+        padding: "8px",
+        borderRadius: "4px",
+      },
+    },
+  },
+  elevation: 0,
+  anchorOrigin: {
+    vertical: "bottom",
+    horizontal: "right",
+  },
+  transformOrigin: {
+    vertical: "top",
+    horizontal: "right",
+  },
+};
 
 export const MenuStyled = styled((props) => (
   <Menu
