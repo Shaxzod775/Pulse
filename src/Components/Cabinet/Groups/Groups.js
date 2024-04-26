@@ -208,6 +208,19 @@ NumericFormatCustom.propTypes = {
 };
 
 const Groups = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const [groups, setGroups] = useState([
+    createGroup({ name: "GR011-62", duration: 3 }),
+    createGroup({ name: "GR011-61", duration: 3 }),
+    createGroup({ name: "GR011-63", duration: 3 }),
+    createGroup({ name: "GR011-64", duration: 6 }),
+    createGroup({ name: "GR011-65", duration: 9 }),
+    createGroup({ name: "GR011-66", duration: 3 }),
+    createGroup({ name: "GR011-67", duration: 3 }),
+    createGroup({ name: "GR011-68", duration: 3 }),
+  ]);
   const [anchorTeacher, setAnchorTeacher] = useState(null);
   const [anchorCourse, setAnchorCourse] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -237,21 +250,6 @@ const Groups = () => {
     setAnchorCourse(null);
   };
 
-  const [open, setOpen] = useState(false);
-
-  const [groups, setGroups] = useState([
-    createGroup({ name: "GR011-62", duration: 3 }),
-    createGroup({ name: "GR011-61", duration: 3 }),
-    createGroup({ name: "GR011-63", duration: 3 }),
-    createGroup({ name: "GR011-64", duration: 6 }),
-    createGroup({ name: "GR011-65", duration: 9 }),
-    createGroup({ name: "GR011-66", duration: 3 }),
-    createGroup({ name: "GR011-67", duration: 3 }),
-    createGroup({ name: "GR011-68", duration: 3 }),
-  ]);
-
-  const navigate = useNavigate();
-
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
@@ -266,7 +264,6 @@ const Groups = () => {
 
   const handleAddGroup = (newGroup) => {
     setGroups([...groups, newGroup]);
-    console.log(newGroup);
   };
 
   const handleDeleteGroup = (idToDelete) => {

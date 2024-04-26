@@ -60,7 +60,9 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
                   borderRadius: "10px",
                 }}
               /> */}
-              <Icons.MariyaAvatar />
+              <Icons.MariyaAvatar
+                style={{ minWidth: "50px", minHeight: "50px" }}
+              />
             </div>
 
             <div className="flex flex-col justify-around">

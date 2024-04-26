@@ -50,8 +50,6 @@ const Students = () => {
     createStudent({ name: studentNames[2], group: "Frontend GR1214-23" }),
   ]);
 
-  console.log(students);
-
   const handleAddStudent = (newStudent) => {
     setStudents([...students, newStudent]);
   };

@@ -63,7 +63,9 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
                   borderRadius: "10px",
                 }}
               /> */}
-              <Icons.ArslanAvatar />
+              <Icons.ArslanAvatar
+                style={{ minWidth: "50px", minHeight: "50px" }}
+              />
             </div>
             <div className="flex flex-col justify-around">
               <TypographyStyled fontWeight={600} letterSpacing="0.48px">

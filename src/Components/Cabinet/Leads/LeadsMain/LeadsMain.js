@@ -37,6 +37,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Icons } from "../../../../Assets/Icons/icons";
 import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
+import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 
 const customMenuProps = {
   // onClick: (e) => e.stopPropagation(),
@@ -179,8 +180,10 @@ const statuses = [
 ];
 const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
-const LeadsMain = ({ leads, handleDeleteLead }) => {
+const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -224,6 +227,14 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
   const handleCloseCourseSelect = (e) => {
     e.stopPropagation();
     setAnchorCourse(null);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -364,14 +375,16 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <Link to={routes.CABINET + routes.LEADS + routes.NEW}>
-              <ButtonStyled variant="contained" color="purpleBlue">
-                <div className="flex items-center gap-x3s">
-                  <Icons.UserAdd />
-                  <span>Добавить лида</span>
-                </div>
-              </ButtonStyled>
-            </Link>
+            <ButtonStyled
+              variant="contained"
+              color="purpleBlue"
+              onClick={handleClickOpen}
+            >
+              <div className="flex items-center gap-x3s">
+                <Icons.UserAdd />
+                <span>Добавить лида</span>
+              </div>
+            </ButtonStyled>
             <ButtonStyled variant="outlined" color="purpleBlue">
               <div className="flex items-center gap-x3s">
                 <Icons.InboxIn />
@@ -425,6 +438,12 @@ const LeadsMain = ({ leads, handleDeleteLead }) => {
         </div>
         {/* </Paper> */}
       </Main>
+
+      <NewLeadDialog
+        open={open}
+        handleClose={handleClose}
+        handleAddLead={handleAddLead}
+      />
     </Root>
   );
 };

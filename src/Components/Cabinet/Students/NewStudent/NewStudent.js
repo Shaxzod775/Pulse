@@ -132,9 +132,9 @@ const NewStudent = () => {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [firstNameHelperText, setFirstNameHelperText] = useState("");
-  const [lastNameHelperText, setLastNameHelperText] = useState("");
-  const [middleNameHelperText, setMiddleNameHelperText] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [middleNameError, setMiddleNameError] = useState(false);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
@@ -183,11 +183,11 @@ const NewStudent = () => {
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
-    if (/^[a-zA-Z]*$/.test(value)) {
+    if (/^[a-zA-Z\s]*$/.test(value)) {
       setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
-      setHelperText("");
+      setHelperText(false);
     } else {
-      setHelperText("Только латинские буквы!");
+      setHelperText(true);
     }
   };
 
@@ -197,7 +197,7 @@ const NewStudent = () => {
 
     // Check if the new phone number starts with "+998" and does not exceed 12 digits
     if (newPhone.startsWith("+998") && digits.length <= 12) {
-      phoneNumberSetter(newPhone);
+      phoneNumberSetter(`+${digits}`);
     } else if (digits.length <= 3) {
       // If the new phone number is "+99" or "+9", reset it to "+998"
       phoneNumberSetter("+998");
@@ -260,7 +260,7 @@ const NewStudent = () => {
 
       // Check if the new phone number starts with "+998" and does not exceed 12 digits
       if (newPhone.startsWith("+998") && digits.length <= 12) {
-        newValues[index].number = newPhone;
+        newValues[index].number = `+${digits}`;
         setParentsPhoneNumbers(newValues);
       } else if (digits.length <= 3) {
         // If the new phone number is "+99" or "+9", reset it to "+998"
@@ -406,13 +406,11 @@ const NewStudent = () => {
                         variant="outlined"
                         placeholder="Фамилия"
                         value={lastName}
-                        helperText={lastNameHelperText}
+                        helperText={
+                          lastNameError ? "Только латинские буквы!" : ""
+                        }
                         onChange={(event) =>
-                          handleChange(
-                            event,
-                            setLastName,
-                            setLastNameHelperText
-                          )
+                          handleChange(event, setLastName, setLastNameError)
                         }
                       />
                     </FormControl>
@@ -424,13 +422,11 @@ const NewStudent = () => {
                         variant="outlined"
                         placeholder="Имя"
                         value={firstName}
-                        helperText={firstNameHelperText}
+                        helperText={
+                          firstNameError ? "Только латинские буквы!" : ""
+                        }
                         onChange={(event) =>
-                          handleChange(
-                            event,
-                            setFirstName,
-                            setFirstNameHelperText
-                          )
+                          handleChange(event, setFirstName, setFirstNameError)
                         }
                       />
                     </FormControl>
@@ -442,13 +438,11 @@ const NewStudent = () => {
                         variant="outlined"
                         placeholder="Отчество"
                         value={middleName}
-                        helperText={middleNameHelperText}
+                        helperText={
+                          middleNameError ? "Только латинские буквы!" : ""
+                        }
                         onChange={(event) =>
-                          handleChange(
-                            event,
-                            setMiddleName,
-                            setMiddleNameHelperText
-                          )
+                          handleChange(event, setMiddleName, setMiddleNameError)
                         }
                       />
                     </FormControl>
@@ -688,7 +682,9 @@ const NewStudent = () => {
                   <TextFieldStyled
                     value={email}
                     error={emailError}
-                    helperText={emailError ? "Invalid email format" : ""}
+                    helperText={
+                      emailError ? "Неверный формат электронной почты" : ""
+                    }
                     onChange={handleChangeEmail}
                     onBlur={handleBlurEmail}
                     fullWidth

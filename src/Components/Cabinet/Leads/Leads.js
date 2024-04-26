@@ -11,29 +11,21 @@ export function createLead({
   id = uuidv4(),
   name = "Azizova Aziza",
   field = "Frontend",
-  techs = ["React", "UI/UX", "Node.js", "Ruby on Rails", "Vue.js"],
-  contactNumber = "998987654321",
+  phoneNumber = "+998330331533",
+  additionalPhoneNumber = "+998330331533",
   email = "example@gmail.com",
-  group = "Frontend GR1214-21",
-  teacher = "Elyorov Ahmad",
+  group = "GR1214-21",
   status = statuses[0],
-  startDate = new Date(2024, 4, 3),
-  endDate = new Date(2024, 10, 3),
-  balance = 1120000,
 } = {}) {
   return {
     id,
     name,
     field,
-    techs,
-    contactNumber,
+    phoneNumber,
+    additionalPhoneNumber,
     email,
     group,
-    teacher,
     status,
-    startDate,
-    endDate,
-    balance,
   };
 }
 
@@ -114,7 +106,11 @@ const Leads = () => {
       <Route
         path={routes.HOME}
         element={
-          <LeadsMain leads={leads} handleDeleteLead={handleDeleteLead} />
+          <LeadsMain
+            leads={leads}
+            handleDeleteLead={handleDeleteLead}
+            handleAddLead={handleAddLead}
+          />
         }
       />
       <Route path={routes.PROFILE} element={<div>LEADS PROFILE</div>} />

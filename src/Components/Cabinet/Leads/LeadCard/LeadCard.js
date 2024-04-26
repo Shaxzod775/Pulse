@@ -26,6 +26,7 @@ import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
+import { formattedPhoneNumber } from "../../../../helpers/helpers";
 
 const StatusChip = styled((props) => <Chip {...props} />)(
   ({ theme, status }) => ({
@@ -62,7 +63,14 @@ const StatusChip = styled((props) => <Chip {...props} />)(
   })
 );
 
-const LeadCard = ({ id, name, status, handleDeleteLead }) => {
+const LeadCard = ({
+  id,
+  name,
+  phoneNumber,
+  additionalPhoneNumber,
+  status,
+  handleDeleteLead,
+}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -90,7 +98,7 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
               navigate(routes.CABINET + routes.LEADS + routes.PROFILE)
             }
           >
-            <Icons.AnnaAvatar />
+            <Icons.AnnaAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
             <div className="flex flex-col justify-around">
               <TypographyStyled fontWeight={600}>{name}</TypographyStyled>
               <TypographyStyled color="#AEB2BA" fontWeight={400} small>
@@ -143,8 +151,10 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
               <Icons.Call />
               <TypographyStyled>Телефон</TypographyStyled>
             </InfoWithIcon>
-            <Link to="tel:/+998330331533" className="link">
-              <TypographyStyled small>+998 (33) 033-15-33</TypographyStyled>
+            <Link to={`tel:/${phoneNumber}`} className="link">
+              <TypographyStyled small>
+                {formattedPhoneNumber(phoneNumber)}
+              </TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
@@ -152,8 +162,10 @@ const LeadCard = ({ id, name, status, handleDeleteLead }) => {
               <Icons.Call />
               <TypographyStyled>Доп. Телефон</TypographyStyled>
             </InfoWithIcon>
-            <Link to="tel:/+998330331533" className="link">
-              <TypographyStyled small>+998 (33) 033-15-33</TypographyStyled>
+            <Link to={`tel:/${additionalPhoneNumber}`} className="link">
+              <TypographyStyled small>
+                {formattedPhoneNumber(additionalPhoneNumber)}
+              </TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
