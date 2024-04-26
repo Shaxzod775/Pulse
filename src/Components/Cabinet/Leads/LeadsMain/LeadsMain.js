@@ -44,6 +44,7 @@ const customMenuProps = {
   //   onClik: (e) => e.stopPropagation(),
   // },
   sx: {
+    maxHeight: "500px",
     top: "10px",
     "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
       minWidth: "240px",
@@ -152,13 +153,29 @@ const StatusTitle = ({ status, leadsAmount }) => {
 };
 
 const statuses = [
-  "Активные студенты",
-  "Закончившие курс",
-  "Оплатившие",
-  "Должники",
-  "Ушли после пробных",
-  "Замороженные ученики",
-  "Не добавлены в группу",
+  "Instagram",
+  "Facebook",
+  "Twitter",
+  "LinkedIn",
+  "YouTube",
+  "TikTok",
+  "Сайт",
+  "Email-рассылка",
+  "Рекомендация",
+  "Событие",
+  "Вебинар",
+  "Подкаст",
+  "Холодный звонок",
+  "Органический поиск",
+  "Платная реклама",
+  "Связи с общественностью",
+  "Нетворкинг",
+  "Выставки",
+  "Контент-маркетинг",
+  "Партнерский маркетинг",
+  "Отзывы в сети",
+  "Сарафанное радио",
+  "Другое",
 ];
 const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 

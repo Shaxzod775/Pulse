@@ -145,6 +145,9 @@ const NewStudent = () => {
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
 
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+
   const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
     { number: "", name: "" },
     { number: "", name: "" },
@@ -167,7 +170,7 @@ const NewStudent = () => {
         };
         reader.readAsDataURL(file);
       } else {
-        console.error("Please upload an image file.");
+        alert("Please upload an image file.");
       }
     }
   };
@@ -231,6 +234,21 @@ const NewStudent = () => {
     }, 10),
     [parentsPhoneNumbers]
   ); // delay of 10ms
+
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+    setEmailError(false);
+  };
+
+  const handleBlurEmail = useCallback(
+    _.debounce((event) => {
+      const email = event.target.value;
+      if (email === "") return;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      setEmailError(!emailRegex.test(email));
+    }, 500),
+    [setEmailError]
+  );
 
   const handleChangeParentPhoneNumber =
     // useCallback(
@@ -668,6 +686,11 @@ const NewStudent = () => {
                     <FormLabel row>E-mail</FormLabel>
                   </label>
                   <TextFieldStyled
+                    value={email}
+                    error={emailError}
+                    helperText={emailError ? "Invalid email format" : ""}
+                    onChange={handleChangeEmail}
+                    onBlur={handleBlurEmail}
                     fullWidth
                     variant="outlined"
                     placeholder="info@gmail.com"

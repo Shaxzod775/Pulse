@@ -537,15 +537,6 @@ const NewGroupDialog = ({
                       <label htmlFor="date-start">
                         <FormLabel>Дата завершения</FormLabel>
                       </label>
-                      {/* <TextFieldStyled
-                        id="date-start"
-                        variant="outlined"
-                        type="date"
-                        value={
-                          endDate ? endDate.toISOString().split("T")[0] : ""
-                        }
-                        onChange={handleEndDateChange}
-                      /> */}
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}

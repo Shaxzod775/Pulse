@@ -42,6 +42,7 @@ const customMenuProps = {
   //   onClik: (e) => e.stopPropagation(),
   // },
   sx: {
+    maxHeight: "500px",
     top: "10px",
     "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
       minWidth: "240px",
