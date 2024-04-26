@@ -187,10 +187,10 @@ function TagCheckbox({
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
 const teacherNames = [
-  "Коптлеулов Арслан",
-  "Илья Стародубцев",
-  "Азиз Мамаджонов",
-  "Мухаммад Матчонов",
+  "Koptleulov Arslan",
+  "Ilya Starodubtsev",
+  "Aziz Mamajonov",
+  "Muhammad Matchonov",
 ];
 
 const NewGroupDialog = ({
@@ -240,6 +240,14 @@ const NewGroupDialog = ({
   // Function to handle change in subject selection
   const handleCourseChange = (event, newValue) => {
     changeSelectedCourseName({ target: { value: newValue } });
+    // Find the selected course by its name
+    const selectedCourse = findCourseByName(newValue);
+    if (startDate && selectedCourse) {
+      // Add the duration as months to the start date to calculate the end date
+      const endDate = new Date(startDate);
+      endDate.setMonth(startDate.getMonth() + selectedCourse.duration);
+      setEndDate(endDate);
+    }
   };
 
   // Function to handle change in teacher selection

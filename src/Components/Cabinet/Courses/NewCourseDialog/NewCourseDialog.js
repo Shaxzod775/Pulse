@@ -155,10 +155,10 @@ const SquareContainer = styled("div")(
 );
 
 const teachers = [
-  "Коптлеулов Арслан",
-  "Илья Стародубцев",
-  "Азиз Мамаджонов",
-  "Мухаммад Матчонов",
+  "Koptleulov Arslan",
+  "Ilya Starodubtsev",
+  "Aziz Mamajonov",
+  "Muhammad Matchonov",
 ];
 const techs = [
   "JavaScript",

@@ -33,7 +33,7 @@ const GroupCard = ({
   startDate,
   endDate,
   weekDays = [0, 2, 4],
-  teacher = "Arslan Koptleulov",
+  teacher = "Koptleulov Arslan",
   duration,
   roomNumber,
   thumbnail,

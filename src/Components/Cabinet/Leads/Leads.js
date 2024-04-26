@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
 import LeadsMain from "./LeadsMain/LeadsMain";
 
-const names = ["Eshmatov Toshmat", "Aliyev Shohrux", "Azizova Aziza"];
+const names = ["Elyorov Ahmad", "Aliyev Shohrux", "Azizova Aziza"];
 const statuses = ["recycled", "dead", "inProgress"];
 
 export function createLead({
@@ -15,7 +15,7 @@ export function createLead({
   contactNumber = "998987654321",
   email = "example@gmail.com",
   group = "Frontend GR1214-21",
-  teacher = "Eshmatov Toshmat",
+  teacher = "Elyorov Ahmad",
   status = statuses[0],
   startDate = new Date(2024, 4, 3),
   endDate = new Date(2024, 10, 3),

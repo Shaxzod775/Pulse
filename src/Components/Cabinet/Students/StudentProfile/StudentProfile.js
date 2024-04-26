@@ -377,7 +377,7 @@ const StudentProfile = () => {
             <div className="flex flex-col gap-xxs2">
               <InfoItem>
                 <h5>Фамилия Имя Отчество</h5>
-                <span>Коптлеулов Арслан Алмазович</span>
+                <span>Koptleulov Arslan Almazovich</span>
               </InfoItem>
               <InfoItem>
                 <h5>Номер телефона</h5>
