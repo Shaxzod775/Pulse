@@ -68,7 +68,7 @@ const initialState = [
   },
   {
     id: uuidv4(),
-    name: "Dart",
+    name: "AI",
     duration: 6,
     price: 2000000,
     thumbnail: null,
