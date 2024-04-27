@@ -806,7 +806,7 @@ const NewTeacher = () => {
               <FormControl required fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel>Курсы</FormLabel>
+                    <FormLabel>Образование</FormLabel>
                   </label>
                   <Box width="100%" maxWidth="75%">
                     <Select
