@@ -43,7 +43,7 @@ export const theme = createTheme({
     },
     golden: {
       main: "#FC0",
-      light: "#FC0",
+      light: "#FFF8DE",
       dark: "#FC0",
       contrastText: "#ffffff",
     },
@@ -346,6 +346,7 @@ export const selectStyles = ({ theme }) => ({
   borderRadius: "8px",
   // border: "3px solid #E5E7EB !important",
   // boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+  "& .MuiListItemText-root": { margin: "0" },
   "& .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input": {
     padding: "12px 32px 12px 12px",
   },

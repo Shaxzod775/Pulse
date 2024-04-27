@@ -49,7 +49,11 @@ import { ru } from "date-fns/locale";
 import { russianLocale } from "../../../../Constants/dateLocales";
 import { MuiTelInput } from "mui-tel-input";
 import _ from "lodash"; // lodash library
-import { languagesFullRu, leadSources } from "../../../../Constants/testData";
+import {
+  languagesFullRu,
+  leadSources,
+  leadStatuses,
+} from "../../../../Constants/testData";
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -101,7 +105,12 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   const [leadSource, setLeadSource] = useState("");
 
   const [selectedCourseNames, setSelectedCourseNames] = useState([]);
+
   const [courseLanguages, setCourseLanguages] = useState([]);
+
+  const [comment, changeComment] = useInput("");
+
+  const [selectedStatus, changeSelectedStatus] = useInput("");
 
   const handleChangeName = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -177,6 +186,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       leadSource: leadSource,
       selectedCourseNames: selectedCourseNames,
       courseLanguages: courseLanguages,
+      comment: comment,
     });
     handleAddLead(newLead);
     handleClose();
@@ -387,6 +397,45 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </div>
+              <div className="flex gap-lg">
+                <FormControl required fullWidth variant="outlined">
+                  <label>
+                    <FormLabel>Язык курса</FormLabel>
+                  </label>
+                  <Select
+                    value={selectedStatus}
+                    onChange={changeSelectedStatus}
+                    MenuProps={customMenuProps}
+                    sx={selectStyles({ theme })}
+                    input={<InputBaseStyled />}
+                    IconComponent={Icons.ArrowD}
+                  >
+                    {leadStatuses.map((leadStatus) => (
+                      <MenuItem key={leadStatus} value={leadStatus}>
+                        <ListItemText primary={leadStatus} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl required fullWidth variant="outlined">
+                  <label>
+                    <FormLabel>Комментарий</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    multiline
+                    rows={3}
+                    variant="outlined"
+                    placeholder="Напишите комментарий"
+                    value={comment}
+                    onChange={changeComment}
+                    sx={{
+                      "& .MuiInputBase-multiline": {
+                        padding: "0",
+                      },
+                    }}
+                  />
                 </FormControl>
               </div>
             </div>

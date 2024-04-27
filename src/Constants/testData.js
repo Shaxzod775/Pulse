@@ -41,3 +41,5 @@ export const languagesFullRu = ["Узбекский", "Русский", "Анг�
 //   ru: "Ruscha",
 //   en: "Inglizcha",
 // };
+
+export const leadStatuses = ["In Progress", "Dead", "New", "Recycled"];

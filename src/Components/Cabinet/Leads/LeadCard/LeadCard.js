@@ -27,6 +27,7 @@ import { NumericFormat } from "react-number-format";
 import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { formattedPhoneNumber } from "../../../../helpers/helpers";
+import { leadStatuses } from "../../../../Constants/testData";
 
 const StatusChip = styled((props) => <Chip {...props} />)(
   ({ theme, status }) => ({
@@ -34,18 +35,22 @@ const StatusChip = styled((props) => <Chip {...props} />)(
     padding: "8px 10px",
     borderRadius: "8px",
     backgroundColor:
-      status === "recycled"
-        ? theme.palette.seaBlue.light
-        : status === "dead"
+      status === leadStatuses[0]
+        ? theme.palette.orange.light
+        : status === leadStatuses[1]
         ? theme.palette.blue.light
-        : theme.palette.orange.light,
+        : status === leadStatuses[2]
+        ? theme.palette.golden.light
+        : theme.palette.seaBlue.light,
     "& .MuiChip-label": {
       color:
-        status === "recycled"
-          ? theme.palette.seaBlue.main
-          : status === "dead"
+        status === leadStatuses[0]
+          ? theme.palette.orange.main
+          : status === leadStatuses[1]
           ? theme.palette.blue.main
-          : theme.palette.orange.main,
+          : status === leadStatuses[2]
+          ? theme.palette.golden.main
+          : theme.palette.seaBlue.main,
       padding: "0",
       letterSpacing: "0.32px",
     },
@@ -54,11 +59,13 @@ const StatusChip = styled((props) => <Chip {...props} />)(
       margin: "0",
       marginRight: "8px",
       color:
-        status === "recycled"
-          ? theme.palette.seaBlue.main
-          : status === "dead"
+        status === leadStatuses[0]
+          ? theme.palette.orange.main
+          : status === leadStatuses[1]
           ? theme.palette.blue.main
-          : theme.palette.orange.main,
+          : status === leadStatuses[2]
+          ? theme.palette.golden.main
+          : theme.palette.seaBlue.main,
     },
   })
 );
@@ -72,6 +79,7 @@ const LeadCard = ({
   leadSource,
   selectedCourseNames,
   courseLanguages,
+  comment,
   status,
   handleDeleteLead,
 }) => {
@@ -84,14 +92,6 @@ const LeadCard = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const statusLabel =
-    status === "recycled"
-      ? "Recycled"
-      : status === "dead"
-      ? "Dead"
-      : status === "inProgress"
-      ? "In Progress"
-      : "Other";
   return (
     <CardStyled>
       <Box className="flex flex-col gap-sm" padding="9px">
@@ -232,21 +232,14 @@ const LeadCard = ({
             <Icons.ChatRoundDots />
             <TypographyStyled>Комментарий</TypographyStyled>
           </InfoWithIcon>
-          <TypographyStyled small>
-            Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras sit.
-            Consectetur nulla.
-          </TypographyStyled>
+          <TypographyStyled small>{comment}</TypographyStyled>
         </Box>
         <div className="flex items-center justify-between">
           <InfoWithIcon>
             <Icons.Star />
             <TypographyStyled>Статус</TypographyStyled>
           </InfoWithIcon>
-          <StatusChip
-            label={statusLabel}
-            status={status}
-            icon={<Icons.Circle />}
-          />
+          <StatusChip label={status} status={status} icon={<Icons.Circle />} />
           {/* <StatusChip icon={<Icons.Circle />} label="Example Chip" /> */}
         </div>
       </Box>

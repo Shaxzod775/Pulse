@@ -3,9 +3,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
 import LeadsMain from "./LeadsMain/LeadsMain";
+import { leadStatuses } from "../../../Constants/testData";
 
 const names = ["Elyorov Ahmad", "Aliyev Shohrux", "Azizova Aziza"];
-const statuses = ["recycled", "dead", "inProgress"];
 
 export function createLead({
   id = uuidv4(),
@@ -17,8 +17,8 @@ export function createLead({
   leadSource = "Instagram",
   selectedCourseNames = ["Course1", "Course2"],
   courseLanguages = ["Русский", "Узбекский"],
-  group = "GR1214-21",
-  status = statuses[0],
+  comment = "Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras sit. Consectetur nulla.",
+  status = leadStatuses[0],
 } = {}) {
   return {
     id,
@@ -30,7 +30,7 @@ export function createLead({
     leadSource,
     selectedCourseNames,
     courseLanguages,
-    group,
+    comment,
     status,
   };
 }
@@ -40,62 +40,62 @@ const Leads = () => {
     createLead({
       name: names[0],
       group: "Frontend GR1214-21",
-      status: statuses[0],
+      status: leadStatuses[0],
     }),
     createLead({
       name: names[1],
       group: "Frontend GR1214-22",
-      status: statuses[2],
+      status: leadStatuses[2],
     }),
     createLead({
       name: names[2],
       group: "Frontend GR1214-23",
-      status: statuses[0],
+      status: leadStatuses[0],
     }),
     createLead({
       name: names[0],
       group: "Frontend GR1214-21",
-      status: statuses[2],
+      status: leadStatuses[3],
     }),
     createLead({
       name: names[1],
       group: "Frontend GR1214-22",
-      status: statuses[2],
+      status: leadStatuses[2],
     }),
     createLead({
       name: names[2],
       group: "Frontend GR1214-23",
-      status: statuses[1],
+      status: leadStatuses[1],
     }),
     createLead({
       name: names[0],
       group: "Frontend GR1214-21",
-      status: statuses[2],
+      status: leadStatuses[2],
     }),
     createLead({
       name: names[1],
       group: "Frontend GR1214-22",
-      status: statuses[1],
+      status: leadStatuses[3],
     }),
     createLead({
       name: names[2],
       group: "Frontend GR1214-23",
-      status: statuses[0],
+      status: leadStatuses[0],
     }),
     createLead({
       name: names[0],
       group: "Frontend GR1214-23",
-      status: statuses[2],
+      status: leadStatuses[2],
     }),
     createLead({
       name: names[2],
       group: "Frontend GR1214-23",
-      status: statuses[2],
+      status: leadStatuses[2],
     }),
     createLead({
       name: names[1],
       group: "Frontend GR1214-23",
-      status: statuses[0],
+      status: leadStatuses[3],
     }),
   ]);
 

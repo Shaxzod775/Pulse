@@ -39,7 +39,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
-import { leadSources } from "../../../../Constants/testData";
+import { leadSources, leadStatuses } from "../../../../Constants/testData";
 
 const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   padding: "0 8px 0 0",
@@ -91,30 +91,28 @@ const statusTitleCardStyles = ({ theme, colorMain }) => ({
   },
 });
 const StatusTitle = ({ status, leadsAmount }) => {
+  // const colorMain =
+  //   status === "recycled"
+  //     ? theme.palette.seaBlue.main
+  //     : status === "dead"
+  //     ? theme.palette.blue.main
+  //     : status === "new"
+  //     ? theme.palette.golden.main
+  //     : theme.palette.orange.main;
   const colorMain =
-    status === "recycled"
-      ? theme.palette.seaBlue.main
-      : status === "dead"
+    status === leadStatuses[0]
+      ? theme.palette.orange.main
+      : status === leadStatuses[1]
       ? theme.palette.blue.main
-      : status === "new"
+      : status === leadStatuses[2]
       ? theme.palette.golden.main
-      : theme.palette.orange.main;
+      : theme.palette.seaBlue.main;
   return (
-    <Card sx={statusTitleCardStyles({ status, colorMain })}>
+    <Card sx={statusTitleCardStyles({ colorMain })}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-xxs2">
           <Icons.Circle color={colorMain} />
-          <Typography>
-            {status === "recycled"
-              ? "Recycled"
-              : status === "dead"
-              ? "Dead"
-              : status === "inProgress"
-              ? "In Progress"
-              : status === "new"
-              ? "New"
-              : "Other"}
-          </Typography>
+          <Typography>{status}</Typography>
         </div>
         <Chip label={`${leadsAmount} leads`} />
       </div>
@@ -367,7 +365,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
             columnSpacing={"32px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            {["inProgress", "dead", "new", "recycled"].map((leadStatus, i) => (
+            {leadStatuses.map((leadStatus, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
                 <StatusTitle status={leadStatus} leadsAmount={5} />
               </Grid>
