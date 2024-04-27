@@ -1,31 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Button,
+  Checkbox,
   Chip,
   Divider,
   FormControl,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   InputBase,
+  InputLabel,
+  ListItemText,
+  MenuItem,
   Paper,
   Radio,
   RadioGroup,
+  Select,
   TextField,
   Typography,
   styled,
 } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
+  AutocompleteField,
+  AutocompleteStyled,
   ButtonStyled,
+  InputBaseStyled,
   Main,
   Root,
   TextFieldStyled,
   Title,
+  customMenuProps,
+  muiTelInputStyles,
+  selectStyles,
+  textFieldStyles,
   theme,
 } from "../../CabinetStyles";
 import Dropzone from "react-dropzone";
+import { MuiTelInput } from "mui-tel-input";
+import { ar, ru } from "date-fns/locale";
+import _ from "lodash"; // lodash library
+import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
+import useInput from "../../../../hooks/useInput";
+import {
+  REGIONS,
+  REGION_WITH_DISTRICTS,
+} from "../../../../Constants/usbekistan";
+import { russianLocale } from "../../../../Constants/dateLocales";
+import { uzbekEducationLevels } from "../../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -109,22 +138,39 @@ const NewTeacher = () => {
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [middleNameError, setMiddleNameError] = useState(false);
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
+
+  const [passportSeries, setPassportSeries] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
+
+  const [region, changeRegion, resetRegion] = useAutocompleteInput("");
+  const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
+
+  const [email, changeEmail] = useInput("");
+  const [emailError, setEmailError] = useState(false);
+  const [emailCorp, changeEmailCorp] = useInput("");
+  const [emailErrorCorp, setEmailErrorCorp] = useState(false);
+
+  const [selectedCourseNames, setSelectedCourseNames] = useState([]);
+
+  const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
+    { number: "", name: "" },
+    { number: "", name: "" },
+    { number: "", name: "" },
+  ]);
+  const [visibleCount, setVisibleCount] = useState(1);
+
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [firstNameHelperText, setFirstNameHelperText] = useState("");
-  const [lastNameHelperText, setLastNameHelperText] = useState("");
-
-  const handleChange = (event, setter, setHelperText) => {
-    const { value } = event.target;
-    if (/^[a-zA-Z]*$/.test(value)) {
-      setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
-      setHelperText("");
-    } else {
-      setHelperText("Только латинские буквы!");
-    }
-  };
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -138,7 +184,7 @@ const NewTeacher = () => {
         };
         reader.readAsDataURL(file);
       } else {
-        console.error("Please upload an image file.");
+        alert("Please upload an image file.");
       }
     }
   };
@@ -147,6 +193,116 @@ const NewTeacher = () => {
     // Simulate file input click event
     const fileInput = document.getElementById("file-upload-input");
     fileInput.click();
+  };
+
+  const handleChange = (event, setter, setHelperText) => {
+    const { value } = event.target;
+    if (/^[a-zA-Z\s]*$/.test(value)) {
+      setter(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()); // Capitalize the first letter and make the rest lowercase
+      setHelperText(false);
+    } else {
+      setHelperText(true);
+    }
+  };
+
+  const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
+    // Remove all non-digit characters
+    const digits = newPhone.replace(/\D/g, "");
+
+    // Check if the new phone number starts with "+998" and does not exceed 12 digits
+    if (newPhone.startsWith("+998") && digits.length <= 12) {
+      phoneNumberSetter(`+${digits}`);
+    } else if (digits.length <= 3) {
+      // If the new phone number is "+99" or "+9", reset it to "+998"
+      phoneNumberSetter("+998");
+    }
+  };
+
+  const handleChangePassportSeries = (event) => {
+    let input = event.target.value;
+    // Remove non-letter characters and limit to 2 characters
+    input = input.replace(/[^a-zA-Z]/g, "").substring(0, 2);
+    // Convert to uppercase
+    input = input.toUpperCase();
+    // Now you can set the state or do whatever you need with the input
+    setPassportSeries(input);
+  };
+
+  const handleChangePassportNumber = (event) => {
+    let input = event.target.value;
+    // Remove non-digit characters and limit to 7 characters
+    input = input.replace(/[^0-9]/g, "").substring(0, 7);
+    // Now you can set the state or do whatever you need with the input
+    setPassportNumber(input);
+  };
+
+  const handleChangeParentName = useCallback(
+    _.debounce((index, name, value) => {
+      setParentsPhoneNumbers((values) => {
+        const newValues = [...values];
+        if (name === "name") {
+          newValues[index].name = value;
+        }
+        return newValues;
+      });
+    }, 10),
+    [parentsPhoneNumbers]
+  ); // delay of 10ms
+
+  const handleBlurEmail = useCallback(
+    _.debounce((event) => {
+      const email = event.target.value;
+      if (email === "") return;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      setEmailError(!emailRegex.test(email));
+    }, 500),
+    [setEmailError]
+  );
+
+  const handleBlurEmailCorp = useCallback(
+    _.debounce((event) => {
+      const emailCorp = event.target.value;
+      if (emailCorp === "") return;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      setEmailErrorCorp(!emailRegex.test(emailCorp));
+    }, 500),
+    [setEmailErrorCorp]
+  );
+
+  const handleChangeCourses = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCourseNames(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleChangeParentPhoneNumber =
+    // useCallback(
+    //   _.debounce(
+    (index, newPhone) => {
+      // Remove all non-digit characters
+      const digits = newPhone.replace(/\D/g, "");
+      const newValues = [...parentsPhoneNumbers];
+
+      // Check if the new phone number starts with "+998" and does not exceed 12 digits
+      if (newPhone.startsWith("+998") && digits.length <= 12) {
+        newValues[index].number = `+${digits}`;
+        setParentsPhoneNumbers(newValues);
+      } else if (digits.length <= 3) {
+        // If the new phone number is "+99" or "+9", reset it to "+998"
+        newValues[index].number = "+998";
+        setParentsPhoneNumbers(newValues);
+      }
+    };
+  //   , 0),
+  //   [parentsPhoneNumbers]
+  // ); // delay of 10ms
+
+  const handleAddFields = () => {
+    setVisibleCount(visibleCount + 1);
   };
 
   // Function to handle adding a new tag
@@ -161,14 +317,7 @@ const NewTeacher = () => {
 
   return (
     <Root>
-      <Main
-        sx={{
-          fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
-          "& *": {
-            fontFamily: "Poppins, Rubik, Roboto, sans-serif !important",
-          },
-        }}
-      >
+      <Main>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
             <ButtonStyled
@@ -211,7 +360,10 @@ const NewTeacher = () => {
           </div>
         </div>
         <div className="flex justify-between gap-md">
-          <PaperStyled className="full-width" sx={{ padding: "30px 52px" }}>
+          <PaperStyled
+            className="full-width"
+            sx={{ maxWidth: "50%", padding: "30px 52px" }}
+          >
             <div className="flex flex-col gap-md">
               <div
                 className="flex gap-sm"
@@ -277,50 +429,58 @@ const NewTeacher = () => {
               </div>
               <div className="flex flex-col gap-md">
                 <div>
-                  <label>
-                    <FormLabel>Имя и Фамилия</FormLabel>
-                  </label>
                   <div className="flex gap-xxs">
-                    <FormControl fullWidth variant="outlined">
+                    <FormControl required fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Фамилия *</FormLabel>
+                      </label>
                       <TextFieldStyled
                         variant="outlined"
-                        placeholder="First name"
-                        value={firstName}
-                        helperText={firstNameHelperText}
+                        placeholder="Фамилия"
+                        value={lastName}
+                        helperText={
+                          lastNameError ? "Только латинские буквы!" : ""
+                        }
                         onChange={(event) =>
-                          handleChange(
-                            event,
-                            setFirstName,
-                            setFirstNameHelperText
-                          )
+                          handleChange(event, setLastName, setLastNameError)
+                        }
+                      />
+                    </FormControl>
+                    <FormControl required fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Имя *</FormLabel>
+                      </label>
+                      <TextFieldStyled
+                        variant="outlined"
+                        placeholder="Имя"
+                        value={firstName}
+                        helperText={
+                          firstNameError ? "Только латинские буквы!" : ""
+                        }
+                        onChange={(event) =>
+                          handleChange(event, setFirstName, setFirstNameError)
                         }
                       />
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
+                      <label>
+                        <FormLabel>Отчество</FormLabel>
+                      </label>
                       <TextFieldStyled
                         variant="outlined"
-                        placeholder="Last name"
-                        value={lastName}
-                        helperText={lastNameHelperText}
+                        placeholder="Отчество"
+                        value={middleName}
+                        helperText={
+                          middleNameError ? "Только латинские буквы!" : ""
+                        }
                         onChange={(event) =>
-                          handleChange(
-                            event,
-                            setLastName,
-                            setLastNameHelperText
-                          )
+                          handleChange(event, setMiddleName, setMiddleNameError)
                         }
                       />
                     </FormControl>
                   </div>
                 </div>
-                <Divider
-                // sx={{
-                //   all: "unset",
-                //   width: "100%",
-                //   height: "1px",
-                //   backgroundColor: "#E5E7EB",
-                // }}
-                />
+                <Divider />
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>Номер телефона:</FormLabel>
@@ -330,15 +490,32 @@ const NewTeacher = () => {
                     style={{ maxWidth: "75%" }}
                   >
                     <FormControl fullWidth variant="outlined">
-                      <TextFieldStyled
+                      <MuiTelInput
                         variant="outlined"
-                        placeholder="Номер телефона"
+                        defaultCountry="UZ"
+                        onlyCountries={["UZ"]}
+                        helperText="Основной номер"
+                        value={phoneNumber}
+                        onChange={(newPhone) =>
+                          handleChangePhoneNumber(newPhone, setPhoneNumber)
+                        }
+                        sx={muiTelInputStyles({ theme })}
                       />
                     </FormControl>
                     <FormControl fullWidth variant="outlined">
-                      <TextFieldStyled
+                      <MuiTelInput
                         variant="outlined"
-                        placeholder="Доп. номер"
+                        defaultCountry="UZ"
+                        onlyCountries={["UZ"]}
+                        helperText="Дополнительный номер"
+                        value={additionalPhoneNumber}
+                        onChange={(newPhone) =>
+                          handleChangePhoneNumber(
+                            newPhone,
+                            setAdditionalPhoneNumber
+                          )
+                        }
+                        sx={muiTelInputStyles({ theme })}
                       />
                     </FormControl>
                   </div>
@@ -355,37 +532,58 @@ const NewTeacher = () => {
                         defaultValue="male"
                         aria-labelledby="gender-radios"
                         name="gender-radios"
+                        sx={{
+                          "& > div": { marginRight: "16px" },
+                          "& .MuiFormControlLabel-root": { marginRight: "0" },
+                        }}
                       >
-                        <FormControlLabel
-                          value="male"
-                          control={<RadioStyled />}
-                          label="Мужской"
-                        />
-                        <FormControlLabel
-                          value="female"
-                          control={<RadioStyled />}
-                          label="Женский"
-                        />
+                        <div className="flex items-center gap-xxs2">
+                          <FormControlLabel
+                            value="male"
+                            control={<RadioStyled />}
+                            label="Мужской"
+                          />
+                          <Icons.MaleSymbol
+                            color={theme.typography.color.purpleBlue}
+                          />
+                        </div>
+                        <div className="flex items-center gap-xxs2">
+                          <FormControlLabel
+                            value="female"
+                            control={<RadioStyled />}
+                            label="Женский"
+                          />
+                          <Icons.FemaleSymbol
+                            color={theme.typography.color.purpleBlue}
+                          />
+                        </div>
                       </RadioGroup>
                     </div>
                   </FormControl>
                 </div>
                 <Divider />
                 <div className="flex gap-lg">
-                  <div>
+                  <div style={{ maxWidth: "30%" }}>
                     <FormControl fullWidth variant="outlined">
                       <label htmlFor="date-start">
                         <FormLabel>Дата рождения</FormLabel>
                       </label>
-                      <TextFieldStyled
-                        id="date-start"
-                        variant="outlined"
-                        type="date"
-                        // value={
-                        //   startDate ? startDate.toISOString().split("T")[0] : ""
-                        // }
-                        // onChange={handleStartDateChange}
-                      />
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={ru}
+                        localeText={russianLocale}
+                      >
+                        <DatePicker
+                          sx={textFieldStyles({ theme })}
+                          slots={{
+                            openPickerIcon: Icons.CalendarContained,
+                          }}
+                          slotProps={{
+                            field: { clearable: true },
+                            openPickerButton: { color: "purpleBlue" },
+                          }}
+                        />
+                      </LocalizationProvider>
                     </FormControl>
                   </div>
                   <div>
@@ -401,6 +599,8 @@ const NewTeacher = () => {
                         <TextFieldStyled
                           variant="outlined"
                           placeholder="Серия"
+                          value={passportSeries}
+                          onChange={handleChangePassportSeries}
                         />
                       </FormControl>
                       <FormControl
@@ -411,30 +611,103 @@ const NewTeacher = () => {
                         <TextFieldStyled
                           variant="outlined"
                           placeholder="Номер паспорта"
+                          value={passportNumber}
+                          onChange={handleChangePassportNumber}
                         />
                       </FormControl>
                     </div>
                   </div>
                 </div>
                 <Divider />
-                <div>
-                  <FormControl fullWidth variant="outlined">
-                    <div className="flex items-center gap-md">
-                      <label>
+
+                <FormControl fullWidth variant="outlined">
+                  <div className="flex flex-col gap-sm">
+                    <div className="flex items-center">
+                      <label className="full-width" style={{ maxWidth: "25%" }}>
                         <FormLabel row>Адрес проживания</FormLabel>
                       </label>
-                      <TextFieldStyled
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Страна, Город, Место проживания"
-                      />
+                      <div
+                        className="full-width flex gap-xxs"
+                        style={{ maxWidth: "75%" }}
+                      >
+                        <FormControl fullWidth variant="outlined">
+                          <AutocompleteStyled
+                            options={REGIONS}
+                            value={region}
+                            onChange={(event, value) => {
+                              changeRegion(event, value);
+                              resetDistrict();
+                            }}
+                            renderInput={(params) => (
+                              <AutocompleteField
+                                {...params}
+                                id="city"
+                                variant="outlined"
+                                placeholder="Регион"
+                              />
+                            )}
+                            popupIcon={
+                              <Icons.ArrowD
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                            clearIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        </FormControl>
+                        <FormControl fullWidth variant="outlined">
+                          <AutocompleteStyled
+                            options={REGION_WITH_DISTRICTS[region] || [""]}
+                            value={district}
+                            onChange={changeDistrict}
+                            renderInput={(params) => (
+                              <AutocompleteField
+                                {...params}
+                                id="city"
+                                variant="outlined"
+                                placeholder="Район"
+                                helperText={`${
+                                  region ? "" : "Сначала выберите регион"
+                                }`}
+                                // error={!city}
+                              />
+                            )}
+                            disabled={!region}
+                            popupIcon={
+                              <Icons.ArrowD
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                            clearIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        </FormControl>
+                      </div>
                     </div>
-                  </FormControl>
-                </div>
+
+                    {/* <div className="flex gap-xxs" style={{ marginLeft: "25%" }}> */}
+                    <TextFieldStyled
+                      fullWidth
+                      variant="outlined"
+                      placeholder="Место проживания"
+                      sx={{ marginLeft: "25%", maxWidth: "75%" }}
+                    />
+                    {/* </div> */}
+                  </div>
+                </FormControl>
               </div>
             </div>
           </PaperStyled>
-          <PaperStyled className="full-width" sx={{ padding: "30px 52px" }}>
+          <PaperStyled
+            className="full-width"
+            sx={{ maxWidth: "50%", padding: "30px 52px" }}
+          >
             <div className="flex flex-col gap-md">
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
@@ -442,6 +715,35 @@ const NewTeacher = () => {
                     <FormLabel row>E-mail</FormLabel>
                   </label>
                   <TextFieldStyled
+                    value={email}
+                    error={emailError}
+                    helperText={
+                      emailError ? "Неверный формат электронной почты" : ""
+                    }
+                    onChange={changeEmail}
+                    onBlur={handleBlurEmail}
+                    onFocus={() => setEmailError(false)}
+                    fullWidth
+                    variant="outlined"
+                    placeholder="info@gmail.com"
+                    sx={{ maxWidth: "75%" }}
+                  />
+                </div>
+              </FormControl>
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>E-mail (корпоративный)</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    value={emailCorp}
+                    error={emailErrorCorp}
+                    helperText={
+                      emailErrorCorp ? "Неверный формат электронной почты" : ""
+                    }
+                    onChange={changeEmailCorp}
+                    onBlur={handleBlurEmailCorp}
+                    onFocus={() => setEmailErrorCorp(false)}
                     fullWidth
                     variant="outlined"
                     placeholder="info@gmail.com"
@@ -462,64 +764,175 @@ const NewTeacher = () => {
                   />
                 </div>
               </FormControl>
-              <div className="flex items-center justify-between">
-                <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Телефон близких</FormLabel>
-                </label>
-                <div
-                  className="full-width flex gap-xxs"
-                  style={{ maxWidth: "75%" }}
-                >
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled
-                      variant="outlined"
-                      placeholder="Номер телефона"
-                    />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <TextFieldStyled
-                      variant="outlined"
-                      placeholder="Доп. номер"
-                    />
-                  </FormControl>
-                </div>
-              </div>
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Адрес проживания</FormLabel>
+                    <FormLabel row>ПИНФЛ</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth
                     variant="outlined"
-                    placeholder="Страна, Город, Место проживания"
-                    style={{ maxWidth: "75%" }}
+                    // placeholder="Пример: 011/256"
+                    sx={{ maxWidth: "75%" }}
                   />
                 </div>
               </FormControl>
               <FormControl fullWidth variant="outlined">
-                <div className="flex items-start justify-between">
+                <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Комментарий</FormLabel>
+                    <FormLabel row>ИНПС</FormLabel>
                   </label>
                   <TextFieldStyled
                     fullWidth
-                    multiline
-                    rows={3}
                     variant="outlined"
-                    placeholder="Комментарий ученика"
-                    sx={{
-                      maxWidth: "75%",
-                      "& .MuiInputBase-multiline": {
-                        padding: "0",
-                      },
-                    }}
+                    // placeholder="Пример: 011/256"
+                    sx={{ maxWidth: "75%" }}
                   />
                 </div>
               </FormControl>
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>ИНН</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    fullWidth
+                    variant="outlined"
+                    // placeholder="Пример: 011/256"
+                    sx={{ maxWidth: "75%" }}
+                  />
+                </div>
+              </FormControl>
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel>Курсы</FormLabel>
+                  </label>
+                  <Box width="100%" maxWidth="75%">
+                    <Select
+                      fullWidth
+                      multiple
+                      required
+                      value={selectedCourseNames}
+                      onChange={handleChangeCourses}
+                      renderValue={(selected) => selected.join(", ")}
+                      MenuProps={customMenuProps}
+                      sx={selectStyles({ theme })}
+                      input={<InputBaseStyled />}
+                      IconComponent={Icons.ArrowD}
+                    >
+                      {uzbekEducationLevels.map((educationalLevel) => (
+                        <MenuItem
+                          key={educationalLevel}
+                          value={educationalLevel}
+                        >
+                          <Checkbox
+                            checked={
+                              selectedCourseNames.indexOf(educationalLevel) > -1
+                            }
+                          />
+                          <ListItemText primary={educationalLevel} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                </div>
+              </FormControl>
+              <div className="full-width flex flex-col gap-xs">
+                {/* Render the first item */}
+                {parentsPhoneNumbers[0] && (
+                  <div className="flex items-center justify-between">
+                    <label style={{ maxWidth: "25%" }}>
+                      <FormLabel row>Телефон близких</FormLabel>
+                    </label>
+                    <div
+                      className="full-width flex gap-xxs"
+                      style={{ maxWidth: "75%" }}
+                    >
+                      <FormControl fullWidth variant="outlined">
+                        <MuiTelInput
+                          variant="outlined"
+                          defaultCountry="UZ"
+                          onlyCountries={["UZ"]}
+                          value={parentsPhoneNumbers[0].number}
+                          onChange={(newPhone) =>
+                            handleChangeParentPhoneNumber(0, newPhone)
+                          }
+                          sx={muiTelInputStyles({ theme })}
+                        />
+                      </FormControl>
+                      <FormControl fullWidth variant="outlined">
+                        <TextFieldStyled
+                          variant="outlined"
+                          placeholder="Имя"
+                          name="name"
+                          value={parentsPhoneNumbers[0].name}
+                          onChange={(event) =>
+                            handleChangeParentName(
+                              0,
+                              event.target.name,
+                              event.target.value
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                )}
+
+                {/* Render the rest of the items */}
+                {parentsPhoneNumbers
+                  .slice(1, visibleCount)
+                  .map((parentPhoneNumber, index) => (
+                    <div
+                      className="full-width flex gap-xxs"
+                      style={{ marginLeft: "25%", maxWidth: "75%" }}
+                    >
+                      <FormControl fullWidth variant="outlined">
+                        <MuiTelInput
+                          variant="outlined"
+                          defaultCountry="UZ"
+                          onlyCountries={["UZ"]}
+                          value={parentPhoneNumber.number}
+                          onChange={(newPhone) =>
+                            handleChangeParentPhoneNumber(index + 1, newPhone)
+                          }
+                          sx={muiTelInputStyles({ theme })}
+                        />
+                      </FormControl>
+                      <FormControl fullWidth variant="outlined">
+                        <TextFieldStyled
+                          variant="outlined"
+                          placeholder="Имя"
+                          name="name"
+                          value={parentPhoneNumber.name}
+                          onChange={(event) =>
+                            handleChangeParentName(
+                              index + 1,
+                              event.target.name,
+                              event.target.value
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </div>
+                  ))}
+
+                <div style={{ marginLeft: "25%", maxWidth: "75%" }}>
+                  <DialogButton
+                    variant="outlined"
+                    color="purpleBlue"
+                    onClick={handleAddFields}
+                    disabled={visibleCount >= parentsPhoneNumbers.length}
+                  >
+                    Добавить ещё
+                  </DialogButton>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Теги</FormLabel>
+                  <FormLabel row>Добавить тег:</FormLabel>
                 </label>
                 <div
                   className="full-width flex flex-wrap gap-x3s"
@@ -590,7 +1003,7 @@ const NewTeacher = () => {
                   <Chip
                     label="+"
                     variant="outlined"
-                    color="darkBlue"
+                    color="purpleBlue"
                     sx={{
                       borderRadius: `${theme.custom.spacing.xxs}px`,
                     }}
@@ -598,6 +1011,26 @@ const NewTeacher = () => {
                   />
                 </div>
               </div>
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-start justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Описание</FormLabel>
+                  </label>
+                  <TextFieldStyled
+                    fullWidth
+                    multiline
+                    rows={3}
+                    variant="outlined"
+                    placeholder="Описание ученика"
+                    sx={{
+                      maxWidth: "75%",
+                      "& .MuiInputBase-multiline": {
+                        padding: "0",
+                      },
+                    }}
+                  />
+                </div>
+              </FormControl>
             </div>
           </PaperStyled>
         </div>
