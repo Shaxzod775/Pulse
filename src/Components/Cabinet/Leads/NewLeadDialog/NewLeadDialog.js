@@ -402,7 +402,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Язык курса</FormLabel>
+                    <FormLabel>Статус</FormLabel>
                   </label>
                   <Select
                     value={selectedStatus}
