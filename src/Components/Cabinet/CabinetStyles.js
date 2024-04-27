@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
 import { BorderColor } from "@mui/icons-material";
+import { FormLabel } from "@mui/material";
 
 export const theme = createTheme({
   palette: {
@@ -658,4 +659,13 @@ export const MenuStyled = styled((props) => (
       "&:hover": { all: "unset" },
     },
   },
+}));
+export const FormLabelStyled = styled(FormLabel)(({ theme }) => ({
+  padding: "0",
+  color: theme.typography.color.darkBlue,
+  fontSize: theme.typography.fontSize.xs,
+  lineHeight: "normal",
+  paddingBottom: "12px",
+  letterSpacing: "0.32px",
+  fontWeight: "600",
 }));

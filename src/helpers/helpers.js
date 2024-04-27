@@ -30,3 +30,16 @@ export function formattedPhoneNumber(phoneNumber) {
     phoneNumber.slice(11)
   );
 }
+
+export function calculateMonthDifference(startDate, endDate) {
+  // Handle invalid dates or missing values
+  if (!startDate || !endDate) {
+    return 0; // Or handle it differently as needed
+  }
+
+  const yearsDifference = endDate.getFullYear() - startDate.getFullYear();
+  const monthsDifference = endDate.getMonth() - startDate.getMonth();
+
+  // Floor the month difference considering years difference
+  return monthsDifference + yearsDifference * 12;
+}

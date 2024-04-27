@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogContent,
   FormControl,
-  FormLabel,
   InputAdornment,
   TextField,
   Typography,
@@ -28,6 +27,7 @@ import useInput from "../../../../hooks/useInput";
 import Dropzone from "react-dropzone";
 import { getRussianWord } from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
+import { FormLabelStyled } from "../../CabinetStyles";
 
 const timeInputStyles = {
   minHeight: "unset",
@@ -68,16 +68,6 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
-}));
-
-const FormLabelStyled = styled(FormLabel)(({ theme }) => ({
-  padding: "0",
-  color: theme.typography.color.darkBlue,
-  fontSize: theme.typography.fontSize.xs,
-  lineHeight: "normal",
-  paddingBottom: "12px",
-  letterSpacing: "0.32px",
-  fontWeight: "600",
 }));
 
 function TagCheckbox({
@@ -212,19 +202,6 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export function calculateMonthDifference(startDate, endDate) {
-  // Handle invalid dates or missing values
-  if (!startDate || !endDate) {
-    return 0; // Or handle it differently as needed
-  }
-
-  const yearsDifference = endDate.getFullYear() - startDate.getFullYear();
-  const monthsDifference = endDate.getMonth() - startDate.getMonth();
-
-  // Floor the month difference considering years difference
-  return monthsDifference + yearsDifference * 12;
-}
-
 const NewCourseDialog = ({
   open,
   handleClose,
@@ -278,29 +255,6 @@ const NewCourseDialog = ({
     }
     changeName(event); // Update the name input field value
   };
-
-  // Function to handle change in start date
-  // const handleStartDateChange = (event) => {
-  //   const inputDate = event.target.value;
-  //   const newStartDate = new Date(inputDate);
-  //   if (!isNaN(newStartDate.getTime())) {
-  //     setStartDate(newStartDate);
-  //   } else {
-  //     // Handle invalid input date here
-  //     setStartDate(null);
-  //   }
-  // };
-  // Function to handle change in start date
-  // const handleEndDateChange = (event) => {
-  //   const inputDate = event.target.value;
-  //   const newEndDate = new Date(inputDate);
-  //   if (!isNaN(newEndDate.getTime())) {
-  //     setEndDate(newEndDate);
-  //   } else {
-  //     // Handle invalid input date here
-  //     setEndDate(null);
-  //   }
-  // };
 
   // Function to handle change in minutes
   const handleDurationChange = (event) => {

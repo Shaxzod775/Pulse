@@ -161,17 +161,20 @@ const LeadCard = ({
               </TypographyStyled>
             </Link>
           </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.Call />
-              <TypographyStyled>Доп. Телефон</TypographyStyled>
-            </InfoWithIcon>
-            <Link to={`tel:/${additionalPhoneNumber}`} className="link">
-              <TypographyStyled small>
-                {formattedPhoneNumber(additionalPhoneNumber)}
-              </TypographyStyled>
-            </Link>
-          </div>
+          {additionalPhoneNumber && (
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Call />
+                <TypographyStyled>Доп. Телефон</TypographyStyled>
+              </InfoWithIcon>
+              <Link to={`tel:/${additionalPhoneNumber}`} className="link">
+                <TypographyStyled small>
+                  {formattedPhoneNumber(additionalPhoneNumber)}
+                </TypographyStyled>
+              </Link>
+            </div>
+          )}
+
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Messages />

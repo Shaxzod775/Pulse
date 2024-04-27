@@ -33,6 +33,7 @@ import {
   customMenuProps,
   selectStyles,
   InputBaseStyled,
+  FormLabelStyled,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -40,7 +41,7 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createLead } from "../Leads";
 import Dropzone from "react-dropzone";
-import { calculateMonthDifference } from "../../Courses/NewCourseDialog/NewCourseDialog";
+import { calculateMonthDifference } from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -54,6 +55,7 @@ import {
   leadSources,
   leadStatuses,
 } from "../../../../Constants/testData";
+import useToggle from "../../../../hooks/useToggle";
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -97,6 +99,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   const [middleNameError, setMiddleNameError] = useState(false);
 
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumberError, togglePhoneNumberError] = useToggle(false);
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
   const [email, setEmail] = useState("");
@@ -123,6 +126,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   };
 
   const handleChangePhoneNumber = (newPhone, phoneNumberSetter) => {
+    togglePhoneNumberError(false);
     // Remove all non-digit characters
     const digits = newPhone.replace(/\D/g, "");
 
@@ -132,6 +136,17 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     } else if (digits.length <= 3) {
       // If the new phone number is "+99" or "+9", reset it to "+998"
       phoneNumberSetter("+998");
+    }
+  };
+
+  const handleBlurPhoneNumber = () => {
+    // Check if the phone number is not valid (not 13 characters length)
+    if (phoneNumber.length !== 13) {
+      // Toggle the phone number error state to true
+      togglePhoneNumberError(true);
+    } else {
+      // If the phone number is valid, ensure the phone number error state is false
+      togglePhoneNumberError(false);
     }
   };
 
@@ -177,6 +192,16 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Check if the phone number is empty or not valid (not 13 characters length)
+    if (phoneNumber.length === 0 || phoneNumber.length !== 13) {
+      // Toggle the phone number error state to true
+      togglePhoneNumberError(true);
+      // Exit the function early since the form is not valid
+      return;
+    }
+    // If the phone number is valid, reset the phone number error state
+    // togglePhoneNumberError(false);
+
     const fullName = `${lastName} ${firstName} ${middleName}`;
     const newLead = createLead({
       name: fullName,
@@ -224,9 +249,10 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               <div className="flex gap-xxs">
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Фамилия *</FormLabel>
+                    <FormLabelStyled>Фамилия</FormLabelStyled>
                   </label>
                   <TextFieldStyled
+                    required
                     variant="outlined"
                     placeholder="Фамилия"
                     value={lastName}
@@ -238,9 +264,10 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Имя *</FormLabel>
+                    <FormLabelStyled>Имя</FormLabelStyled>
                   </label>
                   <TextFieldStyled
+                    required
                     variant="outlined"
                     placeholder="Имя"
                     value={firstName}
@@ -252,7 +279,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
                 <FormControl fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Отчество</FormLabel>
+                    <FormLabelStyled>Отчество</FormLabelStyled>
                   </label>
                   <TextFieldStyled
                     variant="outlined"
@@ -269,22 +296,29 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Номер телефона:</FormLabel>
+                  <FormLabelStyled row>Номер телефона:</FormLabelStyled>
                 </label>
                 <div
                   className="full-width flex gap-xxs"
                   style={{ maxWidth: "75%" }}
                 >
-                  <FormControl fullWidth variant="outlined">
+                  <FormControl required fullWidth variant="outlined">
                     <MuiTelInput
+                      required
                       variant="outlined"
                       defaultCountry="UZ"
                       onlyCountries={["UZ"]}
-                      helperText="Основной номер"
+                      helperText={
+                        phoneNumberError
+                          ? "Неверный номер телефона"
+                          : "Основной номер *"
+                      }
                       value={phoneNumber}
                       onChange={(newPhone) =>
                         handleChangePhoneNumber(newPhone, setPhoneNumber)
                       }
+                      onBlur={handleBlurPhoneNumber}
+                      error={phoneNumberError}
                       sx={muiTelInputStyles({ theme })}
                     />
                   </FormControl>
@@ -309,9 +343,10 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>E-mail</FormLabel>
+                    <FormLabelStyled>E-mail</FormLabelStyled>
                   </label>
                   <TextFieldStyled
+                    required
                     value={email}
                     error={emailError}
                     helperText={
@@ -326,7 +361,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Откуда лид</FormLabel>
+                    <FormLabelStyled>Откуда лид</FormLabelStyled>
                   </label>
                   <AutocompleteStyled
                     options={leadSources}
@@ -335,6 +370,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                     renderInput={(params) => (
                       <AutocompleteField
                         {...params}
+                        required
                         id="subject"
                         variant="outlined"
                         placeholder=""
@@ -352,10 +388,11 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Курсы</FormLabel>
+                    <FormLabelStyled>Курсы</FormLabelStyled>
                   </label>
                   <Select
                     multiple
+                    required
                     value={selectedCourseNames}
                     onChange={handleChangeCourses}
                     renderValue={(selected) => selected.join(", ")}
@@ -376,10 +413,11 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Язык курса</FormLabel>
+                    <FormLabelStyled>Язык курса</FormLabelStyled>
                   </label>
                   <Select
                     multiple
+                    required
                     value={courseLanguages}
                     onChange={handleChangeCourseLanguages}
                     renderValue={(selected) => selected.join(", ")}
@@ -402,9 +440,10 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Статус</FormLabel>
+                    <FormLabelStyled>Статус</FormLabelStyled>
                   </label>
                   <Select
+                    required
                     value={selectedStatus}
                     onChange={changeSelectedStatus}
                     MenuProps={customMenuProps}
@@ -421,10 +460,11 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <label>
-                    <FormLabel>Комментарий</FormLabel>
+                    <FormLabelStyled>Комментарий</FormLabelStyled>
                   </label>
                   <TextFieldStyled
                     multiline
+                    required
                     rows={3}
                     variant="outlined"
                     placeholder="Напишите комментарий"

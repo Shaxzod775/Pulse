@@ -34,7 +34,7 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
-import { calculateMonthDifference } from "../../Courses/NewCourseDialog/NewCourseDialog";
+import { calculateMonthDifference } from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
