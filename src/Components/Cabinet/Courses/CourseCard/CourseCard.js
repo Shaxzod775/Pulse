@@ -26,8 +26,6 @@ import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { getRussianWord } from "../../../../helpers/helpers";
 
-const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-
 const CourseCard = ({
   id,
   name,

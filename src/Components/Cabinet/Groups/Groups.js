@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   ButtonBase,
+  Checkbox,
   Grid,
   IconButton,
   InputBase,
@@ -26,6 +27,8 @@ import {
   TextFieldStyled,
   SelectStyled,
   customMenuProps,
+  selectStylesV2,
+  InputBaseStyledV2,
 } from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -36,6 +39,10 @@ import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
 import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
 import { CustomCheckbox } from "../CabinetStyles";
+import {
+  weekDaysTextFull,
+  weekDaysTextFullToShort,
+} from "../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -182,6 +189,9 @@ const Groups = () => {
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
+  const [selectedCourseNames, setSelectedCourseNames] =
+    useState(weekDaysTextFull);
+
   const handleChangeCourse = (event) => {
     const {
       target: { value },
@@ -205,6 +215,16 @@ const Groups = () => {
   const handleCloseCourseSelect = (e) => {
     e.stopPropagation();
     setAnchorCourseSelect(null);
+  };
+
+  const handleChangeCourses = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCourseNames(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   const goBack = () => {
@@ -385,6 +405,28 @@ const Groups = () => {
                   ))}
                 </SelectStyled>
               </HeaderDiv>
+              <Select
+                multiple
+                required
+                value={selectedCourseNames}
+                onChange={handleChangeCourses}
+                renderValue={(selected) =>
+                  selected.map((day) => weekDaysTextFullToShort[day]).join(", ")
+                }
+                MenuProps={customMenuProps}
+                sx={selectStylesV2({ theme })}
+                input={<InputBaseStyledV2 />}
+                IconComponent={Icons.ArrowDBold}
+              >
+                {weekDaysTextFull.map((weekDayFull) => (
+                  <MenuItem key={weekDayFull} value={weekDayFull}>
+                    <Checkbox
+                      checked={selectedCourseNames.indexOf(weekDayFull) > -1}
+                    />
+                    <ListItemText primary={weekDayFull} />
+                  </MenuItem>
+                ))}
+              </Select>
             </div>
           </div>
 

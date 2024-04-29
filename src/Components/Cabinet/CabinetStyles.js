@@ -360,6 +360,11 @@ export const selectStyles = ({ theme }) => ({
 
 export const selectStylesV2 = ({ theme }) => ({
   minHeight: "43px",
+  "& .MuiSelect-select.MuiInputBase-input.MuiSelect-select": {
+    minHeight: "25px",
+    display: "flex",
+    alignItems: "center",
+  },
   "& .MuiListItemText-root": {
     margin: "0",
     height: "25px",

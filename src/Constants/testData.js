@@ -61,3 +61,32 @@ export const teacherNames = [
   "Aziz Mamajonov",
   "Muhammad Matchonov",
 ];
+
+export const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+export const weekDaysTextFull = [
+  "Понедельник",
+  "Вторник",
+  "Среда",
+  "Четверг",
+  "Пятница",
+  "Суббота",
+  "Воскресенье",
+];
+export const weekDaysTextShortToFull = {
+  Пн: "Понедельник",
+  Вт: "Вторник",
+  Ср: "Среда",
+  Чт: "Четверг",
+  Пт: "Пятница",
+  Сб: "Суббота",
+  Вс: "Воскресенье",
+};
+export const weekDaysTextFullToShort = {
+  Понедельник: "Пн",
+  Вторник: "Вт",
+  Среда: "Ср",
+  Четверг: "Чт",
+  Пятница: "Пт",
+  Суббота: "Сб",
+  Воскресенье: "Вс",
+};
