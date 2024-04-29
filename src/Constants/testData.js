@@ -55,3 +55,9 @@ export const uzbekEducationLevels = [
   "Доктор наук",
   "Квалификационная категория учителя",
 ];
+export const teacherNames = [
+  "Koptleulov Arslan",
+  "Ilya Starodubtsev",
+  "Aziz Mamajonov",
+  "Muhammad Matchonov",
+];

@@ -358,6 +358,23 @@ export const selectStyles = ({ theme }) => ({
   },
 });
 
+export const selectStylesV2 = ({ theme }) => ({
+  minHeight: "43px",
+  "& .MuiListItemText-root": {
+    margin: "0",
+    height: "25px",
+    display: "flex",
+    alignItems: "center",
+  },
+  "& .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input": {
+    padding: "0px 32px 0px 12px",
+  },
+  "& .MuiSelect-icon": {
+    top: "calc(50% - 11px)",
+    color: "#9CA3AF",
+  },
+});
+
 export const InputBaseStyled = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     borderRadius: 8,
@@ -368,6 +385,21 @@ export const InputBaseStyled = styled(InputBase)(({ theme }) => ({
     // Use the system font instead of the default Roboto font.
     "&:focus": {
       // border: "1px solid #E5E7EB",
+      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}));
+
+export const InputBaseStyledV2 = styled(InputBase)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    borderRadius: "10px !important",
+    position: "relative",
+    backgroundColor: "#fff",
+    border: "1px solid #E5E7EB",
+    padding: "8px 32px 8px 12px",
+    // boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+    "&:focus": {
+      border: "1px solid #E5E7EB",
       // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
   },
@@ -577,6 +609,66 @@ export const AutocompleteField = styled(TextField)(({ theme }) => ({
     margin: "2px 0 -10px 12px",
   },
 }));
+
+export const AutocompleteStyledV2 = styled(Autocomplete)(({ theme }) => ({
+  "& .MuiInputBase-root": {
+    minWidth: "180px",
+    minHeight: "43px",
+    maxHeight: "43px",
+    padding: "0",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    "& .MuiInputBase-input": {
+      padding: "8px 0px 8px 12px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
+    "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+      {
+        border: "1px solid #E5E7EB !important",
+      },
+  },
+  "& .MuiSvgIcon-root": {
+    width: theme.custom.spacing.sm,
+    height: "auto",
+  },
+  "& .MuiAutocomplete-endAdornment": {
+    // top: "10px !important",
+  },
+  "& .MuiFormHelperText-root": {
+    fontSize: ".8rem",
+    margin: "2px 0 -10px 12px",
+  },
+}));
+
+export const AutocompleteFieldV2 = styled(TextField)(({ theme }) => ({
+  "& .MuiInputBase-root": {
+    "& .MuiInputBase-input": {
+      padding: "8px 0px 8px 12px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
+    "& .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+      {
+        border: "1px solid #E5E7EB !important",
+      },
+  },
+}));
+
+export const AutocompleteMenuProps = {
+  sx: {
+    maxHeight: "350px",
+    minWidth: "240px",
+    marginTop: "10px",
+    boxShadow:
+      "0px 2px 4px 0px rgba(31, 41, 55, 0.06), 0px 4px 6px 0px rgba(31, 41, 55, 0.10)",
+    "& .MuiAutocomplete-listbox": {
+      padding: "8px",
+      ".MuiAutocomplete-option": {
+        padding: "8px",
+        borderRadius: "4px",
+      },
+    },
+  },
+};
 
 export const customMenuProps = {
   // onClick: (e) => e.stopPropagation(),

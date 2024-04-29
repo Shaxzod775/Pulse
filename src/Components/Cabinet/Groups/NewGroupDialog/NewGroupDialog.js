@@ -41,6 +41,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ru } from "date-fns/locale";
 import { russianLocale } from "../../../../Constants/dateLocales";
+import { teacherNames } from "../../../../Constants/testData";
 
 const rainbowCycle = keyframes`
   0% {
@@ -186,13 +187,6 @@ function TagCheckbox({
 
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
-const teacherNames = [
-  "Koptleulov Arslan",
-  "Ilya Starodubtsev",
-  "Aziz Mamajonov",
-  "Muhammad Matchonov",
-];
-
 const NewGroupDialog = ({
   open,
   handleClose,

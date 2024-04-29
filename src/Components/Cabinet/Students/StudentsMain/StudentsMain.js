@@ -29,6 +29,16 @@ import {
   SelectStyled,
   customMenuProps,
   CustomCheckbox,
+  selectStyles,
+  InputBaseStyled,
+  selectStylesV2,
+  InputBaseStyledV2,
+  AutocompleteStyled,
+  AutocompleteField,
+  MenuStyled,
+  AutocompleteMenuProps,
+  AutocompleteStyledV2,
+  AutocompleteFieldV2,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -36,6 +46,8 @@ import { v4 as uuidv4 } from "uuid";
 import StudentCard from "../StudentCard/StudentCard";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
+import useInput from "../../../../hooks/useInput";
+import { teacherNames } from "../../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -53,8 +65,16 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const { allCourseNames } = useCourses();
   const navigate = useNavigate();
 
+  const [leadSource, setLeadSource] = useState("");
+
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
+
+  const [selectedGroup, changeSelectedGroup] = useInput("0");
+
+  const handleLeadSourceChange = (event, newValue) => {
+    setLeadSource(newValue);
+  };
 
   const handleClickCourseSelect = (e) => {
     setAnchorCourseSelect(e.currentTarget);
@@ -134,6 +154,24 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   />
                 </div>
               </HeaderDiv>
+              <AutocompleteStyledV2
+                options={teacherNames}
+                value={leadSource}
+                onChange={handleLeadSourceChange}
+                renderInput={(params) => (
+                  <AutocompleteFieldV2
+                    {...params}
+                    required
+                    id="subject"
+                    variant="outlined"
+                    placeholder="Учитель"
+                  />
+                )}
+                popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
+                clearIcon={<Icons.Delete color="#9CA3AF" />}
+                slotProps={{ paper: AutocompleteMenuProps }}
+                // open={true}
+              />
               <HeaderDiv
                 sx={{
                   position: "relative",
@@ -196,6 +234,24 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   ))}
                 </SelectStyled>
               </HeaderDiv>
+              <Select
+                required
+                value={selectedGroup}
+                onChange={changeSelectedGroup}
+                MenuProps={customMenuProps}
+                sx={selectStylesV2({ theme })}
+                input={<InputBaseStyledV2 />}
+                IconComponent={Icons.ArrowDBold}
+              >
+                <MenuItem value="0">
+                  <ListItemText>Все группы</ListItemText>
+                </MenuItem>
+                {["GR-0010", "GR-0100", "GR-0022"].map((group) => (
+                  <MenuItem key={group} value={group}>
+                    <ListItemText primary={group} />
+                  </MenuItem>
+                ))}
+              </Select>
             </div>
           </div>
 
