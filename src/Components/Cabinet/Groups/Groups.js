@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  Box,
   Button,
   ButtonBase,
   Checkbox,
@@ -32,6 +33,8 @@ import {
   AutocompleteStyledV2,
   AutocompleteFieldV2,
   AutocompleteMenuProps,
+  selectStyles,
+  InputBaseStyled,
 } from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -397,6 +400,7 @@ const Groups = () => {
                 </SelectStyled>
               </HeaderDiv>
               <Select
+                fullWidth
                 multiple
                 required
                 value={selectedCourseNames}

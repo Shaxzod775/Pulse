@@ -360,10 +360,12 @@ export const selectStyles = ({ theme }) => ({
 
 export const selectStylesV2 = ({ theme }) => ({
   minHeight: "43px",
+  maxWidth: "200px",
   "& .MuiSelect-select.MuiInputBase-input.MuiSelect-select": {
     minHeight: "25px",
-    display: "flex",
-    alignItems: "center",
+    lineHeight: "25px",
+    // display: "flex", if I change this to flex or grid it is messing up the select and it is overflowing without ellipsis
+    // alignItems: "center",
   },
   "& .MuiListItemText-root": {
     margin: "0",
