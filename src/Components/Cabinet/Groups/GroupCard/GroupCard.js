@@ -154,15 +154,6 @@ const GroupCard = ({
               )}
             </TypographyStyled>
           </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.Messages />
-              <TypographyStyled>E-mail</TypographyStyled>
-            </InfoWithIcon>
-            <Link to="mailto:example@gmail.com" className="link">
-              <TypographyStyled small>example@gmail.com</TypographyStyled>
-            </Link>
-          </div>
         </Box>
         <Box className="flex justify-between" paddingX="9px">
           <InfoWithIcon>

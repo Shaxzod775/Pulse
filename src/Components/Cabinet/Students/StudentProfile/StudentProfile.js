@@ -385,17 +385,9 @@ const StudentProfile = () => {
                   <div className="flex items-center gap-xxs2">
                     <Typography>+998 (33) 033-15-33</Typography>
                     <Link to="tel:/+998330331533" className="link">
-                      <ButtonStyled
-                        variant="contained"
-                        color="purpleBlueLight"
-                        sx={{
-                          minWidth: "unset",
-                          padding: "10px",
-                          borderRadius: "10px",
-                        }}
-                      >
+                      <IconButton color="purpleBlue">
                         <Icons.Call />
-                      </ButtonStyled>
+                      </IconButton>
                     </Link>
                   </div>
                 </span>
@@ -413,17 +405,9 @@ const StudentProfile = () => {
                       to="mailto:arslan.koptleulov@abexlab.com"
                       className="link"
                     >
-                      <ButtonStyled
-                        variant="contained"
-                        color="purpleBlueLight"
-                        sx={{
-                          minWidth: "unset",
-                          padding: "10px",
-                          borderRadius: "10px",
-                        }}
-                      >
+                      <IconButton color="purpleBlue">
                         <Icons.Messages />
-                      </ButtonStyled>
+                      </IconButton>
                     </Link>
                   </div>
                 </span>
@@ -451,17 +435,9 @@ const StudentProfile = () => {
                   <div className="flex items-center gap-xxs2">
                     <Typography>+998 (33) 033-15-33</Typography>
                     <Link to="tel:/+998330331533" className="link">
-                      <ButtonStyled
-                        variant="contained"
-                        color="purpleBlueLight"
-                        sx={{
-                          minWidth: "unset",
-                          padding: "10px",
-                          borderRadius: "10px",
-                        }}
-                      >
+                      <IconButton color="purpleBlue">
                         <Icons.Call />
-                      </ButtonStyled>
+                      </IconButton>
                     </Link>
                   </div>
                 </span>
