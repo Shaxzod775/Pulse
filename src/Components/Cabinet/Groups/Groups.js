@@ -16,7 +16,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
 import {
   theme,
   ButtonStyled,
@@ -36,17 +35,7 @@ import { Icons } from "../../../Assets/Icons/icons";
 import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
 import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
-
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  padding: "0 8px 0 0",
-  color: "grey",
-  "&.Mui-checked": {
-    color: "grey",
-  },
-  "&:hover": {
-    backgroundColor: "transparent", // remove hover background color
-  },
-}));
+import { CustomCheckbox } from "../CabinetStyles";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -190,7 +179,7 @@ const Groups = () => {
     createGroup({ name: "GR011-68", duration: 3 }),
   ]);
   const [anchorTeacher, setAnchorTeacher] = useState(null);
-  const [anchorCourse, setAnchorCourse] = useState(null);
+  const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
   const handleChangeCourse = (event) => {
@@ -211,11 +200,11 @@ const Groups = () => {
     setAnchorTeacher(null);
   };
   const handleClickCourseSelect = (e) => {
-    setAnchorCourse(e.currentTarget);
+    setAnchorCourseSelect(e.currentTarget);
   };
   const handleCloseCourseSelect = (e) => {
     e.stopPropagation();
-    setAnchorCourse(null);
+    setAnchorCourseSelect(null);
   };
 
   const goBack = () => {
@@ -246,7 +235,10 @@ const Groups = () => {
           !anchorTeacher.parentElement.contains(event.target)
         ) {
           handleCloseTeacherSelect();
-        } else if (anchorCourse && !anchorCourse.contains(event.target)) {
+        } else if (
+          anchorCourseSelect &&
+          !anchorCourseSelect.contains(event.target)
+        ) {
           handleCloseCourseSelect();
         }
       };
@@ -311,7 +303,8 @@ const Groups = () => {
                   IconComponent={
                     Boolean(anchorTeacher) ? Icons.ArrowUBold : Icons.ArrowDBold
                   }
-                  defaultValue={0}
+                  placeholder="Учителя"
+                  // defaultValue={0}
                   onClose={handleCloseTeacherSelect}
                   MenuProps={{
                     ...customMenuProps,
@@ -324,7 +317,7 @@ const Groups = () => {
                   }}
                 >
                   {teachers.map((teacher, i) => (
-                    <MenuItem value={i} key={i}>
+                    <MenuItem value={teacher} key={i}>
                       {teacher}
                     </MenuItem>
                   ))}
@@ -366,13 +359,15 @@ const Groups = () => {
                     return selected;
                   }}
                   IconComponent={
-                    Boolean(anchorCourse) ? Icons.ArrowUBold : Icons.ArrowDBold
+                    Boolean(anchorCourseSelect)
+                      ? Icons.ArrowUBold
+                      : Icons.ArrowDBold
                   }
                   onClose={handleCloseCourseSelect}
                   MenuProps={{
                     ...customMenuProps,
-                    anchorEl: anchorCourse,
-                    open: Boolean(anchorCourse),
+                    anchorEl: anchorCourseSelect,
+                    open: Boolean(anchorCourseSelect),
                     onClose: handleCloseCourseSelect,
                   }}
                   sx={{

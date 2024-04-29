@@ -7,10 +7,10 @@ import NewTeacher from "./NewTeacher/NewTeacher";
 import TeacherProfile from "./TeacherProfile/TeacherProfile";
 
 const teacherNames = [
-  "Коптлеулов Арслан",
-  "Илья Стародубцев",
-  "Азиз Мамаджонов",
-  "Мухаммад Матчонов",
+  "Koptleulov Arslan",
+  "Ilya Starodubtsev",
+  "Aziz Mamajonov",
+  "Muhammad Matchonov",
 ];
 
 export function createTeacher({

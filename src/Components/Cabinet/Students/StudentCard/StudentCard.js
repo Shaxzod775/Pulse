@@ -164,7 +164,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
             to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
             className="link flex gap-x4s"
           >
-            <TypographyStyled small>Коптлеулов Арслан</TypographyStyled>
+            <TypographyStyled small>Koptleulov Arslan</TypographyStyled>
           </Link>
         </div>
         <div className="flex justify-between">

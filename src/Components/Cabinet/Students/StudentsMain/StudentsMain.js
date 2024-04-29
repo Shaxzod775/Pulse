@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
@@ -27,12 +27,15 @@ import {
   Title,
   TextFieldStyled,
   SelectStyled,
+  customMenuProps,
+  CustomCheckbox,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import StudentCard from "../StudentCard/StudentCard";
 import { Icons } from "../../../../Assets/Icons/icons";
+import { useCourses } from "../../../../contexts/Courses.context";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -47,11 +50,62 @@ const HeaderDiv = styled("div")(({ theme }) => ({
 }));
 
 const StudentsMain = ({ students, handleDeleteStudent }) => {
+  const { allCourseNames } = useCourses();
   const navigate = useNavigate();
+
+  const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
+  const [selectedCourses, setSelectedCourses] = useState([]);
+
+  const handleClickCourseSelect = (e) => {
+    setAnchorCourseSelect(e.currentTarget);
+  };
+  const handleCloseCourseSelect = (e) => {
+    e.stopPropagation();
+    setAnchorCourseSelect(null);
+  };
+
+  const handleChangeCourse = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCourses(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
+
+  useEffect(
+    () => {
+      const handleClickOutside = (event) => {
+        // if (
+        //   anchorTeacher &&
+        //   !anchorTeacher.parentElement.contains(event.target)
+        // ) {
+        //   handleCloseTeacherSelect();
+        // } else
+        if (anchorCourseSelect && !anchorCourseSelect.contains(event.target)) {
+          handleCloseCourseSelect();
+        }
+      };
+      // const handleClickInside = (event) => {}
+
+      document.addEventListener("mousedown", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    },
+    [
+      // anchorTeacher,
+      // handleCloseTeacherSelect,
+      // anchorCourse,
+      // handleCloseCourseSelect,
+    ]
+  );
 
   return (
     <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
@@ -80,6 +134,68 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   />
                 </div>
               </HeaderDiv>
+              <HeaderDiv
+                sx={{
+                  position: "relative",
+                  cursor: "pointer",
+                  label: { cursor: "pointer" },
+                }}
+                className="flex items-stretch full-height p-xxs2"
+                onClick={handleClickCourseSelect}
+              >
+                <label
+                  htmlFor="course-select"
+                  className="flex items-center full-height"
+                >
+                  <Icons.NotebookBookmark color="#b4b7c3" />
+                  <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
+                    {(selectedCourses.length < 1 ||
+                      selectedCourses.length === allCourseNames.length) &&
+                      "Все"}
+                  </span>
+                </label>
+                <SelectStyled
+                  id="course-select"
+                  autoWidth
+                  multiple
+                  value={selectedCourses}
+                  onChange={handleChangeCourse}
+                  renderValue={(selected) => {
+                    if (selected.length > 1) {
+                      if (selected.length === allCourseNames.length) {
+                        return "";
+                      }
+                      return "..."; // Render "..." if multiple courses are selected
+                    }
+                    return selected;
+                  }}
+                  IconComponent={
+                    Boolean(anchorCourseSelect)
+                      ? Icons.ArrowUBold
+                      : Icons.ArrowDBold
+                  }
+                  onClose={handleCloseCourseSelect}
+                  MenuProps={{
+                    ...customMenuProps,
+                    anchorEl: anchorCourseSelect,
+                    open: Boolean(anchorCourseSelect),
+                    onClose: handleCloseCourseSelect,
+                  }}
+                  sx={{
+                    "& > svg": { transform: "none !important" },
+                  }}
+                >
+                  {allCourseNames.map((course, i) => (
+                    <MenuItem value={course} key={i}>
+                      <CustomCheckbox
+                        checked={selectedCourses.indexOf(course) > -1}
+                      />
+                      <ListItemText primary={course} />
+                      {/* {course} */}
+                    </MenuItem>
+                  ))}
+                </SelectStyled>
+              </HeaderDiv>
             </div>
           </div>
 
@@ -92,12 +208,12 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                 </div>
               </ButtonStyled>
             </Link>
-            <ButtonStyled variant="outlined" color="purpleBlue">
+            {/* <ButtonStyled variant="outlined" color="purpleBlue">
               <div className="flex items-center gap-x3s">
                 <Icons.InboxIn />
                 <span>Скачать список</span>
               </div>
-            </ButtonStyled>
+            </ButtonStyled> */}
 
             <ButtonStyled
               variant="outlined"

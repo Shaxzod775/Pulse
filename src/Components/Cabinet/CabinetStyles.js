@@ -11,6 +11,7 @@ import {
   FormControl,
   Typography,
   InputBase,
+  Checkbox,
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
 import { BorderColor } from "@mui/icons-material";
@@ -668,4 +669,14 @@ export const FormLabelStyled = styled(FormLabel)(({ theme }) => ({
   paddingBottom: "12px",
   letterSpacing: "0.32px",
   fontWeight: "600",
+}));
+export const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  padding: "0 8px 0 0",
+  // color: "grey",
+  // "&.Mui-checked": {
+  //   color: "grey",
+  // },
+  "&:hover": {
+    backgroundColor: "transparent", // remove hover background color
+  },
 }));
