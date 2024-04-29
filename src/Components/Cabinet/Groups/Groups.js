@@ -29,6 +29,9 @@ import {
   customMenuProps,
   selectStylesV2,
   InputBaseStyledV2,
+  AutocompleteStyledV2,
+  AutocompleteFieldV2,
+  AutocompleteMenuProps,
 } from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -40,6 +43,7 @@ import { useNavigate } from "react-router-dom";
 import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
 import { CustomCheckbox } from "../CabinetStyles";
 import {
+  teacherNames,
   weekDaysTextFull,
   weekDaysTextFullToShort,
 } from "../../../Constants/testData";
@@ -186,11 +190,18 @@ const Groups = () => {
     createGroup({ name: "GR011-68", duration: 3 }),
   ]);
   const [anchorTeacher, setAnchorTeacher] = useState(null);
+
+  const [teacher, setTeacher] = useState("");
+
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
   const [selectedCourseNames, setSelectedCourseNames] =
     useState(weekDaysTextFull);
+
+  const handleTeacherChange = (event, newValue) => {
+    setTeacher(newValue);
+  };
 
   const handleChangeCourse = (event) => {
     const {
@@ -305,44 +316,24 @@ const Groups = () => {
                   />
                 </div>
               </HeaderDiv>
-              <HeaderDiv
-                sx={{
-                  position: "relative",
-                  cursor: "pointer",
-                  label: { cursor: "pointer" },
-                }}
-                className="flex items-stretch full-height p-xxs2"
-                onClick={handleClickTeacherSelect}
-              >
-                <label htmlFor="teacher-select" className="full-height">
-                  <Typography color="#b4b7c3">Учителя</Typography>
-                </label>
-                <SelectStyled
-                  id="teacher-select"
-                  autoWidth
-                  IconComponent={
-                    Boolean(anchorTeacher) ? Icons.ArrowUBold : Icons.ArrowDBold
-                  }
-                  placeholder="Учителя"
-                  // defaultValue={0}
-                  onClose={handleCloseTeacherSelect}
-                  MenuProps={{
-                    ...customMenuProps,
-                    anchorEl: anchorTeacher,
-                    open: Boolean(anchorTeacher),
-                    onClose: handleCloseTeacherSelect,
-                  }}
-                  sx={{
-                    "& > svg": { transform: "none !important" },
-                  }}
-                >
-                  {teachers.map((teacher, i) => (
-                    <MenuItem value={teacher} key={i}>
-                      {teacher}
-                    </MenuItem>
-                  ))}
-                </SelectStyled>
-              </HeaderDiv>
+              <AutocompleteStyledV2
+                options={teacherNames}
+                value={teacher}
+                onChange={handleTeacherChange}
+                renderInput={(params) => (
+                  <AutocompleteFieldV2
+                    {...params}
+                    required
+                    id="subject"
+                    variant="outlined"
+                    placeholder="Учитель"
+                  />
+                )}
+                popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
+                clearIcon={<Icons.Delete color="#9CA3AF" />}
+                slotProps={{ paper: AutocompleteMenuProps }}
+                // open={true}
+              />
               <HeaderDiv
                 sx={{
                   position: "relative",

@@ -65,15 +65,15 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const { allCourseNames } = useCourses();
   const navigate = useNavigate();
 
-  const [leadSource, setLeadSource] = useState("");
+  const [teacher, setTeacher] = useState("");
 
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
   const [selectedGroup, changeSelectedGroup] = useInput("0");
 
-  const handleLeadSourceChange = (event, newValue) => {
-    setLeadSource(newValue);
+  const handleTeacherChange = (event, newValue) => {
+    setTeacher(newValue);
   };
 
   const handleClickCourseSelect = (e) => {
@@ -156,8 +156,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               </HeaderDiv>
               <AutocompleteStyledV2
                 options={teacherNames}
-                value={leadSource}
-                onChange={handleLeadSourceChange}
+                value={teacher}
+                onChange={handleTeacherChange}
                 renderInput={(params) => (
                   <AutocompleteFieldV2
                     {...params}
