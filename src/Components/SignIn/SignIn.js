@@ -10,6 +10,7 @@ import {
 } from "@mui/icons-material";
 import * as routes from "../../Constants/routes";
 import api from "../../Core/api";
+import { useGlobal } from "../../Core/global";
 
 const Logo = require("../../Assets/Images/Logo.png");
 const LogoClosed = require("../../Assets/Images/LogoClosed.png");
@@ -20,6 +21,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const login = useGlobal((state) => state.login)
 
   const handleSignIn = async () => {
     try {
@@ -28,6 +30,7 @@ const SignIn = () => {
       password: password });
       // Обработка успешного входа, например, редирект на домашнюю страницу
       console.log("Успешный вход:", response.data);
+      login(response.data)
     } catch (error) {
       console.error("Ошибка входа:", error.response.data);
     }
@@ -36,6 +39,7 @@ const SignIn = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  
   return (
     <div className={styles["SignIn"]}>
       <div className={styles["signIn-box"]}>

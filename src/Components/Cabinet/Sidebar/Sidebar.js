@@ -21,6 +21,7 @@ import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
 import { Icons } from "../../../Assets/Icons/icons";
 import { theme } from "../CabinetStyles";
+import { useGlobal } from "../../../Core/global";
 
 const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
   padding: "10px",
@@ -74,6 +75,9 @@ const MenuAction = styled("div")(
 );
 
 const Sidebar = () => {
+
+  const logout = useGlobal((state) => state.logout)
+
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
@@ -180,7 +184,7 @@ const Sidebar = () => {
               <div>Поддержка 24/7</div>
             </Collapse>
           </MenuAction>
-          <MenuAction color="crimson" backgroundColor="#FDF3F2">
+          <MenuAction onClick={logout} color="crimson" backgroundColor="#FDF3F2">
             <Icons.Logout />
             <Collapse orientation="horizontal" in={isOpen}>
               <div className="text">Log out</div>

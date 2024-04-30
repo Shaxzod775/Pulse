@@ -1,25 +1,24 @@
 import { create } from 'zustand'
 import { secure } from './secure'
 
-const useGlobal = create((set, get) => ({ 
+export const useGlobal = create((set, get) => ({
 
-
-    authenticated: false,
-    auth: {},
+    authenticated: secure.get('auth') ? true : false,
+    auth: secure.get('auth') ? secure.get('auth') : {},
 
     login: (auth) => {
-        secure.set('auth', auth)
-        set((state) => ({
-            authenticated: true,
-            auth: auth
-        }))
-    },
+                secure.set('auth', auth)
+                set(() => ({
+                    authenticated: true,
+                    auth: auth
+                }))
+            },
 
     logout: () => {
-        secure.clear()
-        set((state) => ({
-            authenticated: false,
-            auth: {}
-        }))
-    },
+                    secure.clear()
+                    set(() => ({
+                        authenticated: false,
+                        auth: {}
+                    }))
+                }
 }))
