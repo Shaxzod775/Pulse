@@ -9,6 +9,7 @@ import {
   NightlightOutlined,
 } from "@mui/icons-material";
 import * as routes from "../../Constants/routes";
+import api from "../../Core/api";
 
 const Logo = require("../../Assets/Images/Logo.png");
 const LogoClosed = require("../../Assets/Images/LogoClosed.png");
@@ -16,6 +17,21 @@ const LogoScanning = require("../../Assets/Images/LogoScanning.png");
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const handleSignIn = async () => {
+    try {
+      const response = await api.post("auth/login", { 
+      username: email, // Передаем email вместо username
+      password: password });
+      // Обработка успешного входа, например, редирект на домашнюю страницу
+      console.log("Успешный вход:", response.data);
+    } catch (error) {
+      console.error("Ошибка входа:", error.response.data);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -34,6 +50,8 @@ const SignIn = () => {
               id="outlined-required"
               type="email"
               autoComplete="current-password"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
@@ -66,6 +84,8 @@ const SignIn = () => {
               id="outlined-password-input"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
@@ -91,6 +111,7 @@ const SignIn = () => {
           </div>
           <Button
             variant="contained"
+            onClick={handleSignIn}
             sx={{
               backgroundColor: "#00988f",
               borderRadius: "10px",
