@@ -1,13 +1,13 @@
 import { create } from 'zustand'
-import { secure } from './secure'
+import secureLocalStorage from 'react-secure-storage'
 
 export const useGlobal = create((set, get) => ({
 
-    authenticated: secure.get('auth') ? true : false,
-    auth: secure.get('auth') ? secure.get('auth') : {},
+    authenticated: secureLocalStorage.getItem('auth') ? true : false,
+    auth: secureLocalStorage.getItem('auth') ? secureLocalStorage.getItem('auth') : {},
 
     login: (auth) => {
-                secure.set('auth', auth)
+                secureLocalStorage.setItem('auth', auth)
                 set(() => ({
                     authenticated: true,
                     auth: auth
@@ -15,7 +15,7 @@ export const useGlobal = create((set, get) => ({
             },
 
     logout: () => {
-                    secure.clear()
+                    secureLocalStorage.clear()
                     set(() => ({
                         authenticated: false,
                         auth: {}
