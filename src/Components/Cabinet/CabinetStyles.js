@@ -408,7 +408,7 @@ export const InputBaseStyled = styled(InputBase)(({ theme }) => ({
 
 export const InputBaseStyledV2 = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
-    borderRadius: "10px !important",
+    borderRadius: "10px",
     position: "relative",
     backgroundColor: "#fff",
     border: "1px solid #E5E7EB",

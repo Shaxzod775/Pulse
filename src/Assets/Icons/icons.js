@@ -12,6 +12,7 @@ import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as CalendarAdd } from "./svgs/calendarAdd.svg";
 import { ReactComponent as User } from "./svgs/user.svg";
 import { ReactComponent as UserAdd } from "./svgs/userAdd.svg";
+import { ReactComponent as UserCheckRounded } from "./svgs/userCheckRounded.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
 import { ReactComponent as UserId } from "./svgs/userId.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
@@ -82,6 +83,7 @@ export const Icons = {
   CalendarAdd,
   User,
   UserAdd,
+  UserCheckRounded,
   UsersGroupRounded,
   UserId,
   AcademicCap,

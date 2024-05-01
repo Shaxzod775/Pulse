@@ -1,5 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ButtonStyled, Main, Root, Title, theme } from "../../CabinetStyles";
+import {
+  ButtonStyled,
+  InputBaseStyledV2,
+  Main,
+  Root,
+  Title,
+  customMenuProps,
+  selectStylesV2,
+  theme,
+} from "../../CabinetStyles";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
@@ -17,6 +26,9 @@ import {
   IconButton,
   Dialog,
   Box,
+  Select,
+  MenuItem,
+  ListItemText,
 } from "@mui/material";
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
@@ -25,6 +37,7 @@ import { Height, RouteSharp } from "@mui/icons-material";
 import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
+import useInput from "../../../../hooks/useInput";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -161,6 +174,7 @@ const PaymentInfoLine = styled("div")(({ theme }) => ({
 const GroupProfile = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
+  const [selectedGroup, changeSelectedGroup] = useInput("0");
   const tabsToMap = [
     "Посещаемость",
     "Материалы",
@@ -174,8 +188,82 @@ const GroupProfile = () => {
     navigate(-1); // This navigates one step back in history
   };
 
-  const persoalInfoContent = useMemo(
-    () => <div className="flex flex-wrap gap-lg"></div>,
+  const attendanceContent = useMemo(
+    () => (
+      <Box>
+        <Box className="flex justify-between" paddingX="20px">
+          <Box display="flex" columnGap="14px">
+            <Box className="flex items-center" columnGap="10px" padding="10px">
+              <Icons.UserCheckRounded color="#1C0D64" />
+              <TypographyStyled
+                fontSize="1.125rem"
+                fontWeight="600"
+                color="#1C0D64"
+              >
+                Посещаемость
+              </TypographyStyled>
+            </Box>
+            <ButtonStyled sx={{ padding: "10px" }} color="purpleBlue">
+              <Box className="flex items-center" columnGap="10px">
+                <Icons.Group />
+                <Typography fontSize="0.875rem">222</Typography>
+              </Box>
+            </ButtonStyled>
+          </Box>
+          <Box className="flex items-center">
+            <Select
+              required
+              value={selectedGroup}
+              onChange={changeSelectedGroup}
+              MenuProps={customMenuProps}
+              sx={selectStylesV2({ theme })}
+              input={<InputBaseStyledV2 />}
+              IconComponent={Icons.ArrowDBold}
+            >
+              <MenuItem value="0">
+                <ListItemText>По А-Я</ListItemText>
+              </MenuItem>
+              {["По Я-А", "Sort by", "Sort by"].map((group, i) => (
+                <MenuItem key={group} value={group}>
+                  <ListItemText primary={group} />
+                </MenuItem>
+              ))}
+            </Select>
+            <ButtonStyled
+              sx={{ borderRadius: "50px", padding: "8px 20px" }}
+              color="purpleBlue"
+            >
+              <Box className="flex items-center" columnGap="10px">
+                <Icons.CalendarContained />
+                <Typography fontSize="1.125rem" fontWeight="600">
+                  2-6 Апреля 2024
+                </Typography>
+              </Box>
+            </ButtonStyled>
+            <Box className="flex items-center" columnGap="4px">
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                sx={{
+                  borderRadius: "50%",
+                }}
+              >
+                <Icons.ArrowDBold style={{ transform: "rotate(90deg)" }} />
+              </ButtonStyled>
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                sx={{
+                  borderRadius: "50%",
+                }}
+              >
+                <Icons.ArrowDBold style={{ transform: "rotate(270deg)" }} />
+              </ButtonStyled>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    ),
     []
   );
 
@@ -186,8 +274,8 @@ const GroupProfile = () => {
 
   const emptyElement = <></>;
   const tabContents = useMemo(
-    () => [persoalInfoContent, groupsContent, emptyElement, emptyElement],
-    [persoalInfoContent]
+    () => [attendanceContent, groupsContent, emptyElement, emptyElement],
+    [attendanceContent]
   );
 
   return (
@@ -445,6 +533,7 @@ const GroupProfile = () => {
                     </>
                   ))}
                 </Box>
+                {tabContents[activeTab]}
               </Box>
             </Paper>
           </Box>
