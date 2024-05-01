@@ -35,21 +35,21 @@ import {
   AutocompleteMenuProps,
   selectStyles,
   InputBaseStyled,
-} from "../CabinetStyles";
+  CustomCheckbox,
+} from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
-import GroupCard from "./GroupCard/GroupCard";
-import { Icons } from "../../../Assets/Icons/icons";
-import NewGroupDialog from "./NewGroupDialog/NewGroupDialog";
+import GroupCard from "../GroupCard/GroupCard";
+import { Icons } from "../../../../Assets/Icons/icons";
+import NewGroupDialog from "../NewGroupDialog/NewGroupDialog";
 import { useNavigate } from "react-router-dom";
-import CustomSelect from "../customComponents/CustomSelect/CustomSelect";
-import { CustomCheckbox } from "../CabinetStyles";
 import {
   teacherNames,
   weekDaysTextFull,
   weekDaysTextFullToShort,
-} from "../../../Constants/testData";
+} from "../../../../Constants/testData";
+import { useCourses } from "../../../../contexts/Courses.context";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -86,12 +86,14 @@ const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
     />
   );
 });
+
 NumericFormatCustom.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-const GroupsMain = () => {
+const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
+  const { allCourseNames } = useCourses();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -248,7 +250,7 @@ const GroupsMain = () => {
                   <Icons.NotebookBookmark color="#b4b7c3" />
                   <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
                     {(selectedCourses.length < 1 ||
-                      selectedCourses.length === courses.length) &&
+                      selectedCourses.length === allCourseNames.length) &&
                       "Все"}
                   </span>
                 </label>
@@ -260,7 +262,7 @@ const GroupsMain = () => {
                   onChange={handleChangeCourse}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
-                      if (selected.length === courses.length) {
+                      if (selected.length === allCourseNames.length) {
                         return "";
                       }
                       return "..."; // Render "..." if multiple courses are selected
@@ -283,7 +285,7 @@ const GroupsMain = () => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  {courses.map((course, i) => (
+                  {allCourseNames.map((course, i) => (
                     <MenuItem value={course} key={i}>
                       <CustomCheckbox
                         checked={selectedCourses.indexOf(course) > -1}
