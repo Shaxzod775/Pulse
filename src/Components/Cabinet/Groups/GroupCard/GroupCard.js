@@ -15,11 +15,8 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import {
-  CardStyled,
-  InfoWithIcon,
-  TypographyStyled,
-} from "../../GridItemCardStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
@@ -193,7 +190,10 @@ const GroupCard = ({
               </Link>
             </Box>
           </Box>
-          <Link className="link full-width">
+          <Link
+            to={routes.CABINET + routes.GROUPS + routes.PROFILE}
+            className="link full-width"
+          >
             <ButtonStyled
               fullWidth
               variant="contained"
@@ -202,7 +202,7 @@ const GroupCard = ({
             >
               <div className="flex items-center gap-x3s">
                 <Icons.SquareArrowLeftUp />
-                <TypographyStyled>Открыть</TypographyStyled>
+                <Typography>Открыть</Typography>
               </div>
             </ButtonStyled>
           </Link>

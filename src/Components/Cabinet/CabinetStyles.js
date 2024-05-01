@@ -55,12 +55,18 @@ export const theme = createTheme({
       dark: "#007AFF",
       contrastText: "#ffffff",
     },
-    greyLight: {
-      main: "#E5E7EB",
-      light: "#E5E7EB",
-      dark: "#706F7C",
-      contrastText: "#000000",
+    grayLight: {
+      main: "#F9F9F9",
+      light: "#F9F9F9",
+      dark: "#AEB2BA",
+      contrastText: "#7D8594",
     },
+    // greyLight: {
+    //   main: "#E5E7EB",
+    //   light: "#E5E7EB",
+    //   dark: "#706F7C",
+    //   contrastText: "#000000",
+    // },
     aqua: {
       main: "#00988F",
       light: "#00988F",
@@ -125,6 +131,8 @@ export const theme = createTheme({
       mediumaquamarine: "#89CCB5",
       aqua: "#00988F",
       lightGrey: "#AEB2BA",
+      greenSuccess: "#54D549",
+      redError: "#FF7D7D",
     },
   },
   shape: {
@@ -137,6 +145,7 @@ export const theme = createTheme({
           fontSize: "inherit",
           fontFamily: "Poppins, Rubik, sans-serif",
           fontWeight: "500",
+          color: "inherit",
         },
       },
     },
@@ -779,3 +788,9 @@ export const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
     backgroundColor: "transparent", // remove hover background color
   },
 }));
+export const TypographyStyled = styled(Typography)(
+  ({ theme, color, small }) => ({
+    color: color ? color : theme.typography.color.darkBlue,
+    fontSize: small ? "0.875rem" : "",
+  })
+);

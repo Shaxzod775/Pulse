@@ -16,11 +16,8 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import {
-  CardStyled,
-  InfoWithIcon,
-  TypographyStyled,
-} from "../../GridItemCardStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import { TypographyStyled } from "../../CabinetStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import mariyaAvatar from "../../../../Assets/Images/Avatars/Mariya.png";
 import { format, weeksToDays } from "date-fns";
@@ -189,7 +186,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
           >
             <div className="flex items-center gap-x3s">
               <Icons.SquareArrowLeftUp />
-              <TypographyStyled>Открыть</TypographyStyled>
+              <Typography>Открыть</Typography>
             </div>
           </ButtonStyled>
         </Link>

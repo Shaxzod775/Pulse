@@ -64,6 +64,8 @@ import { ReactComponent as FemaleSymbol } from "./svgs/femaleSymbol.svg";
 import { ReactComponent as DividerDot } from "./svgs/dividerDot.svg";
 import { ReactComponent as Global } from "./svgs/global.svg";
 import { ReactComponent as Star } from "./svgs/star.svg";
+import { ReactComponent as CardSend } from "./svgs/cardSend.svg";
+import { ReactComponent as BillCross } from "./svgs/billCross.svg";
 
 export const Icons = {
   ArrowD,
@@ -132,4 +134,6 @@ export const Icons = {
   DividerDot,
   Global,
   Star,
+  CardSend,
+  BillCross,
 };

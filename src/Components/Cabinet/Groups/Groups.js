@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import GroupsMain from "./GroupsMain/GroupsMain";
 import * as routes from "../../../Constants/routes";
+import GroupProfile from "./GroupProfile/GroupProfile";
 
 export function createGroup({
   id = uuidv4(),
@@ -62,7 +63,7 @@ const Groups = () => {
           />
         }
       />
-      {/* <Route path={routes.PROFILE} element={<StudentProfile />} /> */}
+      <Route path={routes.PROFILE} element={<GroupProfile />} />
       <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.GROUPS} replace />}

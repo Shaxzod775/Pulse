@@ -40,7 +40,7 @@ const Cabinet = () => {
                 <Route path={routes.DASHBOARD} element={<Dashboard />} />
                 <Route path={routes.COURSES} element={<Courses />} />
                 <Route path={routes.LEADS + "/*"} element={<Leads />} />
-                <Route path={routes.GROUPS} element={<Groups />} />
+                <Route path={routes.GROUPS + "/*"} element={<Groups />} />
                 <Route path={routes.TEACHERS + "/*"} element={<Teachers />} />
                 <Route path={routes.PERSONAL} element={<div>Personal</div>} />
                 <Route path={routes.STUDENTS + "/*"} element={<Students />} />
