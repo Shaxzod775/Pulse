@@ -190,7 +190,13 @@ const GroupProfile = () => {
 
   const attendanceContent = useMemo(
     () => (
-      <Box>
+      <Box
+        className="flex flex-col"
+        rowGap="16px"
+        maxHeight="75vh"
+        height="auto"
+        overflow="hidden"
+      >
         <Box className="flex justify-between" paddingX="20px">
           <Box display="flex" columnGap="14px">
             <Box className="flex items-center" columnGap="10px" padding="10px">
@@ -210,7 +216,7 @@ const GroupProfile = () => {
               </Box>
             </ButtonStyled>
           </Box>
-          <Box className="flex items-center">
+          <Box className="flex items-center" columnGap="12px">
             <Select
               required
               value={selectedGroup}
@@ -246,21 +252,160 @@ const GroupProfile = () => {
                 color="purpleBlue"
                 sx={{
                   borderRadius: "50%",
+                  padding: "5px",
                 }}
               >
-                <Icons.ArrowDBold style={{ transform: "rotate(90deg)" }} />
+                <Icons.ArrowDBold
+                  width="26px"
+                  height="26px"
+                  style={{ transform: "rotate(90deg)" }}
+                />
               </ButtonStyled>
               <ButtonStyled
                 variant="contained"
                 color="purpleBlue"
                 sx={{
                   borderRadius: "50%",
+                  padding: "5px",
                 }}
               >
-                <Icons.ArrowDBold style={{ transform: "rotate(270deg)" }} />
+                <Icons.ArrowDBold
+                  width="26px"
+                  height="26px"
+                  style={{
+                    transform: "rotate(270deg)",
+                  }}
+                />
               </ButtonStyled>
             </Box>
           </Box>
+        </Box>
+        <Box
+          display="flex"
+          marginX="20px"
+          padding="8px 34px"
+          borderRadius="30px"
+          backgroundColor="#f9f9f9"
+        >
+          <Box flexGrow="1" color="#7D8594">
+            <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+              Имя
+            </TypographyStyled>
+          </Box>
+          <Box display="flex" flexGrow="3">
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Понедельник
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Вторник
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Среда
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Четверг
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Пятница
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Суббота
+              </TypographyStyled>
+            </Box>
+            <Box className="flex items-center justify-center" flexGrow="1">
+              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                Восскресенье
+              </TypographyStyled>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          className="flex flex-col"
+          rowGap="15px"
+          marginRight="23px"
+          marginBottom="20px"
+          sx={{ overflowY: "scroll", overflowX: "hidden" }}
+        >
+          {[
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+          ].map((index) => (
+            <Box
+              display="flex"
+              marginLeft="20px"
+              marginRight="-15px"
+              padding="8px 34px"
+            >
+              <Box flexGrow="1" color="#7D8594">
+                <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                  Имя
+                </TypographyStyled>
+              </Box>
+              <Box display="flex" flexGrow="3">
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Понедельник
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Вторник
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Среда
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Четверг
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Пятница
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Суббота
+                  </TypographyStyled>
+                </Box>
+                <Box className="flex items-center justify-center" flexGrow="1">
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    Восскресенье
+                  </TypographyStyled>
+                </Box>
+              </Box>
+            </Box>
+          ))}
         </Box>
       </Box>
     ),
@@ -318,6 +463,7 @@ const GroupProfile = () => {
             borderRadius: "20px",
             padding: "24px",
             boxShadow: "none",
+            overflow: "hidden",
           }}
         >
           <Box className="flex" columnGap="24px" width="100%" height="100%">
@@ -496,9 +642,10 @@ const GroupProfile = () => {
                 boxShadow: "none",
                 borderRadius: "20px",
                 border: "1px solid #E5E7EB",
+                overflow: "hidden",
               }}
             >
-              <Box className="flex flex-col" rowGap="20px">
+              <Box className="flex flex-col" rowGap="20px" maxHeight="100%">
                 <Box
                   className="flex"
                   columnGap="12px"

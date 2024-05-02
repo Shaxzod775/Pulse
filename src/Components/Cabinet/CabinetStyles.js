@@ -133,6 +133,7 @@ export const theme = createTheme({
       lightGrey: "#AEB2BA",
       greenSuccess: "#54D549",
       redError: "#FF7D7D",
+      grey: "#7D8594",
     },
   },
   shape: {
@@ -789,8 +790,12 @@ export const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   },
 }));
 export const TypographyStyled = styled(Typography)(
-  ({ theme, color, small }) => ({
-    color: color ? color : theme.typography.color.darkBlue,
+  ({ theme, color, small, colorFromTheme }) => ({
+    color: colorFromTheme
+      ? theme.typography.color[colorFromTheme]
+      : color
+      ? color
+      : theme.typography.color.darkBlue,
     fontSize: small ? "0.875rem" : "",
   })
 );
