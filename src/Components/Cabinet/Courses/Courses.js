@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -30,6 +30,8 @@ import {
   useCoursesDispatch,
 } from "../../../contexts/Courses.context";
 import { addCourse, deleteCourse } from "../../../reducers/courses.reducer";
+
+import api from "../../../Core/api";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -134,8 +136,33 @@ NumericFormatCustom.propTypes = {
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
+  const [courses, setCourses] = useState([])
 
-  const { courses } = useCourses();
+  const handleAddCourse = () => {
+    console.log("Добавлен курс")
+  };
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        // Выполняем GET-запрос для получения списка курсов
+        const response = await api.get('courses');
+        // Обновляем состояние courses данными из ответа
+        setCourses(response.data);
+      } catch (error) {
+        // Обрабатываем ошибки
+        console.error('Error fetching courses:', error);
+        // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
+      }
+    };
+
+    // Вызываем функцию для загрузки курсов при монтировании компонента
+    fetchCourses();
+  }, [handleAddCourse]); // Пустой массив зависимостей означает, что эффект будет выполняться только один раз при монтировании компонента
+
+
+
+  // const { courses } = useCourses();
   const coursesDispatch = useCoursesDispatch();
 
   const navigate = useNavigate();
@@ -152,14 +179,24 @@ const Courses = () => {
     setOpen(false);
   };
 
-  const handleAddCourse = (newCourse) => {
-    // setCourses([...courses, newCourse]);
-    coursesDispatch(addCourse(newCourse));
-  };
 
-  const handleDeleteCourse = (idToDelete) => {
-    // setCourses(courses.filter((course) => course.id !== idToDelete));
-    coursesDispatch(deleteCourse(idToDelete));
+
+  const handleDeleteCourse = async (idToDelete) => {
+    const idToDeleteQuoted = `"${idToDelete}"`;
+    console.log(idToDeleteQuoted)
+    try {
+      // Отправляем запрос на удаление курса
+      await api.post('courses/delete', idToDeleteQuoted );
+      
+
+
+      // Если удаление прошло успешно, обновляем состояние courses, убирая удаленный курс
+      // setCourses(courses.filter(course => course.id !== idToDelete));
+    } catch (error) {
+      // Обрабатываем ошибки
+      console.error('Error deleting course:', error);
+      // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
+    }
   };
 
   return (
