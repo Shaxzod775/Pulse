@@ -25,22 +25,21 @@ const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const GroupCard = ({
   id,
-  name = "Frontend",
-  subject,
+  name,
   startDate,
   endDate,
-  weekDays = [0, 2, 4],
-  teacher = "Koptleulov Arslan",
-  duration,
+  course,
+  imageID,
+  courseTime,
   roomNumber,
-  thumbnail,
-  handleDeleteGroup,
+  teacher,
+  handleDeleteGroup
 }) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
   // const durationInHours = duration * lessonsInOneMonth * lessonLength;
   // const navigate = useNavigate();
-  const lessonsAmount = duration * weekDays.length * 4; // months * lessons in a week * weeks in a month
+  // const lessonsAmount = courseTime.duration * weekDays.length * 4; // months * lessons in a week * weeks in a month
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -54,7 +53,7 @@ const GroupCard = ({
     <CardStyled>
       <Box className="flex flex-col" rowGap="20px">
         <img
-          src={thumbnail ? thumbnail : groupImage}
+          src={imageID ? imageID : groupImage}
           alt="Group"
           width={"100%"}
           height={183}
@@ -75,7 +74,7 @@ const GroupCard = ({
               fontWeight={600}
               color={theme.typography.color.darkBlue}
             >
-              {subject !== "" ? subject : "UI/UX"}
+              {course.name !== "" ? course.name : "UI/UX"}
             </TypographyStyled>
           </div>
           <IconButton
@@ -143,12 +142,11 @@ const GroupCard = ({
                 <TypographyStyled>Дни урока</TypographyStyled>
               </InfoWithIcon>
               <TypographyStyled small>
-                {weekDays.map(
+                {/* {weekDays.map(
                   (weekDay, i) =>
-                    `${weekDaysText[weekDay]}${
-                      i < weekDays.length - 1 ? ", " : ""
+                    `${weekDaysText[weekDay]}${i < weekDays.length - 1 ? ", " : ""
                     }`
-                )}
+                )} */}
               </TypographyStyled>
             </div>
             <div className="flex justify-between">
@@ -160,7 +158,7 @@ const GroupCard = ({
                 to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
                 className="link flex gap-x3s"
               >
-                <TypographyStyled small>{teacher}</TypographyStyled>
+                <TypographyStyled small>{teacher.firstName} {teacher.lastName}</TypographyStyled>
               </Link>
             </div>
             <div className="flex justify-between">
@@ -169,10 +167,10 @@ const GroupCard = ({
                 <TypographyStyled>Продолжительность</TypographyStyled>
               </InfoWithIcon>
               <TypographyStyled small>
-                {duration}{" "}
-                {getRussianWord(duration, "месяц", "месяца", "месяцев")}/
-                {lessonsAmount}{" "}
-                {getRussianWord(lessonsAmount, "урок", "урока", "уроков")}
+                {course.duration}{" "}
+                {getRussianWord(course.duration, "месяц", "месяца", "месяцев")}/
+                {/* {lessonsAmount}{" "} */}
+                {getRussianWord(courseTime, "урок", "урока", "уроков")}
               </TypographyStyled>
             </div>
             <Box className="flex justify-between">

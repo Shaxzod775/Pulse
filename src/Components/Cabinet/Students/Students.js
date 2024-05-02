@@ -48,7 +48,7 @@ const Students = () => {
 
 
     fetchStudents();
-  }, )
+  }, [])
 
   return (
     <Routes>
