@@ -14,11 +14,8 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import {
-  CardStyled,
-  InfoWithIcon,
-  TypographyStyled,
-} from "../../GridItemCardStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import { TypographyStyled } from "../../CabinetStyles";
 import courseImage from "../../../../Assets/Images/Course.png";
 import arslanAvatar from "../../../../Assets/Images/Avatars/Arslan.png";
 import { format, weeksToDays } from "date-fns";
@@ -159,7 +156,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             <TypographyStyled small>01.01.2024</TypographyStyled>
           </div>
         </Box>
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <InfoWithIcon>
             <Icons.Location />
             <TypographyStyled>Филиалы</TypographyStyled>
@@ -178,7 +175,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
           >
             <div className="flex items-center gap-x3s">
               <Icons.SquareArrowLeftUp />
-              <TypographyStyled>Открыть</TypographyStyled>
+              <Typography>Открыть</Typography>
             </div>
           </ButtonStyled>
         </Link>

@@ -12,6 +12,7 @@ import { ReactComponent as Calendar } from "./svgs/calendar.svg";
 import { ReactComponent as CalendarAdd } from "./svgs/calendarAdd.svg";
 import { ReactComponent as User } from "./svgs/user.svg";
 import { ReactComponent as UserAdd } from "./svgs/userAdd.svg";
+import { ReactComponent as UserCheckRounded } from "./svgs/userCheckRounded.svg";
 import { ReactComponent as UsersGroupRounded } from "./svgs/usersGroupRounded.svg";
 import { ReactComponent as UserId } from "./svgs/userId.svg";
 import { ReactComponent as AcademicCap } from "./svgs/academicCap.svg";
@@ -64,6 +65,10 @@ import { ReactComponent as FemaleSymbol } from "./svgs/femaleSymbol.svg";
 import { ReactComponent as DividerDot } from "./svgs/dividerDot.svg";
 import { ReactComponent as Global } from "./svgs/global.svg";
 import { ReactComponent as Star } from "./svgs/star.svg";
+import { ReactComponent as CardSend } from "./svgs/cardSend.svg";
+import { ReactComponent as BillCross } from "./svgs/billCross.svg";
+import { ReactComponent as XCircle } from "./svgs/xCircle.svg";
+import { ReactComponent as CheckCircle } from "./svgs/checkCircle.svg";
 
 export const Icons = {
   ArrowD,
@@ -80,6 +85,7 @@ export const Icons = {
   CalendarAdd,
   User,
   UserAdd,
+  UserCheckRounded,
   UsersGroupRounded,
   UserId,
   AcademicCap,
@@ -132,4 +138,8 @@ export const Icons = {
   DividerDot,
   Global,
   Star,
+  CardSend,
+  BillCross,
+  XCircle,
+  CheckCircle,
 };

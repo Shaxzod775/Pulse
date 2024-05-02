@@ -1,4 +1,4 @@
-import { Box, Card, Typography, styled } from "@mui/material";
+import { Box, Card, styled } from "@mui/material";
 
 export const CardStyled = styled(Card)(({ theme }) => ({
   // "::before": {
@@ -23,10 +23,6 @@ export const CardStyled = styled(Card)(({ theme }) => ({
   "& .font-xxs": {
     fontSize: ".75rem",
   },
-}));
-
-export const TypographyStyled = styled(Typography)(({ theme, small }) => ({
-  fontSize: small ? "0.875rem" : "",
 }));
 
 export const InfoWithIcon = styled("div")(

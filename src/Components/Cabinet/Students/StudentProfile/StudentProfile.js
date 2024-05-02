@@ -684,7 +684,7 @@ const StudentProfile = () => {
                 // onClick={handleClickOpen}
               >
                 <div className="flex items-center gap-x3s">
-                  <span>Удалить ученика</span>
+                  <Typography>Удалить ученика</Typography>
                 </div>
               </DialogButton>
             </Link>

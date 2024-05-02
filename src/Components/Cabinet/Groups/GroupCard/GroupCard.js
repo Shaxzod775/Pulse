@@ -15,11 +15,8 @@ import {
 } from "@mui/material";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import {
-  CardStyled,
-  InfoWithIcon,
-  TypographyStyled,
-} from "../../GridItemCardStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
+import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
@@ -120,89 +117,96 @@ const GroupCard = ({
             </MenuItem>
           </MenuStyled>
         </Box>
-
-        <Box className="flex flex-col" rowGap="12px" paddingX="9px">
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.CalendarContained />
-              <TypographyStyled>Дата начала</TypographyStyled>
-            </InfoWithIcon>
-            <TypographyStyled small>
-              {format(startDate, "dd.MM.yyyy")}
-            </TypographyStyled>
-          </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.ClockDashed />
-              <TypographyStyled>Дата завершения</TypographyStyled>
-            </InfoWithIcon>
-            <TypographyStyled small>
-              {format(endDate, "dd.MM.yyyy")}
-            </TypographyStyled>
-          </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.CalendarDateContained />
-              <TypographyStyled>Дни урока</TypographyStyled>
-            </InfoWithIcon>
-            <TypographyStyled small>
-              {weekDays.map(
-                (weekDay, i) =>
-                  `${weekDaysText[weekDay]}${
-                    i < weekDays.length - 1 ? ", " : ""
-                  }`
-              )}
-            </TypographyStyled>
-          </div>
-        </Box>
-        <Box className="flex justify-between" paddingX="9px">
-          <InfoWithIcon>
-            <Icons.SchoolAcademicCap />
-            <TypographyStyled>Учитель</TypographyStyled>
-          </InfoWithIcon>
+        <Box className="flex flex-col" rowGap="12px">
+          <Box className="flex flex-col" rowGap="12px" paddingX="9px">
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.CalendarContained />
+                <TypographyStyled>Дата начала</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled small>
+                {format(startDate, "dd.MM.yyyy")}
+              </TypographyStyled>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.ClockDashed />
+                <TypographyStyled>Дата завершения</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled small>
+                {format(endDate, "dd.MM.yyyy")}
+              </TypographyStyled>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.CalendarDateContained />
+                <TypographyStyled>Дни урока</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled small>
+                {weekDays.map(
+                  (weekDay, i) =>
+                    `${weekDaysText[weekDay]}${
+                      i < weekDays.length - 1 ? ", " : ""
+                    }`
+                )}
+              </TypographyStyled>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.SchoolAcademicCap />
+                <TypographyStyled>Учитель</TypographyStyled>
+              </InfoWithIcon>
+              <Link
+                to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+                className="link flex gap-x3s"
+              >
+                <TypographyStyled small>{teacher}</TypographyStyled>
+              </Link>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon small>
+                <Icons.ClockContained />
+                <TypographyStyled>Продолжительность</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled small>
+                {duration}{" "}
+                {getRussianWord(duration, "месяц", "месяца", "месяцев")}/
+                {lessonsAmount}{" "}
+                {getRussianWord(lessonsAmount, "урок", "урока", "уроков")}
+              </TypographyStyled>
+            </div>
+            <Box className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Door />
+                <div>{roomNumber} кабинет</div>
+              </InfoWithIcon>
+              <Link to={routes.CABINET + routes.STUDENTS} className="link">
+                <InfoWithIcon>
+                  <Icons.Group />
+                  <div>
+                    10 {getRussianWord(10, "ученик", "ученика", "учеников")}
+                  </div>
+                </InfoWithIcon>
+              </Link>
+            </Box>
+          </Box>
           <Link
-            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
-            className="link flex gap-x3s"
+            to={routes.CABINET + routes.GROUPS + routes.PROFILE}
+            className="link full-width"
           >
-            <TypographyStyled small>{teacher}</TypographyStyled>
-          </Link>
-        </Box>
-        <Box className="flex justify-between">
-          <InfoWithIcon small>
-            <Icons.ClockContained />
-            <div>
-              {duration}{" "}
-              {getRussianWord(duration, "месяц", "месяца", "месяцев")}/
-              {lessonsAmount}{" "}
-              {getRussianWord(lessonsAmount, "урок", "урока", "уроков")}
-            </div>
-          </InfoWithIcon>
-          <InfoWithIcon small>
-            <Icons.Door />
-            <div>{roomNumber} кабинет</div>
-          </InfoWithIcon>
-          <Link to={routes.CABINET + routes.STUDENTS} className="link">
-            <InfoWithIcon small>
-              <Icons.Group />
-              <div>
-                10 {getRussianWord(10, "ученик", "ученика", "учеников")}
+            <ButtonStyled
+              fullWidth
+              variant="contained"
+              color="purpleBlueLight"
+              sx={{ borderRadius: "15px" }}
+            >
+              <div className="flex items-center gap-x3s">
+                <Icons.SquareArrowLeftUp />
+                <Typography>Открыть</Typography>
               </div>
-            </InfoWithIcon>
+            </ButtonStyled>
           </Link>
         </Box>
-        <Link className="link full-width">
-          <ButtonStyled
-            fullWidth
-            variant="contained"
-            color="purpleBlueLight"
-            sx={{ borderRadius: "15px" }}
-          >
-            <div className="flex items-center gap-x3s">
-              <Icons.SquareArrowLeftUp />
-              <TypographyStyled>Открыть</TypographyStyled>
-            </div>
-          </ButtonStyled>
-        </Link>
       </Box>
     </CardStyled>
   );

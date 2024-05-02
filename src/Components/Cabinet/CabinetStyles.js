@@ -55,12 +55,18 @@ export const theme = createTheme({
       dark: "#007AFF",
       contrastText: "#ffffff",
     },
-    greyLight: {
-      main: "#E5E7EB",
-      light: "#E5E7EB",
-      dark: "#706F7C",
-      contrastText: "#000000",
+    grayLight: {
+      main: "#F9F9F9",
+      light: "#F9F9F9",
+      dark: "#AEB2BA",
+      contrastText: "#7D8594",
     },
+    // greyLight: {
+    //   main: "#E5E7EB",
+    //   light: "#E5E7EB",
+    //   dark: "#706F7C",
+    //   contrastText: "#000000",
+    // },
     aqua: {
       main: "#00988F",
       light: "#00988F",
@@ -125,6 +131,9 @@ export const theme = createTheme({
       mediumaquamarine: "#89CCB5",
       aqua: "#00988F",
       lightGrey: "#AEB2BA",
+      greenSuccess: "#54D549",
+      redError: "#FF7D7D",
+      grey: "#7D8594",
     },
   },
   shape: {
@@ -137,6 +146,7 @@ export const theme = createTheme({
           fontSize: "inherit",
           fontFamily: "Poppins, Rubik, sans-serif",
           fontWeight: "500",
+          color: "inherit",
         },
       },
     },
@@ -399,7 +409,7 @@ export const InputBaseStyled = styled(InputBase)(({ theme }) => ({
 
 export const InputBaseStyledV2 = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
-    borderRadius: "10px !important",
+    borderRadius: "10px",
     position: "relative",
     backgroundColor: "#fff",
     border: "1px solid #E5E7EB",
@@ -779,3 +789,13 @@ export const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
     backgroundColor: "transparent", // remove hover background color
   },
 }));
+export const TypographyStyled = styled(Typography)(
+  ({ theme, color, small, colorFromTheme }) => ({
+    color: colorFromTheme
+      ? theme.typography.color[colorFromTheme]
+      : color
+      ? color
+      : theme.typography.color.darkBlue,
+    fontSize: small ? "0.875rem" : "",
+  })
+);
