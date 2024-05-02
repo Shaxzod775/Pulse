@@ -69,15 +69,16 @@ const StatusChip = styled((props) => <Chip {...props} />)(
 
 const LeadCard = ({
   id,
-  name,
+  firstName,
+  lastName,
   phoneNumber,
-  additionalPhoneNumber,
+  secondPhoneNumber,
   email,
-  leadSource,
+  source,
   selectedCourseNames,
-  courseLanguages,
+  langEnum,
   comment,
-  status,
+  statusEnum,
   handleDeleteLead,
 }) => {
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ const LeadCard = ({
           >
             <Icons.AnnaAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
             <div className="flex flex-col justify-around">
-              <TypographyStyled fontWeight={600}>{name}</TypographyStyled>
+              <TypographyStyled fontWeight={600}>{firstName} {lastName}</TypographyStyled>
               <TypographyStyled color="#AEB2BA" fontWeight={400} small>
                 Today 12:40
               </TypographyStyled>
@@ -158,15 +159,15 @@ const LeadCard = ({
               </TypographyStyled>
             </Link>
           </div>
-          {additionalPhoneNumber && (
+          {secondPhoneNumber && (
             <div className="flex justify-between">
               <InfoWithIcon>
                 <Icons.Call />
                 <TypographyStyled>Доп. Телефон</TypographyStyled>
               </InfoWithIcon>
-              <Link to={`tel:/${additionalPhoneNumber}`} className="link">
+              <Link to={`tel:/${secondPhoneNumber}`} className="link">
                 <TypographyStyled small>
-                  {formattedPhoneNumber(additionalPhoneNumber)}
+                  {formattedPhoneNumber(secondPhoneNumber)}
                 </TypographyStyled>
               </Link>
             </div>
@@ -201,7 +202,7 @@ const LeadCard = ({
               textOverflow="ellipsis"
               small
             >
-              {courseLanguages.join(", ")}
+              {/* {langEnum.join(", ")} */}
             </TypographyStyled>
           </div>
           <div className="flex justify-between">
@@ -216,7 +217,7 @@ const LeadCard = ({
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {selectedCourseNames.join(", ")}
+              {/* {selectedCourseNames.join(", ")} */}
             </TypographyStyled>
           </div>
           <div className="flex justify-between">
@@ -224,7 +225,7 @@ const LeadCard = ({
               <Icons.User />
               <TypographyStyled>Откуда лид</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled small>{leadSource}</TypographyStyled>
+            <TypographyStyled small>{source}</TypographyStyled>
           </div>
         </Box>
         <Box className="flex flex-col" rowGap="8px">
@@ -239,7 +240,7 @@ const LeadCard = ({
             <Icons.Star />
             <TypographyStyled>Статус</TypographyStyled>
           </InfoWithIcon>
-          <StatusChip label={status} status={status} icon={<Icons.Circle />} />
+          <StatusChip label={statusEnum} status={statusEnum} icon={<Icons.Circle />} />
           {/* <StatusChip icon={<Icons.Circle />} label="Example Chip" /> */}
         </div>
       </Box>

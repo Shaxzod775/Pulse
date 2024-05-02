@@ -57,6 +57,8 @@ import {
 } from "../../../../Constants/testData";
 import useToggle from "../../../../hooks/useToggle";
 
+import api from "../../../../Core/api";
+
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
   minWidth: "150px",
@@ -190,7 +192,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Check if the phone number is empty or not valid (not 13 characters length)
     if (phoneNumber.length === 0 || phoneNumber.length !== 13) {
@@ -202,18 +204,45 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     // If the phone number is valid, reset the phone number error state
     // togglePhoneNumberError(false);
 
-    const fullName = `${lastName} ${firstName} ${middleName}`;
-    const newLead = createLead({
-      name: fullName,
-      phoneNumber: phoneNumber,
-      additionalPhoneNumber: additionalPhoneNumber,
-      email: email,
-      leadSource: leadSource,
-      selectedCourseNames: selectedCourseNames,
-      courseLanguages: courseLanguages,
-      comment: comment,
-    });
-    handleAddLead(newLead);
+    // const fullName = `${lastName} ${firstName} ${middleName}`;
+    // const newLead = createLead({
+    //   name: fullName,
+    //   phoneNumber: phoneNumber,
+    //   additionalPhoneNumber: additionalPhoneNumber,
+    //   email: email,
+    //   leadSource: leadSource,
+    //   selectedCourseNames: selectedCourseNames,
+    //   courseLanguages: courseLanguages,
+    //   comment: comment,
+    // });
+
+
+    try {
+
+      const response = await api.post('leads/create', {
+          firstName: firstName,
+          lastName: lastName,
+          middleName: middleName,
+          email: email,
+          phoneNumber: phoneNumber,
+          secondPhoneNumber: additionalPhoneNumber,
+          comment: comment,
+          source: "string",
+          course_id: "0c745667-1918-4e7a-a996-a7832089a374",
+          statusEnum: "IN_PROGRESS",
+          langEnum: "UZ"
+      });
+  
+
+      console.log(response);
+      handleAddLead();
+      handleClose();
+    } catch (error) {
+
+      console.error('Error submitting course:', error);
+
+    }
+
     handleClose();
   };
 

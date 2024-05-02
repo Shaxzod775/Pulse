@@ -1,112 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
 import LeadsMain from "./LeadsMain/LeadsMain";
 import { leadStatuses } from "../../../Constants/testData";
+import api from "../../../Core/api";
+
+
 
 const names = ["Elyorov Ahmad", "Aliyev Shohrux", "Azizova Aziza"];
 
-export function createLead({
-  id = uuidv4(),
-  name = "Azizova Aziza",
-  field = "Frontend",
-  phoneNumber = "+998330331533",
-  additionalPhoneNumber = "+998330331533",
-  email = "example@gmail.com",
-  leadSource = "Instagram",
-  selectedCourseNames = ["Course1", "Course2"],
-  courseLanguages = ["Русский", "Узбекский"],
-  comment = "Lorem ipsum dolor sit amet consectetur. In rhoncus euismod cras sit. Consectetur nulla.",
-  status = leadStatuses[0],
-} = {}) {
-  return {
-    id,
-    name,
-    field,
-    phoneNumber,
-    additionalPhoneNumber,
-    email,
-    leadSource,
-    selectedCourseNames,
-    courseLanguages,
-    comment,
-    status,
-  };
-}
+
 
 const Leads = () => {
-  const [leads, setLeads] = useState([
-    createLead({
-      name: names[0],
-      group: "Frontend GR1214-21",
-      status: leadStatuses[0],
-    }),
-    createLead({
-      name: names[1],
-      group: "Frontend GR1214-22",
-      status: leadStatuses[2],
-    }),
-    createLead({
-      name: names[2],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[0],
-    }),
-    createLead({
-      name: names[0],
-      group: "Frontend GR1214-21",
-      status: leadStatuses[3],
-    }),
-    createLead({
-      name: names[1],
-      group: "Frontend GR1214-22",
-      status: leadStatuses[2],
-    }),
-    createLead({
-      name: names[2],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[1],
-    }),
-    createLead({
-      name: names[0],
-      group: "Frontend GR1214-21",
-      status: leadStatuses[2],
-    }),
-    createLead({
-      name: names[1],
-      group: "Frontend GR1214-22",
-      status: leadStatuses[3],
-    }),
-    createLead({
-      name: names[2],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[0],
-    }),
-    createLead({
-      name: names[0],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[2],
-    }),
-    createLead({
-      name: names[2],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[2],
-    }),
-    createLead({
-      name: names[1],
-      group: "Frontend GR1214-23",
-      status: leadStatuses[3],
-    }),
-  ]);
+  const [leads, setLeads] = useState([]);
 
-  const handleAddLead = (newLead) => {
-    setLeads([...leads, newLead]);
+  const handleAddLead = () => {
+    console.log('Обновлено')
   };
 
-  const handleDeleteLead = (idToDelete) => {
-    setLeads(leads.filter((lead) => lead.id !== idToDelete));
+  const handleDeleteLead = async(idToDelete) => {
+    const idToDeleteQuoted = `"${idToDelete}"`;
+    try {
+      // Отправляем запрос на удаление курса
+      await api.post('leads/delete', idToDeleteQuoted );
+      
+    
+      setLeads(leads.filter((lead) => lead.id !== idToDelete));
+    } catch (error) {
+    
+      console.error('Error deleting course:', error);
+      
+    }
+
+    
   };
 
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        // Выполняем GET-запрос для получения списка курсов
+        const response = await api.get('leads');
+        // Обновляем состояние courses данными из ответа
+        setLeads(response.data);
+      } catch (error) {
+        // Обрабатываем ошибки
+        console.error('Error fetching courses:', error);
+        // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
+      }
+    };
+
+    // Вызываем функцию для загрузки курсов при монтировании компонента
+    fetchLeads();
+  }, [handleAddLead])
   return (
     <Routes>
       <Route
