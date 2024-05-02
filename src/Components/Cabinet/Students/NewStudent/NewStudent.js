@@ -123,7 +123,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewStudent = () => {
+const NewStudent = ({fetchStudents}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -333,7 +333,9 @@ const NewStudent = () => {
 
       // Обработка успешного ответа, если необходимо
       console.log('Teacher created:', response.data);
+      fetchStudents();
       navigate('/cabinet/students')
+
     } catch (error) {
       // Обработка ошибок
       console.error('Error creating teacher:', error);

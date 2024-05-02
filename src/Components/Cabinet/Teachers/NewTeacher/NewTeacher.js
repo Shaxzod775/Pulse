@@ -133,7 +133,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewTeacher = () => {
+const NewTeacher = ({fetchTeachers}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -401,6 +401,7 @@ const NewTeacher = () => {
 
       // Обработка успешного ответа, если необходимо
       console.log('Teacher created:', response.data);
+      fetchTeachers();
       navigate('/cabinet/teachers')
     } catch (error) {
       // Обработка ошибок

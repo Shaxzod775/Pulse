@@ -32,20 +32,20 @@ const Students = () => {
     
   };
 
+  const fetchStudents = async () => {
+    try {
+      const response = await api.get('students');
+
+      setStudents(response.data);
+      console.log(response.data)
+    } catch (error) {
+
+      console.error('Error fetching courses:', error);
+
+    }
+  };
+
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await api.get('students');
-
-        setStudents(response.data);
-        console.log(response.data)
-      } catch (error) {
-
-        console.error('Error fetching courses:', error);
-
-      }
-    };
-
 
     fetchStudents();
   }, [])
@@ -62,7 +62,7 @@ const Students = () => {
         }
       />
       <Route path={routes.PROFILE} element={<StudentProfile />} />
-      <Route path={routes.NEW} element={<NewStudent />} />
+      <Route path={routes.NEW} element={<NewStudent fetchStudents={fetchStudents} />} />
       <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.STUDENTS} replace />}

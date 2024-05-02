@@ -63,23 +63,20 @@ const Teachers = () => {
     }
     
   };
-
+  const fetchTeachers = async () => {
+    try {
+      
+      const response = await api.get('teachers');
+      
+      setTeachers(response.data);
+      console.log(response.data)
+    } catch (error) {
+      
+      console.error('Error fetching courses:', error);
+     
+    }
+  };
   useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        
-        const response = await api.get('teachers');
-        
-        setTeachers(response.data);
-        console.log(response.data)
-      } catch (error) {
-        
-        console.error('Error fetching courses:', error);
-       
-      }
-    };
-
-    
     fetchTeachers();
   }, [])
 
@@ -95,7 +92,7 @@ const Teachers = () => {
         }
       />
       <Route path={routes.PROFILE} element={<TeacherProfile />} />
-      <Route path={routes.NEW} element={<NewTeacher />} />
+      <Route path={routes.NEW} element={<NewTeacher fetchTeachers={fetchTeachers}/>} />
       <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.TEACHERS} replace />}
