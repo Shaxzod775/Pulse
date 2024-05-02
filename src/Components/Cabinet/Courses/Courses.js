@@ -191,7 +191,7 @@ const Courses = () => {
 
 
       // Если удаление прошло успешно, обновляем состояние courses, убирая удаленный курс
-      // setCourses(courses.filter(course => course.id !== idToDelete));
+      setCourses(courses.filter(course => course.id !== idToDelete));
     } catch (error) {
       // Обрабатываем ошибки
       console.error('Error deleting course:', error);
