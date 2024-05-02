@@ -4,6 +4,7 @@ import {
   Button,
   ButtonBase,
   Checkbox,
+  Collapse,
   Grid,
   IconButton,
   InputBase,
@@ -36,6 +37,7 @@ import {
   selectStyles,
   InputBaseStyled,
   CustomCheckbox,
+  TypographyStyled,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -50,6 +52,7 @@ import {
   weekDaysTextFullToShort,
 } from "../../../../Constants/testData";
 import { useCourses } from "../../../../contexts/Courses.context";
+import useToggle from "../../../../hooks/useToggle";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -104,8 +107,9 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
-  const [selectedCourseNames, setSelectedCourseNames] =
-    useState(weekDaysTextFull);
+  const [selectedWeekDays, setSelectedWeekDays] = useState(["0"]);
+
+  const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
@@ -136,11 +140,11 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     setAnchorCourseSelect(null);
   };
 
-  const handleChangeCourses = (event) => {
+  const handleChangeWeekDays = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedCourseNames(
+    setSelectedWeekDays(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -190,152 +194,180 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   );
 
   return (
-    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
-      <Main>
-        <div className="flex items-stretch justify-between">
-          <div className="flex items-center gap-md">
-            <ButtonStyled
-              variant="outlined"
-              sx={headerItemStyles}
-              color="grey"
-              onClick={goBack}
-            >
-              <Icons.ArrowL />
-            </ButtonStyled>
-            <Title>Группы</Title>
-            <div className="flex items-stretch gap-xxs full-height">
-              <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
+    <Root
+    // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
+    >
+      <Main sx={{ maxHeight: "calc(100vh - 42px)" }}>
+        <Box className="flex flex-col" rowGap="16px">
+          <div className="flex items-stretch justify-between">
+            <div className="flex items-center gap-md">
+              <ButtonStyled
+                variant="outlined"
+                sx={headerItemStyles}
+                color="grey"
+                onClick={goBack}
+              >
+                <Icons.ArrowL />
+              </ButtonStyled>
+              <Title>Группы</Title>
+              <div className="flex items-stretch gap-xxs full-height">
+                {/* <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
                 <div className="flex items-center">
                   <Icons.Search
                     style={{ boxSizing: "content-box", paddingRight: "8px" }}
                     color="#E5E7EB"
-                  />
-                  <InputBase
-                    sx={{ color: theme.typography.color.darkBlue }}
-                    placeholder="Поиск по ученику..."
-                  />
-                </div>
-              </HeaderDiv>
-              <AutocompleteStyledV2
-                options={teacherNames}
-                value={teacher}
-                onChange={handleTeacherChange}
-                renderInput={(params) => (
-                  <AutocompleteFieldV2
-                    {...params}
-                    required
-                    id="subject"
-                    variant="outlined"
-                    placeholder="Учитель"
-                  />
-                )}
-                popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
-                clearIcon={<Icons.Delete color="#9CA3AF" />}
-                slotProps={{ paper: AutocompleteMenuProps }}
-                // open={true}
-              />
-              <HeaderDiv
-                sx={{
-                  position: "relative",
-                  cursor: "pointer",
-                  label: { cursor: "pointer" },
-                }}
-                className="flex items-stretch full-height p-xxs2"
-                onClick={handleClickCourseSelect}
-              >
-                <label
-                  htmlFor="course-select"
-                  className="flex items-center full-height"
-                >
-                  <Icons.NotebookBookmark color="#b4b7c3" />
-                  <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
-                    {(selectedCourses.length < 1 ||
-                      selectedCourses.length === allCourseNames.length) &&
-                      "Все"}
-                  </span>
-                </label>
-                <SelectStyled
-                  id="course-select"
-                  autoWidth
-                  multiple
-                  value={selectedCourses}
-                  onChange={handleChangeCourse}
-                  renderValue={(selected) => {
-                    if (selected.length > 1) {
-                      if (selected.length === allCourseNames.length) {
-                        return "";
-                      }
-                      return "..."; // Render "..." if multiple courses are selected
-                    }
-                    return selected;
-                  }}
-                  IconComponent={
-                    Boolean(anchorCourseSelect)
-                      ? Icons.ArrowUBold
-                      : Icons.ArrowDBold
-                  }
-                  onClose={handleCloseCourseSelect}
-                  MenuProps={{
-                    ...customMenuProps,
-                    anchorEl: anchorCourseSelect,
-                    open: Boolean(anchorCourseSelect),
-                    onClose: handleCloseCourseSelect,
-                  }}
+                  /> */}
+                <InputBaseStyledV2
+                  placeholder="Поиск по группе..."
                   sx={{
-                    "& > svg": { transform: "none !important" },
+                    position: "relative",
+                    minWidth: "240px",
+                    width: "240px",
+                    color: theme.typography.color.darkBlue,
+                    "& .MuiInputBase-input": { paddingLeft: "36px" },
                   }}
+                  startAdornment={
+                    <Icons.Search
+                      color="#E5E7EB"
+                      width="20px"
+                      style={{ position: "absolute", left: "8px", zIndex: "1" }}
+                    />
+                  }
+                />
+                {/* </div>
+              </HeaderDiv> */}
+                <AutocompleteStyledV2
+                  options={teacherNames}
+                  value={teacher}
+                  onChange={handleTeacherChange}
+                  renderInput={(params) => (
+                    <AutocompleteFieldV2
+                      {...params}
+                      required
+                      id="subject"
+                      variant="outlined"
+                      placeholder="Учителя"
+                    />
+                  )}
+                  popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
+                  clearIcon={<Icons.Delete color="#9CA3AF" />}
+                  slotProps={{ paper: AutocompleteMenuProps }}
+                  // open={true}
+                />
+                <HeaderDiv
+                  sx={{
+                    position: "relative",
+                    cursor: "pointer",
+                    label: { cursor: "pointer" },
+                  }}
+                  className="flex items-stretch full-height p-xxs2"
+                  onClick={handleClickCourseSelect}
                 >
-                  {allCourseNames.map((course, i) => (
-                    <MenuItem value={course} key={i}>
+                  <label
+                    htmlFor="course-select"
+                    className="flex items-center full-height"
+                  >
+                    <Icons.NotebookBookmark color="#b4b7c3" />
+                    <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
+                      {(selectedCourses.length < 1 ||
+                        selectedCourses.length === allCourseNames.length) &&
+                        "Все"}
+                    </span>
+                  </label>
+                  <SelectStyled
+                    id="course-select"
+                    autoWidth
+                    multiple
+                    value={selectedCourses}
+                    onChange={handleChangeCourse}
+                    renderValue={(selected) => {
+                      if (selected.length > 1) {
+                        if (selected.length === allCourseNames.length) {
+                          return "";
+                        }
+                        return "..."; // Render "..." if multiple courses are selected
+                      }
+                      return selected;
+                    }}
+                    IconComponent={
+                      Boolean(anchorCourseSelect)
+                        ? Icons.ArrowUBold
+                        : Icons.ArrowDBold
+                    }
+                    onClose={handleCloseCourseSelect}
+                    MenuProps={{
+                      ...customMenuProps,
+                      anchorEl: anchorCourseSelect,
+                      open: Boolean(anchorCourseSelect),
+                      onClose: handleCloseCourseSelect,
+                    }}
+                    sx={{
+                      "& > svg": { transform: "none !important" },
+                    }}
+                  >
+                    {allCourseNames.map((course, i) => (
+                      <MenuItem value={course} key={i}>
+                        <CustomCheckbox
+                          checked={selectedCourses.indexOf(course) > -1}
+                        />
+                        <ListItemText primary={course} />
+                      </MenuItem>
+                    ))}
+                  </SelectStyled>
+                </HeaderDiv>
+                <Select
+                  multiple
+                  required
+                  value={selectedWeekDays}
+                  onChange={handleChangeWeekDays}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Дни недели";
+                    return selected
+                      .slice(1)
+                      .map((day) => weekDaysTextFullToShort[day])
+                      .join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "180px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {weekDaysTextFull.map((weekDayFull) => (
+                    <MenuItem key={weekDayFull} value={weekDayFull}>
                       <CustomCheckbox
-                        checked={selectedCourses.indexOf(course) > -1}
+                        checked={selectedWeekDays.indexOf(weekDayFull) > -1}
                       />
-                      <ListItemText primary={course} />
-                      {/* {course} */}
+                      <ListItemText primary={weekDayFull} />
                     </MenuItem>
                   ))}
-                </SelectStyled>
-              </HeaderDiv>
-              <Select
-                fullWidth
-                multiple
-                required
-                value={selectedCourseNames}
-                onChange={handleChangeCourses}
-                renderValue={(selected) =>
-                  selected.map((day) => weekDaysTextFullToShort[day]).join(", ")
-                }
-                MenuProps={customMenuProps}
-                sx={selectStylesV2({ theme })}
-                input={<InputBaseStyledV2 />}
-                IconComponent={Icons.ArrowDBold}
+                </Select>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-sm">
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                onClick={handleClickOpen}
               >
-                {weekDaysTextFull.map((weekDayFull) => (
-                  <MenuItem key={weekDayFull} value={weekDayFull}>
-                    <Checkbox
-                      checked={selectedCourseNames.indexOf(weekDayFull) > -1}
-                    />
-                    <ListItemText primary={weekDayFull} />
-                  </MenuItem>
-                ))}
-              </Select>
+                <div className="flex items-center gap-xs">
+                  <Icons.AddCircle />
+                  <span>Создать группу</span>
+                </div>
+              </ButtonStyled>
             </div>
           </div>
-
-          <div className="flex items-center gap-sm">
-            <ButtonStyled
-              variant="contained"
-              color="purpleBlue"
-              onClick={handleClickOpen}
-            >
-              <div className="flex items-center gap-xs">
-                <Icons.AddCircle />
-                <span>Создать группу</span>
-              </div>
-            </ButtonStyled>
-          </div>
-        </div>
-
+          <Box>
+            <Box onClick={toggleAllfiltersOpen} sx={{ cursor: "pointer" }}>
+              <TypographyStyled colorFromTheme="purpleBlue">
+                Показать все фильтры
+              </TypographyStyled>
+            </Box>
+            <Collapse orientation="vertical" in={allFiltersOpen}>
+              <Box paddingTop="16px">2</Box>
+            </Collapse>
+          </Box>
+        </Box>
         <div
           style={{
             maxHeight: "100%",
