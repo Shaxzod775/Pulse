@@ -67,6 +67,8 @@ import { ReactComponent as Global } from "./svgs/global.svg";
 import { ReactComponent as Star } from "./svgs/star.svg";
 import { ReactComponent as CardSend } from "./svgs/cardSend.svg";
 import { ReactComponent as BillCross } from "./svgs/billCross.svg";
+import { ReactComponent as XCircle } from "./svgs/xCircle.svg";
+import { ReactComponent as CheckCircle } from "./svgs/checkCircle.svg";
 
 export const Icons = {
   ArrowD,
@@ -138,4 +140,6 @@ export const Icons = {
   Star,
   CardSend,
   BillCross,
+  XCircle,
+  CheckCircle,
 };

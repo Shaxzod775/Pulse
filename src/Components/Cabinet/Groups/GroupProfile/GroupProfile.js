@@ -38,6 +38,7 @@ import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import useInput from "../../../../hooks/useInput";
+import { weekDaysTextFull } from "../../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -63,113 +64,157 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   "&:hover": { boxShadow: "none" },
 }));
 
-const InfoLine = styled("div")(({ theme, small }) => ({
-  display: "flex",
-  alignItems: "center",
-  gap: small ? "3px" : "5px",
-  fontSize: small ? ".75rem" : "inherit",
-  "& svg": {
-    minWidth: "20px",
-    width: small ? "20px" : "24px",
-    height: "auto",
-  },
-}));
-
-const CardText = styled(Typography)(
-  ({
-    theme,
-    fontFamily = "Poppins, Rubik, sans-serif",
-    fontSize = "18px",
-  }) => ({
-    fontFamily: fontFamily,
-    fontSize: fontSize,
-    lineHeight: "normal",
-  })
-);
-
-const ProfileTabHeader = styled("div")(
-  ({
-    theme,
-    active,
-    fontWeight = 500,
-    fontSize = "1.125rem",
-    fontFamily = "inherit",
-  }) => ({
-    color: active ? "#1C0D64" : "#AEB2BA",
-    fontFamily: fontFamily,
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    lineHeight: "150%",
-    position: "relative",
-    transition: "all 0.3s ease-in-out",
-    cursor: active ? "" : "pointer",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      left: active ? "0%" : "50%",
-      right: active ? "0%" : "50%",
-      bottom: "-14px",
-      height: "2px",
-      backgroundColor: "#6574D8",
-      transition: "all .3s ease-in-out",
-    },
-    "&:hover": { opacity: active ? "" : ".5" },
-  })
-);
-
-const InfoItem = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-  lineHeight: "150%",
-  fontFamily: "Poppins, Rubik, sans-serif",
-  "& > h5": {
-    margin: "0",
-    color: "#AEB2BA",
-    fontSize: "1.125rem",
-    fontWeight: "500",
-    letterSpacing: ".36px",
-  },
-  "& > span": {
-    color: "#1C0D64",
-    fontSize: "1rem",
-    letterSpacing: ".32px",
-  },
-  // svg: { color: theme.typography.color.purpleBlue },
-}));
-
-const SkillChip = styled(Chip)(({ theme }) => ({
-  borderRadius: "8px",
-  padding: "6px 12px",
-  "& .MuiChip-label": { padding: "0" },
-}));
-
-const PaymentPaper = styled(Paper)(({ theme }) => ({
-  borderRadius: "10px",
-  padding: "8px 10px",
-  boxShadow: "none",
-  width: "100%",
-  color: "#6574D8",
-  backgroundColor: "#EEF0FF",
-}));
-
-const PaymentInfoLine = styled("div")(({ theme }) => ({
-  color: "inherit",
-  display: "flex",
-  gap: "8px",
-  "& svg": {
-    minWidth: "24px",
-    height: "auto",
-  },
-  "& span": {
-    fontSize: "1rem",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "150%",
-    letterSpacing: "0.32px",
-    whiteSpace: "nowrap",
-  },
-}));
+// 0 for not absence, 1 for attendance, any other for default (not set)
+// const AttendanceToggler = ({ initialToggle = "2" }) => {
+//   const [toggle, setToggle] = useState(initialToggle);
+//   const [hover, setHover] = useState(false);
+//   const handleSetAttendance = () => {
+//     setToggle("1");
+//   };
+//   const handleSetAbsence = () => {
+//     setToggle("0");
+//   };
+//   const handleSetNeutral = () => {
+//     setToggle("2");
+//   };
+//   const handleMouseEnter = () => {
+//     setHover(true);
+//   };
+//   const handleMouseLeave = () => {
+//     setHover(false);
+//   };
+//   return (
+//     <Box
+//       className="flex justify-between items-center"
+//       minHeight="26px"
+//       width="100%"
+//       maxWidth="64px"
+//       backgroundColor={
+//         !hover
+//           ? toggle === "1"
+//             ? "#97FF95"
+//             : toggle === "0"
+//             ? "#FFC3C3"
+//             : "#f9f9f9"
+//           : "#f9f9f9"
+//       }
+//       border={toggle === "1" && toggle === "0" ? "" : "1px solid #A1A7B2"}
+//       borderRadius="40px"
+//       sx={{
+//         cursor: "pointer",
+//       }}
+//       onMouseEnter={handleMouseEnter}
+//       onMouseLeave={handleMouseLeave}
+//       onClick={() => setHover(false)}
+//     >
+//       {(toggle !== "1" && toggle !== "0") || hover ? (
+//         <>
+//           <Icons.XCircle
+//             className="xCircle"
+//             color={theme.typography.color.redError}
+//             style={{
+//               transition: "all .2s ease-in-out",
+//               // opacity: toggle === "0" ? 1 : 0,
+//             }}
+//             onClick={handleSetAbsence}
+//           />
+//           <Icons.Circle
+//             className="circle"
+//             color="#A1A7B2"
+//             style={{
+//               transition: "all .2s ease-in-out",
+//               // opacity: toggle !== "0" && toggle !== "1" ? 1 : 0,
+//             }}
+//             onClick={handleSetNeutral}
+//           />
+//           <Icons.CheckCircle
+//             className="checkCircle"
+//             color={theme.typography.color.greenSuccess}
+//             style={{
+//               transition: "all .2s ease-in-out",
+//               // opacity: toggle === "1" ? 1 : 0,
+//             }}
+//             onClick={handleSetAttendance}
+//           />
+//         </>
+//       ) : (
+//         <></>
+//       )}
+//     </Box>
+//   );
+// };
+const AttendanceToggler = ({ initialToggle = "2" }) => {
+  const [toggle, setToggle] = useState(initialToggle);
+  const handleSetAttendance = () => {
+    setToggle("1");
+  };
+  const handleSetAbsence = () => {
+    setToggle("0");
+  };
+  const handleSetNeutral = () => {
+    setToggle("2");
+  };
+  return (
+    <Box
+      className="flex justify-between items-stretch"
+      minHeight="26px"
+      width="100%"
+      maxWidth="64px"
+      backgroundColor={"#f9f9f9"}
+      border={"1px solid #A1A7B2"}
+      borderRadius="40px"
+      sx={{
+        cursor: "pointer",
+      }}
+    >
+      {/* {(toggle !== "1" && toggle !== "0") || hover ? ( */}
+      <>
+        <Box
+          className="flex items-center"
+          sx={{
+            transition: "all .2s ease-in-out",
+            opacity: toggle === "0" ? 1 : 0,
+            "&:hover": { opacity: toggle !== "0" ? 0.5 : "" },
+          }}
+          onClick={handleSetAbsence}
+        >
+          <Icons.XCircle
+            className="xCircle"
+            color={theme.typography.color.redError}
+          />
+        </Box>
+        <Box
+          className="flex items-center"
+          sx={{
+            transition: "all .2s ease-in-out",
+            opacity: toggle !== "0" && toggle !== "1" ? 1 : 0,
+            "&:hover": { opacity: toggle === "0" || toggle === "1" ? 0.5 : "" },
+          }}
+          onClick={handleSetNeutral}
+        >
+          <Icons.Circle className="circle" color="#A1A7B2" />
+        </Box>
+        <Box
+          className="flex items-center"
+          sx={{
+            transition: "all .2s ease-in-out",
+            opacity: toggle === "1" ? 1 : 0,
+            "&:hover": { opacity: toggle !== "1" ? 0.5 : "" },
+          }}
+          onClick={handleSetAttendance}
+        >
+          <Icons.CheckCircle
+            className="checkCircle"
+            color={theme.typography.color.greenSuccess}
+          />
+        </Box>
+      </>
+      {/* ) : (
+        <></>
+      )} */}
+    </Box>
+  );
+};
 
 const GroupProfile = () => {
   const navigate = useNavigate();
@@ -287,47 +332,19 @@ const GroupProfile = () => {
           borderRadius="30px"
           backgroundColor="#f9f9f9"
         >
-          <Box flexGrow="1" color="#7D8594">
+          <Box flexGrow="1" color="#7D8594" maxWidth="25%">
             <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
               Имя
             </TypographyStyled>
           </Box>
-          <Box display="flex" flexGrow="3">
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Понедельник
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Вторник
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Среда
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Четверг
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Пятница
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Суббота
-              </TypographyStyled>
-            </Box>
-            <Box className="flex items-center justify-center" flexGrow="1">
-              <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                Восскресенье
-              </TypographyStyled>
-            </Box>
+          <Box display="flex" flexGrow="3" maxWidth="75%">
+            {weekDaysTextFull.map((weekDay) => (
+              <Box className="flex items-center justify-center" width="100%">
+                <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                  {weekDay}
+                </TypographyStyled>
+              </Box>
+            ))}
           </Box>
         </Box>
         <Box
@@ -362,47 +379,38 @@ const GroupProfile = () => {
               marginRight="-15px"
               padding="8px 34px"
             >
-              <Box flexGrow="1" color="#7D8594">
-                <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                  Имя
+              <Box
+                className="flex items-center"
+                columnGap="10px"
+                flexGrow="1"
+                color="#7D8594"
+                maxWidth="25%"
+              >
+                <Icons.Circle
+                  color={
+                    parseInt(index) % 3 === 0 || parseInt(index) % 2 === 0
+                      ? theme.typography.color.greenSuccess
+                      : theme.typography.color.redError
+                  }
+                  width="8px"
+                />
+                <TypographyStyled
+                  colorFromTheme="grey"
+                  fontSize="0.75rem"
+                  noWrap
+                >
+                  Ali Ahmad Muhammad ogli
                 </TypographyStyled>
               </Box>
               <Box display="flex" flexGrow="3">
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Понедельник
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Вторник
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Среда
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Четверг
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Пятница
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Суббота
-                  </TypographyStyled>
-                </Box>
-                <Box className="flex items-center justify-center" flexGrow="1">
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    Восскресенье
-                  </TypographyStyled>
-                </Box>
+                {weekDaysTextFull.map((weekDay) => (
+                  <Box
+                    className="flex items-center justify-center"
+                    width="100%"
+                  >
+                    <AttendanceToggler initialToggle="2" />
+                  </Box>
+                ))}
               </Box>
             </Box>
           ))}
@@ -674,8 +682,6 @@ const GroupProfile = () => {
                         <div className="flex justify-between items-center">
                           <Icons.DividerDot height="6px" color="#D1D5DB" />
                         </div>
-
-                        // <Divider orientation="vertical" flexItem />
                       )}
                     </>
                   ))}
