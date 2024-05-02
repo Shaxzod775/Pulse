@@ -297,6 +297,7 @@ const NewCourseDialog = ({
   
       // Обрабатываем успешный ответ, если это необходимо
       console.log(response);
+      handleAddCourse()
       handleClose();
     } catch (error) {
       // Обрабатываем ошибки
