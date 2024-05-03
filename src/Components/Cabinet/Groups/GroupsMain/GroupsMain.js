@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -38,6 +39,8 @@ import {
   InputBaseStyled,
   CustomCheckbox,
   TypographyStyled,
+  textFieldStyles,
+  textFieldStylesV2,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -45,7 +48,11 @@ import { v4 as uuidv4 } from "uuid";
 import GroupCard from "../GroupCard/GroupCard";
 import { Icons } from "../../../../Assets/Icons/icons";
 import NewGroupDialog from "../NewGroupDialog/NewGroupDialog";
-import { useNavigate } from "react-router-dom";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ru } from "date-fns/locale";
+import { russianLocale } from "../../../../Constants/dateLocales";
 import {
   teacherNames,
   weekDaysTextFull,
@@ -109,17 +116,24 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const [selectedWeekDays, setSelectedWeekDays] = useState(["0"]);
 
+  const [selectedGroupStatuses, setSelectedGroupStatuses] = useState(["0"]);
+
+  const [selectedTags, setSelectedTags] = useState(["0"]);
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
   };
 
-  const handleChangeCourse = (event) => {
+  const handleChangeMultipleSelect = (setter) => (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedCourses(
+    setter(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -140,14 +154,14 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     setAnchorCourseSelect(null);
   };
 
-  const handleChangeWeekDays = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedWeekDays(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+  // Function to handle change in date
+  const handleDateChange = (setter) => (newDate) => {
+    if (newDate instanceof Date && !isNaN(newDate)) {
+      setter(newDate);
+    } else {
+      // Handle invalid input date here
+      setter(null);
+    }
   };
 
   const goBack = () => {
@@ -271,7 +285,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     autoWidth
                     multiple
                     value={selectedCourses}
-                    onChange={handleChangeCourse}
+                    onChange={handleChangeMultipleSelect(setSelectedCourses)}
                     renderValue={(selected) => {
                       if (selected.length > 1) {
                         if (selected.length === allCourseNames.length) {
@@ -324,18 +338,64 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             </div>
           </div>
           <Box>
-            <Box onClick={toggleAllfiltersOpen} sx={{ cursor: "pointer" }}>
+            <Box
+              className="flex items-center"
+              columnGap="4px"
+              maxWidth="max-content"
+              sx={{ cursor: "pointer" }}
+              onClick={toggleAllfiltersOpen}
+            >
               <TypographyStyled colorFromTheme="purpleBlue">
                 Показать все фильтры
               </TypographyStyled>
+              <TypographyStyled colorFromTheme="purpleBlue" display="flex">
+                <Icons.ArrowDBold
+                  style={{
+                    transform: `rotate(${allFiltersOpen ? "180deg" : "0deg"})`,
+                    transition: "all .2s ease-in-out",
+                  }}
+                />
+              </TypographyStyled>
             </Box>
             <Collapse orientation="vertical" in={allFiltersOpen}>
-              <Box paddingTop="16px">
+              <Box display="flex" columnGap="10px" paddingTop="16px">
+                <Select
+                  multiple
+                  required
+                  value={selectedGroupStatuses}
+                  onChange={handleChangeMultipleSelect(
+                    setSelectedGroupStatuses
+                  )}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Статус группы";
+                    return selected.slice(1).join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "240px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {[
+                    "Действующие группы",
+                    "Group status 1",
+                    "Group status 2",
+                    "Group status 3",
+                  ].map((groupStatus) => (
+                    <MenuItem key={groupStatus} value={groupStatus}>
+                      <CustomCheckbox
+                        checked={
+                          selectedGroupStatuses.indexOf(groupStatus) > -1
+                        }
+                      />
+                      <ListItemText primary={groupStatus} />
+                    </MenuItem>
+                  ))}
+                </Select>
                 <Select
                   multiple
                   required
                   value={selectedWeekDays}
-                  onChange={handleChangeWeekDays}
+                  onChange={handleChangeMultipleSelect(setSelectedWeekDays)}
                   renderValue={(selected) => {
                     if (selected.length === 1) return "Дни недели";
                     return selected
@@ -357,6 +417,67 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     </MenuItem>
                   ))}
                 </Select>
+                <Select
+                  multiple
+                  required
+                  value={selectedTags}
+                  onChange={handleChangeMultipleSelect(setSelectedTags)}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Теги";
+                    return selected.slice(1).join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "150px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {["Тег 0", "Тег 1", "Тег 2", "Тег 3"].map((groupTag) => (
+                    <MenuItem key={groupTag} value={groupTag}>
+                      <CustomCheckbox
+                        checked={selectedTags.indexOf(groupTag) > -1}
+                      />
+                      <ListItemText primary={groupTag} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={ru}
+                  localeText={russianLocale}
+                >
+                  <DatePicker
+                    id="date-start"
+                    value={startDate}
+                    onChange={handleDateChange(setStartDate)}
+                    sx={{ ...textFieldStylesV2({ theme }), maxWidth: "180px" }}
+                    slots={{
+                      openPickerIcon: Icons.CalendarContained,
+                    }}
+                    slotProps={{
+                      field: { clearable: true, placeholder: "Начало даты" },
+                      openPickerButton: { color: "purpleBlue" },
+                    }}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={ru}
+                  localeText={russianLocale}
+                >
+                  <DatePicker
+                    id="date-start"
+                    value={endDate}
+                    onChange={handleDateChange(setEndDate)}
+                    sx={{ ...textFieldStylesV2({ theme }), maxWidth: "180px" }}
+                    slots={{
+                      openPickerIcon: Icons.CalendarContained,
+                    }}
+                    slotProps={{
+                      field: { clearable: true, placeholder: "Конец даты" },
+                      openPickerButton: { color: "purpleBlue" },
+                    }}
+                  />
+                </LocalizationProvider>
               </Box>
             </Collapse>
           </Box>

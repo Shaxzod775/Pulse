@@ -552,6 +552,29 @@ export const textFieldStyles = ({ theme }) => ({
   },
 });
 
+export const textFieldStylesV2 = ({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-root": {
+    backgroundColor: "#fff",
+    minHeight: "43px",
+    borderRadius: "10px",
+    ".MuiInputBase-input": {
+      padding: "8px",
+      "::placeholder": { color: "#D1D5DB", opacity: "1" },
+    },
+    ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+      {
+        border: "1px solid #E5E7EB !important",
+        // boxShadow: "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+      },
+  },
+  "& .MuiFormHelperText-root": {
+    color: "crimson",
+    fontSize: ".8rem",
+    margin: "2px 0 -10px 12px",
+  },
+});
+
 export const muiTelInputStyles = ({ theme }) => ({
   ...textFieldStyles({ theme }),
   "& .MuiButtonBase-root.MuiIconButton-root": {
