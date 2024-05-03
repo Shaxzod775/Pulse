@@ -31,6 +31,10 @@ import {
   TextFieldStyled,
   SelectStyled,
   customMenuProps,
+  selectStylesV2,
+  InputBaseStyledV2,
+  TypographyStyled,
+  CustomCheckbox,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -40,17 +44,6 @@ import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 import { leadSources, leadStatuses } from "../../../../Constants/testData";
-
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  padding: "0 8px 0 0",
-  color: "grey",
-  "&.Mui-checked": {
-    color: "grey",
-  },
-  "&:hover": {
-    backgroundColor: "transparent", // remove hover background color
-  },
-}));
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -136,25 +129,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const [anchorCourse, setAnchorCourse] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
-  const handleChangeStatus = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedStatuses(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const handleChangeCourse = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedCourses(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  const [selectedLeadSources, setSelectedLeadSources] = useState(["0"]);
 
   const handleClickStatusSelect = (e) => {
     setAnchorStatus(e.currentTarget);
@@ -169,6 +144,17 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const handleCloseCourseSelect = (e) => {
     e.stopPropagation();
     setAnchorCourse(null);
+  };
+
+  // Function to handle change in select with multiple property
+  const handleChangeMultipleSelect = (setter) => (event) => {
+    const {
+      target: { value },
+    } = event;
+    setter(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   const handleClickOpen = () => {
@@ -219,7 +205,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   autoWidth
                   multiple
                   value={selectedStatuses}
-                  onChange={handleChangeStatus}
+                  onChange={handleChangeMultipleSelect(setSelectedStatuses)}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
                       if (selected.length === leadSources.length) {
@@ -270,7 +256,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
                     {(selectedCourses.length < 1 ||
                       selectedCourses.length === courses.length) &&
-                      "Все"}
+                      "Все курсы"}
                   </span>
                 </label>
                 <SelectStyled
@@ -278,7 +264,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   autoWidth
                   multiple
                   value={selectedCourses}
-                  onChange={handleChangeCourse}
+                  onChange={handleChangeMultipleSelect(setSelectedCourses)}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
                       if (selected.length === courses.length) {
@@ -313,6 +299,32 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   ))}
                 </SelectStyled>
               </HeaderDiv>
+              <Select
+                multiple
+                required
+                value={selectedLeadSources}
+                onChange={handleChangeMultipleSelect(setSelectedLeadSources)}
+                renderValue={(selected) => {
+                  if (selected.length === 1) return "Откуда лид";
+                  return selected.slice(1).join(", ");
+                }}
+                MenuProps={customMenuProps}
+                sx={{
+                  ...selectStylesV2({ theme }),
+                  minWidth: "200px",
+                }}
+                input={<InputBaseStyledV2 />}
+                IconComponent={Icons.ArrowDBold}
+              >
+                {leadSources.map((status, i) => (
+                  <MenuItem value={status} key={i}>
+                    <CustomCheckbox
+                      checked={selectedLeadSources.indexOf(status) > -1}
+                    />
+                    <ListItemText primary={status} />
+                  </MenuItem>
+                ))}
+              </Select>
             </div>
           </div>
 

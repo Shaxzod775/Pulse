@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Button,
   ButtonBase,
+  Collapse,
   Grid,
   IconButton,
   InputBase,
@@ -39,15 +41,24 @@ import {
   AutocompleteMenuProps,
   AutocompleteStyledV2,
   AutocompleteFieldV2,
+  TypographyStyled,
+  textFieldStylesV2,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import StudentCard from "../StudentCard/StudentCard";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ru } from "date-fns/locale";
+import { russianLocale } from "../../../../Constants/dateLocales";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
 import { teacherNames } from "../../../../Constants/testData";
+
+import useToggle from "../../../../hooks/useToggle";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -65,12 +76,21 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const { allCourseNames } = useCourses();
   const navigate = useNavigate();
 
+  const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
+
   const [teacher, setTeacher] = useState("");
 
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
   const [selectedGroup, changeSelectedGroup] = useInput("0");
+
+  const [selectedGroupStatuses, setSelectedGroupStatuses] = useState(["0"]);
+
+  const [selectedTags, setSelectedTags] = useState(["0"]);
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
@@ -92,6 +112,27 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  // Function to handle change in select with multiple property
+  const handleChangeMultipleSelect = (setter) => (event) => {
+    const {
+      target: { value },
+    } = event;
+    setter(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  // Function to handle change in date
+  const handleDateChange = (setter) => (newDate) => {
+    if (newDate instanceof Date && !isNaN(newDate)) {
+      setter(newDate);
+    } else {
+      // Handle invalid input date here
+      setter(null);
+    }
   };
 
   const goBack = () => {
@@ -130,156 +171,290 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   return (
     <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
       <Main>
-        <div className="flex items-stretch justify-between">
-          <div className="flex items-center gap-md">
-            <ButtonStyled
-              variant="outlined"
-              sx={headerItemStyles}
-              color="grey"
-              onClick={goBack}
-            >
-              <Icons.ArrowL />
-            </ButtonStyled>
-            <Title>Ученики</Title>
-            <div className="flex items-stretch gap-xxs full-height">
-              <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
-                <div className="flex items-center">
-                  <Icons.Search
-                    style={{ boxSizing: "content-box", paddingRight: "8px" }}
-                    color="#E5E7EB"
-                  />
-                  <InputBase
-                    sx={{ color: theme.typography.color.darkBlue }}
-                    placeholder="Поиск по ученику..."
-                  />
-                </div>
-              </HeaderDiv>
-              <AutocompleteStyledV2
-                options={teacherNames}
-                value={teacher}
-                onChange={handleTeacherChange}
-                renderInput={(params) => (
-                  <AutocompleteFieldV2
-                    {...params}
-                    required
-                    id="subject"
-                    variant="outlined"
-                    placeholder="Учитель"
-                  />
-                )}
-                popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
-                clearIcon={<Icons.Delete color="#9CA3AF" />}
-                slotProps={{ paper: AutocompleteMenuProps }}
-                // open={true}
-              />
-              <HeaderDiv
-                sx={{
-                  position: "relative",
-                  cursor: "pointer",
-                  label: { cursor: "pointer" },
-                }}
-                className="flex items-stretch full-height p-xxs2"
-                onClick={handleClickCourseSelect}
+        <Box className="flex flex-col" rowGap="16px">
+          <div className="flex items-stretch justify-between">
+            <div className="flex items-center gap-md">
+              <ButtonStyled
+                variant="outlined"
+                sx={headerItemStyles}
+                color="grey"
+                onClick={goBack}
               >
-                <label
-                  htmlFor="course-select"
-                  className="flex items-center full-height"
-                >
-                  <Icons.NotebookBookmark color="#b4b7c3" />
-                  <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
-                    {(selectedCourses.length < 1 ||
-                      selectedCourses.length === allCourseNames.length) &&
-                      "Все"}
-                  </span>
-                </label>
-                <SelectStyled
-                  id="course-select"
-                  autoWidth
-                  multiple
-                  value={selectedCourses}
-                  onChange={handleChangeCourse}
-                  renderValue={(selected) => {
-                    if (selected.length > 1) {
-                      if (selected.length === allCourseNames.length) {
-                        return "";
-                      }
-                      return "..."; // Render "..." if multiple courses are selected
-                    }
-                    return selected;
-                  }}
-                  IconComponent={
-                    Boolean(anchorCourseSelect)
-                      ? Icons.ArrowUBold
-                      : Icons.ArrowDBold
-                  }
-                  onClose={handleCloseCourseSelect}
-                  MenuProps={{
-                    ...customMenuProps,
-                    anchorEl: anchorCourseSelect,
-                    open: Boolean(anchorCourseSelect),
-                    onClose: handleCloseCourseSelect,
-                  }}
+                <Icons.ArrowL />
+              </ButtonStyled>
+              <Title>Ученики</Title>
+              <div className="flex items-stretch gap-xxs full-height">
+                <InputBaseStyledV2
+                  placeholder="Поиск по ученику..."
                   sx={{
-                    "& > svg": { transform: "none !important" },
+                    position: "relative",
+                    minWidth: "240px",
+                    width: "240px",
+                    color: theme.typography.color.darkBlue,
+                    "& .MuiInputBase-input": { paddingLeft: "36px" },
                   }}
+                  startAdornment={
+                    <Icons.Search
+                      color="#AEB2BA"
+                      width="20px"
+                      style={{ position: "absolute", left: "8px", zIndex: "1" }}
+                    />
+                  }
+                />
+                <AutocompleteStyledV2
+                  options={teacherNames}
+                  value={teacher}
+                  onChange={handleTeacherChange}
+                  renderInput={(params) => (
+                    <AutocompleteFieldV2
+                      {...params}
+                      required
+                      id="subject"
+                      variant="outlined"
+                      placeholder="Учитель"
+                    />
+                  )}
+                  popupIcon={<Icons.ArrowDBold color="#9CA3AF" />}
+                  clearIcon={<Icons.Delete color="#9CA3AF" />}
+                  slotProps={{ paper: AutocompleteMenuProps }}
+                  // open={true}
+                />
+                <HeaderDiv
+                  sx={{
+                    position: "relative",
+                    cursor: "pointer",
+                    label: { cursor: "pointer" },
+                  }}
+                  className="flex items-stretch full-height p-xxs2"
+                  onClick={handleClickCourseSelect}
                 >
-                  {allCourseNames.map((course, i) => (
-                    <MenuItem value={course} key={i}>
-                      <CustomCheckbox
-                        checked={selectedCourses.indexOf(course) > -1}
-                      />
-                      <ListItemText primary={course} />
-                      {/* {course} */}
+                  <label
+                    htmlFor="course-select"
+                    className="flex items-center full-height"
+                  >
+                    <Icons.NotebookBookmark color="#b4b7c3" />
+                    <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
+                      {(selectedCourses.length < 1 ||
+                        selectedCourses.length === allCourseNames.length) &&
+                        "Все курсы"}
+                    </span>
+                  </label>
+                  <SelectStyled
+                    id="course-select"
+                    autoWidth
+                    multiple
+                    value={selectedCourses}
+                    onChange={handleChangeCourse}
+                    renderValue={(selected) => {
+                      if (selected.length > 1) {
+                        if (selected.length === allCourseNames.length) {
+                          return "";
+                        }
+                        return "..."; // Render "..." if multiple courses are selected
+                      }
+                      return selected;
+                    }}
+                    IconComponent={
+                      Boolean(anchorCourseSelect)
+                        ? Icons.ArrowUBold
+                        : Icons.ArrowDBold
+                    }
+                    onClose={handleCloseCourseSelect}
+                    MenuProps={{
+                      ...customMenuProps,
+                      anchorEl: anchorCourseSelect,
+                      open: Boolean(anchorCourseSelect),
+                      onClose: handleCloseCourseSelect,
+                    }}
+                    sx={{
+                      "& > svg": { transform: "none !important" },
+                    }}
+                  >
+                    {allCourseNames.map((course, i) => (
+                      <MenuItem value={course} key={i}>
+                        <CustomCheckbox
+                          checked={selectedCourses.indexOf(course) > -1}
+                        />
+                        <ListItemText primary={course} />
+                        {/* {course} */}
+                      </MenuItem>
+                    ))}
+                  </SelectStyled>
+                </HeaderDiv>
+                <Select
+                  required
+                  value={selectedGroup}
+                  onChange={changeSelectedGroup}
+                  MenuProps={customMenuProps}
+                  sx={selectStylesV2({ theme })}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  <MenuItem value="0">
+                    <ListItemText>Все группы</ListItemText>
+                  </MenuItem>
+                  {["GR-0010", "GR-0100", "GR-0022"].map((group) => (
+                    <MenuItem key={group} value={group}>
+                      <ListItemText primary={group} />
                     </MenuItem>
                   ))}
-                </SelectStyled>
-              </HeaderDiv>
-              <Select
-                required
-                value={selectedGroup}
-                onChange={changeSelectedGroup}
-                MenuProps={customMenuProps}
-                sx={selectStylesV2({ theme })}
-                input={<InputBaseStyledV2 />}
-                IconComponent={Icons.ArrowDBold}
-              >
-                <MenuItem value="0">
-                  <ListItemText>Все группы</ListItemText>
-                </MenuItem>
-                {["GR-0010", "GR-0100", "GR-0022"].map((group) => (
-                  <MenuItem key={group} value={group}>
-                    <ListItemText primary={group} />
-                  </MenuItem>
-                ))}
-              </Select>
+                </Select>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-sm">
-            <Link to={routes.CABINET + routes.STUDENTS + routes.NEW}>
-              <ButtonStyled variant="contained" color="purpleBlue">
-                <div className="flex items-center gap-x3s">
-                  <Icons.UserAdd />
-                  <span>Добавить ученика</span>
-                </div>
-              </ButtonStyled>
-            </Link>
-            {/* <ButtonStyled variant="outlined" color="purpleBlue">
+            <div className="flex items-center gap-sm">
+              <Link to={routes.CABINET + routes.STUDENTS + routes.NEW}>
+                <ButtonStyled variant="contained" color="purpleBlue">
+                  <div className="flex items-center gap-x3s">
+                    <Icons.UserAdd />
+                    <span>Добавить ученика</span>
+                  </div>
+                </ButtonStyled>
+              </Link>
+              {/* <ButtonStyled variant="outlined" color="purpleBlue">
               <div className="flex items-center gap-x3s">
                 <Icons.InboxIn />
                 <span>Скачать список</span>
               </div>
             </ButtonStyled> */}
 
-            <ButtonStyled
-              variant="outlined"
-              color="purpleBlue"
-              sx={{ minWidth: "0" }}
-            >
-              <Icons.MenuDots />
-            </ButtonStyled>
+              <ButtonStyled
+                variant="outlined"
+                color="purpleBlue"
+                sx={{ minWidth: "0" }}
+              >
+                <Icons.MenuDots />
+              </ButtonStyled>
+            </div>
           </div>
-        </div>
+          <Box>
+            <Box
+              className="flex items-center"
+              columnGap="4px"
+              maxWidth="max-content"
+              sx={{ cursor: "pointer" }}
+              onClick={toggleAllfiltersOpen}
+            >
+              <TypographyStyled colorFromTheme="purpleBlue">
+                Показать все фильтры
+              </TypographyStyled>
+              <TypographyStyled colorFromTheme="purpleBlue" display="flex">
+                <Icons.ArrowDBold
+                  style={{
+                    transform: `rotate(${allFiltersOpen ? "180deg" : "0deg"})`,
+                    transition: "all .2s ease-in-out",
+                  }}
+                />
+              </TypographyStyled>
+            </Box>
+            <Collapse orientation="vertical" in={allFiltersOpen}>
+              <Box display="flex" columnGap="10px" paddingTop="16px">
+                <Select
+                  multiple
+                  required
+                  value={selectedGroupStatuses}
+                  onChange={handleChangeMultipleSelect(
+                    setSelectedGroupStatuses
+                  )}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Статус ученика";
+                    return selected.slice(1).join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "240px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {[
+                    "Student status 0",
+                    "Student status 1",
+                    "Student status 2",
+                    "Student status 3",
+                  ].map((groupStatus) => (
+                    <MenuItem key={groupStatus} value={groupStatus}>
+                      <CustomCheckbox
+                        checked={
+                          selectedGroupStatuses.indexOf(groupStatus) > -1
+                        }
+                      />
+                      <ListItemText primary={groupStatus} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Select
+                  multiple
+                  required
+                  value={selectedTags}
+                  onChange={handleChangeMultipleSelect(setSelectedTags)}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Теги";
+                    return selected.slice(1).join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "150px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {["Тег 0", "Тег 1", "Тег 2", "Тег 3"].map((groupTag) => (
+                    <MenuItem key={groupTag} value={groupTag}>
+                      <CustomCheckbox
+                        checked={selectedTags.indexOf(groupTag) > -1}
+                      />
+                      <ListItemText primary={groupTag} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <InputBaseStyledV2
+                  placeholder="Дополнительный ID"
+                  sx={{
+                    position: "relative",
+                    minWidth: "240px",
+                    width: "240px",
+                    color: theme.typography.color.darkBlue,
+                  }}
+                />
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={ru}
+                  localeText={russianLocale}
+                >
+                  <DatePicker
+                    id="date-start"
+                    value={startDate}
+                    onChange={handleDateChange(setStartDate)}
+                    sx={{ ...textFieldStylesV2({ theme }), maxWidth: "180px" }}
+                    slots={{
+                      openPickerIcon: Icons.CalendarContained,
+                    }}
+                    slotProps={{
+                      field: { clearable: true, placeholder: "Начало даты" },
+                      openPickerButton: { color: "purpleBlue" },
+                    }}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={ru}
+                  localeText={russianLocale}
+                >
+                  <DatePicker
+                    id="date-start"
+                    value={endDate}
+                    onChange={handleDateChange(setEndDate)}
+                    sx={{ ...textFieldStylesV2({ theme }), maxWidth: "180px" }}
+                    slots={{
+                      openPickerIcon: Icons.CalendarContained,
+                    }}
+                    slotProps={{
+                      field: { clearable: true, placeholder: "Конец даты" },
+                      openPickerButton: { color: "purpleBlue" },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Collapse>
+          </Box>
+        </Box>
         <div
           style={{
             maxHeight: "100%",

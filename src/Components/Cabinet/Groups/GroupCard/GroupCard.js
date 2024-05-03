@@ -33,7 +33,7 @@ const GroupCard = ({
   courseTime,
   roomNumber,
   teacher,
-  handleDeleteGroup
+  handleDeleteGroup,
 }) => {
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
@@ -158,7 +158,9 @@ const GroupCard = ({
                 to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
                 className="link flex gap-x3s"
               >
-                <TypographyStyled small>{teacher.firstName} {teacher.lastName}</TypographyStyled>
+                <TypographyStyled small>
+                  {teacher.firstName} {teacher.lastName}
+                </TypographyStyled>
               </Link>
             </div>
             <div className="flex justify-between">

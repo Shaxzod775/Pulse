@@ -107,6 +107,8 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
+
   const [anchorTeacher, setAnchorTeacher] = useState(null);
 
   const [teacher, setTeacher] = useState("");
@@ -122,8 +124,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
@@ -236,7 +236,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   }}
                   startAdornment={
                     <Icons.Search
-                      color="#E5E7EB"
+                      color="#AEB2BA"
                       width="20px"
                       style={{ position: "absolute", left: "8px", zIndex: "1" }}
                     />
@@ -277,7 +277,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
                       {(selectedCourses.length < 1 ||
                         selectedCourses.length === allCourseNames.length) &&
-                        "Все"}
+                        "Все курсы"}
                     </span>
                   </label>
                   <SelectStyled
