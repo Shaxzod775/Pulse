@@ -159,12 +159,13 @@ function TagCheckbox({
         boxSizing: "border-box",
         boxShadow: "none",
         "&:hover": { boxShadow: "none" },
-        minWidth: "44px",
-        minHeight: "44px",
+        minWidth: "50px",
+        minHeight: "50px",
         padding: "10px",
         lineHeight: "inherit",
-        border: `${selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
-          }`,
+        border: `${
+          selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
+        }`,
         borderRadius: "10px",
         textTransform: "none",
         fontSize: "1rem",
@@ -196,18 +197,30 @@ const NewGroupDialog = ({
 }) => {
   const { courses, findCourseByName, allCourseNames } = useCourses();
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [name, changeName, resetName] = useInput("");
+
   const [selectedCourseName, changeSelectedCourseName] = useInput(null);
+
   const [teacher, changeTeacher, resetTeacher] = useInput(null);
+
   const [room, changeRoom, resetRoom] = useInput(null);
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
   const [selectedWeekDays, setSelectedWeekDays] = useState(
     weekDays.map(() => false)
   );
+
   const [hoursNumber, setHoursNumber] = useState("");
   const [minutesNumber, setMinutesNumber] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [endHoursNumber, setEndHoursNumber] = useState("");
+  const [endMinutesNumber, setEndMinutesNumber] = useState("");
+
+  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
+  const [tagFormOpen, setTagFormOpen] = useState(false);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -292,7 +305,7 @@ const NewGroupDialog = ({
   };
 
   // Function to handle change in hours
-  const handleHoursChange = (event) => {
+  const handleHoursChange = (setter) => (event) => {
     let inputValue = parseInt(event.target.value, 10);
 
     // Ensure the value is between 0 and 23
@@ -306,11 +319,11 @@ const NewGroupDialog = ({
       inputValue = `${inputValue}`;
     }
 
-    setHoursNumber(inputValue);
+    setter(inputValue);
   };
 
   // Function to handle change in minutes
-  const handleMinutesChange = (event) => {
+  const handleMinutesChange = (setter) => (event) => {
     let inputValue = parseInt(event.target.value, 10);
 
     // Ensure the value is between 0 and 59
@@ -324,7 +337,17 @@ const NewGroupDialog = ({
       inputValue = `${inputValue}`;
     }
 
-    setMinutesNumber(inputValue);
+    setter(inputValue);
+  };
+
+  // Function to handle adding a new tag
+  const handleAddTag = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  // Function to handle deletion of a tag
+  const handleDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
   // Function to handle form submission
@@ -340,25 +363,25 @@ const NewGroupDialog = ({
     const duration = calculateMonthDifference(startDate, endDate);
 
     const formData = new FormData();
-    formData.append('groupData', JSON.stringify({
-      name: name,
-      startDate: "2024-05-02T19:22:35.886Z",
-      endDate: "2024-11-02T19:22:35.886Z",
-      roomNumber: room,
-      courseTime: "67",
-      classDays: [
-        "21"
-      ],
-      courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
-      teacherId: "c43a2788-f292-400f-916e-6aafc6204373"
-
-    }));
+    formData.append(
+      "groupData",
+      JSON.stringify({
+        name: name,
+        startDate: "2024-05-02T19:22:35.886Z",
+        endDate: "2024-11-02T19:22:35.886Z",
+        roomNumber: room,
+        courseTime: "67",
+        classDays: ["21"],
+        courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
+        teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
+      })
+    );
 
     try {
       // Отправляем запрос на сервер с использованием Axios
-      const response = await api.post('groups/create', formData, {
+      const response = await api.post("groups/create", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -368,10 +391,9 @@ const NewGroupDialog = ({
       handleClose();
     } catch (error) {
       // Обрабатываем ошибки
-      console.error('Error submitting course:', error);
+      console.error("Error submitting course:", error);
       // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
     }
-
 
     handleClose();
   };
@@ -458,7 +480,7 @@ const NewGroupDialog = ({
                 </div>
               </div>
               <div className="full-width flex justify-between gap-sm">
-                <div className="flex flex-col gap-sm" style={{ width: "40%" }}>
+                <div className="flex flex-col gap-sm" style={{ width: "50%" }}>
                   <FormControl fullWidth variant="outlined">
                     <label htmlFor="name">
                       <FormLabel>Название группы*</FormLabel>
@@ -471,56 +493,6 @@ const NewGroupDialog = ({
                       onChange={changeName}
                     />
                   </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="subject">
-                      <FormLabel>Выбрать курс</FormLabel>
-                    </label>
-                    <AutocompleteStyled
-                      options={allCourseNames}
-                      value={selectedCourseName}
-                      onChange={handleCourseChange}
-                      renderInput={(params) => (
-                        <AutocompleteField
-                          {...params}
-                          id="subject"
-                          variant="outlined"
-                          placeholder="Выберите курс"
-                        />
-                      )}
-                      popupIcon={
-                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
-                      }
-                      clearIcon={
-                        <Icons.Delete color={theme.typography.color.darkBlue} />
-                      }
-                    />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="teacher">
-                      <FormLabel>Выбрать кабинет</FormLabel>
-                    </label>
-                    <AutocompleteStyled
-                      options={["1", "2", "3", "4", "5", "6"]}
-                      value={room}
-                      onChange={handleRoomChange}
-                      renderInput={(params) => (
-                        <AutocompleteField
-                          {...params}
-                          id="teacher"
-                          variant="outlined"
-                          placeholder="Выберите кабинет"
-                        />
-                      )}
-                      popupIcon={
-                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
-                      }
-                      clearIcon={
-                        <Icons.Delete color={theme.typography.color.darkBlue} />
-                      }
-                    />
-                  </FormControl>
-                </div>
-                <div className="flex flex-col gap-sm" style={{ width: "60%" }}>
                   <div className="flex gap-sm">
                     <FormControl fullWidth variant="outlined">
                       <label htmlFor="date-start">
@@ -571,7 +543,85 @@ const NewGroupDialog = ({
                       </LocalizationProvider>
                     </FormControl>
                   </div>
-                  <div>
+                  <FormControl fullWidth variant="outlined">
+                    <label htmlFor="teacher">
+                      <FormLabel>Выбрать кабинет</FormLabel>
+                    </label>
+                    <AutocompleteStyled
+                      options={["1", "2", "3", "4", "5", "6"]}
+                      value={room}
+                      onChange={handleRoomChange}
+                      renderInput={(params) => (
+                        <AutocompleteField
+                          {...params}
+                          id="teacher"
+                          variant="outlined"
+                          placeholder="Выберите кабинет"
+                        />
+                      )}
+                      popupIcon={
+                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                      }
+                      clearIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
+                    />
+                  </FormControl>
+                  <FormControl fullWidth variant="outlined">
+                    <label htmlFor="subject">
+                      <FormLabel>Выберите учителя</FormLabel>
+                    </label>
+                    <AutocompleteStyled
+                      options={teacherNames}
+                      value={teacher}
+                      onChange={handleTeacherChange}
+                      renderInput={(params) => (
+                        <AutocompleteField
+                          {...params}
+                          id="subject"
+                          variant="outlined"
+                          placeholder="Выберите учителя"
+                        />
+                      )}
+                      popupIcon={
+                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                      }
+                      clearIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
+                    />
+                  </FormControl>
+                </div>
+                <Box
+                  className="flex flex-col"
+                  rowGap="20px"
+                  style={{ width: "50%" }}
+                >
+                  <FormControl fullWidth variant="outlined">
+                    <label htmlFor="subject">
+                      <FormLabel>Выбрать курс</FormLabel>
+                    </label>
+                    <AutocompleteStyled
+                      options={allCourseNames}
+                      value={selectedCourseName}
+                      onChange={handleCourseChange}
+                      renderInput={(params) => (
+                        <AutocompleteField
+                          {...params}
+                          id="subject"
+                          variant="outlined"
+                          placeholder="Выберите курс"
+                        />
+                      )}
+                      popupIcon={
+                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                      }
+                      clearIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
+                    />
+                  </FormControl>
+                  <Box>
                     <label htmlFor="week-days">
                       <FormLabel>Дни недели:</FormLabel>
                     </label>
@@ -588,7 +638,14 @@ const NewGroupDialog = ({
                           </TagCheckbox>
                         ))}
                       </div>
-                      <div className="flex items-center gap-xxs2">
+                    </div>
+                  </Box>
+                  <Box>
+                    <label htmlFor="week-days">
+                      <FormLabel>Время начала и окончания урока</FormLabel>
+                    </label>
+                    <Box className="flex items-center" columnGap="24px">
+                      <Box className="flex items-center" columnGap="8px">
                         <FormControl variant="outlined">
                           <Box
                             sx={{
@@ -603,7 +660,7 @@ const NewGroupDialog = ({
                               variant="outlined"
                               placeholder="00"
                               value={hoursNumber}
-                              onChange={handleHoursChange}
+                              onChange={handleHoursChange(setHoursNumber)}
                               sx={timeInputStyles}
                               autoComplete="off"
                             />
@@ -624,46 +681,141 @@ const NewGroupDialog = ({
                               variant="outlined"
                               placeholder="00"
                               value={minutesNumber}
-                              onChange={handleMinutesChange}
+                              onChange={handleMinutesChange(setMinutesNumber)}
                               sx={timeInputStyles}
                               autoComplete="off"
                             />
                           </Box>
                         </FormControl>
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ maxWidth: "66.66%" }}>
-                    <FormControl fullWidth variant="outlined">
-                      <label htmlFor="subject">
-                        <FormLabel>Выберите учителя</FormLabel>
-                      </label>
-                      <AutocompleteStyled
-                        options={teacherNames}
-                        value={teacher}
-                        onChange={handleTeacherChange}
-                        renderInput={(params) => (
-                          <AutocompleteField
-                            {...params}
-                            id="subject"
+                      </Box>
+                      <Box className="flex items-center" columnGap="8px">
+                        <FormControl variant="outlined">
+                          <Box
+                            sx={{
+                              aspectRatio: 1,
+                              maxWidth: "50px",
+                              maxHeight: "50px",
+                            }}
+                          >
+                            <TextFieldStyled
+                              type="number"
+                              id="name"
+                              variant="outlined"
+                              placeholder="00"
+                              value={endHoursNumber}
+                              onChange={handleHoursChange(setEndHoursNumber)}
+                              sx={timeInputStyles}
+                              autoComplete="off"
+                            />
+                          </Box>
+                        </FormControl>
+                        <Typography color="#D1D5DB">:</Typography>
+                        <FormControl variant="outlined">
+                          <Box
+                            sx={{
+                              aspectRatio: 1,
+                              maxWidth: "50px",
+                              maxHeight: "50px",
+                            }}
+                          >
+                            <TextFieldStyled
+                              type="number"
+                              id="name"
+                              variant="outlined"
+                              placeholder="00"
+                              value={endMinutesNumber}
+                              onChange={handleMinutesChange(
+                                setEndMinutesNumber
+                              )}
+                              sx={timeInputStyles}
+                              autoComplete="off"
+                            />
+                          </Box>
+                        </FormControl>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box>
+                    <label htmlFor="week-days">
+                      <FormLabel>Теги</FormLabel>
+                    </label>
+                    <Box className="full-width flex flex-wrap" gap="5px">
+                      {tags.map((tag, i) => (
+                        <Chip
+                          label={tag}
+                          onDelete={() => handleDeleteTag(tag)}
+                          key={i}
+                          variant="outlined"
+                          color="purpleBlue"
+                          sx={{
+                            borderRadius: "8px",
+                          }}
+                          deleteIcon={
+                            <Icons.Delete
+                              color={theme.typography.color.darkBlue}
+                            />
+                          }
+                        />
+                      ))}
+                      {tagFormOpen && (
+                        <FormControl variant="outlined">
+                          <TextField
+                            autoFocus
+                            required
+                            onBlur={() => {
+                              setTagFormOpen(!tagFormOpen);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                setTagFormOpen(false);
+                                handleAddTag(e.target.value);
+                              }
+                            }}
+                            id="info"
                             variant="outlined"
-                            placeholder="Выберите учителя"
+                            sx={{
+                              fontSize: theme.typography.fontSize.xs,
+                              fontWeight: "400",
+                              color: "inherit",
+                              "& .MuiInputBase-root": {
+                                borderRadius: "8px",
+                                ".MuiInputBase-input": {
+                                  width: "100px",
+                                  padding: "4.5px 12px",
+                                  "::placeholder": {
+                                    color: "#D1D5DB",
+                                    opacity: "1",
+                                  },
+                                },
+                                ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+                                  {
+                                    border: "1px solid #E5E7EB !important",
+                                    boxShadow:
+                                      "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                                  },
+                              },
+                              "& .MuiFormHelperText-root": {
+                                color: "crimson",
+                                fontSize: ".8rem",
+                                margin: "2px 0 -10px 12px",
+                              },
+                            }}
                           />
-                        )}
-                        popupIcon={
-                          <Icons.ArrowD
-                            color={theme.typography.color.darkBlue}
-                          />
-                        }
-                        clearIcon={
-                          <Icons.Delete
-                            color={theme.typography.color.darkBlue}
-                          />
-                        }
+                        </FormControl>
+                      )}
+                      <Chip
+                        label="+"
+                        variant="outlined"
+                        color="purpleBlue"
+                        sx={{
+                          borderRadius: `${theme.custom.spacing.xxs}px`,
+                        }}
+                        onClick={() => setTagFormOpen(!tagFormOpen)}
                       />
-                    </FormControl>
-                  </div>
-                </div>
+                    </Box>
+                  </Box>
+                </Box>
               </div>
             </div>
 
