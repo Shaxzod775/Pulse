@@ -211,12 +211,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
               </ButtonStyled>
               <Title>Группы</Title>
               <div className="flex items-stretch gap-xxs full-height">
-                {/* <HeaderDiv className="flex items-stretch full-height p-r-xxs2 p-l-xxs2">
-                <div className="flex items-center">
-                  <Icons.Search
-                    style={{ boxSizing: "content-box", paddingRight: "8px" }}
-                    color="#E5E7EB"
-                  /> */}
                 <InputBaseStyledV2
                   placeholder="Поиск по группе..."
                   sx={{
@@ -234,8 +228,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     />
                   }
                 />
-                {/* </div>
-              </HeaderDiv> */}
                 <AutocompleteStyledV2
                   options={teacherNames}
                   value={teacher}
@@ -315,6 +307,30 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     ))}
                   </SelectStyled>
                 </HeaderDiv>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-sm">
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                onClick={handleClickOpen}
+              >
+                <div className="flex items-center gap-xs">
+                  <Icons.AddCircle />
+                  <span>Создать группу</span>
+                </div>
+              </ButtonStyled>
+            </div>
+          </div>
+          <Box>
+            <Box onClick={toggleAllfiltersOpen} sx={{ cursor: "pointer" }}>
+              <TypographyStyled colorFromTheme="purpleBlue">
+                Показать все фильтры
+              </TypographyStyled>
+            </Box>
+            <Collapse orientation="vertical" in={allFiltersOpen}>
+              <Box paddingTop="16px">
                 <Select
                   multiple
                   required
@@ -341,30 +357,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     </MenuItem>
                   ))}
                 </Select>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-sm">
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-xs">
-                  <Icons.AddCircle />
-                  <span>Создать группу</span>
-                </div>
-              </ButtonStyled>
-            </div>
-          </div>
-          <Box>
-            <Box onClick={toggleAllfiltersOpen} sx={{ cursor: "pointer" }}>
-              <TypographyStyled colorFromTheme="purpleBlue">
-                Показать все фильтры
-              </TypographyStyled>
-            </Box>
-            <Collapse orientation="vertical" in={allFiltersOpen}>
-              <Box paddingTop="16px">2</Box>
+              </Box>
             </Collapse>
           </Box>
         </Box>
