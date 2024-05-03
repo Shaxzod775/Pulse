@@ -25,7 +25,7 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 
-const StudentCard = ({ id, name, handleDeleteStudent }) => {
+const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDeleteStudent }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -68,7 +68,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
                 fontWeight={600}
                 letterSpacing="0.32px"
               >
-                {name}
+                {firstName} {lastName}
               </TypographyStyled>
               <TypographyStyled
                 color="#AEB2BA"
@@ -139,7 +139,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
               <TypographyStyled>Номер</TypographyStyled>
             </InfoWithIcon>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
-              <TypographyStyled small>+998 (98) 765-43-21</TypographyStyled>
+              <TypographyStyled small>{phoneNumber}</TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">
@@ -148,7 +148,7 @@ const StudentCard = ({ id, name, handleDeleteStudent }) => {
               <TypographyStyled>E-mail</TypographyStyled>
             </InfoWithIcon>
             <Link to="mailto:example@gmail.com" className="link flex gap-x3s">
-              <TypographyStyled small>example@gmail.com</TypographyStyled>
+              <TypographyStyled small>{email}</TypographyStyled>
             </Link>
           </div>
         </Box>

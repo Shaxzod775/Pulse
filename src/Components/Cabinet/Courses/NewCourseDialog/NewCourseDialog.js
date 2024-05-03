@@ -28,6 +28,7 @@ import Dropzone from "react-dropzone";
 import { getRussianWord } from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { FormLabelStyled } from "../../CabinetStyles";
+import api from "../../../../Core/api"
 
 const timeInputStyles = {
   minHeight: "unset",
@@ -270,22 +271,40 @@ const NewCourseDialog = ({
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (nameError) {
       return; // Prevent form submission if name is not unique
     }
     // const monthsDifference = calculateMonthDifference(startDate, endDate);
-    const newCourse = createCourse({
+    const formData = new FormData();
+    formData.append('courseData', JSON.stringify({
       name: name,
       price: price,
       duration: selectedDuration,
-      // startDate: startDate,
-      // endDate: endDate,
-      thumbnail: selectedImage,
-    });
+      // startDate: startDate, // Если требуется
+      // endDate: endDate, // Если требуется
+      // thumbnail: selectedImage,
+    }));
 
-    handleAddCourse(newCourse);
+    try {
+      // Отправляем запрос на сервер с использованием Axios
+      const response = await api.post('courses/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      // Обрабатываем успешный ответ, если это необходимо
+      console.log(response);
+      handleAddCourse()
+      handleClose();
+    } catch (error) {
+      // Обрабатываем ошибки
+      console.error('Error submitting course:', error);
+      // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
+    }
+
     handleClose();
   };
 

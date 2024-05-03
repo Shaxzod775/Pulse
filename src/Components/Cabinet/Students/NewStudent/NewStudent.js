@@ -1,5 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import api from "../../../../Core/api";
+
 import * as routes from "../../../../Constants/routes";
 import {
   Button,
@@ -120,7 +123,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewStudent = () => {
+const NewStudent = ({fetchStudents}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -286,6 +289,59 @@ const NewStudent = () => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
+  const handleClickAdd = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append('studentData', JSON.stringify({
+
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      dateOfBirth: "1995-09-30",
+      phoneNumber: phoneNumber,
+      secondPhoneNumber: additionalPhoneNumber,
+      gender: "MALE",
+      passportSeries: passportSeries,
+      passportNumber: passportNumber,
+      address: {
+        region: "string",
+        state: "string",
+        location: "string"
+      },
+      email: email,
+      contractNumber: "string",
+      tags: [
+        "string"
+      ],
+      contacts: [
+        {
+          name: "string",
+          phoneNumber: "string"
+        }
+      ],
+      description: "string"
+    }));
+    try {
+
+      const response = await api.post('students/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // Обработка успешного ответа, если необходимо
+      console.log('Teacher created:', response.data);
+      fetchStudents();
+      navigate('/cabinet/students')
+
+    } catch (error) {
+      // Обработка ошибок
+      console.error('Error creating teacher:', error);
+    }
+  };
+
   return (
     <Root>
       <Main>
@@ -317,14 +373,14 @@ const NewStudent = () => {
             <DialogButton
               variant="outlined"
               color="purpleBlue"
-              // onClick={handleClickOpen}
+              onClick={goBack}
             >
               <span>Отменить</span>
             </DialogButton>
             <DialogButton
               variant="contained"
               color="purpleBlue"
-              // onClick={handleClickOpen}
+              onClick={handleClickAdd}
             >
               <span>Добавить</span>
             </DialogButton>
@@ -637,10 +693,9 @@ const NewStudent = () => {
                                 id="city"
                                 variant="outlined"
                                 placeholder="Район"
-                                helperText={`${
-                                  region ? "" : "Сначала выберите регион"
-                                }`}
-                                // error={!city}
+                                helperText={`${region ? "" : "Сначала выберите регион"
+                                  }`}
+                              // error={!city}
                               />
                             )}
                             disabled={!region}
@@ -854,11 +909,11 @@ const NewStudent = () => {
                               },
                             },
                             ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
-                              {
-                                border: "1px solid #E5E7EB !important",
-                                boxShadow:
-                                  "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
-                              },
+                            {
+                              border: "1px solid #E5E7EB !important",
+                              boxShadow:
+                                "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                            },
                           },
                           "& .MuiFormHelperText-root": {
                             color: "crimson",

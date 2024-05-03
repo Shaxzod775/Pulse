@@ -25,7 +25,7 @@ import { NumericFormat } from "react-number-format";
 import { Link, useNavigate } from "react-router-dom";
 import { getRussianWord } from "../../../../helpers/helpers";
 
-const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
+const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -66,7 +66,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
             </div>
             <div className="flex flex-col justify-around">
               <TypographyStyled fontWeight={600} letterSpacing="0.48px">
-                {name}
+              {firstName} {lastName}
               </TypographyStyled>
               <TypographyStyled
                 color="#AEB2BA"
@@ -127,7 +127,7 @@ const TeacherCard = ({ id, name, handleDeleteTeacher }) => {
               <TypographyStyled>Номер</TypographyStyled>
             </InfoWithIcon>
             <Link to="tel:/+998987654321" className="link flex gap-x3s">
-              <TypographyStyled small>+998 (98) 765-43-21</TypographyStyled>
+              <TypographyStyled small>{phoneNumber}</TypographyStyled>
             </Link>
           </div>
           <div className="flex justify-between">

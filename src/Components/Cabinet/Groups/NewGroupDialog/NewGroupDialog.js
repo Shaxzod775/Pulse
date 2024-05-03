@@ -43,6 +43,8 @@ import { ru } from "date-fns/locale";
 import { russianLocale } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 
+import api from "../../../../Core/api";
+
 const rainbowCycle = keyframes`
   0% {
     border-color: hsl(0, 100%, 50%); /* Red */
@@ -161,9 +163,8 @@ function TagCheckbox({
         minHeight: "44px",
         padding: "10px",
         lineHeight: "inherit",
-        border: `${
-          selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
-        }`,
+        border: `${selected ? `1px solid ${theme.palette[otherProps.color].main}` : ""
+          }`,
         borderRadius: "10px",
         textTransform: "none",
         fontSize: "1rem",
@@ -327,14 +328,9 @@ const NewGroupDialog = ({
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // id,
-    // name,
-    // subject,
-    // startDate,
-    // endDate,
-    // thumbnail,
+
     const weekDays = selectedWeekDays.reduce((acc, val, index) => {
       if (val) {
         acc.push(index);
@@ -342,26 +338,41 @@ const NewGroupDialog = ({
       return acc;
     }, []);
     const duration = calculateMonthDifference(startDate, endDate);
-    const newGroup = createGroup({
-      name,
-      subject: selectedCourseName,
-      teacher,
-      startDate: startDate
-        ? !isNaN(startDate.getTime())
-          ? startDate
-          : new Date(2024, 3, 2)
-        : new Date(2024, 3, 2),
-      endDate: endDate
-        ? !isNaN(endDate.getTime())
-          ? endDate
-          : new Date(2024, 3, 2)
-        : new Date(2024, 3, 2),
-      duration,
+
+    const formData = new FormData();
+    formData.append('groupData', JSON.stringify({
+      name: name,
+      startDate: "2024-05-02T19:22:35.886Z",
+      endDate: "2024-11-02T19:22:35.886Z",
       roomNumber: room,
-      weekDays: weekDays,
-      thumbnail: selectedImage,
-    });
-    handleAddGroup(newGroup);
+      courseTime: "67",
+      classDays: [
+        "21"
+      ],
+      courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
+      teacherId: "c43a2788-f292-400f-916e-6aafc6204373"
+
+    }));
+
+    try {
+      // Отправляем запрос на сервер с использованием Axios
+      const response = await api.post('groups/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // Обрабатываем успешный ответ, если это необходимо
+      console.log(response);
+      handleAddGroup();
+      handleClose();
+    } catch (error) {
+      // Обрабатываем ошибки
+      console.error('Error submitting course:', error);
+      // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
+    }
+
+
     handleClose();
   };
 

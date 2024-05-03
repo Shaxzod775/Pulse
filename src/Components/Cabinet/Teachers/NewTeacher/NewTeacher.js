@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as routes from "../../../../Constants/routes";
+import * as routes from "../../../../Constants/routes"
+
+import api from "../../../../Core/api";
+
 import {
   Box,
   Button,
@@ -130,7 +133,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewTeacher = () => {
+const NewTeacher = ({fetchTeachers}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -154,7 +157,7 @@ const NewTeacher = () => {
 
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
-
+  const [location, changeLocation] = useState("")
   const [email, changeEmail] = useInput("");
   const [emailError, setEmailError] = useState(false);
   const [emailCorp, changeEmailCorp] = useInput("");
@@ -169,7 +172,7 @@ const NewTeacher = () => {
   ]);
   const [visibleCount, setVisibleCount] = useState(1);
 
-  const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
+  const [tags, setTags] = useState(["Тег 1"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
   const handleImageSelection = (acceptedFiles) => {
@@ -315,6 +318,97 @@ const NewTeacher = () => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
+  const handleClickAdd = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append('teacherData', JSON.stringify({
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      email: email,
+      corporateEmail: emailCorp,
+      phoneNumber: phoneNumber,
+      secondPhoneNumber: additionalPhoneNumber,
+      gender: "MALE",
+      dateOfBirth: "1995-09-30",
+      passportSeries: passportSeries,
+      passportNumber: passportNumber,
+      contacts: [
+        { "name": "alwi", "phoneNumber": "1231321123" },
+        { "name": "annaa", "phoneNumber": "123212312" }
+      ],
+      education: null,
+      contractNumber: "1223",
+      description: "sdasdassadasdasd",
+      inn: null,
+      inps: null,
+      pnfl: null,
+      tags: ["saasd", "boboy", "asdasda"],
+      address: {
+        region: "namangan city",
+        state: "namangan viloyat",
+        location: "mahalla hontaxtada okeee"
+      }
+    }));
+    try {
+      // const teacherData = {
+      //   firstName: firstName,
+      //   lastName: lastName,
+      //   middleName: middleName,
+      //   email: email,
+      //   corporateEmail: emailCorp,
+      //   phoneNumber: phoneNumber,
+      //   secondPhoneNumber: additionalPhoneNumber,
+      //   gender: "MALE", // Предположим, что у вас есть значение пола или вы можете добавить его в состояние
+      //   dateOfBirth: "1995-09-30", // Предположим, что вы выбираете дату рождения
+      //   passportSeries: passportSeries,
+      //   passportNumber: passportNumber,
+      //   // contacts: parentsPhoneNumbers,
+      //   contacts: [
+      //     {
+
+      //       "name": "alwi",
+      //       "phoneNumber": "1231321123"
+      //     },
+      //     {
+      //       "name": "annaa",
+      //       "phoneNumber": "123212312"
+      //     }
+      //   ],
+      //   education: null, // Замените на соответствующее значение образования, если есть
+      //   contractNumber: "1223", // Предположим, что у вас есть номер контракта
+      //   description: "sdasdassadasdasd", // Описание
+      //   inn: null, // ИНН
+      //   inps: null, // ИНПС
+      //   pnfl: null, // ПНФЛ
+      //   tags: tags,
+      //   address: {
+      //     region: region,
+      //     state: district,
+      //     location: location // Местоположение
+      //   }
+      // };
+
+
+
+      const response = await api.post('teachers/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // Обработка успешного ответа, если необходимо
+      console.log('Teacher created:', response.data);
+      fetchTeachers();
+      navigate('/cabinet/teachers')
+    } catch (error) {
+      // Обработка ошибок
+      console.error('Error creating teacher:', error);
+    }
+  };
+
   return (
     <Root>
       <Main>
@@ -346,14 +440,14 @@ const NewTeacher = () => {
             <DialogButton
               variant="outlined"
               color="purpleBlue"
-              // onClick={handleClickOpen}
+              onClick={goBack}
             >
               <span>Отменить</span>
             </DialogButton>
             <DialogButton
               variant="contained"
               color="purpleBlue"
-              // onClick={handleClickOpen}
+              onClick={handleClickAdd}
             >
               <span>Добавить</span>
             </DialogButton>
@@ -669,10 +763,9 @@ const NewTeacher = () => {
                                 id="city"
                                 variant="outlined"
                                 placeholder="Район"
-                                helperText={`${
-                                  region ? "" : "Сначала выберите регион"
-                                }`}
-                                // error={!city}
+                                helperText={`${region ? "" : "Сначала выберите регион"
+                                  }`}
+                              // error={!city}
                               />
                             )}
                             disabled={!region}
@@ -696,6 +789,7 @@ const NewTeacher = () => {
                       fullWidth
                       variant="outlined"
                       placeholder="Место проживания"
+                      onChange={changeLocation}
                       sx={{ marginLeft: "25%", maxWidth: "75%" }}
                     />
                     {/* </div> */}
@@ -985,11 +1079,11 @@ const NewTeacher = () => {
                               },
                             },
                             ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
-                              {
-                                border: "1px solid #E5E7EB !important",
-                                boxShadow:
-                                  "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
-                              },
+                            {
+                              border: "1px solid #E5E7EB !important",
+                              boxShadow:
+                                "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                            },
                           },
                           "& .MuiFormHelperText-root": {
                             color: "crimson",
