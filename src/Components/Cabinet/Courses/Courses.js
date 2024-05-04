@@ -136,22 +136,22 @@ NumericFormatCustom.propTypes = {
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState([]);
 
   const handleAddCourse = () => {
-    console.log("Добавлен курс")
+    console.log("Добавлен курс");
   };
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         // Выполняем GET-запрос для получения списка курсов
-        const response = await api.get('courses');
+        const response = await api.get("courses");
         // Обновляем состояние courses данными из ответа
         setCourses(response.data);
       } catch (error) {
         // Обрабатываем ошибки
-        console.error('Error fetching courses:', error);
+        console.error("Error fetching courses:", error);
         // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
       }
     };
@@ -159,8 +159,6 @@ const Courses = () => {
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchCourses();
   }, [handleAddCourse]); // Пустой массив зависимостей означает, что эффект будет выполняться только один раз при монтировании компонента
-
-
 
   // const { courses } = useCourses();
   const coursesDispatch = useCoursesDispatch();
@@ -179,29 +177,27 @@ const Courses = () => {
     setOpen(false);
   };
 
-
-
   const handleDeleteCourse = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
-    console.log(idToDeleteQuoted)
+    console.log(idToDeleteQuoted);
     try {
       // Отправляем запрос на удаление курса
-      await api.post('courses/delete', idToDeleteQuoted );
-      
-
+      await api.post("courses/delete", idToDeleteQuoted);
 
       // Если удаление прошло успешно, обновляем состояние courses, убирая удаленный курс
-      setCourses(courses.filter(course => course.id !== idToDelete));
+      setCourses(courses.filter((course) => course.id !== idToDelete));
     } catch (error) {
       // Обрабатываем ошибки
-      console.error('Error deleting course:', error);
+      console.error("Error deleting course:", error);
       // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
     }
   };
 
   return (
-    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
-      <Main>
+    <Root
+    // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
+    >
+      <Main sx={{ maxHeight: "calc(100vh - 42px)" }}>
         <div className="flex items-stretch justify-between">
           <div className="flex items-center gap-md">
             <ButtonStyled

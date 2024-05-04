@@ -169,8 +169,10 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   );
 
   return (
-    <Root sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}>
-      <Main>
+    <Root
+    // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
+    >
+      <Main sx={{ maxHeight: "calc(100vh - 42px)" }}>
         <Box className="flex flex-col" rowGap="16px">
           <div className="flex items-stretch justify-between">
             <div className="flex items-center gap-md">
