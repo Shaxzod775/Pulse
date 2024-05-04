@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ButtonStyled, Main, Root, Title, theme } from "../../CabinetStyles";
+import {
+  ButtonStyled,
+  Main,
+  Root,
+  Title,
+  TypographyStyled,
+  theme,
+} from "../../CabinetStyles";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
@@ -16,11 +23,13 @@ import {
   styled,
   IconButton,
   Dialog,
+  Box,
 } from "@mui/material";
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
 import { Height, RouteSharp } from "@mui/icons-material";
+import { weekDaysTextFull } from "../../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -642,10 +651,124 @@ const StudentProfile = () => {
     []
   );
 
+  const attendanceContent = useMemo(
+    () => (
+      <>
+        <Box>
+          <Box className="flex flex-col" rowGap="24px" maxWidth="60%">
+            <Box className="flex justify-between">
+              <Box display="flex" columnGap="14px">
+                <Box
+                  className="flex items-center"
+                  columnGap="10px"
+                  padding="10px"
+                >
+                  <Icons.UserCheckRounded color="#1C0D64" />
+                  <TypographyStyled
+                    fontSize="1.125rem"
+                    fontWeight="600"
+                    color="#1C0D64"
+                  >
+                    Посещаемость
+                  </TypographyStyled>
+                </Box>
+              </Box>
+              <Box className="flex items-center" columnGap="12px">
+                {/* <Select
+                  required
+                  value={selectedGroup}
+                  onChange={changeSelectedGroup}
+                  MenuProps={customMenuProps}
+                  sx={selectStylesV2({ theme })}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  <MenuItem value="0">
+                    <ListItemText>По А-Я</ListItemText>
+                  </MenuItem>
+                  {["По Я-А", "Sort by", "Sort by"].map((group, i) => (
+                    <MenuItem key={group} value={group}>
+                      <ListItemText primary={group} />
+                    </MenuItem>
+                  ))}
+                </Select> */}
+                <ButtonStyled
+                  sx={{ borderRadius: "50px", padding: "8px 20px" }}
+                  color="purpleBlue"
+                >
+                  <Box className="flex items-center" columnGap="10px">
+                    <Icons.CalendarContained />
+                    <Typography fontSize="1.125rem" fontWeight="600">
+                      Апрель 2024
+                    </Typography>
+                  </Box>
+                </ButtonStyled>
+                <Box className="flex items-center" columnGap="4px">
+                  <ButtonStyled
+                    variant="contained"
+                    color="purpleBlue"
+                    sx={{
+                      borderRadius: "50%",
+                      padding: "5px",
+                    }}
+                  >
+                    <Icons.ArrowDBold
+                      width="26px"
+                      height="26px"
+                      style={{ transform: "rotate(90deg)" }}
+                    />
+                  </ButtonStyled>
+                  <ButtonStyled
+                    variant="contained"
+                    color="purpleBlue"
+                    sx={{
+                      borderRadius: "50%",
+                      padding: "5px",
+                    }}
+                  >
+                    <Icons.ArrowDBold
+                      width="26px"
+                      height="26px"
+                      style={{
+                        transform: "rotate(270deg)",
+                      }}
+                    />
+                  </ButtonStyled>
+                </Box>
+              </Box>
+            </Box>
+            <Box className="flex" columnGap="12px">
+              {weekDaysTextFull.map((weekDay) => (
+                <Box
+                  className="flex items-center justify-center"
+                  width="100%"
+                  padding="3px 12px"
+                  borderRadius="35px"
+                  backgroundColor="#F4F9FD"
+                >
+                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                    {weekDay}
+                  </TypographyStyled>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      </>
+    ),
+    []
+  );
+
   const emptyElement = <></>;
   const tabContents = useMemo(
-    () => [persoalInfoContent, groupsContent, emptyElement, emptyElement],
-    [persoalInfoContent]
+    () => [
+      persoalInfoContent,
+      groupsContent,
+      attendanceContent,
+      emptyElement,
+      emptyElement,
+    ],
+    [persoalInfoContent, groupsContent]
   );
 
   return (
@@ -822,15 +945,9 @@ const StudentProfile = () => {
                   ))}
                 </div>
               </div>
-              <div
-                style={{
-                  minHeight: "450px",
-                  paddingRight: "20px",
-                  paddingLeft: "20px",
-                }}
-              >
+              <Box minHeight="450px" height="max-content">
                 {tabContents[activeTab]}
-              </div>
+              </Box>
             </div>
           </div>
         </Paper>
