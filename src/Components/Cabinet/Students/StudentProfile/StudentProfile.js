@@ -647,14 +647,204 @@ export const StudentProfile = () => {
     []
   );
 
+  const callsHistoryContent = useMemo(
+    () => (
+      <>
+        <Box className="flex flex-col" rowGap="26px">
+          <Box className="flex items-center" columnGap="10px">
+            <TypographyStyled display="flex" colorFromTheme="purpleBlue">
+              <Icons.Call />
+            </TypographyStyled>
+            <TypographyStyled fontSize="1.125rem" fontWeight="600">
+              История звонков
+            </TypographyStyled>
+          </Box>
+          <Box
+            className="flex flex-col"
+            rowGap="26px"
+            maxHeight="50vh"
+            overflow="auto"
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, i) => (
+              <Box
+                key={i}
+                className="flex items-center justify-between"
+                marginRight="10px"
+                padding="18px 25px"
+                borderRadius="25px"
+                bgcolor="#F9FAFB"
+              >
+                <TypographyStyled colorFromTheme="black" small>
+                  +998 (33) 033-15-33
+                </TypographyStyled>
+                <Box display="flex" columnGap="24px">
+                  <TypographyStyled colorFromTheme="purpleBlue" small>
+                    12 минут
+                  </TypographyStyled>
+                  <TypographyStyled colorFromTheme="black" small>
+                    13:23 | 15.02.2024
+                  </TypographyStyled>
+                  <TypographyStyled colorFromTheme="greenSuccess" small>
+                    Звонок совершен
+                  </TypographyStyled>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </>
+    ),
+    []
+  );
+
+  const smsHistoryContent = useMemo(
+    () => (
+      <>
+        <Box className="flex flex-col" rowGap="26px">
+          <Box className="flex items-center" columnGap="10px">
+            <TypographyStyled display="flex" colorFromTheme="purpleBlue">
+              <Icons.ChatRoundUnread />
+            </TypographyStyled>
+            <TypographyStyled fontSize="1.125rem" fontWeight="600">
+              SMS
+            </TypographyStyled>
+          </Box>
+          <Box
+            className="flex flex-col"
+            rowGap="26px"
+            maxHeight="50vh"
+            overflow="auto"
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, i) => (
+              <Box
+                key={i}
+                className="flex flex-col"
+                rowGap="7px"
+                marginRight="10px"
+                padding="18px 25px"
+                borderRadius="25px"
+                bgcolor="#F9FAFB"
+              >
+                <Box className="flex items-center justify-between">
+                  <TypographyStyled colorFromTheme="black" small>
+                    +998 (33) 033-15-33
+                  </TypographyStyled>
+                  <Box display="flex" columnGap="24px">
+                    <TypographyStyled colorFromTheme="black" small>
+                      13:23 | 15.02.2024
+                    </TypographyStyled>
+                  </Box>
+                </Box>
+                <Box className="flex items-center justify-between">
+                  <Box
+                    className="flex items-center"
+                    columnGap="10px"
+                    maxWidth="75%"
+                  >
+                    <TypographyStyled
+                      display="flex"
+                      colorFromTheme="purpleBlue"
+                    >
+                      <Icons.ChatRoundDots width="34px" height="34px" />
+                    </TypographyStyled>
+                    <TypographyStyled small>
+                      Office ipsum you must be muted. Strategies relaxation go
+                      eow book reinvent working nail parking. Incentivization
+                      solutionize interim search way discussions able. Light
+                      anomalies highlights initiative enable crack building out.
+                      Mint monday that box food launch unlock is. Last items
+                      goto.
+                    </TypographyStyled>
+                  </Box>
+                  <TypographyStyled colorFromTheme="greenSuccess" small>
+                    Отправлен
+                  </TypographyStyled>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </>
+    ),
+    []
+  );
+
+  const changeHistoryContent = useMemo(
+    () => (
+      <>
+        <Box className="flex flex-col" rowGap="26px">
+          <Box className="flex items-center" columnGap="10px">
+            <TypographyStyled display="flex" colorFromTheme="purpleBlue">
+              <Icons.ClipboardText />
+            </TypographyStyled>
+            <TypographyStyled fontSize="1.125rem" fontWeight="600">
+              История
+            </TypographyStyled>
+          </Box>
+          <Box
+            className="flex flex-col"
+            rowGap="26px"
+            maxHeight="50vh"
+            overflow="auto"
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, i) => (
+              <Box
+                key={i}
+                className="flex flex-col"
+                rowGap="7px"
+                marginRight="10px"
+                padding="18px 25px"
+                borderRadius="25px"
+                bgcolor="#F9FAFB"
+              >
+                <Box className="flex items-center justify-between">
+                  <TypographyStyled colorFromTheme="black" small>
+                    Баланс отредактирован
+                  </TypographyStyled>
+                  <Box display="flex" columnGap="24px">
+                    <TypographyStyled colorFromTheme="black" small>
+                      13:23 | 15.02.2024
+                    </TypographyStyled>
+                  </Box>
+                </Box>
+                <Box className="flex items-center justify-between">
+                  <Box
+                    className="flex items-center"
+                    columnGap="10px"
+                    maxWidth="75%"
+                  >
+                    <TypographyStyled
+                      display="flex"
+                      colorFromTheme="purpleBlue"
+                    >
+                      <Icons.Pen2 width="34px" height="34px" />
+                    </TypographyStyled>
+                    <TypographyStyled small>
+                      По причине перерасчета
+                    </TypographyStyled>
+                  </Box>
+                  <TypographyStyled colorFromTheme="greenSuccess" small>
+                    Sherzod Abdurahmanov
+                  </TypographyStyled>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </>
+    ),
+    []
+  );
+
   const emptyElement = <></>;
   const tabContents = useMemo(
     () => [
       persoalInfoContent,
       groupsContent,
       attendanceContent,
-      emptyElement,
-      emptyElement,
+      callsHistoryContent,
+      smsHistoryContent,
+      changeHistoryContent,
     ],
     [persoalInfoContent, groupsContent]
   );

@@ -49,6 +49,7 @@ import { ReactComponent as ArrowDCircleContained } from "./svgs/arrowDCircleCont
 import { ReactComponent as PenNewSquare } from "./svgs/penNewSquare.svg";
 import { ReactComponent as ChatRoundDots } from "./svgs/chatRoundDots.svg";
 import { ReactComponent as ChatRoundLine } from "./svgs/chatRoundLine.svg";
+import { ReactComponent as ChatRoundUnread } from "./svgs/chatRoundUnread.svg";
 import { ReactComponent as Bill } from "./svgs/bill.svg";
 import { ReactComponent as Mailbox } from "./svgs/mailbox.svg";
 import { ReactComponent as Pen } from "./svgs/pen.svg";
@@ -73,6 +74,7 @@ import { ReactComponent as Button } from "./svgs/button.svg";
 import { ReactComponent as MonthCellBg } from "./svgs/monthCellBg.svg";
 import { ReactComponent as ClipboardRemove } from "./svgs/clipboardRemove.svg";
 import { ReactComponent as ClipboardCheck } from "./svgs/clipboardCheck.svg";
+import { ReactComponent as ClipboardText } from "./svgs/clipboardText.svg";
 
 export const Icons = {
   ArrowD,
@@ -126,6 +128,7 @@ export const Icons = {
   PenNewSquare,
   ChatRoundDots,
   ChatRoundLine,
+  ChatRoundUnread,
   Bill,
   Mailbox,
   Pen,
@@ -150,4 +153,5 @@ export const Icons = {
   MonthCellBg,
   ClipboardRemove,
   ClipboardCheck,
+  ClipboardText,
 };
