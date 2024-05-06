@@ -28,8 +28,9 @@ import {
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
-import { Height, RouteSharp } from "@mui/icons-material";
+import { Height, RateReview, RouteSharp } from "@mui/icons-material";
 import { weekDaysTextFull } from "../../../../Constants/testData";
+import { monthsInGenitiveForm } from "../../../../Constants/dateLocales";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -350,6 +351,32 @@ const StudentProfile = () => {
     "SMS",
     "История",
   ];
+
+  const props = { month: 4 };
+
+  const year = new Date().getFullYear(); // Current year
+
+  const month = Number(props.month);
+  const monthInGenitiveForm = monthsInGenitiveForm[month];
+  const monthLocaleLong = new Date(2024, month).toLocaleString("ru", {
+    month: "long",
+  });
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const prevMonthDays = new Date(year, month, 0).getDate();
+  const nextMonthFirstDay = new Date(year, month + 1, 1).getDay();
+  const prevMonthDisplayDays = Array.from(
+    { length: (firstDay + 6) % 7 },
+    (_, i) => prevMonthDays - i
+  );
+  const nextMonthDisplayDays = Array.from(
+    { length: (7 - nextMonthFirstDay) % 7 },
+    (_, i) => i + 1
+  );
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const daysArray = [...Array(daysInMonth).keys()].map((i) => i + 1);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -698,8 +725,12 @@ const StudentProfile = () => {
                 >
                   <Box className="flex items-center" columnGap="10px">
                     <Icons.CalendarContained />
-                    <Typography fontSize="1.125rem" fontWeight="600">
-                      Апрель 2024
+                    <Typography
+                      fontSize="1.125rem"
+                      fontWeight="600"
+                      textTransform="capitalize"
+                    >
+                      {monthLocaleLong} 2024
                     </Typography>
                   </Box>
                 </ButtonStyled>
@@ -737,21 +768,131 @@ const StudentProfile = () => {
                 </Box>
               </Box>
             </Box>
-            <Box className="flex" columnGap="12px">
-              {weekDaysTextFull.map((weekDay) => (
-                <Box
-                  className="flex items-center justify-center"
-                  width="100%"
-                  padding="3px 12px"
-                  borderRadius="35px"
-                  backgroundColor="#F4F9FD"
-                >
-                  <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                    {weekDay}
-                  </TypographyStyled>
-                </Box>
-              ))}
+            <Box className="flex flex-col" rowGap="10px">
+              <Box display="flex" columnGap="12px">
+                {weekDaysTextFull.map((weekDay) => (
+                  <Box
+                    className="flex items-center justify-center"
+                    width="100%"
+                    padding="3px 12px"
+                    borderRadius="35px"
+                    backgroundColor="#F4F9FD"
+                  >
+                    <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                      {weekDay}
+                    </TypographyStyled>
+                  </Box>
+                ))}
+              </Box>
+              <Box
+                display="grid"
+                gridTemplateColumns="repeat(7, 1fr)"
+                rowGap="10px"
+                columnGap="12px"
+              >
+                {prevMonthDisplayDays.map((day, index) => (
+                  <Box
+                    key={index}
+                    className="flex flex-col items-center justify-center"
+                    rowGap="4px"
+                    minHeight="80px"
+                    width="100%"
+                    backgroundColor="#F4F9FD"
+                    borderRadius="20px"
+                  >
+                    <TypographyStyled
+                      fontSize="0.625rem"
+                      color="#fff"
+                    >{`${day} ${
+                      monthsInGenitiveForm[(month + 11) % 12]
+                    }`}</TypographyStyled>
+                  </Box>
+                ))}
+                {daysArray.map((day, index) => (
+                  <Box
+                    className="flex flex-col items-center justify-center"
+                    rowGap="4px"
+                    minHeight="80px"
+                    width="100%"
+                    backgroundColor="#F4F9FD"
+                    borderRadius="20px"
+                  >
+                    <Icons.Button color="#B5CBDD" />
+                    <Box
+                      padding="2px 7px"
+                      borderRadius="41px"
+                      backgroundColor="#B5CBDD"
+                    >
+                      <TypographyStyled
+                        fontSize="0.625rem"
+                        color="#fff"
+                      >{`${day} ${monthInGenitiveForm}`}</TypographyStyled>
+                    </Box>
+                  </Box>
+                ))}
+                {nextMonthDisplayDays.map((day, index) => (
+                  <Box
+                    key={index}
+                    className="flex flex-col items-center justify-center"
+                    rowGap="4px"
+                    minHeight="80px"
+                    width="100%"
+                    backgroundColor="#F4F9FD"
+                    borderRadius="20px"
+                  >
+                    <Icons.Button color="yellow" />
+                    <Box
+                      padding="2px 7px"
+                      borderRadius="41px"
+                      backgroundColor="yellow"
+                    >
+                      <TypographyStyled
+                        fontSize="0.625rem"
+                        color="#000"
+                      >{`${day} ${
+                        monthsInGenitiveForm[(month + 1) % 12]
+                      }`}</TypographyStyled>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+
+              {/* <Box
+                display="grid"
+                gridTemplateColumns="repeat(7, 1fr)"
+                rowGap="10px"
+                columnGap="12px"
+              >
+                {Array.from({ length: (firstDay + 6) % 7 }).map((_, index) => (
+                  <div key={index}></div>
+                ))}
+                {daysArray.map((day, index) => (
+                  <Box
+                    className="flex flex-col items-center justify-center"
+                    rowGap="4px"
+                    minHeight="80px"
+                    width="100%"
+                    backgroundColor="#F4F9FD"
+                    borderRadius="20px"
+                  >
+                    <Icons.Button color="#B5CBDD" />
+                    <Box
+                      padding="2px 7px"
+                      borderRadius="41px"
+                      backgroundColor="#B5CBDD"
+                    >
+                      <TypographyStyled
+                        fontSize="0.625rem"
+                        color="#fff"
+                      >{`${day} ${monthInGenitiveForm}`}</TypographyStyled>
+                    </Box>
+                  </Box>
+                ))}
+              </Box> */}
             </Box>
+            {/* {Array.from({ length: (firstDay + 6) % 7 }).map((_, index) => (
+              <div key={index}>{index}</div>
+            ))} */}
           </Box>
         </Box>
       </>

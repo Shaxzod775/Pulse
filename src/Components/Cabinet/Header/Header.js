@@ -14,7 +14,7 @@ import { Icons } from "../../../Assets/Icons/icons";
 import { useGlobal } from "../../../Core/global";
 
 const Header = () => {
-  const auth = useGlobal((state) => state.auth)
+  const auth = useGlobal((state) => state.auth);
   const navigate = useNavigate();
 
   return (
@@ -40,8 +40,11 @@ const Header = () => {
           <div className={styles["avatar"]}>
             <Icons.AnnaAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
             <div className={styles["avatar-text"]}>
-              <span className={styles["name"]}>{auth.user.fullName}</span>
-              <span className={styles["title"]}>{auth.user.roleName}</span>
+              {/* <span className={styles["name"]}>{auth.user.fullName}</span>
+              <span className={styles["title"]}>{auth.user.roleName}</span> */}
+
+              <span className={styles["name"]}>Khabibulloh Saidakhmatov</span>
+              <span className={styles["title"]}>Administrator</span>
             </div>
           </div>
         </Link>

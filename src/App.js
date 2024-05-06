@@ -7,21 +7,27 @@ import Cabinet from "./Components/Cabinet/Cabinet";
 import { useGlobal } from "./Core/global";
 
 function App() {
-  const authenticated = useGlobal((state) => state.authenticated)
+  const authenticated = useGlobal((state) => state.authenticated);
   return (
     <div className="App">
       <Routes>
         {authenticated ? (
           <>
             <Route path={routes.CABINET + "/*"} element={<Cabinet />} />
-            <Route path={routes.SIGN_IN} element={<Navigate to={routes.CABINET} replace />} />
-            <Route path={routes.HOME} element={<Navigate to={routes.CABINET} replace />} />
+            <Route
+              path={routes.SIGN_IN}
+              element={<Navigate to={routes.CABINET} replace />}
+            />
+            <Route
+              path={routes.HOME}
+              element={<Navigate to={routes.CABINET} replace />}
+            />
           </>
         ) : (
           <>
+            <Route path={routes.CABINET + "/*"} element={<Cabinet />} />
             <Route path={routes.SIGN_IN} element={<SignIn />} />
             <Route path={routes.HOME} element={<Home />} />
-
           </>
         )}
 
