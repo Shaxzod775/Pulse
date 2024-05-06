@@ -18,6 +18,7 @@ import {
   Title,
   TextFieldStyled,
   AutocompleteStyled,
+  SquareContainer,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -28,7 +29,7 @@ import Dropzone from "react-dropzone";
 import { getRussianWord } from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { FormLabelStyled } from "../../CabinetStyles";
-import api from "../../../../Core/api"
+import api from "../../../../Core/api";
 
 const timeInputStyles = {
   minHeight: "unset",
@@ -118,32 +119,6 @@ function TagCheckbox({
     </Button>
   );
 }
-
-const SquareContainer = styled("div")(
-  ({ theme, width, height = 160, bgColor = "#fff", active }) => ({
-    width: width ? `${width}px` : "100%",
-    height: `${height}px`,
-    backgroundColor: bgColor,
-    borderRadius: "12px",
-    border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
-    overflow: "hidden",
-
-    "& img": {
-      // Set image to cover the entire container
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // This resizes the image to fit the container
-
-      // Maintain aspect ratio and prevent overflow
-      objectPosition: "center", // Center the image within the container
-    },
-
-    // animation: `${rainbowCycle} 6s ${
-    //   active ? "infinite" : "1"
-    // } alternate ease-in-out`,
-    // animationDelay: active ? "0s" : "3s", // Control animation timing
-  })
-);
 
 const teachers = [
   "Koptleulov Arslan",
@@ -271,37 +246,40 @@ const NewCourseDialog = ({
   };
 
   // Function to handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (nameError) {
       return; // Prevent form submission if name is not unique
     }
     // const monthsDifference = calculateMonthDifference(startDate, endDate);
     const formData = new FormData();
-    formData.append('courseData', JSON.stringify({
-      name: name,
-      price: price,
-      duration: selectedDuration,
-      // startDate: startDate, // Если требуется
-      // endDate: endDate, // Если требуется
-      // thumbnail: selectedImage,
-    }));
+    formData.append(
+      "courseData",
+      JSON.stringify({
+        name: name,
+        price: price,
+        duration: selectedDuration,
+        // startDate: startDate, // Если требуется
+        // endDate: endDate, // Если требуется
+        // thumbnail: selectedImage,
+      })
+    );
 
     try {
       // Отправляем запрос на сервер с использованием Axios
-      const response = await api.post('courses/create', formData, {
+      const response = await api.post("courses/create", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-  
+
       // Обрабатываем успешный ответ, если это необходимо
       console.log(response);
-      handleAddCourse()
+      handleAddCourse();
       handleClose();
     } catch (error) {
       // Обрабатываем ошибки
-      console.error('Error submitting course:', error);
+      console.error("Error submitting course:", error);
       // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
     }
 

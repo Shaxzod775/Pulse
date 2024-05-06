@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as routes from "../../../../Constants/routes"
+import * as routes from "../../../../Constants/routes";
 
 import api from "../../../../Core/api";
 
@@ -38,8 +38,10 @@ import {
   InputBaseStyled,
   Main,
   Root,
+  SquareContainer,
   TextFieldStyled,
   Title,
+  TypographyStyled,
   customMenuProps,
   muiTelInputStyles,
   selectStyles,
@@ -58,6 +60,7 @@ import {
 } from "../../../../Constants/usbekistan";
 import { russianLocale } from "../../../../Constants/dateLocales";
 import { uzbekEducationLevels } from "../../../../Constants/testData";
+import { formatFileName } from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -133,7 +136,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewTeacher = ({fetchTeachers}) => {
+const NewTeacher = ({ fetchTeachers }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -152,12 +155,14 @@ const NewTeacher = ({fetchTeachers}) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+
   const [passportSeries, setPassportSeries] = useState("");
   const [passportNumber, setPassportNumber] = useState("");
 
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
-  const [location, changeLocation] = useState("")
+  const [location, changeLocation] = useState("");
   const [email, changeEmail] = useInput("");
   const [emailError, setEmailError] = useState(false);
   const [emailCorp, changeEmailCorp] = useInput("");
@@ -165,17 +170,20 @@ const NewTeacher = ({fetchTeachers}) => {
 
   const [selectedCourseNames, setSelectedCourseNames] = useState([]);
 
-  const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
-    { number: "", name: "" },
-    { number: "", name: "" },
-    { number: "", name: "" },
-  ]);
-  const [visibleCount, setVisibleCount] = useState(1);
+  const [dateOfEmployment, setDateOfEmployment] = useState(null);
+
+  const [typeOfContrat, changeTypeOfContract] = useInput("");
+
+  const [jobPositions, setJobPositions] = useState([]);
+
+  const [branches, setBranches] = useState([]);
 
   const [tags, setTags] = useState(["Тег 1"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
-  const handleImageSelection = (acceptedFiles) => {
+  const [files, setFiles] = useState([]);
+
+  const handleImageSelection = useCallback((acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0]; // Get the first file
@@ -190,13 +198,26 @@ const NewTeacher = ({fetchTeachers}) => {
         alert("Please upload an image file.");
       }
     }
-  };
+  }, []);
 
-  const handleUploadClick = () => {
+  const handleUploadClick = (idToClick) => () => {
     // Simulate file input click event
-    const fileInput = document.getElementById("file-upload-input");
+    const fileInput = document.getElementById(idToClick);
     fileInput.click();
   };
+
+  const handleFileUpload = useCallback((acceptedFiles) => {
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+  }, []);
+  const handleFileDelete = useCallback(
+    (index) => () => {
+      let newFiles = [...files]; // create a new copy of files array
+      newFiles.splice(index, 1); // remove the file at the specified index
+      setFiles(newFiles); // update the state
+    },
+    [files, setFiles]
+  );
+  useEffect(() => console.log(files), [files]);
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -221,6 +242,19 @@ const NewTeacher = ({fetchTeachers}) => {
     }
   };
 
+  // Function to handle change in date
+  const handleDateChange = useCallback(
+    (setter) => (newDate) => {
+      if (newDate instanceof Date && !isNaN(newDate)) {
+        setter(newDate);
+      } else {
+        // Handle invalid input date here
+        setter(null);
+      }
+    },
+    []
+  );
+
   const handleChangePassportSeries = (event) => {
     let input = event.target.value;
     // Remove non-letter characters and limit to 2 characters
@@ -238,19 +272,6 @@ const NewTeacher = ({fetchTeachers}) => {
     // Now you can set the state or do whatever you need with the input
     setPassportNumber(input);
   };
-
-  const handleChangeParentName = useCallback(
-    _.debounce((index, name, value) => {
-      setParentsPhoneNumbers((values) => {
-        const newValues = [...values];
-        if (name === "name") {
-          newValues[index].name = value;
-        }
-        return newValues;
-      });
-    }, 10),
-    [parentsPhoneNumbers]
-  ); // delay of 10ms
 
   const handleBlurEmail = useCallback(
     _.debounce((event) => {
@@ -272,41 +293,18 @@ const NewTeacher = ({fetchTeachers}) => {
     [setEmailErrorCorp]
   );
 
-  const handleChangeCourses = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedCourseNames(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const handleChangeParentPhoneNumber =
-    // useCallback(
-    //   _.debounce(
-    (index, newPhone) => {
-      // Remove all non-digit characters
-      const digits = newPhone.replace(/\D/g, "");
-      const newValues = [...parentsPhoneNumbers];
-
-      // Check if the new phone number starts with "+998" and does not exceed 12 digits
-      if (newPhone.startsWith("+998") && digits.length <= 12) {
-        newValues[index].number = `+${digits}`;
-        setParentsPhoneNumbers(newValues);
-      } else if (digits.length <= 3) {
-        // If the new phone number is "+99" or "+9", reset it to "+998"
-        newValues[index].number = "+998";
-        setParentsPhoneNumbers(newValues);
-      }
-    };
-  //   , 0),
-  //   [parentsPhoneNumbers]
-  // ); // delay of 10ms
-
-  const handleAddFields = () => {
-    setVisibleCount(visibleCount + 1);
-  };
+  const handleChangeMultipleSelect = useCallback(
+    (setter) => (event) => {
+      const {
+        target: { value },
+      } = event;
+      setter(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value
+      );
+    },
+    []
+  );
 
   // Function to handle adding a new tag
   const handleAddTag = (tag) => {
@@ -323,89 +321,52 @@ const NewTeacher = ({fetchTeachers}) => {
 
     const formData = new FormData();
 
-    formData.append('teacherData', JSON.stringify({
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      email: email,
-      corporateEmail: emailCorp,
-      phoneNumber: phoneNumber,
-      secondPhoneNumber: additionalPhoneNumber,
-      gender: "MALE",
-      dateOfBirth: "1995-09-30",
-      passportSeries: passportSeries,
-      passportNumber: passportNumber,
-      contacts: [
-        { "name": "alwi", "phoneNumber": "1231321123" },
-        { "name": "annaa", "phoneNumber": "123212312" }
-      ],
-      education: null,
-      contractNumber: "1223",
-      description: "sdasdassadasdasd",
-      inn: null,
-      inps: null,
-      pnfl: null,
-      tags: ["saasd", "boboy", "asdasda"],
-      address: {
-        region: "namangan city",
-        state: "namangan viloyat",
-        location: "mahalla hontaxtada okeee"
-      }
-    }));
+    formData.append(
+      "teacherData",
+      JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        email: email,
+        corporateEmail: emailCorp,
+        phoneNumber: phoneNumber,
+        secondPhoneNumber: additionalPhoneNumber,
+        gender: "MALE",
+        dateOfBirth: "1995-09-30",
+        passportSeries: passportSeries,
+        passportNumber: passportNumber,
+        contacts: [
+          { name: "alwi", phoneNumber: "1231321123" },
+          { name: "annaa", phoneNumber: "123212312" },
+        ],
+        education: null,
+        contractNumber: "1223",
+        description: "sdasdassadasdasd",
+        inn: null,
+        inps: null,
+        pnfl: null,
+        tags: ["saasd", "boboy", "asdasda"],
+        address: {
+          region: "namangan city",
+          state: "namangan viloyat",
+          location: "mahalla hontaxtada okeee",
+        },
+      })
+    );
     try {
-      // const teacherData = {
-      //   firstName: firstName,
-      //   lastName: lastName,
-      //   middleName: middleName,
-      //   email: email,
-      //   corporateEmail: emailCorp,
-      //   phoneNumber: phoneNumber,
-      //   secondPhoneNumber: additionalPhoneNumber,
-      //   gender: "MALE", // Предположим, что у вас есть значение пола или вы можете добавить его в состояние
-      //   dateOfBirth: "1995-09-30", // Предположим, что вы выбираете дату рождения
-      //   passportSeries: passportSeries,
-      //   passportNumber: passportNumber,
-      //   // contacts: parentsPhoneNumbers,
-      //   contacts: [
-      //     {
-
-      //       "name": "alwi",
-      //       "phoneNumber": "1231321123"
-      //     },
-      //     {
-      //       "name": "annaa",
-      //       "phoneNumber": "123212312"
-      //     }
-      //   ],
-      //   education: null, // Замените на соответствующее значение образования, если есть
-      //   contractNumber: "1223", // Предположим, что у вас есть номер контракта
-      //   description: "sdasdassadasdasd", // Описание
-      //   inn: null, // ИНН
-      //   inps: null, // ИНПС
-      //   pnfl: null, // ПНФЛ
-      //   tags: tags,
-      //   address: {
-      //     region: region,
-      //     state: district,
-      //     location: location // Местоположение
-      //   }
-      // };
-
-
-
-      const response = await api.post('teachers/create', formData, {
+      const response = await api.post("teachers/create", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
       // Обработка успешного ответа, если необходимо
-      console.log('Teacher created:', response.data);
+      console.log("Teacher created:", response.data);
       fetchTeachers();
-      navigate('/cabinet/teachers')
+      navigate("/cabinet/teachers");
     } catch (error) {
       // Обработка ошибок
-      console.error('Error creating teacher:', error);
+      console.error("Error creating teacher:", error);
     }
   };
 
@@ -453,10 +414,10 @@ const NewTeacher = ({fetchTeachers}) => {
             </DialogButton>
           </div>
         </div>
-        <div className="flex justify-between gap-md">
+        <Box className="flex justify-between" columnGap="20px">
           <PaperStyled
             className="full-width"
-            sx={{ maxWidth: "50%", padding: "30px 52px" }}
+            sx={{ maxWidth: "calc(50% - 10px)", padding: "30px" }}
           >
             <div className="flex flex-col gap-md">
               <div
@@ -472,7 +433,7 @@ const NewTeacher = ({fetchTeachers}) => {
                         {...getRootProps()}
                       >
                         <input
-                          {...getInputProps({ id: "file-upload-input" })}
+                          {...getInputProps({ id: "image-upload-input" })}
                         />
                         {selectedImage ? (
                           <img src={selectedImage} alt="Uploaded" />
@@ -498,7 +459,7 @@ const NewTeacher = ({fetchTeachers}) => {
                   </div>
                   <div className="flex gap-xxs">
                     <DialogButton
-                      onClick={handleUploadClick}
+                      onClick={handleUploadClick("image-upload-input")}
                       variant="contained"
                       color="purpleBlue"
                     >
@@ -669,6 +630,8 @@ const NewTeacher = ({fetchTeachers}) => {
                       >
                         <DatePicker
                           sx={textFieldStyles({ theme })}
+                          value={dateOfBirth}
+                          onChange={handleDateChange(setDateOfBirth)}
                           slots={{
                             openPickerIcon: Icons.CalendarContained,
                           }}
@@ -763,9 +726,10 @@ const NewTeacher = ({fetchTeachers}) => {
                                 id="city"
                                 variant="outlined"
                                 placeholder="Район"
-                                helperText={`${region ? "" : "Сначала выберите регион"
-                                  }`}
-                              // error={!city}
+                                helperText={`${
+                                  region ? "" : "Сначала выберите регион"
+                                }`}
+                                // error={!city}
                               />
                             )}
                             disabled={!region}
@@ -800,7 +764,7 @@ const NewTeacher = ({fetchTeachers}) => {
           </PaperStyled>
           <PaperStyled
             className="full-width"
-            sx={{ maxWidth: "50%", padding: "30px 52px" }}
+            sx={{ maxWidth: "calc(50% - 10px)", padding: "30px" }}
           >
             <div className="flex flex-col gap-md">
               <FormControl fullWidth variant="outlined">
@@ -900,7 +864,7 @@ const NewTeacher = ({fetchTeachers}) => {
               <FormControl required fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel>Образование</FormLabel>
+                    <FormLabel row>Направление</FormLabel>
                   </label>
                   <Box width="100%" maxWidth="75%">
                     <Select
@@ -908,7 +872,9 @@ const NewTeacher = ({fetchTeachers}) => {
                       multiple
                       required
                       value={selectedCourseNames}
-                      onChange={handleChangeCourses}
+                      onChange={handleChangeMultipleSelect(
+                        setSelectedCourseNames
+                      )}
                       renderValue={(selected) => selected.join(", ")}
                       MenuProps={customMenuProps}
                       sx={selectStyles({ theme })}
@@ -932,101 +898,39 @@ const NewTeacher = ({fetchTeachers}) => {
                   </Box>
                 </div>
               </FormControl>
-              <div className="full-width flex flex-col gap-xs">
-                {/* Render the first item */}
-                {parentsPhoneNumbers[0] && (
-                  <div className="flex items-center justify-between">
-                    <label style={{ maxWidth: "25%" }}>
-                      <FormLabel row>Телефон близких</FormLabel>
-                    </label>
-                    <div
-                      className="full-width flex gap-xxs"
-                      style={{ maxWidth: "75%" }}
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Дата начала работы</FormLabel>
+                  </label>
+                  <Box width="100%" maxWidth="75%">
+                    <LocalizationProvider
+                      dateAdapter={AdapterDateFns}
+                      adapterLocale={ru}
+                      localeText={russianLocale}
                     >
-                      <FormControl fullWidth variant="outlined">
-                        <MuiTelInput
-                          variant="outlined"
-                          defaultCountry="UZ"
-                          onlyCountries={["UZ"]}
-                          value={parentsPhoneNumbers[0].number}
-                          onChange={(newPhone) =>
-                            handleChangeParentPhoneNumber(0, newPhone)
-                          }
-                          sx={muiTelInputStyles({ theme })}
-                        />
-                      </FormControl>
-                      <FormControl fullWidth variant="outlined">
-                        <TextFieldStyled
-                          variant="outlined"
-                          placeholder="Имя"
-                          name="name"
-                          value={parentsPhoneNumbers[0].name}
-                          onChange={(event) =>
-                            handleChangeParentName(
-                              0,
-                              event.target.name,
-                              event.target.value
-                            )
-                          }
-                        />
-                      </FormControl>
-                    </div>
-                  </div>
-                )}
-
-                {/* Render the rest of the items */}
-                {parentsPhoneNumbers
-                  .slice(1, visibleCount)
-                  .map((parentPhoneNumber, index) => (
-                    <div
-                      className="full-width flex gap-xxs"
-                      style={{ marginLeft: "25%", maxWidth: "75%" }}
-                    >
-                      <FormControl fullWidth variant="outlined">
-                        <MuiTelInput
-                          variant="outlined"
-                          defaultCountry="UZ"
-                          onlyCountries={["UZ"]}
-                          value={parentPhoneNumber.number}
-                          onChange={(newPhone) =>
-                            handleChangeParentPhoneNumber(index + 1, newPhone)
-                          }
-                          sx={muiTelInputStyles({ theme })}
-                        />
-                      </FormControl>
-                      <FormControl fullWidth variant="outlined">
-                        <TextFieldStyled
-                          variant="outlined"
-                          placeholder="Имя"
-                          name="name"
-                          value={parentPhoneNumber.name}
-                          onChange={(event) =>
-                            handleChangeParentName(
-                              index + 1,
-                              event.target.name,
-                              event.target.value
-                            )
-                          }
-                        />
-                      </FormControl>
-                    </div>
-                  ))}
-
-                <div style={{ marginLeft: "25%", maxWidth: "75%" }}>
-                  <DialogButton
-                    variant="outlined"
-                    color="purpleBlue"
-                    onClick={handleAddFields}
-                    disabled={visibleCount >= parentsPhoneNumbers.length}
-                  >
-                    Добавить ещё
-                  </DialogButton>
+                      <DatePicker
+                        sx={{
+                          ...textFieldStyles({ theme }),
+                          maxWidth: "230px",
+                        }}
+                        value={dateOfEmployment}
+                        onChange={handleDateChange(setDateOfEmployment)}
+                        slots={{
+                          openPickerIcon: Icons.CalendarContained,
+                        }}
+                        slotProps={{
+                          field: { clearable: true },
+                          openPickerButton: { color: "purpleBlue" },
+                        }}
+                      />
+                    </LocalizationProvider>
+                  </Box>
                 </div>
-              </div>
-
+              </FormControl>
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Добавить тег:</FormLabel>
+                  <FormLabel row>Добавить тег</FormLabel>
                 </label>
                 <div
                   className="full-width flex flex-wrap gap-x3s"
@@ -1079,11 +983,11 @@ const NewTeacher = ({fetchTeachers}) => {
                               },
                             },
                             ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
-                            {
-                              border: "1px solid #E5E7EB !important",
-                              boxShadow:
-                                "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
-                            },
+                              {
+                                border: "1px solid #E5E7EB !important",
+                                boxShadow:
+                                  "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                              },
                           },
                           "& .MuiFormHelperText-root": {
                             color: "crimson",
@@ -1106,6 +1010,185 @@ const NewTeacher = ({fetchTeachers}) => {
                 </div>
               </div>
               <FormControl fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Вид контракта</FormLabel>
+                  </label>
+                  <Select
+                    fullWidth
+                    required
+                    value={typeOfContrat}
+                    onChange={changeTypeOfContract}
+                    MenuProps={customMenuProps}
+                    sx={{ ...selectStyles({ theme }), maxWidth: "75%" }}
+                    input={<InputBaseStyled />}
+                    IconComponent={Icons.ArrowD}
+                  >
+                    {["ГПХ", "ГПХ", "ГПХ", "ГПХ"].map((leadStatus) => (
+                      <MenuItem key={leadStatus} value={leadStatus}>
+                        <ListItemText primary={leadStatus} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </FormControl>
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Должность</FormLabel>
+                  </label>
+                  <Box width="100%" maxWidth="75%">
+                    <Select
+                      fullWidth
+                      multiple
+                      required
+                      value={jobPositions}
+                      onChange={handleChangeMultipleSelect(setJobPositions)}
+                      renderValue={(selected) => selected.join(", ")}
+                      MenuProps={customMenuProps}
+                      sx={selectStyles({ theme })}
+                      input={<InputBaseStyled />}
+                      IconComponent={Icons.ArrowD}
+                    >
+                      {uzbekEducationLevels.map((educationalLevel) => (
+                        <MenuItem
+                          key={educationalLevel}
+                          value={educationalLevel}
+                        >
+                          <Checkbox
+                            checked={
+                              jobPositions.indexOf(educationalLevel) > -1
+                            }
+                          />
+                          <ListItemText primary={educationalLevel} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                </div>
+              </FormControl>
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Филиалы</FormLabel>
+                  </label>
+                  <Box width="100%" maxWidth="75%">
+                    <Select
+                      fullWidth
+                      multiple
+                      required
+                      value={branches}
+                      onChange={handleChangeMultipleSelect(setBranches)}
+                      renderValue={(selected) => selected.join(", ")}
+                      MenuProps={customMenuProps}
+                      sx={selectStyles({ theme })}
+                      input={<InputBaseStyled />}
+                      IconComponent={Icons.ArrowD}
+                    >
+                      {uzbekEducationLevels.map((educationalLevel) => (
+                        <MenuItem
+                          key={educationalLevel}
+                          value={educationalLevel}
+                        >
+                          <Checkbox
+                            checked={branches.indexOf(educationalLevel) > -1}
+                          />
+                          <ListItemText primary={educationalLevel} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                </div>
+              </FormControl>
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-start justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Документы</FormLabel>
+                  </label>
+                  <Box
+                    width="100%"
+                    maxWidth="75%"
+                    className="flex flex-col"
+                    rowGap="12px"
+                  >
+                    <Dropzone onDrop={handleFileUpload}>
+                      {({ getRootProps, getInputProps, isDragActive }) => (
+                        <SquareContainer
+                          {...getRootProps({
+                            className: "flex justify-center items-center",
+                            active: true,
+                          })}
+                        >
+                          <input
+                            {...getInputProps({ id: "file-upload-input" })}
+                          />
+                          <Box
+                            className="flex flex-col items-center"
+                            rowGap="6px"
+                          >
+                            <Icons.GalleryAdd color="#D1D5DB" />
+                            <TypographyStyled
+                              maxWidth="70%"
+                              textAlign="center"
+                              colorFromTheme="grey"
+                            >
+                              Загрузите или перетащите ваши документы
+                            </TypographyStyled>
+                          </Box>
+                        </SquareContainer>
+                      )}
+                    </Dropzone>
+                    <Box className="flex flex-col" rowGap="8px">
+                      {files.map((file, index) => (
+                        <>
+                          <Box
+                            className="flex justify-between"
+                            columnGap="10px"
+                          >
+                            <Box className="flex items-center" columnGap="10px">
+                              <TypographyStyled
+                                display="flex"
+                                colorFromTheme="purpleBlue"
+                              >
+                                <Icons.ClipboardText />
+                              </TypographyStyled>
+                              <TypographyStyled
+                                whiteSpace="nowrap"
+                                maxWidth="300px"
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                              >
+                                {formatFileName(file.name)}
+                              </TypographyStyled>
+                            </Box>
+                            <Box className="flex items-center" columnGap="4px">
+                              <TypographyStyled whiteSpace="nowrap">
+                                {(file.size / 1024 / 1024).toFixed(2)} MB
+                              </TypographyStyled>
+                              <IconButton
+                                color="purpleBlue"
+                                onClick={handleFileDelete(index)}
+                              >
+                                <Icons.TrashCan width="24px" height="24px" />
+                              </IconButton>
+                            </Box>
+                          </Box>
+                        </>
+                      ))}
+                      <Box>
+                        <DialogButton
+                          variant="contained"
+                          color="purpleBlue"
+                          onClick={handleUploadClick("file-upload-input")}
+                        >
+                          {files.length === 0 ? "Загрузить" : "Добавить еще"}
+                        </DialogButton>
+                      </Box>
+                    </Box>
+                  </Box>
+                </div>
+              </FormControl>
+              <FormControl fullWidth variant="outlined">
                 <div className="flex items-start justify-between">
                   <label style={{ maxWidth: "25%" }}>
                     <FormLabel row>Описание</FormLabel>
@@ -1127,7 +1210,7 @@ const NewTeacher = ({fetchTeachers}) => {
               </FormControl>
             </div>
           </PaperStyled>
-        </div>
+        </Box>
       </Main>
     </Root>
   );

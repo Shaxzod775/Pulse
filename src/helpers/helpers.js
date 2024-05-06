@@ -43,3 +43,18 @@ export function calculateMonthDifference(startDate, endDate) {
   // Floor the month difference considering years difference
   return monthsDifference + yearsDifference * 12;
 }
+
+export function formatFileName(fileName) {
+  const dotIndex = fileName.lastIndexOf(".");
+  const name = fileName.substring(0, dotIndex);
+  const lastDigitsToBeSeen = 2;
+  const extension = fileName.substring(dotIndex - lastDigitsToBeSeen);
+
+  const maxLength = 20; // adjust as needed
+  const formattedName =
+    name.length > maxLength
+      ? `${name.substring(0, maxLength - 4)}...${extension}`
+      : fileName;
+
+  return formattedName;
+}

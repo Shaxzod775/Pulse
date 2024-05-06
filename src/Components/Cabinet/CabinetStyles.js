@@ -822,3 +822,27 @@ export const TypographyStyled = styled(Typography)(
     fontSize: small ? "0.875rem" : "",
   })
 );
+export const SquareContainer = styled("div")(
+  ({ theme, width, height = 160, bgColor = "#fff", active }) => ({
+    width: width ? `${width}px` : "100%",
+    height: `${height}px`,
+    backgroundColor: bgColor,
+    borderRadius: "12px",
+    border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
+    overflow: "hidden",
+
+    "& img": {
+      // Set image to cover the entire container
+      width: "100%",
+      height: "100%",
+      objectFit: "cover", // This resizes the image to fit the container
+
+      // Maintain aspect ratio and prevent overflow
+      objectPosition: "center", // Center the image within the container
+    },
+    // animation: `${rainbowCycle} 6s ${
+    //   active ? "infinite" : "1"
+    // } alternate ease-in-out`,
+    // animationDelay: active ? "0s" : "3s", // Control animation timing
+  })
+);
