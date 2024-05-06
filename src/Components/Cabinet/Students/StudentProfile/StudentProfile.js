@@ -339,6 +339,189 @@ const GroupsCard = ({ status = "active" }) => {
   );
 };
 
+const AttendanceMonthCell = ({ text, cellType = "neutral" }) => {
+  // cellTypes=["neutral", "inactive", "success", "error"]
+  const colors = {
+    neutral: { main: "#B5CBDD", bg: "#F4F9FD", text: "#fff" },
+    inactive: { main: "#bbb", bg: "#fafafa", text: "#fff" },
+    success: { main: "#4CE894", bg: "#D0FFEB", text: "#fff" },
+    error: { main: "#FF6D6D", bg: "#FFDBDB", text: "#fff" },
+  };
+  const iconComponents = {
+    error: Icons.ClipboardRemove,
+    success: Icons.ClipboardCheck,
+    default: Icons.Button,
+  };
+
+  const IconComponent = iconComponents[cellType] || iconComponents.default;
+  return (
+    <>
+      <Box
+        className="flex flex-col items-center justify-center"
+        rowGap="4px"
+        minHeight="80px"
+        width="100%"
+        backgroundColor={colors[cellType].bg}
+        borderRadius="20px"
+      >
+        <IconComponent color={colors[cellType].main} />
+        <Box
+          className="flex items-center justify-center"
+          minWidth="50%"
+          padding="2px 7px"
+          borderRadius="41px"
+          backgroundColor={colors[cellType].main}
+          zIndex="2"
+        >
+          <TypographyStyled fontSize="0.625rem" color={colors[cellType].text}>
+            {text}
+          </TypographyStyled>
+        </Box>
+      </Box>
+    </>
+  );
+};
+
+const AttendanceCalendar = (props) => {
+  const year = new Date().getFullYear(); // Current year
+  const month = Number(props.month);
+  const monthInGenitiveForm = monthsInGenitiveForm[month];
+  const monthLocaleLong = new Date(2024, month).toLocaleString("ru", {
+    month: "long",
+  });
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const prevMonthDays = new Date(year, month, 0).getDate();
+  const nextMonthFirstDay = new Date(year, month + 1, 1).getDay();
+  const prevMonthDisplayDays = Array.from(
+    { length: (firstDay + 6) % 7 },
+    (_, i) => prevMonthDays - i
+  );
+  const nextMonthDisplayDays = Array.from(
+    { length: ((7 - nextMonthFirstDay) % 7) + 1 },
+    (_, i) => i + 1
+  );
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const daysArray = [...Array(daysInMonth).keys()].map((i) => i + 1);
+
+  return (
+    <>
+      <Box className="flex flex-col" rowGap="24px" width="100%">
+        <Box className="flex justify-between">
+          <Box display="flex" columnGap="14px">
+            <Box className="flex items-center" columnGap="10px" padding="10px">
+              <Icons.UserCheckRounded color="#1C0D64" />
+              <TypographyStyled
+                fontSize="1.125rem"
+                fontWeight="600"
+                color="#1C0D64"
+              >
+                Посещаемость
+              </TypographyStyled>
+            </Box>
+          </Box>
+          <Box className="flex items-center" columnGap="12px">
+            <ButtonStyled
+              sx={{ borderRadius: "50px", padding: "8px 20px" }}
+              color="purpleBlue"
+            >
+              <Box className="flex items-center" columnGap="10px">
+                <Icons.CalendarContained />
+                <Typography
+                  fontSize="1.125rem"
+                  fontWeight="600"
+                  textTransform="capitalize"
+                >
+                  {monthLocaleLong} {year}
+                </Typography>
+              </Box>
+            </ButtonStyled>
+            <Box className="flex items-center" columnGap="4px">
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                sx={{
+                  borderRadius: "50%",
+                  padding: "5px",
+                }}
+              >
+                <Icons.ArrowDBold
+                  width="26px"
+                  height="26px"
+                  style={{ transform: "rotate(90deg)" }}
+                />
+              </ButtonStyled>
+              <ButtonStyled
+                variant="contained"
+                color="purpleBlue"
+                sx={{
+                  borderRadius: "50%",
+                  padding: "5px",
+                }}
+              >
+                <Icons.ArrowDBold
+                  width="26px"
+                  height="26px"
+                  style={{
+                    transform: "rotate(270deg)",
+                  }}
+                />
+              </ButtonStyled>
+            </Box>
+          </Box>
+        </Box>
+        <Box className="flex flex-col" rowGap="10px">
+          <Box display="flex" columnGap="12px">
+            {weekDaysTextFull.map((weekDay) => (
+              <Box
+                className="flex items-center justify-center"
+                width="100%"
+                padding="3px 12px"
+                borderRadius="35px"
+                backgroundColor="#F4F9FD"
+              >
+                <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
+                  {weekDay}
+                </TypographyStyled>
+              </Box>
+            ))}
+          </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns="repeat(7, 1fr)"
+            rowGap="10px"
+            columnGap="12px"
+          >
+            {prevMonthDisplayDays.map((day, index) => (
+              <AttendanceMonthCell
+                key={index}
+                text={`${day} ${monthsInGenitiveForm[(month + 11) % 12]}`}
+                cellType="inactive"
+              />
+            ))}
+            {daysArray.map((day, index) => (
+              <AttendanceMonthCell
+                key={index}
+                text={`${day} ${monthInGenitiveForm}`}
+                cellType="neutral"
+              />
+            ))}
+            {nextMonthDisplayDays.map((day, index) => (
+              <AttendanceMonthCell
+                key={index}
+                text={`${day} ${monthsInGenitiveForm[(month + 1) % 12]}`}
+                cellType="inactive"
+              />
+            ))}
+          </Box>
+        </Box>
+      </Box>
+    </>
+  );
+};
+
 const StudentProfile = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -370,7 +553,7 @@ const StudentProfile = () => {
     (_, i) => prevMonthDays - i
   );
   const nextMonthDisplayDays = Array.from(
-    { length: (7 - nextMonthFirstDay) % 7 },
+    { length: ((7 - nextMonthFirstDay) % 7) + 1 },
     (_, i) => i + 1
   );
 
@@ -682,217 +865,8 @@ const StudentProfile = () => {
     () => (
       <>
         <Box>
-          <Box className="flex flex-col" rowGap="24px" maxWidth="60%">
-            <Box className="flex justify-between">
-              <Box display="flex" columnGap="14px">
-                <Box
-                  className="flex items-center"
-                  columnGap="10px"
-                  padding="10px"
-                >
-                  <Icons.UserCheckRounded color="#1C0D64" />
-                  <TypographyStyled
-                    fontSize="1.125rem"
-                    fontWeight="600"
-                    color="#1C0D64"
-                  >
-                    Посещаемость
-                  </TypographyStyled>
-                </Box>
-              </Box>
-              <Box className="flex items-center" columnGap="12px">
-                {/* <Select
-                  required
-                  value={selectedGroup}
-                  onChange={changeSelectedGroup}
-                  MenuProps={customMenuProps}
-                  sx={selectStylesV2({ theme })}
-                  input={<InputBaseStyledV2 />}
-                  IconComponent={Icons.ArrowDBold}
-                >
-                  <MenuItem value="0">
-                    <ListItemText>По А-Я</ListItemText>
-                  </MenuItem>
-                  {["По Я-А", "Sort by", "Sort by"].map((group, i) => (
-                    <MenuItem key={group} value={group}>
-                      <ListItemText primary={group} />
-                    </MenuItem>
-                  ))}
-                </Select> */}
-                <ButtonStyled
-                  sx={{ borderRadius: "50px", padding: "8px 20px" }}
-                  color="purpleBlue"
-                >
-                  <Box className="flex items-center" columnGap="10px">
-                    <Icons.CalendarContained />
-                    <Typography
-                      fontSize="1.125rem"
-                      fontWeight="600"
-                      textTransform="capitalize"
-                    >
-                      {monthLocaleLong} 2024
-                    </Typography>
-                  </Box>
-                </ButtonStyled>
-                <Box className="flex items-center" columnGap="4px">
-                  <ButtonStyled
-                    variant="contained"
-                    color="purpleBlue"
-                    sx={{
-                      borderRadius: "50%",
-                      padding: "5px",
-                    }}
-                  >
-                    <Icons.ArrowDBold
-                      width="26px"
-                      height="26px"
-                      style={{ transform: "rotate(90deg)" }}
-                    />
-                  </ButtonStyled>
-                  <ButtonStyled
-                    variant="contained"
-                    color="purpleBlue"
-                    sx={{
-                      borderRadius: "50%",
-                      padding: "5px",
-                    }}
-                  >
-                    <Icons.ArrowDBold
-                      width="26px"
-                      height="26px"
-                      style={{
-                        transform: "rotate(270deg)",
-                      }}
-                    />
-                  </ButtonStyled>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="flex flex-col" rowGap="10px">
-              <Box display="flex" columnGap="12px">
-                {weekDaysTextFull.map((weekDay) => (
-                  <Box
-                    className="flex items-center justify-center"
-                    width="100%"
-                    padding="3px 12px"
-                    borderRadius="35px"
-                    backgroundColor="#F4F9FD"
-                  >
-                    <TypographyStyled colorFromTheme="grey" fontSize="0.75rem">
-                      {weekDay}
-                    </TypographyStyled>
-                  </Box>
-                ))}
-              </Box>
-              <Box
-                display="grid"
-                gridTemplateColumns="repeat(7, 1fr)"
-                rowGap="10px"
-                columnGap="12px"
-              >
-                {prevMonthDisplayDays.map((day, index) => (
-                  <Box
-                    key={index}
-                    className="flex flex-col items-center justify-center"
-                    rowGap="4px"
-                    minHeight="80px"
-                    width="100%"
-                    backgroundColor="#F4F9FD"
-                    borderRadius="20px"
-                  >
-                    <TypographyStyled
-                      fontSize="0.625rem"
-                      color="#fff"
-                    >{`${day} ${
-                      monthsInGenitiveForm[(month + 11) % 12]
-                    }`}</TypographyStyled>
-                  </Box>
-                ))}
-                {daysArray.map((day, index) => (
-                  <Box
-                    className="flex flex-col items-center justify-center"
-                    rowGap="4px"
-                    minHeight="80px"
-                    width="100%"
-                    backgroundColor="#F4F9FD"
-                    borderRadius="20px"
-                  >
-                    <Icons.Button color="#B5CBDD" />
-                    <Box
-                      padding="2px 7px"
-                      borderRadius="41px"
-                      backgroundColor="#B5CBDD"
-                    >
-                      <TypographyStyled
-                        fontSize="0.625rem"
-                        color="#fff"
-                      >{`${day} ${monthInGenitiveForm}`}</TypographyStyled>
-                    </Box>
-                  </Box>
-                ))}
-                {nextMonthDisplayDays.map((day, index) => (
-                  <Box
-                    key={index}
-                    className="flex flex-col items-center justify-center"
-                    rowGap="4px"
-                    minHeight="80px"
-                    width="100%"
-                    backgroundColor="#F4F9FD"
-                    borderRadius="20px"
-                  >
-                    <Icons.Button color="yellow" />
-                    <Box
-                      padding="2px 7px"
-                      borderRadius="41px"
-                      backgroundColor="yellow"
-                    >
-                      <TypographyStyled
-                        fontSize="0.625rem"
-                        color="#000"
-                      >{`${day} ${
-                        monthsInGenitiveForm[(month + 1) % 12]
-                      }`}</TypographyStyled>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-
-              {/* <Box
-                display="grid"
-                gridTemplateColumns="repeat(7, 1fr)"
-                rowGap="10px"
-                columnGap="12px"
-              >
-                {Array.from({ length: (firstDay + 6) % 7 }).map((_, index) => (
-                  <div key={index}></div>
-                ))}
-                {daysArray.map((day, index) => (
-                  <Box
-                    className="flex flex-col items-center justify-center"
-                    rowGap="4px"
-                    minHeight="80px"
-                    width="100%"
-                    backgroundColor="#F4F9FD"
-                    borderRadius="20px"
-                  >
-                    <Icons.Button color="#B5CBDD" />
-                    <Box
-                      padding="2px 7px"
-                      borderRadius="41px"
-                      backgroundColor="#B5CBDD"
-                    >
-                      <TypographyStyled
-                        fontSize="0.625rem"
-                        color="#fff"
-                      >{`${day} ${monthInGenitiveForm}`}</TypographyStyled>
-                    </Box>
-                  </Box>
-                ))}
-              </Box> */}
-            </Box>
-            {/* {Array.from({ length: (firstDay + 6) % 7 }).map((_, index) => (
-              <div key={index}>{index}</div>
-            ))} */}
+          <Box maxWidth="60%">
+            <AttendanceCalendar month={4} />
           </Box>
         </Box>
       </>
