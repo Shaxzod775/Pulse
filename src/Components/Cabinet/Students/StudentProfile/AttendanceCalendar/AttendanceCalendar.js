@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Typography, Box } from "@mui/material";
 import { Icons } from "../../../../../Assets/Icons/icons";
 import { monthsInGenitiveForm } from "../../../../../Constants/dateLocales";
-import { weekDaysTextFull } from "../../../../../Constants/testData";
+import { weekDaysTextFull } from "../../../../../Constants/dateLocales";
 import { ButtonStyled, TypographyStyled } from "../../../CabinetStyles";
 
 const AttendanceMonthCell = ({ text, cellType = "neutral" }) => {

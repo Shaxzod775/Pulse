@@ -17,7 +17,6 @@ export const monthsInGenitiveForm = [
   "Ноября",
   "Декабря",
 ];
-
 export const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 export const weekDaysTextFull = [
   "Понедельник",

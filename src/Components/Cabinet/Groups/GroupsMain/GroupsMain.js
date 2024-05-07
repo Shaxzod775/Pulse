@@ -53,11 +53,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ru } from "date-fns/locale";
 import { russianLocale } from "../../../../Constants/dateLocales";
+import { teacherNames } from "../../../../Constants/testData";
 import {
-  teacherNames,
   weekDaysTextFull,
   weekDaysTextFullToShort,
-} from "../../../../Constants/testData";
+} from "../../../../Constants/dateLocales";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useToggle from "../../../../hooks/useToggle";
 

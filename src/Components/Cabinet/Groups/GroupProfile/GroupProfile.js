@@ -38,7 +38,7 @@ import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import useInput from "../../../../hooks/useInput";
-import { weekDaysTextFull } from "../../../../Constants/testData";
+import { weekDaysTextFull } from "../../../../Constants/dateLocales";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",

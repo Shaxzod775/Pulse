@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 
@@ -38,6 +38,7 @@ import {
   InputBaseStyled,
   Main,
   Root,
+  SelectStyled,
   SquareContainer,
   TextFieldStyled,
   Title,
@@ -59,7 +60,10 @@ import {
   REGION_WITH_DISTRICTS,
 } from "../../../../Constants/usbekistan";
 import { russianLocale } from "../../../../Constants/dateLocales";
-import { uzbekEducationLevels } from "../../../../Constants/testData";
+import {
+  socialMediaTypes,
+  uzbekEducationLevels,
+} from "../../../../Constants/testData";
 import { formatFileName } from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
@@ -304,13 +308,16 @@ const NewTeacher = ({ fetchTeachers }) => {
     });
   }, []);
 
-  const handleTypeChange = useCallback((index, event) => {
-    setLinks((prevLinks) => {
-      const newLinks = [...prevLinks];
-      newLinks[index].type = event.target.value;
-      return newLinks;
-    });
-  }, []);
+  const handleTypeChange = useCallback(
+    (index) => (event, newValue) => {
+      setLinks((prevLinks) => {
+        const newLinks = [...prevLinks];
+        newLinks[index].type = newValue;
+        return newLinks;
+      });
+    },
+    []
+  );
 
   const addLink = () => {
     setLinks([...links, { url: "", type: "" }]);
@@ -782,6 +789,109 @@ const NewTeacher = ({ fetchTeachers }) => {
                 <Box className="flex justify-center">
                   <Title fontSize="1.2rem">Социальная информация</Title>
                 </Box>
+                <Box className="flex flex-col" rowGap="20px">
+                  {links[0] && (
+                    <Box className="flex items-center justify-between">
+                      <Box maxWidth="25%">
+                        <FormLabel row>Ссылки</FormLabel>
+                      </Box>
+                      <Box className="full-width flex gap-xxs" maxWidth="75%">
+                        <FormControl fullWidth variant="outlined">
+                          <TextFieldStyled
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Введите"
+                            value={links[0].url}
+                            onChange={(event) => handleLinkChange(0, event)}
+                          />
+                        </FormControl>
+                        <FormControl fullWidth variant="outlined">
+                          <AutocompleteStyled
+                            freeSolo // enables user to enter their own option, by default hides popup icon
+                            forcePopupIcon // forces popup icon to appear again
+                            options={socialMediaTypes}
+                            value={links[0].type}
+                            onChange={handleTypeChange[0]}
+                            renderInput={(params) => (
+                              <AutocompleteField
+                                {...params}
+                                id="subject"
+                                variant="outlined"
+                                helperText="Выберите или введите свой вариант"
+                              />
+                            )}
+                            popupIcon={
+                              <Icons.ArrowD
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                            clearIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        </FormControl>
+                      </Box>
+                    </Box>
+                  )}
+                  {links.slice(1, links.length).map((link, index) => (
+                    <Box
+                      className="full-width flex gap-xxs"
+                      maxWidth="75%"
+                      marginLeft="25%"
+                    >
+                      <FormControl fullWidth variant="outlined">
+                        <TextFieldStyled
+                          fullWidth
+                          variant="outlined"
+                          placeholder="Введите"
+                          value={links[index + 1].url}
+                          onChange={(event) =>
+                            handleLinkChange(index + 1, event)
+                          }
+                        />
+                      </FormControl>
+                      <FormControl fullWidth variant="outlined">
+                        <AutocompleteStyled
+                          freeSolo // enables user to enter their own option, by default hides popup icon
+                          forcePopupIcon // forces popup icon to appear again
+                          options={socialMediaTypes}
+                          value={links[index + 1].type}
+                          onChange={handleTypeChange[index + 1]}
+                          renderInput={(params) => (
+                            <AutocompleteField
+                              {...params}
+                              id="subject"
+                              variant="outlined"
+                              placeholder="Выберите или введите"
+                            />
+                          )}
+                          popupIcon={
+                            <Icons.ArrowD
+                              color={theme.typography.color.darkBlue}
+                            />
+                          }
+                          clearIcon={
+                            <Icons.Delete
+                              color={theme.typography.color.darkBlue}
+                            />
+                          }
+                        />
+                      </FormControl>
+                    </Box>
+                  ))}
+                  <Box maxWidth="75%" marginLeft="25%">
+                    <DialogButton
+                      variant="outlined"
+                      color="purpleBlue"
+                      onClick={addLink}
+                      disabled={links.length >= 10}
+                    >
+                      Добавить ещё
+                    </DialogButton>
+                  </Box>
+                </Box>
               </Box>
             </div>
           </PaperStyled>
@@ -888,7 +998,7 @@ const NewTeacher = ({ fetchTeachers }) => {
               <FormControl required fullWidth variant="outlined">
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Направление</FormLabel>
+                    <FormLabel row>Направления</FormLabel>
                   </label>
                   <Box width="100%" maxWidth="75%">
                     <Select
