@@ -162,7 +162,10 @@ const NewTeacher = ({ fetchTeachers }) => {
 
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
-  const [location, changeLocation] = useState("");
+  const [location, changeLocation] = useInput("");
+
+  const [links, setLinks] = useState([{ url: "", type: "" }]);
+
   const [email, changeEmail] = useInput("");
   const [emailError, setEmailError] = useState(false);
   const [emailCorp, changeEmailCorp] = useInput("");
@@ -292,6 +295,26 @@ const NewTeacher = ({ fetchTeachers }) => {
     }, 500),
     [setEmailErrorCorp]
   );
+
+  const handleLinkChange = useCallback((index, event) => {
+    setLinks((prevLinks) => {
+      const newLinks = [...prevLinks];
+      newLinks[index].url = event.target.value;
+      return newLinks;
+    });
+  }, []);
+
+  const handleTypeChange = useCallback((index, event) => {
+    setLinks((prevLinks) => {
+      const newLinks = [...prevLinks];
+      newLinks[index].type = event.target.value;
+      return newLinks;
+    });
+  }, []);
+
+  const addLink = () => {
+    setLinks([...links, { url: "", type: "" }]);
+  };
 
   const handleChangeMultipleSelect = useCallback(
     (setter) => (event) => {
@@ -454,7 +477,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       fontFamily={"Poppins, Rubik, Roboto, sans-serif"}
                     >
                       Мы рекомендуем изображения не менее 1000x1000, вы можете
-                      загрузить PNG или JPG размером менее 10 МБ
+                      загрузить PNG или JPG размером не более 10 МБ
                     </Typography>
                   </div>
                   <div className="flex gap-xxs">
@@ -478,9 +501,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                 </div>
               </div>
               <div className="flex justify-center">
-                <Title sx={{ fontSize: "1.2rem" }}>
-                  Персональная информация
-                </Title>
+                <Title fontSize="1.2rem">Персональная информация</Title>
               </div>
               <div className="flex flex-col gap-md">
                 <div>
@@ -598,9 +619,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                             control={<RadioStyled />}
                             label="Мужской"
                           />
-                          <Icons.MaleSymbol
-                            color={theme.typography.color.purpleBlue}
-                          />
+                          <Icons.MaleSymbol />
                         </div>
                         <div className="flex items-center gap-xxs2">
                           <FormControlLabel
@@ -608,9 +627,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                             control={<RadioStyled />}
                             label="Женский"
                           />
-                          <Icons.FemaleSymbol
-                            color={theme.typography.color.purpleBlue}
-                          />
+                          <Icons.FemaleSymbol />
                         </div>
                       </RadioGroup>
                     </div>
@@ -753,6 +770,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       fullWidth
                       variant="outlined"
                       placeholder="Место проживания"
+                      value={location}
                       onChange={changeLocation}
                       sx={{ marginLeft: "25%", maxWidth: "75%" }}
                     />
@@ -760,8 +778,14 @@ const NewTeacher = ({ fetchTeachers }) => {
                   </div>
                 </FormControl>
               </div>
+              <Box className="flex flex-col" rowGap="30px">
+                <Box className="flex justify-center">
+                  <Title fontSize="1.2rem">Социальная информация</Title>
+                </Box>
+              </Box>
             </div>
           </PaperStyled>
+
           <PaperStyled
             className="full-width"
             sx={{ maxWidth: "calc(50% - 10px)", padding: "30px" }}
@@ -1181,7 +1205,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                           color="purpleBlue"
                           onClick={handleUploadClick("file-upload-input")}
                         >
-                          {files.length === 0 ? "Загрузить" : "Добавить еще"}
+                          {files.length === 0 ? "Загрузить" : "Добавить ещё"}
                         </DialogButton>
                       </Box>
                     </Box>

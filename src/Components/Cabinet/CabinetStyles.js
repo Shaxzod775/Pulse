@@ -336,11 +336,11 @@ export const ContentHeader = styled("div")(({ theme }) => ({
 }));
 
 export const Title = styled(Typography)(
-  ({ theme, color, fontWeight, fontSize }) => ({
+  ({ theme, color, fontWeight, fontSize = "1.375rem" }) => ({
     margin: "0",
     color: color ? color : theme.typography.color.darkBlue,
     // fontSize: fontSize ? fontSize : theme.typography.fontSize.md,
-    fontSize: "1.375rem",
+    fontSize: fontSize,
     fontWeight: fontWeight ? fontWeight : "1000",
   })
 );

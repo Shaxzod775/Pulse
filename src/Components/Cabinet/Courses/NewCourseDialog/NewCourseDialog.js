@@ -347,7 +347,7 @@ const NewCourseDialog = ({
                       fontWeight={400}
                     >
                       Мы рекомендуем изображения не менее 322x179px, вы можете
-                      загрузить PNG или JPG размером менее 10 МБ
+                      загрузить PNG или JPG размером не более 10 МБ
                     </Typography>
                   </div>
                   <div
@@ -489,9 +489,9 @@ const NewCourseDialog = ({
                     onChange={changePrice}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">UZS</InputAdornment>
+                        <InputAdornment position="end">so'm</InputAdornment>
                       ),
-                      placeholder: "Введите стоимость в UZS",
+                      placeholder: "Введите стоимость в сумах",
                       inputComponent: NumericFormatCustom,
                     }}
                   />

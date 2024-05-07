@@ -43,7 +43,7 @@ const Header = () => {
               {/* <span className={styles["name"]}>{auth.user.fullName}</span>
               <span className={styles["title"]}>{auth.user.roleName}</span> */}
 
-              <span className={styles["name"]}>Khabibulloh Saidakhmatov</span>
+              <span className={styles["name"]}>Administrator</span>
               <span className={styles["title"]}>Administrator</span>
             </div>
           </div>

@@ -18,14 +18,10 @@ function App() {
               path={routes.SIGN_IN}
               element={<Navigate to={routes.CABINET} replace />}
             />
-            <Route
-              path={routes.HOME}
-              element={<Navigate to={routes.CABINET} replace />}
-            />
+            <Route path={routes.HOME} element={<Home />} />
           </>
         ) : (
           <>
-            <Route path={routes.CABINET + "/*"} element={<Cabinet />} />
             <Route path={routes.SIGN_IN} element={<SignIn />} />
             <Route path={routes.HOME} element={<Home />} />
           </>

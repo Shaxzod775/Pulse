@@ -40,7 +40,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ru } from "date-fns/locale";
-import { russianLocale } from "../../../../Constants/dateLocales";
+import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 
 import api from "../../../../Core/api";
@@ -211,7 +211,7 @@ const NewGroupDialog = ({
   const [endDate, setEndDate] = useState(null);
 
   const [selectedWeekDays, setSelectedWeekDays] = useState(
-    weekDays.map(() => false)
+    weekDaysText.map(() => false)
   );
 
   const [hoursNumber, setHoursNumber] = useState("");
@@ -456,7 +456,7 @@ const NewGroupDialog = ({
                       fontFamily={"Poppins, Rubik, Roboto, sans-serif"}
                     >
                       Мы рекомендуем изображения не менее 322x127px, вы можете
-                      загрузить PNG или JPG размером менее 10 МБ
+                      загрузить PNG или JPG размером не более 10 МБ
                     </Typography>
                   </div>
                   <div className="flex gap-xxs">
@@ -627,7 +627,7 @@ const NewGroupDialog = ({
                     </label>
                     <div className="flex gap-sm">
                       <div className="flex items-start gap-xxs">
-                        {weekDays.map((weekDay, i) => (
+                        {weekDaysText.map((weekDay, i) => (
                           <TagCheckbox
                             key={i}
                             color="purpleBlue"

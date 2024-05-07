@@ -16,7 +16,7 @@ import {
   KeyboardDoubleArrowLeftOutlined,
 } from "@mui/icons-material";
 import { Collapse, ThemeProvider, Typography, styled } from "@mui/material";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
 import { Icons } from "../../../Assets/Icons/icons";
@@ -75,8 +75,13 @@ const MenuAction = styled("div")(
 );
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const logout = useGlobal((state) => state.logout);
 
-  const logout = useGlobal((state) => state.logout)
+  const handleLogout = async () => {
+    await logout(); // Perform logout
+    navigate(routes.HOME); // Navigate to HOME
+  };
 
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -184,7 +189,11 @@ const Sidebar = () => {
               <div>Поддержка 24/7</div>
             </Collapse>
           </MenuAction>
-          <MenuAction onClick={logout} color="crimson" backgroundColor="#FDF3F2">
+          <MenuAction
+            onClick={handleLogout}
+            color="crimson"
+            backgroundColor="#FDF3F2"
+          >
             <Icons.Logout />
             <Collapse orientation="horizontal" in={isOpen}>
               <div className="text">Log out</div>

@@ -226,7 +226,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
               <Title>Группы</Title>
               <div className="flex items-stretch gap-xxs full-height">
                 <InputBaseStyledV2
-                  placeholder="Поиск по группе..."
+                  placeholder="Поиск по группам..."
                   sx={{
                     position: "relative",
                     minWidth: "240px",

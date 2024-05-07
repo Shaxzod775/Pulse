@@ -123,7 +123,7 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewStudent = ({fetchStudents}) => {
+const NewStudent = ({ fetchStudents }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -294,51 +294,49 @@ const NewStudent = ({fetchStudents}) => {
 
     const formData = new FormData();
 
-    formData.append('studentData', JSON.stringify({
-
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      dateOfBirth: "1995-09-30",
-      phoneNumber: phoneNumber,
-      secondPhoneNumber: additionalPhoneNumber,
-      gender: "MALE",
-      passportSeries: passportSeries,
-      passportNumber: passportNumber,
-      address: {
-        region: "string",
-        state: "string",
-        location: "string"
-      },
-      email: email,
-      contractNumber: "string",
-      tags: [
-        "string"
-      ],
-      contacts: [
-        {
-          name: "string",
-          phoneNumber: "string"
-        }
-      ],
-      description: "string"
-    }));
+    formData.append(
+      "studentData",
+      JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        dateOfBirth: "1995-09-30",
+        phoneNumber: phoneNumber,
+        secondPhoneNumber: additionalPhoneNumber,
+        gender: "MALE",
+        passportSeries: passportSeries,
+        passportNumber: passportNumber,
+        address: {
+          region: "string",
+          state: "string",
+          location: "string",
+        },
+        email: email,
+        contractNumber: "string",
+        tags: ["string"],
+        contacts: [
+          {
+            name: "string",
+            phoneNumber: "string",
+          },
+        ],
+        description: "string",
+      })
+    );
     try {
-
-      const response = await api.post('students/create', formData, {
+      const response = await api.post("students/create", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
       // Обработка успешного ответа, если необходимо
-      console.log('Teacher created:', response.data);
+      console.log("Teacher created:", response.data);
       fetchStudents();
-      navigate('/cabinet/students')
-
+      navigate("/cabinet/students");
     } catch (error) {
       // Обработка ошибок
-      console.error('Error creating teacher:', error);
+      console.error("Error creating teacher:", error);
     }
   };
 
@@ -423,7 +421,7 @@ const NewStudent = ({fetchStudents}) => {
                       fontFamily={"Poppins, Rubik, Roboto, sans-serif"}
                     >
                       Мы рекомендуем изображения не менее 1000x1000, вы можете
-                      загрузить PNG или JPG размером менее 10 МБ
+                      загрузить PNG или JPG размером не более 10 МБ
                     </Typography>
                   </div>
                   <div className="flex gap-xxs">
@@ -568,7 +566,8 @@ const NewStudent = ({fetchStudents}) => {
                             label="Мужской"
                           />
                           <Icons.MaleSymbol
-                            color={theme.typography.color.purpleBlue}
+                            // color={theme.typography.color.purpleBlue}
+                            color="#62dbfb"
                           />
                         </div>
                         <div className="flex items-center gap-xxs2">
@@ -578,7 +577,8 @@ const NewStudent = ({fetchStudents}) => {
                             label="Женский"
                           />
                           <Icons.FemaleSymbol
-                            color={theme.typography.color.purpleBlue}
+                            // color={theme.typography.color.purpleBlue}
+                            color="#fe7ab6"
                           />
                         </div>
                       </RadioGroup>
@@ -693,9 +693,10 @@ const NewStudent = ({fetchStudents}) => {
                                 id="city"
                                 variant="outlined"
                                 placeholder="Район"
-                                helperText={`${region ? "" : "Сначала выберите регион"
-                                  }`}
-                              // error={!city}
+                                helperText={`${
+                                  region ? "" : "Сначала выберите регион"
+                                }`}
+                                // error={!city}
                               />
                             )}
                             disabled={!region}
@@ -909,11 +910,11 @@ const NewStudent = ({fetchStudents}) => {
                               },
                             },
                             ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
-                            {
-                              border: "1px solid #E5E7EB !important",
-                              boxShadow:
-                                "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
-                            },
+                              {
+                                border: "1px solid #E5E7EB !important",
+                                boxShadow:
+                                  "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                              },
                           },
                           "& .MuiFormHelperText-root": {
                             color: "crimson",
