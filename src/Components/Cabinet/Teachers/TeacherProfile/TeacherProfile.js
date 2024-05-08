@@ -29,6 +29,7 @@ import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
 import { getSocialIconByName } from "../../../../helpers/helpers";
 import { socialMediaTypes } from "../../../../Constants/testData";
+import { GroupsCard } from "../../Students/StudentProfile/StudentProfile";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -461,9 +462,130 @@ const TeacherProfile = () => {
     ),
     []
   );
+
+  const groupsContent = useMemo(
+    () => (
+      <>
+        <Grid
+          container
+          justifyContent="start"
+          spacing={`${12}px`}
+          marginBottom={`${theme.custom.spacing.sm}px`}
+        >
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="active" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="archive" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <GroupsCard status="completed" />
+          </Grid>
+          <Grid item xs="auto" md="auto" lg={3}>
+            <Button
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+                padding: "14px",
+                boxShadow: "none",
+                border: "1px solid #E5E7EB",
+              }}
+              color="purpleBlue"
+            >
+              <div className="full-width full-height flex flex-col items-center justify-center gap-sm">
+                <Icons.AddCircleContained
+                  width="72px"
+                  height="72px"
+                  color={theme.typography.color.purpleBlue}
+                />
+                <Typography
+                  maxWidth="150px"
+                  fontWeight={600}
+                  color={theme.typography.color.purpleBlue}
+                  textAlign="center"
+                >
+                  Добавить в новую группу
+                </Typography>
+              </div>
+            </Button>
+          </Grid>
+        </Grid>
+      </>
+    ),
+    []
+  );
+
+  const activityContent = useMemo(
+    () => (
+      <>
+        <Box className="flex flex-col" rowGap="26px">
+          <Box className="flex items-center" columnGap="10px">
+            <TypographyStyled display="flex" colorFromTheme="purpleBlue">
+              <Icons.ClipboardText />
+            </TypographyStyled>
+            <TypographyStyled fontSize="1.125rem" fontWeight="600">
+              История
+            </TypographyStyled>
+          </Box>
+          <Box
+            className="flex flex-col"
+            rowGap="26px"
+            maxHeight="50vh"
+            overflow="auto"
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, i) => (
+              <Box
+                key={i}
+                className="flex flex-col"
+                rowGap="7px"
+                marginRight="10px"
+                padding="18px 25px"
+                borderRadius="25px"
+                bgcolor="#F9FAFB"
+              >
+                <Box className="flex items-center justify-between">
+                  <TypographyStyled
+                    colorFromTheme="black"
+                    fontWeight="600"
+                    small
+                  >
+                    Добавлено
+                  </TypographyStyled>
+                  <Box display="flex" columnGap="24px">
+                    <TypographyStyled colorFromTheme="black" small>
+                      13:23 | 15.02.2024
+                    </TypographyStyled>
+                  </Box>
+                </Box>
+                <Box className="flex items-center justify-between">
+                  <Box
+                    className="flex items-center"
+                    columnGap="10px"
+                    maxWidth="75%"
+                  >
+                    <Icons.CheckCircleBoldDuotone
+                      width="34px"
+                      height="34px"
+                      color={theme.typography.color.purpleBlue}
+                    />
+                    <TypographyStyled small>
+                      Добавлены ссылки для портфолио
+                    </TypographyStyled>
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </>
+    ),
+    []
+  );
+
   const emptyElement = <></>;
   const tabContents = useMemo(
-    () => [userInfo, emptyElement, emptyElement, emptyElement],
+    () => [userInfo, groupsContent, activityContent, emptyElement],
     [userInfo]
   );
 
@@ -629,15 +751,9 @@ const TeacherProfile = () => {
                   ))}
                 </div>
               </div>
-              <div
-                style={{
-                  minHeight: "450px",
-                  paddingRight: "20px",
-                  paddingLeft: "20px",
-                }}
-              >
+              <Box minHeight="450px" height="max-content">
                 {tabContents[activeTab]}
-              </div>
+              </Box>
             </div>
           </div>
         </Paper>

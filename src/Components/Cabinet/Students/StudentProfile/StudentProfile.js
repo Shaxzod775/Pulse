@@ -223,7 +223,7 @@ const PaymentInfoLine = styled("div")(({ theme }) => ({
   },
 }));
 
-const GroupsCard = ({ status = "active" }) => {
+export const GroupsCard = ({ status = "active" }) => {
   // status from ["active", "archive", "completed"]
   const statusTexts = ["Активен", "Архивный", "Завершен"];
   const GroupCardInfoLine = useMemo(
@@ -674,7 +674,7 @@ export const StudentProfile = () => {
                 borderRadius="25px"
                 bgcolor="#F9FAFB"
               >
-                <TypographyStyled colorFromTheme="black" small>
+                <TypographyStyled colorFromTheme="black" fontWeight="600" small>
                   +998 (33) 033-15-33
                 </TypographyStyled>
                 <Box display="flex" columnGap="24px">
@@ -726,7 +726,11 @@ export const StudentProfile = () => {
                 bgcolor="#F9FAFB"
               >
                 <Box className="flex items-center justify-between">
-                  <TypographyStyled colorFromTheme="black" small>
+                  <TypographyStyled
+                    colorFromTheme="black"
+                    fontWeight="600"
+                    small
+                  >
                     +998 (33) 033-15-33
                   </TypographyStyled>
                   <Box display="flex" columnGap="24px">
@@ -741,12 +745,11 @@ export const StudentProfile = () => {
                     columnGap="10px"
                     maxWidth="75%"
                   >
-                    <TypographyStyled
-                      display="flex"
-                      colorFromTheme="purpleBlue"
-                    >
-                      <Icons.ChatRoundDots width="34px" height="34px" />
-                    </TypographyStyled>
+                    <Icons.ChatRoundDots
+                      width="34px"
+                      height="34px"
+                      color={theme.typography.color.purpleBlue}
+                    />
                     <TypographyStyled small>
                       Office ipsum you must be muted. Strategies relaxation go
                       eow book reinvent working nail parking. Incentivization
@@ -798,7 +801,11 @@ export const StudentProfile = () => {
                 bgcolor="#F9FAFB"
               >
                 <Box className="flex items-center justify-between">
-                  <TypographyStyled colorFromTheme="black" small>
+                  <TypographyStyled
+                    colorFromTheme="black"
+                    fontWeight="600"
+                    small
+                  >
                     Баланс отредактирован
                   </TypographyStyled>
                   <Box display="flex" columnGap="24px">
@@ -813,12 +820,11 @@ export const StudentProfile = () => {
                     columnGap="10px"
                     maxWidth="75%"
                   >
-                    <TypographyStyled
-                      display="flex"
-                      colorFromTheme="purpleBlue"
-                    >
-                      <Icons.Pen2 width="34px" height="34px" />
-                    </TypographyStyled>
+                    <Icons.Pen2
+                      width="34px"
+                      height="34px"
+                      color={theme.typography.color.purpleBlue}
+                    />
                     <TypographyStyled small>
                       По причине перерасчета
                     </TypographyStyled>

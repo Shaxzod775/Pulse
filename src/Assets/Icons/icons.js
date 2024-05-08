@@ -70,6 +70,7 @@ import { ReactComponent as CardSend } from "./svgs/cardSend.svg";
 import { ReactComponent as BillCross } from "./svgs/billCross.svg";
 import { ReactComponent as XCircle } from "./svgs/xCircle.svg";
 import { ReactComponent as CheckCircle } from "./svgs/checkCircle.svg";
+import { ReactComponent as CheckCircleBoldDuotone } from "./svgs/checkCircleBoldDuotone.svg";
 import { ReactComponent as Button } from "./svgs/button.svg";
 import { ReactComponent as MonthCellBg } from "./svgs/monthCellBg.svg";
 import { ReactComponent as ClipboardRemove } from "./svgs/clipboardRemove.svg";
@@ -159,6 +160,7 @@ export const Icons = {
   BillCross,
   XCircle,
   CheckCircle,
+  CheckCircleBoldDuotone,
   Button,
   MonthCellBg,
   ClipboardRemove,
