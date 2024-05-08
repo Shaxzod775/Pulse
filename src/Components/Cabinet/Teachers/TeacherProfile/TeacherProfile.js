@@ -525,7 +525,7 @@ const TeacherProfile = () => {
               <Icons.ClipboardText />
             </TypographyStyled>
             <TypographyStyled fontSize="1.125rem" fontWeight="600">
-              История
+              Активность
             </TypographyStyled>
           </Box>
           <Box
