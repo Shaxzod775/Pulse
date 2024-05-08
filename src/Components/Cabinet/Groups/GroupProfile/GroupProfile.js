@@ -254,12 +254,14 @@ const GroupProfile = () => {
                 Посещаемость
               </TypographyStyled>
             </Box>
-            <ButtonStyled sx={{ padding: "10px" }} color="purpleBlue">
-              <Box className="flex items-center" columnGap="10px">
-                <Icons.Group />
-                <Typography fontSize="0.875rem">222</Typography>
-              </Box>
-            </ButtonStyled>
+            <Link to={routes.STUDENTS} className="link">
+              <ButtonStyled sx={{ padding: "10px" }} color="purpleBlue">
+                <Box className="flex items-center" columnGap="10px">
+                  <Icons.Group />
+                  <Typography fontSize="0.875rem">22</Typography>
+                </Box>
+              </ButtonStyled>
+            </Link>
           </Box>
           <Box className="flex items-center" columnGap="12px">
             <Select
