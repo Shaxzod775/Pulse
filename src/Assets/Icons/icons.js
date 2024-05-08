@@ -75,6 +75,16 @@ import { ReactComponent as MonthCellBg } from "./svgs/monthCellBg.svg";
 import { ReactComponent as ClipboardRemove } from "./svgs/clipboardRemove.svg";
 import { ReactComponent as ClipboardCheck } from "./svgs/clipboardCheck.svg";
 import { ReactComponent as ClipboardText } from "./svgs/clipboardText.svg";
+import { ReactComponent as Feed } from "./svgs/feed.svg";
+import { ReactComponent as Globe } from "./svgs/globe.svg";
+import { ReactComponent as XLogo } from "./svgs/xLogo.svg";
+import { ReactComponent as GithubLogo } from "./svgs/githubLogo.svg";
+import { ReactComponent as YoutubeLogo } from "./svgs/youtubeLogo.svg";
+import { ReactComponent as FacebookLogo } from "./svgs/facebookLogo.svg";
+import { ReactComponent as LinkedinLogo } from "./svgs/linkedinLogo.svg";
+import { ReactComponent as TelegramLogo } from "./svgs/telegramLogo.svg";
+import { ReactComponent as WhatsappLogo } from "./svgs/whatsappLogo.svg";
+import { ReactComponent as InstagramLogo } from "./svgs/instagramLogo.svg";
 
 export const Icons = {
   ArrowD,
@@ -154,4 +164,14 @@ export const Icons = {
   ClipboardRemove,
   ClipboardCheck,
   ClipboardText,
+  Feed,
+  Globe,
+  XLogo,
+  GithubLogo,
+  YoutubeLogo,
+  FacebookLogo,
+  LinkedinLogo,
+  TelegramLogo,
+  WhatsappLogo,
+  InstagramLogo,
 };

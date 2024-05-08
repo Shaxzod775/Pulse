@@ -1,3 +1,7 @@
+import { socialMediaWithIcons } from "../Constants/testData";
+
+import { Icons } from "../Assets/Icons/icons";
+
 export function getRussianWord(num, form1, form2, form3) {
   if (num % 10 === 1 && num % 100 !== 11) {
     return form1; // for "месяц"
@@ -57,4 +61,20 @@ export function formatFileName(fileName) {
       : fileName;
 
   return formattedName;
+}
+export function getSocialIconByName(name) {
+  // Convert the name to lowercase and remove any whitespace
+  const formattedName = name.toLowerCase().trim();
+
+  // Create a new object with all keys in lowercase
+  const formattedIcons = Object.keys(socialMediaWithIcons).reduce(
+    (result, key) => {
+      result[key.toLowerCase()] = socialMediaWithIcons[key];
+      return result;
+    },
+    {}
+  );
+
+  // Return the icon, or Icons.Globe if the icon doesn't exist
+  return formattedIcons[formattedName] || Icons.Globe;
 }

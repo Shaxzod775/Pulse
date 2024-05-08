@@ -1,7 +1,9 @@
+import { Icons } from "../Assets/Icons/icons";
+
 export const leadSources = [
   "Instagram",
   "Facebook",
-  "Twitter",
+  "X",
   "LinkedIn",
   "YouTube",
   "TikTok",
@@ -68,10 +70,20 @@ export const socialMediaTypes = [
   "Instagram",
   "Telegram",
   "Facebook",
-  "Twitter",
+  "X",
   "YouTube",
-  "TikTok",
   "WhatsApp",
   "Персональный сайт",
-  "Другое",
 ];
+
+export const socialMediaWithIcons = {
+  GitHub: Icons.GithubLogo,
+  LinkedIn: Icons.LinkedinLogo,
+  Instagram: Icons.InstagramLogo,
+  Telegram: Icons.TelegramLogo,
+  Facebook: Icons.FacebookLogo,
+  X: Icons.XLogo,
+  YouTube: Icons.YoutubeLogo,
+  WhatsApp: Icons.WhatsappLogo,
+  "Персональный сайт": Icons.Globe,
+};
