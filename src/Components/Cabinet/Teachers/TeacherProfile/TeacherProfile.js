@@ -3,10 +3,12 @@ import { ButtonStyled, Main, Root, Title, theme } from "../../CabinetStyles";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
+  Box,
   Button,
   Card,
   Chip,
   Divider,
+  IconButton,
   InputBase,
   Paper,
   ThemeProvider,
@@ -153,25 +155,50 @@ const ProfileTabHeader = styled("div")(
   })
 );
 
-const InfoItem = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-  lineHeight: "150%",
-  fontFamily: "Poppins, Rubik, sans-serif",
-  "& > h5": {
-    margin: "0",
-    color: "#AEB2BA",
-    fontSize: "1.125rem",
-    fontWeight: "500",
-    letterSpacing: ".36px",
-  },
-  "& > span": {
-    color: "#1C0D64",
-    fontSize: "1rem",
-    letterSpacing: ".32px",
-  },
-}));
+// const InfoItem = styled("div")(({ theme }) => ({
+//   display: "flex",
+//   flexDirection: "column",
+//   gap: "8px",
+//   lineHeight: "150%",
+//   fontFamily: "Poppins, Rubik, sans-serif",
+//   "& > h5": {
+//     margin: "0",
+//     color: "#AEB2BA",
+//     fontSize: "0.875rem",
+//     fontWeight: "500",
+//     letterSpacing: ".36px",
+//   },
+//   "& > span": {
+//     color: "#1C0D64",
+//     fontSize: "1rem",
+//     letterSpacing: ".32px",
+//   },
+// }));
+
+const InfoItem = ({ title, children }) => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "4px",
+      lineHeight: "150%",
+      fontFamily: "Poppins, Rubik, sans-serif",
+    }}
+  >
+    <Typography
+      variant="subtitle2"
+      sx={{ color: "#AEB2BA", letterSpacing: ".36px" }}
+    >
+      {title}
+    </Typography>
+    <Typography
+      variant="body1"
+      sx={{ color: "#1C0D64", letterSpacing: ".32px" }}
+    >
+      {children}
+    </Typography>
+  </Box>
+);
 
 const SkillChip = styled(Chip)(({ theme }) => ({
   borderRadius: "8px",
@@ -183,7 +210,12 @@ const TeacherProfile = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
-  const tabsToMap = ["Личная информация", "Группы", "Активность", "Зарплата"];
+  const tabsToMap = [
+    "Информация о пользователе",
+    "Группы",
+    "Активность",
+    "Зарплата",
+  ];
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -212,100 +244,202 @@ const TeacherProfile = () => {
         <div className="flex items-center gap-xxs">
           <Icons.UserId color={theme.typography.color.purpleBlue} />
           <Typography fontSize="1.125rem" fontWeight={600}>
-            Информация о пользователе
+            Личная информация
           </Typography>
         </div>
-
-        <div className="flex gap-lg">
-          <div className="flex flex-col gap-xxs2">
-            <InfoItem>
-              <h5>Фамилия Имя Отчество</h5>
-              <span>Koptleulov Arslan Almazovich</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Номер телефона</h5>
-              <span>
-                <div className="flex items-center gap-xxs2">
-                  <Typography>+998 (33) 033-15-33</Typography>
-                  <Link to="tel:/+998330331533" className="link">
-                    <ButtonStyled
-                      variant="contained"
-                      color="purpleBlueLight"
-                      sx={{
-                        minWidth: "unset",
-                        padding: "10px",
-                        borderRadius: "10px",
-                      }}
+        <Box display="flex" columnGap="24px">
+          <Card
+            sx={{
+              width: "100%",
+              maxWidth: "calc(50% - 12px)",
+              padding: "20px",
+              borderRadius: "20px",
+              bgcolor: "#F9FAFB",
+              boxShadow: "none",
+            }}
+          >
+            <Box className="flex justify-between">
+              <Box className="flex flex-col" rowGap="14px">
+                <InfoItem title="Фамилия Имя Отчество">
+                  Koptleulov Arslan Almazovich
+                </InfoItem>
+                <InfoItem title="Номер телефона">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>+998 (33) 033-15-33</Typography>
+                    <Box className="flex">
+                      <Link to="sms:+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.ChatRoundDots />
+                        </IconButton>
+                      </Link>
+                      <Link to="tel:/+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.Call />
+                        </IconButton>
+                      </Link>
+                    </Box>
+                  </Box>
+                </InfoItem>
+                <InfoItem title="Дополнительный номер">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>+998 (33) 033-15-33</Typography>
+                    <Box className="flex">
+                      <Link to="sms:+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.ChatRoundDots />
+                        </IconButton>
+                      </Link>
+                      <Link to="tel:/+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.Call />
+                        </IconButton>
+                      </Link>
+                    </Box>
+                  </Box>
+                </InfoItem>
+                <InfoItem title="Почта">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>arslan.koptleulov@abexlab.com</Typography>
+                    <Link
+                      to="mailto:arslan.koptleulov@abexlab.com"
+                      className="link"
                     >
-                      <Icons.Call />
-                    </ButtonStyled>
-                  </Link>
-                </div>
-              </span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Дата рождения:</h5>
-              <span>21.08.2002</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Почта:</h5>
-              <span>
-                <div className="flex items-center gap-xxs2">
-                  <Typography>arslan.koptleulov@abexlab.com</Typography>
-                  <Link
-                    to="mailto:arslan.koptleulov@abexlab.com"
-                    className="link"
-                  >
-                    <ButtonStyled
-                      variant="contained"
-                      color="purpleBlueLight"
-                      sx={{
-                        minWidth: "unset",
-                        padding: "10px",
-                        borderRadius: "10px",
-                      }}
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                        <Icons.Messages />
+                      </IconButton>
+                    </Link>
+                  </Box>
+                </InfoItem>
+                <Box className="flex" columnGap="18px">
+                  <InfoItem title="Дата рождения">21.08.2002</InfoItem>
+                  <InfoItem title="Пол">
+                    <Box className="flex items-center" columnGap="4px">
+                      Мужской
+                      <Icons.MaleSymbol />
+                    </Box>
+                  </InfoItem>
+                </Box>
+              </Box>
+              <Box className="flex flex-col" rowGap="14px">
+                <InfoItem title="ID или Свидетельство о рождении">
+                  AB 1234567
+                </InfoItem>
+                <InfoItem title="ID/Номер договора">
+                  247325247325247325
+                </InfoItem>
+                <InfoItem title="ПИНФЛ">247325247325247325</InfoItem>
+                <InfoItem title="Дата начала работы">21.07.2022</InfoItem>
+                <InfoItem title="Вид контракта">ГПХ</InfoItem>
+                <InfoItem title="Вид контракта">ГПХ</InfoItem>
+                <InfoItem title="Теги">
+                  <div className="flex gap-xxs2">
+                    <SkillChip
+                      label={"Frontend"}
+                      variant="outlined"
+                      color="purpleBlue"
+                    />
+                    <SkillChip
+                      label={"UX/UX"}
+                      variant="outlined"
+                      color="purpleBlue"
+                    />
+                  </div>
+                </InfoItem>
+                <InfoItem title="Роль">UX/UI Designer, Teacher</InfoItem>
+                <InfoItem title="Адрес проживания">
+                  Ташкент, Яшнабад, Тузель 1, кв 33
+                </InfoItem>
+                <InfoItem title="Активная группа">GR011-62</InfoItem>
+              </Box>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              width: "100%",
+              maxWidth: "calc(50% - 12px)",
+              padding: "20px",
+              borderRadius: "20px",
+              bgcolor: "#F9FAFB",
+              boxShadow: "none",
+            }}
+          >
+            <Box className="flex justify-between">
+              <Box className="flex flex-col" rowGap="14px">
+                <InfoItem title="ИНПС">247325247325247325</InfoItem>
+                <InfoItem title="ИНН">247325247325247325</InfoItem>
+                <InfoItem title="Дополнительный номер">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>+998 (33) 033-15-33</Typography>
+                    <Box className="flex">
+                      <Link to="sms:+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.ChatRoundDots />
+                        </IconButton>
+                      </Link>
+                      <Link to="tel:/+998330331533" className="link">
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.Call />
+                        </IconButton>
+                      </Link>
+                    </Box>
+                  </Box>
+                </InfoItem>
+                <InfoItem title="Почта">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>arslan.koptleulov@abexlab.com</Typography>
+                    <Link
+                      to="mailto:arslan.koptleulov@abexlab.com"
+                      className="link"
                     >
-                      <Icons.Messages />
-                    </ButtonStyled>
-                  </Link>
-                </div>
-              </span>
-            </InfoItem>
-            <InfoItem>
-              <h5>ID или Свидетельство о рождении:</h5>
-              <span>AB 247325</span>
-            </InfoItem>
-          </div>
-          <div className="flex flex-col gap-xxs2">
-            <InfoItem>
-              <h5>Теги</h5>
-              <div className="flex gap-xxs2">
-                <SkillChip
-                  label={"Frontend"}
-                  variant="outlined"
-                  color="purpleBlue"
-                />
-                <SkillChip
-                  label={"UX/UX"}
-                  variant="outlined"
-                  color="purpleBlue"
-                />
-              </div>
-            </InfoItem>
-            <InfoItem>
-              <h5>Роль</h5>
-              <span>UX/UI Designer, Teacher</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Адрес проживания:</h5>
-              <span>Ташкент, Яшнабад, Тузель 1, кв 33</span>
-            </InfoItem>
-            <InfoItem>
-              <h5>Активная группа:</h5>
-              <span>GR011-62</span>
-            </InfoItem>
-          </div>
-        </div>
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                        <Icons.Messages />
+                      </IconButton>
+                    </Link>
+                  </Box>
+                </InfoItem>
+                <Box className="flex" columnGap="18px">
+                  <InfoItem title="Дата рождения">21.08.2002</InfoItem>
+                  <InfoItem title="Пол">
+                    <Box className="flex items-center" columnGap="4px">
+                      Мужской
+                      <Icons.MaleSymbol />
+                    </Box>
+                  </InfoItem>
+                </Box>
+              </Box>
+              <Box className="flex flex-col" rowGap="14px">
+                <InfoItem title="ID или Свидетельство о рождении">
+                  AB 1234567
+                </InfoItem>
+                <InfoItem title="ID/Номер договора">
+                  247325247325247325
+                </InfoItem>
+                <InfoItem title="ПИНФЛ">247325247325247325</InfoItem>
+                <InfoItem title="Дата начала работы">21.07.2022</InfoItem>
+                <InfoItem title="Вид контракта">ГПХ</InfoItem>
+                <InfoItem title="Теги">
+                  <div className="flex gap-xxs2">
+                    <SkillChip
+                      label={"Frontend"}
+                      variant="outlined"
+                      color="purpleBlue"
+                    />
+                    <SkillChip
+                      label={"UX/UX"}
+                      variant="outlined"
+                      color="purpleBlue"
+                    />
+                  </div>
+                </InfoItem>
+                <InfoItem title="Роль">UX/UI Designer, Teacher</InfoItem>
+                <InfoItem title="Адрес проживания">
+                  Ташкент, Яшнабад, Тузель 1, кв 33
+                </InfoItem>
+                <InfoItem title="Активная группа">GR011-62</InfoItem>
+              </Box>
+            </Box>
+          </Card>
+        </Box>
       </div>
     ),
     []
