@@ -62,6 +62,7 @@ export function formatFileName(fileName) {
 
   return formattedName;
 }
+
 export function getSocialIconByName(name) {
   // Convert the name to lowercase and remove any whitespace
   const formattedName = name.toLowerCase().trim();
