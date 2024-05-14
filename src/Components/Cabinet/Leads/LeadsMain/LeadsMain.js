@@ -231,7 +231,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-                  {leadSources.map((status, i) => (
+                  {leadStatuses.map((status, i) => (
                     <MenuItem value={status} key={i}>
                       <CustomCheckbox
                         checked={selectedStatuses.indexOf(status) > -1}

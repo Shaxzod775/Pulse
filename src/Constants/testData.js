@@ -44,7 +44,12 @@ export const languagesFullRu = ["Узбекский", "Русский", "Анг�
 //   en: "Inglizcha",
 // };
 
-export const leadStatuses = ["In Progress", "Dead", "New", "Recycled"];
+export const leadStatuses = [
+  "Новые",
+  "Открытые",
+  "В процессе",
+  "Завершенная сделка",
+];
 
 export const uzbekEducationLevels = [
   "Среднее образование",
