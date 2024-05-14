@@ -376,10 +376,9 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   IconComponent={Icons.ArrowDBold}
                 >
                   {[
-                    "Действующие группы",
-                    "Group status 1",
-                    "Group status 2",
-                    "Group status 3",
+                    "Активные группы",
+                    "Архивные status 1",
+                    "Заверщенные status 2",
                   ].map((groupStatus) => (
                     <MenuItem key={groupStatus} value={groupStatus}>
                       <CustomCheckbox

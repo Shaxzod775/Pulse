@@ -368,10 +368,11 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   IconComponent={Icons.ArrowDBold}
                 >
                   {[
-                    "Student status 0",
-                    "Student status 1",
-                    "Student status 2",
-                    "Student status 3",
+                    "Активные студенты",
+                    "Закончившие курс",
+                    "Ушли после пробных",
+                    "Засороженные студентыне",
+                    "Не добавлены в группу",
                   ].map((groupStatus) => (
                     <MenuItem key={groupStatus} value={groupStatus}>
                       <CustomCheckbox
