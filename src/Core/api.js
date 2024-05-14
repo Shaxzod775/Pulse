@@ -22,4 +22,18 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      const logout = useGlobal.getState().logout;
+      logout()
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
