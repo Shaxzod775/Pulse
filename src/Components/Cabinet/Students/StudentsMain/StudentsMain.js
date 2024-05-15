@@ -85,7 +85,11 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const [selectedGroup, changeSelectedGroup] = useInput("0");
 
-  const [selectedGroupStatuses, setSelectedGroupStatuses] = useState(["0"]);
+  const [selectedStatuses, setSelectedStatuses] = useState(["0"]);
+
+  const [selectedFinancialStatuses, setSelectedFinancialStatuses] = useState([
+    "0",
+  ]);
 
   const [selectedTags, setSelectedTags] = useState(["0"]);
 
@@ -354,10 +358,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                 <Select
                   multiple
                   required
-                  value={selectedGroupStatuses}
-                  onChange={handleChangeMultipleSelect(
-                    setSelectedGroupStatuses
-                  )}
+                  value={selectedStatuses}
+                  onChange={handleChangeMultipleSelect(setSelectedStatuses)}
                   renderValue={(selected) => {
                     if (selected.length === 1) return "Статус ученика";
                     return selected.slice(1).join(", ");
@@ -373,14 +375,45 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                     "Ушли после пробных",
                     "Засороженные студентыне",
                     "Не добавлены в группу",
-                  ].map((groupStatus) => (
-                    <MenuItem key={groupStatus} value={groupStatus}>
+                  ].map((status) => (
+                    <MenuItem key={status} value={status}>
+                      <CustomCheckbox
+                        checked={selectedStatuses.indexOf(status) > -1}
+                      />
+                      <ListItemText primary={status} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Select
+                  multiple
+                  required
+                  value={selectedFinancialStatuses}
+                  onChange={handleChangeMultipleSelect(
+                    setSelectedFinancialStatuses
+                  )}
+                  renderValue={(selected) => {
+                    if (selected.length === 1) return "Финансовый статус";
+                    return selected.slice(1).join(", ");
+                  }}
+                  MenuProps={customMenuProps}
+                  sx={{ ...selectStylesV2({ theme }), minWidth: "240px" }}
+                  input={<InputBaseStyledV2 />}
+                  IconComponent={Icons.ArrowDBold}
+                >
+                  {[
+                    "Оплатившие студенты",
+                    "Должники",
+                    "Бесплатно обучающиеся",
+                    "Обучающиеся со скидкой",
+                  ].map((financialStatus) => (
+                    <MenuItem key={financialStatus} value={financialStatus}>
                       <CustomCheckbox
                         checked={
-                          selectedGroupStatuses.indexOf(groupStatus) > -1
+                          selectedFinancialStatuses.indexOf(financialStatus) >
+                          -1
                         }
                       />
-                      <ListItemText primary={groupStatus} />
+                      <ListItemText primary={financialStatus} />
                     </MenuItem>
                   ))}
                 </Select>
