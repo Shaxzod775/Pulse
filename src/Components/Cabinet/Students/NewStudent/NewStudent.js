@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import api from "../../../../Core/api";
 
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Button,
   Chip,
   Divider,
@@ -13,9 +14,12 @@ import {
   IconButton,
   InputAdornment,
   InputBase,
+  ListItemText,
+  MenuItem,
   Paper,
   Radio,
   RadioGroup,
+  Select,
   TextField,
   Typography,
   styled,
@@ -29,11 +33,16 @@ import {
   AutocompleteField,
   AutocompleteStyled,
   ButtonStyled,
+  InputBaseStyled,
   Main,
   Root,
+  SquareContainer,
   TextFieldStyled,
   Title,
+  TypographyStyled,
+  customMenuProps,
   muiTelInputStyles,
+  selectStyles,
   textFieldStyles,
   theme,
 } from "../../CabinetStyles";
@@ -48,6 +57,7 @@ import {
   REGION_WITH_DISTRICTS,
 } from "../../../../Constants/usbekistan";
 import { russianLocale } from "../../../../Constants/dateLocales";
+import { formatFileName } from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -142,6 +152,8 @@ const NewStudent = ({ fetchStudents }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+
   const [passportSeries, setPassportSeries] = useState("");
   const [passportNumber, setPassportNumber] = useState("");
 
@@ -158,8 +170,15 @@ const NewStudent = ({ fetchStudents }) => {
   ]);
   const [visibleCount, setVisibleCount] = useState(1);
 
+  const [group, changeGroup, resetGroup] = useAutocompleteInput("");
+  const [dateOfEnrollment, setDateOfEnrollment] = useState(null);
+
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
+
+  const [studentStatus, setStudentStatus] = useInput("");
+
+  const [files, setFiles] = useState([]);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -178,11 +197,23 @@ const NewStudent = ({ fetchStudents }) => {
     }
   };
 
-  const handleUploadClick = () => {
+  const handleUploadClick = (idToClick) => () => {
     // Simulate file input click event
-    const fileInput = document.getElementById("file-upload-input");
+    const fileInput = document.getElementById(idToClick);
     fileInput.click();
   };
+
+  const handleFileUpload = useCallback((acceptedFiles) => {
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+  }, []);
+  const handleFileDelete = useCallback(
+    (index) => () => {
+      let newFiles = [...files]; // create a new copy of files array
+      newFiles.splice(index, 1); // remove the file at the specified index
+      setFiles(newFiles); // update the state
+    },
+    [files, setFiles]
+  );
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -204,6 +235,16 @@ const NewStudent = ({ fetchStudents }) => {
     } else if (digits.length <= 3) {
       // If the new phone number is "+99" or "+9", reset it to "+998"
       phoneNumberSetter("+998");
+    }
+  };
+
+  // Function to handle change in date
+  const handleDateChange = (setter) => (newDate) => {
+    if (newDate instanceof Date && !isNaN(newDate)) {
+      setter(newDate);
+    } else {
+      // Handle invalid input date here
+      setter(null);
     }
   };
 
@@ -400,7 +441,7 @@ const NewStudent = ({ fetchStudents }) => {
                         {...getRootProps()}
                       >
                         <input
-                          {...getInputProps({ id: "file-upload-input" })}
+                          {...getInputProps({ id: "image-upload-input" })}
                         />
                         {selectedImage ? (
                           <img src={selectedImage} alt="Uploaded" />
@@ -426,7 +467,7 @@ const NewStudent = ({ fetchStudents }) => {
                   </div>
                   <div className="flex gap-xxs">
                     <DialogButton
-                      onClick={handleUploadClick}
+                      onClick={handleUploadClick("image-upload-input")}
                       variant="contained"
                       color="purpleBlue"
                     >
@@ -599,6 +640,8 @@ const NewStudent = ({ fetchStudents }) => {
                       >
                         <DatePicker
                           sx={textFieldStyles({ theme })}
+                          value={dateOfBirth}
+                          onChange={handleDateChange(setDateOfBirth)}
                           slots={{
                             openPickerIcon: Icons.CalendarContained,
                           }}
@@ -857,6 +900,73 @@ const NewStudent = ({ fetchStudents }) => {
 
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
+                  <FormLabel row>Добавить в группу</FormLabel>
+                </label>
+                <div
+                  className="full-width flex gap-xxs"
+                  style={{ maxWidth: "75%" }}
+                >
+                  <FormControl fullWidth variant="outlined">
+                    <AutocompleteStyled
+                      options={[
+                        "GR10-1010",
+                        "GR10-1011",
+                        "GR10-1012",
+                        "GR10-1013",
+                      ]}
+                      value={group}
+                      onChange={changeGroup}
+                      renderInput={(params) => (
+                        <AutocompleteField
+                          {...params}
+                          id="group"
+                          variant="outlined"
+                          placeholder="Группа"
+                        />
+                      )}
+                      popupIcon={
+                        <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                      }
+                      clearIcon={
+                        <Icons.Delete color={theme.typography.color.darkBlue} />
+                      }
+                    />
+                  </FormControl>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <label style={{ maxWidth: "25%" }}>
+                  <FormLabel row>Дата добавления</FormLabel>
+                </label>
+                <Box width="100%" maxWidth="75%">
+                  <FormControl variant="outlined">
+                    <LocalizationProvider
+                      dateAdapter={AdapterDateFns}
+                      adapterLocale={ru}
+                      localeText={russianLocale}
+                    >
+                      <DatePicker
+                        sx={{
+                          ...textFieldStyles({ theme }),
+                          maxWidth: "230px",
+                        }}
+                        value={dateOfBirth}
+                        onChange={handleDateChange(setDateOfBirth)}
+                        slots={{
+                          openPickerIcon: Icons.CalendarContained,
+                        }}
+                        slotProps={{
+                          field: { clearable: true },
+                          openPickerButton: { color: "purpleBlue" },
+                        }}
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Box>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <label style={{ maxWidth: "25%" }}>
                   <FormLabel row>Добавить тег:</FormLabel>
                 </label>
                 <div
@@ -936,6 +1046,122 @@ const NewStudent = ({ fetchStudents }) => {
                   />
                 </div>
               </div>
+
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-center justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Статус</FormLabel>
+                  </label>
+                  <Select
+                    fullWidth
+                    required
+                    value={studentStatus}
+                    onChange={setStudentStatus}
+                    MenuProps={customMenuProps}
+                    sx={{ ...selectStyles({ theme }), maxWidth: "75%" }}
+                    input={<InputBaseStyled />}
+                    IconComponent={Icons.ArrowD}
+                  >
+                    {["status 0", "status 1", "status 2", "status 3"].map(
+                      (leadStatus) => (
+                        <MenuItem key={leadStatus} value={leadStatus}>
+                          <ListItemText primary={leadStatus} />
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
+                </div>
+              </FormControl>
+
+              <FormControl required fullWidth variant="outlined">
+                <div className="flex items-start justify-between">
+                  <label style={{ maxWidth: "25%" }}>
+                    <FormLabel row>Документы</FormLabel>
+                  </label>
+                  <Box
+                    width="100%"
+                    maxWidth="75%"
+                    className="flex flex-col"
+                    rowGap="12px"
+                  >
+                    <Dropzone onDrop={handleFileUpload}>
+                      {({ getRootProps, getInputProps, isDragActive }) => (
+                        <SquareContainer
+                          {...getRootProps({
+                            className: "flex justify-center items-center",
+                            active: true,
+                          })}
+                        >
+                          <input
+                            {...getInputProps({ id: "file-upload-input" })}
+                          />
+                          <Box
+                            className="flex flex-col items-center"
+                            rowGap="6px"
+                          >
+                            <Icons.GalleryAdd color="#D1D5DB" />
+                            <TypographyStyled
+                              maxWidth="70%"
+                              textAlign="center"
+                              colorFromTheme="grey"
+                            >
+                              Загрузите или перетащите ваши документы
+                            </TypographyStyled>
+                          </Box>
+                        </SquareContainer>
+                      )}
+                    </Dropzone>
+                    <Box className="flex flex-col" rowGap="8px">
+                      {files.map((file, index) => (
+                        <>
+                          <Box
+                            className="flex justify-between"
+                            columnGap="10px"
+                          >
+                            <Box className="flex items-center" columnGap="10px">
+                              <TypographyStyled
+                                display="flex"
+                                colorFromTheme="purpleBlue"
+                              >
+                                <Icons.ClipboardText />
+                              </TypographyStyled>
+                              <TypographyStyled
+                                whiteSpace="nowrap"
+                                maxWidth="300px"
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                              >
+                                {formatFileName(file.name)}
+                              </TypographyStyled>
+                            </Box>
+                            <Box className="flex items-center" columnGap="4px">
+                              <TypographyStyled whiteSpace="nowrap">
+                                {(file.size / 1024 / 1024).toFixed(2)} MB
+                              </TypographyStyled>
+                              <IconButton
+                                color="purpleBlue"
+                                onClick={handleFileDelete(index)}
+                              >
+                                <Icons.TrashCan width="24px" height="24px" />
+                              </IconButton>
+                            </Box>
+                          </Box>
+                        </>
+                      ))}
+                      <Box>
+                        <DialogButton
+                          variant="contained"
+                          color="purpleBlue"
+                          onClick={handleUploadClick("file-upload-input")}
+                        >
+                          {files.length === 0 ? "Загрузить" : "Добавить ещё"}
+                        </DialogButton>
+                      </Box>
+                    </Box>
+                  </Box>
+                </div>
+              </FormControl>
+
               <FormControl fullWidth variant="outlined">
                 <div className="flex items-start justify-between">
                   <label style={{ maxWidth: "25%" }}>

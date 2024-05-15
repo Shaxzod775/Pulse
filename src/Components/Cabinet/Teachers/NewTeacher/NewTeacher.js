@@ -224,7 +224,6 @@ const NewTeacher = ({ fetchTeachers }) => {
     },
     [files, setFiles]
   );
-  useEffect(() => console.log(files), [files]);
 
   const handleChange = (event, setter, setHelperText) => {
     const { value } = event.target;
