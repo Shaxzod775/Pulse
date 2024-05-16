@@ -7,7 +7,7 @@ import {
   TypographyStyled,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Button,
@@ -30,6 +30,8 @@ import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
 import { Height, RateReview, RouteSharp } from "@mui/icons-material";
 import AttendanceCalendar from "./AttendanceCalendar/AttendanceCalendar";
+import api from "../../../../Core/api";
+import { formattedPhoneNumber } from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -169,26 +171,16 @@ const ProfileTabHeader = styled("div")(
   })
 );
 
-const InfoItem = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-  lineHeight: "150%",
-  fontFamily: "Poppins, Rubik, sans-serif",
-  "& > h5": {
-    margin: "0",
-    color: "#AEB2BA",
-    fontSize: "1.125rem",
-    fontWeight: "500",
-    letterSpacing: ".36px",
-  },
-  "& > span": {
-    color: "#1C0D64",
-    fontSize: "1rem",
-    letterSpacing: ".32px",
-  },
-  // svg: { color: theme.typography.color.purpleBlue },
-}));
+const InfoItem = ({ title, children }) => (
+  <Box className="flex flex-col" rowGap="4px" lineHeight="150%">
+    <Typography color="#AEB2BA" letterSpacing=".36px" fontSize="14px">
+      {title}
+    </Typography>
+    <Typography color="#1C0D64" letterSpacing=".32px">
+      {children}
+    </Typography>
+  </Box>
+);
 
 const SkillChip = styled(Chip)(({ theme }) => ({
   borderRadius: "8px",
@@ -340,6 +332,9 @@ export const GroupsCard = ({ status = "active" }) => {
 
 export const StudentProfile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [student, setStudent] = useState(null);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const tabsToMap = [
@@ -355,8 +350,25 @@ export const StudentProfile = () => {
     navigate(-1); // This navigates one step back in history
   };
 
-  const persoalInfoContent = useMemo(
-    () => (
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const response = await api.get(`students/getById/${id}`);
+        setStudent(response.data);
+      } catch (error) {
+        console.error("Error fetching student:", error);
+      }
+    };
+
+    fetchStudent();
+    console.log(student);
+  }, [id]);
+
+  const persoalInfoContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+    return (
       <div className="flex flex-wrap gap-lg">
         <div className="flex flex-col gap-sm">
           <div className="flex items-center gap-xxs">
@@ -366,87 +378,107 @@ export const StudentProfile = () => {
             </Typography>
           </div>
           <div className="flex gap-lg">
-            <div className="flex flex-col gap-xxs2">
-              <InfoItem>
-                <h5>Фамилия Имя Отчество</h5>
-                <span>Koptleulov Arslan Almazovich</span>
+            <Box className="flex flex-col" rowGap="14px">
+              <InfoItem title="Фамилия Имя Отчество">
+                {`${student.lastName} ${student.firstName} ${student.middleName}`}
               </InfoItem>
-              <InfoItem>
-                <h5>Номер телефона</h5>
-                <span>
-                  <div className="flex items-center gap-xxs2">
-                    <Typography>+998 (33) 033-15-33</Typography>
-                    <Link to="tel:/+998330331533" className="link">
-                      <IconButton color="purpleBlue">
+              <InfoItem title="Номер телефона">
+                <Box className="flex items-center" columnGap="4px">
+                  <Typography>
+                    {formattedPhoneNumber(student.phoneNumber)}
+                  </Typography>
+                  <Box className="flex">
+                    <Link to={`sms:${student.phoneNumber}`} className="link">
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                        <Icons.ChatRoundDots />
+                      </IconButton>
+                    </Link>
+                    <Link to={`tel:/${student.phoneNumber}`} className="link">
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
                         <Icons.Call />
                       </IconButton>
                     </Link>
-                  </div>
-                </span>
+                  </Box>
+                </Box>
               </InfoItem>
-              <InfoItem>
-                <h5>Дата рождения:</h5>
-                <span>21.08.2002</span>
+              {student.secondPhoneNumber && (
+                <InfoItem title="Дополнительный номер">
+                  <Box className="flex items-center" columnGap="4px">
+                    <Typography>
+                      {formattedPhoneNumber(student.secondPhoneNumber)}
+                    </Typography>
+                    <Box className="flex">
+                      <Link
+                        to={`sms:${student.secondPhoneNumber}`}
+                        className="link"
+                      >
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.ChatRoundDots />
+                        </IconButton>
+                      </Link>
+                      <Link
+                        to={`tel:/${student.secondPhoneNumber}`}
+                        className="link"
+                      >
+                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                          <Icons.Call />
+                        </IconButton>
+                      </Link>
+                    </Box>
+                  </Box>
+                </InfoItem>
+              )}
+              <InfoItem title="Дата рождения">{student.dateOfBirth}</InfoItem>
+              <InfoItem title="E-mail">
+                <Box className="flex items-center" columnGap="4px">
+                  <Typography>{student.email}</Typography>
+                  <Link to={`mailto:${student.email}`} className="link">
+                    <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                      <Icons.Messages />
+                    </IconButton>
+                  </Link>
+                </Box>
               </InfoItem>
-              <InfoItem>
-                <h5>E-mail:</h5>
-                <span>
-                  <div className="flex items-center gap-xxs2">
-                    <Typography>arslan.koptleulov@abexlab.com</Typography>
-                    <Link
-                      to="mailto:arslan.koptleulov@abexlab.com"
-                      className="link"
-                    >
-                      <IconButton color="purpleBlue">
-                        <Icons.Messages />
-                      </IconButton>
-                    </Link>
-                  </div>
-                </span>
+              <InfoItem title="ID или Свидетельство о рождении">
+                {`${student.passportSeries} ${student.passportNumber}`}
               </InfoItem>
-              <InfoItem>
-                <h5>ID или Свидетельство о рождении:</h5>
-                <span>AB 247325</span>
-              </InfoItem>
-            </div>
-            <div className="flex flex-col gap-xxs2">
-              <InfoItem>
-                <h5>Теги</h5>
-                <div className="flex gap-xxs2">
+            </Box>
+            <Box className="flex flex-col" rowGap="14px">
+              <InfoItem title="Теги">
+                <Box display="flex" columnGap="8px">
                   <SkillChip label={"VIP"} variant="outlined" color="golden" />
                   <SkillChip
                     label={"Сын Министра"}
                     variant="outlined"
                     color="blue"
                   />
-                </div>
+                </Box>
               </InfoItem>
-              <InfoItem>
-                <h5>Номер родителей</h5>
-                <span className="flex flex-col">
-                  <div className="flex items-center gap-xxs2">
-                    <Typography>+998 (33) 033-15-33</Typography>
-                    <Link to="tel:/+998330331533" className="link">
-                      <IconButton color="purpleBlue">
+              <InfoItem title="Номер родителей">
+                <Box className="flex items-center" columnGap="4px">
+                  <Typography>
+                    {formattedPhoneNumber(student.phoneNumber)}
+                  </Typography>
+                  <Box className="flex">
+                    <Link to={`sms:${student.phoneNumber}`} className="link">
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
+                        <Icons.ChatRoundDots />
+                      </IconButton>
+                    </Link>
+                    <Link to={`tel:/${student.phoneNumber}`} className="link">
+                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
                         <Icons.Call />
                       </IconButton>
                     </Link>
-                  </div>
-                </span>
+                  </Box>
+                </Box>
               </InfoItem>
-              <InfoItem>
-                <h5>Адрес проживания:</h5>
-                <span>Ташкент, Яшнабад, Тузель 1, кв 33</span>
+              <InfoItem title="Адрес проживания">
+                Ташкент, Яшнабад, Тузель 1, кв 33
               </InfoItem>
-              <InfoItem>
-                <h5>Активная группа:</h5>
-                <span>GR011-62</span>
-              </InfoItem>
-              <InfoItem>
-                <h5>Описание:</h5>
-                <span>Ребенок гений</span>
-              </InfoItem>
-            </div>
+              <InfoItem title="Активная группа">GR011-62</InfoItem>
+              <InfoItem title="Описание">Ребенок гений</InfoItem>
+            </Box>
           </div>
         </div>
         <div className="flex flex-grow flex-col gap-sm">
@@ -577,12 +609,14 @@ export const StudentProfile = () => {
           </Paper>
         </div>
       </div>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
-  const groupsContent = useMemo(
-    () => (
+  const groupsContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+    return (
       <div className="flex flex-wrap gap-lg">
         <Grid
           container
@@ -630,12 +664,15 @@ export const StudentProfile = () => {
           </Grid>
         </Grid>
       </div>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
-  const attendanceContent = useMemo(
-    () => (
+  const attendanceContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+
+    return (
       <>
         <Box>
           <Box maxWidth="60%">
@@ -643,12 +680,14 @@ export const StudentProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
-  const callsHistoryContent = useMemo(
-    () => (
+  const callsHistoryContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+    return (
       <>
         <Box className="flex flex-col" rowGap="26px">
           <Box className="flex items-center" columnGap="10px">
@@ -693,12 +732,14 @@ export const StudentProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
-  const smsHistoryContent = useMemo(
-    () => (
+  const smsHistoryContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+    return (
       <>
         <Box className="flex flex-col" rowGap="26px">
           <Box className="flex items-center" columnGap="10px">
@@ -768,12 +809,14 @@ export const StudentProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
-  const changeHistoryContent = useMemo(
-    () => (
+  const changeHistoryContent = useMemo(() => {
+    if (!student) {
+      return "Loading...";
+    }
+    return (
       <>
         <Box className="flex flex-col" rowGap="26px">
           <Box className="flex items-center" columnGap="10px">
@@ -838,9 +881,8 @@ export const StudentProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [student]);
 
   const emptyElement = <></>;
   const tabContents = useMemo(
@@ -852,9 +894,19 @@ export const StudentProfile = () => {
       smsHistoryContent,
       changeHistoryContent,
     ],
-    [persoalInfoContent, groupsContent]
+    [
+      persoalInfoContent,
+      groupsContent,
+      attendanceContent,
+      callsHistoryContent,
+      smsHistoryContent,
+      changeHistoryContent,
+    ]
   );
 
+  if (!student) {
+    return "Loading...";
+  }
   return (
     <Root>
       <Main>

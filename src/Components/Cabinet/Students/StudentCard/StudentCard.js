@@ -25,7 +25,14 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 
-const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDeleteStudent }) => {
+const StudentCard = ({
+  id,
+  firstName,
+  lastName,
+  phoneNumber,
+  email,
+  handleDeleteStudent,
+}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -42,7 +49,9 @@ const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDelete
           <div
             className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
-              navigate(routes.CABINET + routes.STUDENTS + routes.PROFILE)
+              navigate(
+                routes.CABINET + routes.STUDENTS + routes.getProfilePath(id)
+              )
             }
           >
             <div className="flex items-start justify-between">
@@ -106,7 +115,11 @@ const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDelete
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose} disableRipple>
-                <Link to={routes.CABINET + routes.STUDENTS + routes.PROFILE}>
+                <Link
+                  to={
+                    routes.CABINET + routes.STUDENTS + routes.getProfilePath(id)
+                  }
+                >
                   <ButtonStyled color="purpleBlue">
                     <Icons.Pen />
                     <span>Изменить профиль</span>
@@ -158,7 +171,7 @@ const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDelete
             <TypographyStyled>Учитель</TypographyStyled>
           </InfoWithIcon>
           <Link
-            to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+            to={routes.CABINET + routes.TEACHERS + routes.getProfilePath(id)}
             className="link flex gap-x4s"
           >
             <TypographyStyled small>Koptleulov Arslan</TypographyStyled>
@@ -175,7 +188,7 @@ const StudentCard = ({ id, firstName, lastName, phoneNumber, email, handleDelete
           </InfoWithIcon>
         </div>
         <Link
-          to={routes.CABINET + routes.STUDENTS + routes.PROFILE}
+          to={routes.CABINET + routes.STUDENTS + routes.getProfilePath(id)}
           className="link full-width"
         >
           <ButtonStyled

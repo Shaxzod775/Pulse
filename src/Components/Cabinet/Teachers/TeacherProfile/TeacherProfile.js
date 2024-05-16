@@ -188,7 +188,7 @@ const ProfileTabHeader = styled("div")(
 
 const InfoItem = ({ title, children }) => (
   <Box className="flex flex-col" rowGap="4px" lineHeight="150%">
-    <Typography color="#AEB2BA" letterSpacing=".36px">
+    <Typography color="#AEB2BA" letterSpacing=".36px" fontSize="14px">
       {title}
     </Typography>
     <Typography color="#1C0D64" letterSpacing=".32px">

@@ -9,4 +9,8 @@ export const STUDENTS = "/students";
 export const COURSES = "/courses";
 export const PERSONAL = "/personal";
 export const NEW = "/new";
-export const PROFILE = "/profile";
+export const PROFILE = "/profile/:id";
+
+export function getProfilePath(id) {
+  return PROFILE.replace(":id", id);
+}

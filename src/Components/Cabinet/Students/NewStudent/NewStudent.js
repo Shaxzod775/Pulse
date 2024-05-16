@@ -341,7 +341,7 @@ const NewStudent = ({ fetchStudents }) => {
         firstName: firstName,
         lastName: lastName,
         middleName: middleName,
-        dateOfBirth: "1995-09-30",
+        dateOfBirth: dateOfBirth,
         phoneNumber: phoneNumber,
         secondPhoneNumber: additionalPhoneNumber,
         gender: "MALE",
