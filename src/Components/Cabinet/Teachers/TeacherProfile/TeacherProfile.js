@@ -7,7 +7,7 @@ import {
   TypographyStyled,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Box,
@@ -27,9 +27,13 @@ import {
 import * as routes from "../../../../Constants/routes";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
-import { getSocialIconByName } from "../../../../helpers/helpers";
+import {
+  formattedPhoneNumber,
+  getSocialIconByName,
+} from "../../../../helpers/helpers";
 import { socialMediaTypes } from "../../../../Constants/testData";
 import { GroupsCard } from "../../Students/StudentProfile/StudentProfile";
+import api from "../../../../Core/api";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -235,6 +239,9 @@ const SkillChip = styled(Chip)(({ theme }) => ({
 
 const TeacherProfile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [teacher, setTeacher] = useState(null);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const tabsToMap = [
@@ -265,6 +272,20 @@ const TeacherProfile = () => {
     navigate(-1); // This navigates one step back in history
   };
 
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await api.get(`teachers/getById/${id}`);
+        setTeacher(response.data);
+      } catch (error) {
+        console.error("Error fetching teacher:", error);
+      }
+    };
+
+    fetchTeacher();
+    console.log(teacher);
+  }, [id]);
+
   const userInfo = useMemo(
     () => (
       <>
@@ -289,14 +310,17 @@ const TeacherProfile = () => {
               >
                 <Box className="flex justify-between">
                   <Box className="flex flex-col" rowGap="14px">
-                    <InfoItem title="Фамилия Имя Отчество">
-                      Koptleulov Arslan Almazovich
-                    </InfoItem>
+                    <InfoItem title="Фамилия Имя Отчество">{`${teacher.lastName} ${teacher.firstName} ${teacher.middleName}`}</InfoItem>
                     <InfoItem title="Номер телефона">
                       <Box className="flex items-center" columnGap="4px">
-                        <Typography>+998 (33) 033-15-33</Typography>
+                        <Typography>
+                          {formattedPhoneNumber(teacher.phoneNumber)}
+                        </Typography>
                         <Box className="flex">
-                          <Link to="sms:+998330331533" className="link">
+                          <Link
+                            to={`sms:${teacher.phoneNumber}`}
+                            className="link"
+                          >
                             <IconButton
                               color="purpleBlue"
                               sx={{ marginY: "-8px" }}
@@ -304,7 +328,10 @@ const TeacherProfile = () => {
                               <Icons.ChatRoundDots />
                             </IconButton>
                           </Link>
-                          <Link to="tel:/+998330331533" className="link">
+                          <Link
+                            to={`tel:/${teacher.phoneNumber}`}
+                            className="link"
+                          >
                             <IconButton
                               color="purpleBlue"
                               sx={{ marginY: "-8px" }}
@@ -315,29 +342,40 @@ const TeacherProfile = () => {
                         </Box>
                       </Box>
                     </InfoItem>
-                    <InfoItem title="Дополнительный номер">
-                      <Box className="flex items-center" columnGap="4px">
-                        <Typography>+998 (33) 033-15-33</Typography>
-                        <Box className="flex">
-                          <Link to="sms:+998330331533" className="link">
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
+                    {teacher.secondPhoneNumber && (
+                      <InfoItem title="Дополнительный номер">
+                        <Box className="flex items-center" columnGap="4px">
+                          <Typography>
+                            {formattedPhoneNumber(teacher.secondPhoneNumber)}
+                          </Typography>
+                          <Box className="flex">
+                            <Link
+                              to={`sms:${teacher.secondPhoneNumber}`}
+                              className="link"
                             >
-                              <Icons.ChatRoundDots />
-                            </IconButton>
-                          </Link>
-                          <Link to="tel:/+998330331533" className="link">
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
+                              <IconButton
+                                color="purpleBlue"
+                                sx={{ marginY: "-8px" }}
+                              >
+                                <Icons.ChatRoundDots />
+                              </IconButton>
+                            </Link>
+                            <Link
+                              to={`tel:/${teacher.secondPhoneNumber}`}
+                              className="link"
                             >
-                              <Icons.Call />
-                            </IconButton>
-                          </Link>
+                              <IconButton
+                                color="purpleBlue"
+                                sx={{ marginY: "-8px" }}
+                              >
+                                <Icons.Call />
+                              </IconButton>
+                            </Link>
+                          </Box>
                         </Box>
-                      </Box>
-                    </InfoItem>
+                      </InfoItem>
+                    )}
+
                     <InfoItem title="Почта">
                       <Box className="flex items-center" columnGap="4px">
                         <Typography>arslan.koptleulov@abexlab.com</Typography>

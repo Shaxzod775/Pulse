@@ -23,9 +23,20 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { Link, useNavigate } from "react-router-dom";
-import { getRussianWord } from "../../../../helpers/helpers";
+import {
+  formattedPhoneNumber,
+  getRussianWord,
+} from "../../../../helpers/helpers";
 
-const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher }) => {
+const TeacherCard = ({
+  id,
+  firstName,
+  lastName,
+  phoneNumber,
+  secondPhoneNumber,
+  handleDeleteTeacher,
+  ...otherProps
+}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -45,7 +56,9 @@ const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher
           <div
             className="flex gap-xxs2 items-stretch cursor-pointer"
             onClick={() =>
-              navigate(routes.CABINET + routes.TEACHERS + routes.PROFILE)
+              navigate(
+                routes.CABINET + routes.TEACHERS + routes.getProfilePath(id)
+              )
             }
           >
             <div className="flex items-start justify-between">
@@ -66,7 +79,7 @@ const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher
             </div>
             <div className="flex flex-col justify-around">
               <TypographyStyled fontWeight={600} letterSpacing="0.48px">
-              {firstName} {lastName}
+                {firstName} {lastName}
               </TypographyStyled>
               <TypographyStyled
                 color="#AEB2BA"
@@ -98,7 +111,11 @@ const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose} disableRipple>
-              <Link to={routes.CABINET + routes.TEACHERS + routes.PROFILE}>
+              <Link
+                to={
+                  routes.CABINET + routes.TEACHERS + routes.getProfilePath(id)
+                }
+              >
                 <ButtonStyled color="purpleBlue">
                   <Icons.Pen />
                   <TypographyStyled fontWeight={400}>
@@ -126,10 +143,28 @@ const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher
               <Icons.Call />
               <TypographyStyled>Номер</TypographyStyled>
             </InfoWithIcon>
-            <Link to="tel:/+998987654321" className="link flex gap-x3s">
-              <TypographyStyled small>{phoneNumber}</TypographyStyled>
+            <Link to={`tel:/${phoneNumber}`} className="link flex gap-x3s">
+              <TypographyStyled small>
+                {formattedPhoneNumber(phoneNumber)}
+              </TypographyStyled>
             </Link>
           </div>
+          {secondPhoneNumber && (
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Call />
+                <TypographyStyled>Доп. номер</TypographyStyled>
+              </InfoWithIcon>
+              <Link
+                to={`tel:/${secondPhoneNumber}`}
+                className="link flex gap-x3s"
+              >
+                <TypographyStyled small>
+                  {formattedPhoneNumber(secondPhoneNumber)}
+                </TypographyStyled>
+              </Link>
+            </div>
+          )}
           <div className="flex justify-between">
             <InfoWithIcon>
               <Icons.Documents />
@@ -164,7 +199,7 @@ const TeacherCard = ({ id, firstName, lastName, phoneNumber, handleDeleteTeacher
           <TypographyStyled small>IT Park Tashkent</TypographyStyled>
         </div>
         <Link
-          to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+          to={routes.CABINET + routes.TEACHERS + routes.getProfilePath(id)}
           className="link full-width"
         >
           <ButtonStyled
