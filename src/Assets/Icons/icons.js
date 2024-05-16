@@ -21,9 +21,9 @@ import { ReactComponent as LogoFull } from "./svgs/logoFull.svg";
 import { ReactComponent as Logo } from "./svgs/logo.svg";
 import { ReactComponent as Search } from "./svgs/search.svg";
 import { ReactComponent as Notification } from "./svgs/notification.svg";
-import { ReactComponent as AnnaAvatar } from "./svgs/Avatars/Anna.svg";
-import { ReactComponent as ArslanAvatar } from "./svgs/Avatars/Arslan.svg";
-import { ReactComponent as MariyaAvatar } from "./svgs/Avatars/Mariya.svg";
+import { ReactComponent as FemaleAvatar } from "./svgs/Avatars/female.svg";
+import { ReactComponent as MaleAvatar } from "./svgs/Avatars/male.svg";
+import { ReactComponent as Female1Avatar } from "./svgs/Avatars/female1.svg";
 import { ReactComponent as SquareDoubleArrowLeft } from "./svgs/squareDoubleArrowLeft.svg";
 import { ReactComponent as Dashboard } from "./svgs/dashboard.svg";
 import { ReactComponent as Diploma } from "./svgs/diploma.svg";
@@ -111,9 +111,9 @@ export const Icons = {
   Logo,
   Search,
   Notification,
-  AnnaAvatar,
-  ArslanAvatar,
-  MariyaAvatar,
+  FemaleAvatar,
+  MaleAvatar,
+  Female1Avatar,
   SquareDoubleArrowLeft,
   Dashboard,
   Diploma,

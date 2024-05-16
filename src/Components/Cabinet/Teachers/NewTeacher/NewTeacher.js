@@ -159,6 +159,8 @@ const NewTeacher = ({ fetchTeachers }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
+  const [gender, changeGender] = useInput("male");
+
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const [passportSeries, setPassportSeries] = useState("");
@@ -360,7 +362,7 @@ const NewTeacher = ({ fetchTeachers }) => {
         corporateEmail: emailCorp,
         phoneNumber: phoneNumber,
         secondPhoneNumber: additionalPhoneNumber,
-        gender: "MALE",
+        gender: gender,
         dateOfBirth: "1995-09-30",
         passportSeries: passportSeries,
         passportNumber: passportNumber,
@@ -612,6 +614,8 @@ const NewTeacher = ({ fetchTeachers }) => {
                       <RadioGroup
                         row
                         defaultValue="male"
+                        value={gender}
+                        onChange={changeGender}
                         aria-labelledby="gender-radios"
                         name="gender-radios"
                         sx={{

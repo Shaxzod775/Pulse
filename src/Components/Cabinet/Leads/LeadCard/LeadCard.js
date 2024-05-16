@@ -100,9 +100,11 @@ const LeadCard = ({
               navigate(routes.CABINET + routes.LEADS + routes.PROFILE)
             }
           >
-            <Icons.AnnaAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
+            <Icons.MaleAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
             <div className="flex flex-col justify-around">
-              <TypographyStyled fontWeight={600}>{firstName} {lastName}</TypographyStyled>
+              <TypographyStyled fontWeight={600}>
+                {firstName} {lastName}
+              </TypographyStyled>
               <TypographyStyled color="#AEB2BA" fontWeight={400} small>
                 Today 12:40
               </TypographyStyled>
@@ -240,7 +242,11 @@ const LeadCard = ({
             <Icons.Star />
             <TypographyStyled>Статус</TypographyStyled>
           </InfoWithIcon>
-          <StatusChip label={statusEnum} status={statusEnum} icon={<Icons.Circle />} />
+          <StatusChip
+            label={statusEnum}
+            status={statusEnum}
+            icon={<Icons.Circle />}
+          />
           {/* <StatusChip icon={<Icons.Circle />} label="Example Chip" /> */}
         </div>
       </Box>

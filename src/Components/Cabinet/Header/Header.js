@@ -38,7 +38,7 @@ const Header = () => {
 
         <Link to={routes.SIGN_IN} style={{ textDecoration: "none" }}>
           <div className={styles["avatar"]}>
-            <Icons.AnnaAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
+            <Icons.MaleAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
             <div className={styles["avatar-text"]}>
               {/* <span className={styles["name"]}>{auth.user.fullName}</span>
               <span className={styles["title"]}>{auth.user.roleName}</span> */}

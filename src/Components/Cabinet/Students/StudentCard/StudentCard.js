@@ -24,16 +24,19 @@ import { format, weeksToDays } from "date-fns";
 import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
+import { getIconByGender } from "../../../../helpers/helpers";
 
 const StudentCard = ({
   id,
   firstName,
   lastName,
   phoneNumber,
+  gender,
   email,
   handleDeleteStudent,
 }) => {
   const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,6 +45,11 @@ const StudentCard = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const AvatarIcon = getIconByGender(
+    gender,
+    Icons.MaleAvatar,
+    Icons.Female1Avatar
+  );
   return (
     <CardStyled>
       <Box className="flex flex-col gap-sm" padding="9px">
@@ -66,9 +74,7 @@ const StudentCard = ({
                   borderRadius: "10px",
                 }}
               /> */}
-              <Icons.MariyaAvatar
-                style={{ minWidth: "50px", minHeight: "50px" }}
-              />
+              <AvatarIcon style={{ minWidth: "50px", minHeight: "50px" }} />
             </div>
 
             <div className="flex flex-col justify-around">

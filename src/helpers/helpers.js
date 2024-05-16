@@ -79,3 +79,7 @@ export function getSocialIconByName(name) {
   // Return the icon, or Icons.Globe if the icon doesn't exist
   return formattedIcons[formattedName] || Icons.Globe;
 }
+
+export const getIconByGender = (gender, Icon1, Icon2) => {
+  return gender.toLowerCase() === "male" ? Icon1 : Icon2;
+};
