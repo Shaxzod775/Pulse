@@ -286,8 +286,11 @@ const TeacherProfile = () => {
     console.log(teacher);
   }, [id]);
 
-  const userInfo = useMemo(
-    () => (
+  const userInfo = useMemo(() => {
+    if (!teacher) {
+      return "Loading...";
+    }
+    return (
       <>
         <Box className="flex flex-col" rowGap="37px">
           <Box className="flex flex-col" rowGap="20px">
@@ -378,11 +381,8 @@ const TeacherProfile = () => {
 
                     <InfoItem title="Почта">
                       <Box className="flex items-center" columnGap="4px">
-                        <Typography>arslan.koptleulov@abexlab.com</Typography>
-                        <Link
-                          to="mailto:arslan.koptleulov@abexlab.com"
-                          className="link"
-                        >
+                        <Typography>{teacher.email}</Typography>
+                        <Link to={`mailto:${teacher.email}`} className="link">
                           <IconButton
                             color="purpleBlue"
                             sx={{ marginY: "-8px" }}
@@ -393,7 +393,9 @@ const TeacherProfile = () => {
                       </Box>
                     </InfoItem>
                     <Box className="flex" columnGap="18px">
-                      <InfoItem title="Дата рождения">21.08.2002</InfoItem>
+                      <InfoItem title="Дата рождения">
+                        {teacher.dateOfBirth}
+                      </InfoItem>
                       <InfoItem title="Пол">
                         <Box className="flex items-center" columnGap="4px">
                           Мужской
@@ -404,7 +406,7 @@ const TeacherProfile = () => {
                   </Box>
                   <Box className="flex flex-col" rowGap="14px">
                     <InfoItem title="ID или Свидетельство о рождении">
-                      AB 1234567
+                      {`${teacher.passportSeries} ${teacher.passportNumber}`}
                     </InfoItem>
                     <InfoItem title="ID/Номер договора">
                       247325247325247325
@@ -426,7 +428,7 @@ const TeacherProfile = () => {
                 }}
               >
                 <Box className="flex justify-between">
-                  <Box className="flex flex-col" rowGap="14px">
+                  <Box className="flex flex-col" rowGap="14px" maxWidth="50%">
                     <InfoItem title="ИНПС">247325247325247325</InfoItem>
                     <InfoItem title="ИНН">247325247325247325</InfoItem>
                     <InfoItem title="Скиллы">
@@ -446,9 +448,9 @@ const TeacherProfile = () => {
                     <InfoItem title="Направление">UX/UI</InfoItem>
                     <InfoItem title="Роль">Teacher</InfoItem>
                   </Box>
-                  <Box className="flex flex-col" rowGap="14px">
+                  <Box className="flex flex-col" rowGap="14px" maxWidth="50%">
                     <InfoItem title="Адрес проживания">
-                      Ташкент, Яшнабад, Тузель 1, кв 33
+                      {`${teacher.address.region}, ${teacher.address.state}, ${teacher.address.location}`}
                     </InfoItem>
                     <InfoItem title="Активная группа">GR011-62 </InfoItem>
                     <InfoItem title="Должность">Mentor</InfoItem>
@@ -497,12 +499,14 @@ const TeacherProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [teacher]);
 
-  const groupsContent = useMemo(
-    () => (
+  const groupsContent = useMemo(() => {
+    if (!teacher) {
+      return "Loading...";
+    }
+    return (
       <>
         <Grid
           container
@@ -550,12 +554,14 @@ const TeacherProfile = () => {
           </Grid>
         </Grid>
       </>
-    ),
-    []
-  );
+    );
+  }, [teacher]);
 
-  const activityContent = useMemo(
-    () => (
+  const activityContent = useMemo(() => {
+    if (!teacher) {
+      return "Loading...";
+    }
+    return (
       <>
         <Box className="flex flex-col" rowGap="26px">
           <Box className="flex items-center" columnGap="10px">
@@ -617,14 +623,13 @@ const TeacherProfile = () => {
           </Box>
         </Box>
       </>
-    ),
-    []
-  );
+    );
+  }, [teacher]);
 
   const emptyElement = <></>;
   const tabContents = useMemo(
     () => [userInfo, groupsContent, activityContent, emptyElement],
-    [userInfo]
+    [userInfo, groupsContent, activityContent, emptyElement]
   );
 
   return (
