@@ -362,7 +362,7 @@ const NewTeacher = ({ fetchTeachers }) => {
         corporateEmail: emailCorp,
         phoneNumber: phoneNumber,
         secondPhoneNumber: additionalPhoneNumber,
-        gender: gender,
+        gender: "MALE",
         dateOfBirth: "1995-09-30",
         passportSeries: passportSeries,
         passportNumber: passportNumber,
