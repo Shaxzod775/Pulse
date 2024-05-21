@@ -31,9 +31,10 @@ import {
   formattedPhoneNumber,
   getSocialIconByName,
 } from "../../../../helpers/helpers";
-import { socialMediaTypes } from "../../../../Constants/testData";
+import { genders, socialMediaTypes } from "../../../../Constants/testData";
 import { GroupsCard } from "../../Students/StudentProfile/StudentProfile";
 import api from "../../../../Core/api";
+import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -379,7 +380,7 @@ const TeacherProfile = () => {
                       </InfoItem>
                     )}
 
-                    <InfoItem title="Почта">
+                    <InfoItem title="E-mail">
                       <Box className="flex items-center" columnGap="4px">
                         <Typography>{teacher.email}</Typography>
                         <Link to={`mailto:${teacher.email}`} className="link">
@@ -392,13 +393,31 @@ const TeacherProfile = () => {
                         </Link>
                       </Box>
                     </InfoItem>
+                    {teacher.corporateEmail && (
+                      <InfoItem title="E-mail (корпоративный)">
+                        <Box className="flex items-center" columnGap="4px">
+                          <Typography>{teacher.corporateEmail}</Typography>
+                          <Link
+                            to={`mailto:${teacher.corporateEmail}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.Messages />
+                            </IconButton>
+                          </Link>
+                        </Box>
+                      </InfoItem>
+                    )}
                     <Box className="flex" columnGap="18px">
                       <InfoItem title="Дата рождения">
-                        {teacher.dateOfBirth}
+                        {format(new Date(teacher.dateOfBirth), "dd.MM.yyyy")}
                       </InfoItem>
                       <InfoItem title="Пол">
                         <Box className="flex items-center" columnGap="4px">
-                          Мужской
+                          {genders[teacher.gender].ru}
                           <Icons.MaleSymbol />
                         </Box>
                       </InfoItem>
@@ -411,7 +430,7 @@ const TeacherProfile = () => {
                     <InfoItem title="ID/Номер договора">
                       247325247325247325
                     </InfoItem>
-                    <InfoItem title="ПИНФЛ">247325247325247325</InfoItem>
+                    <InfoItem title="ПИНФЛ">{teacher.pnfl}</InfoItem>
                     <InfoItem title="Дата начала работы">21.07.2022</InfoItem>
                     <InfoItem title="Вид контракта">ГПХ</InfoItem>
                   </Box>
@@ -429,8 +448,8 @@ const TeacherProfile = () => {
               >
                 <Box className="flex justify-between">
                   <Box className="flex flex-col" rowGap="14px" maxWidth="50%">
-                    <InfoItem title="ИНПС">247325247325247325</InfoItem>
-                    <InfoItem title="ИНН">247325247325247325</InfoItem>
+                    <InfoItem title="ИНПС">{teacher.inps}</InfoItem>
+                    <InfoItem title="ИНН">{teacher.inn}</InfoItem>
                     <InfoItem title="Скиллы">
                       <Box className="flex" columnGap="8px">
                         <SkillChip

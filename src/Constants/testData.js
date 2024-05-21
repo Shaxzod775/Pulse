@@ -92,3 +92,8 @@ export const socialMediaWithIcons = {
   WhatsApp: Icons.WhatsappLogo,
   "Персональный сайт": Icons.Globe,
 };
+
+export const genders = {
+  MALE: { ru: "Мужской", uz: "Erkak" },
+  FEMALE: { ru: "Женский", uz: "Ayol" },
+};

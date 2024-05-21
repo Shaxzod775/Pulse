@@ -152,7 +152,7 @@ const NewStudent = ({ fetchStudents }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
-  const [gender, changeGender] = useInput("male");
+  const [gender, changeGender] = useInput("MALE");
 
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
@@ -594,7 +594,6 @@ const NewStudent = ({ fetchStudents }) => {
                       </FormLabel>
                       <RadioGroup
                         row
-                        defaultValue="male"
                         value={gender}
                         onChange={changeGender}
                         aria-labelledby="gender-radios"
@@ -606,7 +605,7 @@ const NewStudent = ({ fetchStudents }) => {
                       >
                         <div className="flex items-center gap-xxs2">
                           <FormControlLabel
-                            value="male"
+                            value="MALE"
                             control={<RadioStyled />}
                             label="Мужской"
                           />
@@ -617,7 +616,7 @@ const NewStudent = ({ fetchStudents }) => {
                         </div>
                         <div className="flex items-center gap-xxs2">
                           <FormControlLabel
-                            value="female"
+                            value="FEMALE"
                             control={<RadioStyled />}
                             label="Женский"
                           />

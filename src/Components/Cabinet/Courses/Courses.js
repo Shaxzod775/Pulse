@@ -158,10 +158,7 @@ const Courses = () => {
 
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchCourses();
-  }, [handleAddCourse]); // Пустой массив зависимостей означает, что эффект будет выполняться только один раз при монтировании компонента
-
-  // const { courses } = useCourses();
-  const coursesDispatch = useCoursesDispatch();
+  }, []); // Пустой массив зависимостей означает, что эффект будет выполняться только один раз при монтировании компонента
 
   const navigate = useNavigate();
 
@@ -264,6 +261,7 @@ const Courses = () => {
         open={open}
         handleClose={handleClose}
         handleAddCourse={handleAddCourse}
+        courses={courses}
       />
     </Root>
   );

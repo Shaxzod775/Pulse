@@ -65,6 +65,7 @@ import {
   uzbekEducationLevels,
 } from "../../../../Constants/testData";
 import { formatFileName } from "../../../../helpers/helpers";
+import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -147,49 +148,79 @@ const NewTeacher = ({ fetchTeachers }) => {
     navigate(-1); // This navigates one step back in history
   };
 
+  //Фото профиля
   const [selectedImage, setSelectedImage] = useState(null);
 
+  //Имя
   const [firstName, setFirstName] = useState("");
+  //Отчество
   const [middleName, setMiddleName] = useState("");
+  //Фамилия
   const [lastName, setLastName] = useState("");
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [middleNameError, setMiddleNameError] = useState(false);
 
+  //Номер телефона
   const [phoneNumber, setPhoneNumber] = useState("");
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState("");
 
-  const [gender, changeGender] = useInput("male");
+  //Пол
+  const [gender, changeGender] = useInput("MALE");
 
+  //Дата рождения
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
+  //ID или Свидетельство о рождении
   const [passportSeries, setPassportSeries] = useState("");
   const [passportNumber, setPassportNumber] = useState("");
 
+  //Адрес проживания
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
   const [location, changeLocation] = useInput("");
 
+  //Ссылки
   const [links, setLinks] = useState([{ url: "", type: "" }]);
 
+  //E-mail
   const [email, changeEmail] = useInput("");
   const [emailError, setEmailError] = useState(false);
+  //E-mail (корпоративный)
   const [emailCorp, changeEmailCorp] = useInput("");
   const [emailErrorCorp, setEmailErrorCorp] = useState(false);
 
+  //ID/Номер договора
+
+  //ПИНФЛ
+  const [pinfl, changePinfl] = useInput("");
+
+  //ИНПС
+  const [inps, changeInps] = useInput("");
+
+  //ИНН
+  const [inn, changeInn] = useInput("");
+
+  //Направления
   const [selectedCourseNames, setSelectedCourseNames] = useState([]);
 
+  //Дата начала работы
   const [dateOfEmployment, setDateOfEmployment] = useState(null);
 
+  //Вид контракта
   const [typeOfContrat, changeTypeOfContract] = useInput("");
 
+  //Должность
   const [jobPositions, setJobPositions] = useState([]);
 
+  //Филиалы
   const [branches, setBranches] = useState([]);
 
+  //Добавить тег
   const [tags, setTags] = useState(["Тег 1"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
+  //Документы
   const [files, setFiles] = useState([]);
 
   const handleImageSelection = useCallback((acceptedFiles) => {
@@ -362,8 +393,8 @@ const NewTeacher = ({ fetchTeachers }) => {
         corporateEmail: emailCorp,
         phoneNumber: phoneNumber,
         secondPhoneNumber: additionalPhoneNumber,
-        gender: "MALE",
-        dateOfBirth: "1995-09-30",
+        gender: gender,
+        dateOfBirth: dateOfBirth,
         passportSeries: passportSeries,
         passportNumber: passportNumber,
         contacts: [
@@ -373,14 +404,14 @@ const NewTeacher = ({ fetchTeachers }) => {
         education: null,
         contractNumber: "1223",
         description: "sdasdassadasdasd",
-        inn: null,
-        inps: null,
-        pnfl: null,
-        tags: ["saasd", "boboy", "asdasda"],
+        inn: inn,
+        inps: inps,
+        pnfl: pinfl,
+        tags: tags,
         address: {
-          region: "namangan city",
-          state: "namangan viloyat",
-          location: "mahalla hontaxtada okeee",
+          region: region,
+          state: district,
+          location: location,
         },
       })
     );
@@ -567,7 +598,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                 <Divider />
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Номер телефона:</FormLabel>
+                    <FormLabel row>Номер телефона</FormLabel>
                   </label>
                   <div
                     className="full-width flex gap-xxs"
@@ -613,7 +644,6 @@ const NewTeacher = ({ fetchTeachers }) => {
                       </FormLabel>
                       <RadioGroup
                         row
-                        defaultValue="male"
                         value={gender}
                         onChange={changeGender}
                         aria-labelledby="gender-radios"
@@ -625,7 +655,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       >
                         <div className="flex items-center gap-xxs2">
                           <FormControlLabel
-                            value="male"
+                            value="MALE"
                             control={<RadioStyled />}
                             label="Мужской"
                           />
@@ -633,7 +663,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                         </div>
                         <div className="flex items-center gap-xxs2">
                           <FormControlLabel
-                            value="female"
+                            value="FEMALE"
                             control={<RadioStyled />}
                             label="Женский"
                           />
@@ -966,6 +996,8 @@ const NewTeacher = ({ fetchTeachers }) => {
                   </label>
                   <TextFieldStyled
                     fullWidth
+                    value={pinfl}
+                    onChange={changePinfl}
                     variant="outlined"
                     // placeholder="Пример: 011/256"
                     sx={{ maxWidth: "75%" }}
@@ -979,6 +1011,8 @@ const NewTeacher = ({ fetchTeachers }) => {
                   </label>
                   <TextFieldStyled
                     fullWidth
+                    value={inps}
+                    onChange={changeInps}
                     variant="outlined"
                     // placeholder="Пример: 011/256"
                     sx={{ maxWidth: "75%" }}
@@ -992,6 +1026,8 @@ const NewTeacher = ({ fetchTeachers }) => {
                   </label>
                   <TextFieldStyled
                     fullWidth
+                    value={inn}
+                    onChange={changeInn}
                     variant="outlined"
                     // placeholder="Пример: 011/256"
                     sx={{ maxWidth: "75%" }}
