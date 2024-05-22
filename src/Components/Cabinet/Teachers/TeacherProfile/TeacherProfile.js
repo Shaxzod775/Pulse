@@ -650,7 +650,9 @@ const TeacherProfile = () => {
     () => [userInfo, groupsContent, activityContent, emptyElement],
     [userInfo, groupsContent, activityContent, emptyElement]
   );
-
+  if (!teacher) {
+    return "Loading...";
+  }
   return (
     <Root>
       <Main>
@@ -733,7 +735,9 @@ const TeacherProfile = () => {
                     </div>
                     <div className="flex gap-sm items-center">
                       <div>
-                        <Title fontWeight={600}>Sakurai Hiro</Title>
+                        <Title
+                          fontWeight={600}
+                        >{`${teacher.lastName} ${teacher.firstName} ${teacher.middleName}`}</Title>
                         <CardText fontSize={"12px"} color={"#AEB2BA"}>
                           ID: 011/256
                         </CardText>

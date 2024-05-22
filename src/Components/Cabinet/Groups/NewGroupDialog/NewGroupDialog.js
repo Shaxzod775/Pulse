@@ -220,6 +220,8 @@ const NewGroupDialog = ({
   const [endHoursNumber, setEndHoursNumber] = useState("");
   const [endMinutesNumber, setEndMinutesNumber] = useState("");
 
+  const [description, changeDescription] = useInput("");
+
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
@@ -460,7 +462,11 @@ const NewGroupDialog = ({
                 </div>
               </div>
               <div className="full-width flex justify-between gap-sm">
-                <div className="flex flex-col gap-sm" style={{ width: "50%" }}>
+                <Box
+                  className="flex flex-col"
+                  rowGap="20px"
+                  style={{ width: "50%" }}
+                >
                   <FormControl required fullWidth variant="outlined">
                     <FormLabelStyled>Название группы</FormLabelStyled>
                     <TextFieldStyled
@@ -566,7 +572,7 @@ const NewGroupDialog = ({
                       }
                     />
                   </FormControl>
-                </div>
+                </Box>
                 <Box
                   className="flex flex-col"
                   rowGap="20px"
@@ -791,6 +797,26 @@ const NewGroupDialog = ({
                   </Box>
                 </Box>
               </div>
+              <FormControl fullWidth variant="outlined">
+                <div className="flex items-start justify-between">
+                  <FormLabelStyled>Описание</FormLabelStyled>
+                  <TextFieldStyled
+                    value={description}
+                    onChange={changeDescription}
+                    fullWidth
+                    multiline
+                    rows={3}
+                    variant="outlined"
+                    placeholder="Описание группы"
+                    sx={{
+                      maxWidth: "75%",
+                      "& .MuiInputBase-multiline": {
+                        padding: "0",
+                      },
+                    }}
+                  />
+                </div>
+              </FormControl>
             </div>
 
             {/* DIALOG ACTIONS */}

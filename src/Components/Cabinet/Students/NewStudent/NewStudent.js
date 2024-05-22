@@ -548,7 +548,7 @@ const NewStudent = ({ fetchStudents }) => {
                 <Divider />
                 <div className="flex items-center justify-between">
                   <label style={{ maxWidth: "25%" }}>
-                    <FormLabel row>Номер телефона:</FormLabel>
+                    <FormLabel row>Номер телефона</FormLabel>
                   </label>
                   <div
                     className="full-width flex gap-xxs"
@@ -970,7 +970,7 @@ const NewStudent = ({ fetchStudents }) => {
 
               <div className="flex items-center justify-between">
                 <label style={{ maxWidth: "25%" }}>
-                  <FormLabel row>Добавить тег:</FormLabel>
+                  <FormLabel row>Добавить тег</FormLabel>
                 </label>
                 <div
                   className="full-width flex flex-wrap gap-x3s"

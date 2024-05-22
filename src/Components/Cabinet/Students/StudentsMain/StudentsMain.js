@@ -100,6 +100,9 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const [anchorThreeDots, setAnchorThreeDots] = useState(null);
+  const threeDotsMenuOpen = Boolean(anchorThreeDots);
+
   const handleClearFilters = () => {
     resetStudent();
     setTeacher("");
@@ -154,6 +157,13 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
       // Handle invalid input date here
       setter(null);
     }
+  };
+
+  const handleClickThreeDots = (event) => {
+    setAnchorThreeDots(event.currentTarget);
+  };
+  const handleCloseThreeDotsMenu = () => {
+    setAnchorThreeDots(null);
   };
 
   const goBack = () => {
@@ -351,12 +361,33 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             </ButtonStyled> */}
 
               <ButtonStyled
+                onClick={handleClickThreeDots}
                 variant="outlined"
                 color="purpleBlue"
                 sx={{ minWidth: "0" }}
               >
                 <Icons.MenuDots />
               </ButtonStyled>
+              <MenuStyled
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorThreeDots}
+                open={threeDotsMenuOpen}
+                onClose={handleCloseThreeDotsMenu}
+              >
+                <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
+                  <ButtonStyled color="purpleBlue">
+                    <Icons.Pen />
+                    <span>Скачать список</span>
+                  </ButtonStyled>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseThreeDotsMenu}
+                  disableRipple
+                ></MenuItem>
+              </MenuStyled>
             </div>
           </div>
           <Box>

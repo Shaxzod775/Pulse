@@ -32,6 +32,8 @@ import { Height, RateReview, RouteSharp } from "@mui/icons-material";
 import AttendanceCalendar from "./AttendanceCalendar/AttendanceCalendar";
 import api from "../../../../Core/api";
 import { formattedPhoneNumber } from "../../../../helpers/helpers";
+import { format } from "date-fns";
+import { genders } from "../../../../Constants/testData";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -369,119 +371,232 @@ export const StudentProfile = () => {
       return "Loading...";
     }
     return (
-      <div className="flex flex-wrap gap-lg">
-        <div className="flex flex-col gap-sm">
+      <Box className="flex flex-col" rowGap="40px">
+        <Box className="flex flex-col" rowGap="20px">
           <div className="flex items-center gap-xxs">
             <Icons.UserId color={theme.typography.color.purpleBlue} />
             <Typography fontSize="1.125rem" fontWeight={600}>
               Информация о пользователе
             </Typography>
           </div>
-          <div className="flex gap-lg">
-            <Box className="flex flex-col" rowGap="14px">
-              <InfoItem title="Фамилия Имя Отчество">
-                {`${student.lastName} ${student.firstName} ${student.middleName}`}
-              </InfoItem>
-              <InfoItem title="Номер телефона">
-                <Box className="flex items-center" columnGap="4px">
-                  <Typography>
-                    {formattedPhoneNumber(student.phoneNumber)}
-                  </Typography>
-                  <Box className="flex">
-                    <Link to={`sms:${student.phoneNumber}`} className="link">
-                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                        <Icons.ChatRoundDots />
-                      </IconButton>
-                    </Link>
-                    <Link to={`tel:/${student.phoneNumber}`} className="link">
-                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                        <Icons.Call />
-                      </IconButton>
-                    </Link>
-                  </Box>
-                </Box>
-              </InfoItem>
-              {student.secondPhoneNumber && (
-                <InfoItem title="Дополнительный номер">
-                  <Box className="flex items-center" columnGap="4px">
-                    <Typography>
-                      {formattedPhoneNumber(student.secondPhoneNumber)}
-                    </Typography>
-                    <Box className="flex">
-                      <Link
-                        to={`sms:${student.secondPhoneNumber}`}
-                        className="link"
-                      >
+          <Box className="flex" columnGap="24px">
+            <Card
+              sx={{
+                width: "100%",
+                maxWidth: "calc(50% - 12px)",
+                padding: "20px",
+                borderRadius: "20px",
+                bgcolor: "#F9FAFB",
+                boxShadow: "none",
+              }}
+            >
+              <Box className="flex justify-between">
+                <Box className="flex flex-col" rowGap="14px">
+                  <InfoItem title="Фамилия Имя Отчество">
+                    {`${student.lastName} ${student.firstName} ${student.middleName}`}
+                  </InfoItem>
+                  <InfoItem title="Номер телефона">
+                    <Box className="flex items-center" columnGap="4px">
+                      <Typography>
+                        {formattedPhoneNumber(student.phoneNumber)}
+                      </Typography>
+                      <Box className="flex">
+                        <Link
+                          to={`sms:${student.phoneNumber}`}
+                          className="link"
+                        >
+                          <IconButton
+                            color="purpleBlue"
+                            sx={{ marginY: "-8px" }}
+                          >
+                            <Icons.ChatRoundDots />
+                          </IconButton>
+                        </Link>
+                        <Link
+                          to={`tel:/${student.phoneNumber}`}
+                          className="link"
+                        >
+                          <IconButton
+                            color="purpleBlue"
+                            sx={{ marginY: "-8px" }}
+                          >
+                            <Icons.Call />
+                          </IconButton>
+                        </Link>
+                      </Box>
+                    </Box>
+                  </InfoItem>
+                  {student.secondPhoneNumber && (
+                    <InfoItem title="Дополнительный номер">
+                      <Box className="flex items-center" columnGap="4px">
+                        <Typography>
+                          {formattedPhoneNumber(student.secondPhoneNumber)}
+                        </Typography>
+                        <Box className="flex">
+                          <Link
+                            to={`sms:${student.secondPhoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.ChatRoundDots />
+                            </IconButton>
+                          </Link>
+                          <Link
+                            to={`tel:/${student.secondPhoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.Call />
+                            </IconButton>
+                          </Link>
+                        </Box>
+                      </Box>
+                    </InfoItem>
+                  )}
+                  <InfoItem title="E-mail">
+                    <Box className="flex items-center" columnGap="4px">
+                      <Typography>{student.email}</Typography>
+                      <Link to={`mailto:${student.email}`} className="link">
                         <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                          <Icons.ChatRoundDots />
-                        </IconButton>
-                      </Link>
-                      <Link
-                        to={`tel:/${student.secondPhoneNumber}`}
-                        className="link"
-                      >
-                        <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                          <Icons.Call />
+                          <Icons.Messages />
                         </IconButton>
                       </Link>
                     </Box>
-                  </Box>
-                </InfoItem>
-              )}
-              <InfoItem title="Дата рождения">{student.dateOfBirth}</InfoItem>
-              <InfoItem title="E-mail">
-                <Box className="flex items-center" columnGap="4px">
-                  <Typography>{student.email}</Typography>
-                  <Link to={`mailto:${student.email}`} className="link">
-                    <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                      <Icons.Messages />
-                    </IconButton>
-                  </Link>
-                </Box>
-              </InfoItem>
-              <InfoItem title="ID или Свидетельство о рождении">
-                {`${student.passportSeries} ${student.passportNumber}`}
-              </InfoItem>
-            </Box>
-            <Box className="flex flex-col" rowGap="14px">
-              <InfoItem title="Теги">
-                <Box display="flex" columnGap="8px">
-                  <SkillChip label={"VIP"} variant="outlined" color="golden" />
-                  <SkillChip
-                    label={"Сын Министра"}
-                    variant="outlined"
-                    color="blue"
-                  />
-                </Box>
-              </InfoItem>
-              <InfoItem title="Номер родителей">
-                <Box className="flex items-center" columnGap="4px">
-                  <Typography>
-                    {formattedPhoneNumber(student.phoneNumber)}
-                  </Typography>
-                  <Box className="flex">
-                    <Link to={`sms:${student.phoneNumber}`} className="link">
-                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                        <Icons.ChatRoundDots />
-                      </IconButton>
-                    </Link>
-                    <Link to={`tel:/${student.phoneNumber}`} className="link">
-                      <IconButton color="purpleBlue" sx={{ marginY: "-8px" }}>
-                        <Icons.Call />
-                      </IconButton>
-                    </Link>
+                  </InfoItem>
+                  <Box className="flex" columnGap="18px">
+                    <InfoItem title="Дата рождения">
+                      {format(new Date(student.dateOfBirth), "dd.MM.yyyy")}
+                    </InfoItem>
+                    <InfoItem title="Пол">
+                      <Box className="flex items-center" columnGap="4px">
+                        {genders[student.gender].ru}
+                        <Icons.MaleSymbol />
+                      </Box>
+                    </InfoItem>
                   </Box>
                 </Box>
-              </InfoItem>
-              <InfoItem title="Адрес проживания">
-                Ташкент, Яшнабад, Тузель 1, кв 33
-              </InfoItem>
-              <InfoItem title="Активная группа">GR011-62</InfoItem>
-              <InfoItem title="Описание">Ребенок гений</InfoItem>
-            </Box>
-          </div>
-        </div>
-        <div className="flex flex-grow flex-col gap-sm">
+                <Box className="flex flex-col" rowGap="14px">
+                  <InfoItem title="ID или Свидетельство о рождении">
+                    {`${student.passportSeries} ${student.passportNumber}`}
+                  </InfoItem>
+                  <Box className="flex flex-col" rowGap="10px">
+                    <TypographyStyled
+                      colorFromTheme="purpleBlue"
+                      fontWeight={600}
+                    >
+                      Телефоны родителей
+                    </TypographyStyled>
+                    <InfoItem title="Фамилия Имя Очество Родителя">
+                      <Typography>Some parent</Typography>
+                      <Box className="flex items-center" columnGap="4px">
+                        <Typography>
+                          {formattedPhoneNumber(student.phoneNumber)}
+                        </Typography>
+                        <Box className="flex">
+                          <Link
+                            to={`sms:${student.phoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.ChatRoundDots />
+                            </IconButton>
+                          </Link>
+                          <Link
+                            to={`tel:/${student.phoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.Call />
+                            </IconButton>
+                          </Link>
+                        </Box>
+                      </Box>
+                    </InfoItem>
+                    <InfoItem title="Фамилия Имя Очество Родителя">
+                      <Typography>Some parent</Typography>
+                      <Box className="flex items-center" columnGap="4px">
+                        <Typography>
+                          {formattedPhoneNumber(student.phoneNumber)}
+                        </Typography>
+                        <Box className="flex">
+                          <Link
+                            to={`sms:${student.phoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.ChatRoundDots />
+                            </IconButton>
+                          </Link>
+                          <Link
+                            to={`tel:/${student.phoneNumber}`}
+                            className="link"
+                          >
+                            <IconButton
+                              color="purpleBlue"
+                              sx={{ marginY: "-8px" }}
+                            >
+                              <Icons.Call />
+                            </IconButton>
+                          </Link>
+                        </Box>
+                      </Box>
+                    </InfoItem>
+                  </Box>
+                </Box>
+              </Box>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
+                maxWidth: "calc(50% - 12px)",
+                padding: "20px",
+                borderRadius: "20px",
+                bgcolor: "#F9FAFB",
+                boxShadow: "none",
+              }}
+            >
+              <Box className="flex justify-between">
+                <Box className="flex flex-col" rowGap="14px">
+                  <InfoItem title="Теги">
+                    <Box display="flex" columnGap="8px">
+                      <SkillChip
+                        label={"VIP"}
+                        variant="outlined"
+                        color="golden"
+                      />
+                      <SkillChip
+                        label={"Сын Министра"}
+                        variant="outlined"
+                        color="blue"
+                      />
+                    </Box>
+                  </InfoItem>
+                  <InfoItem title="Адрес проживания">
+                    Ташкент, Яшнабад, Тузель 1, кв 33
+                  </InfoItem>
+                  <InfoItem title="Активная группа">GR011-62</InfoItem>
+                  <InfoItem title="Описание">{student.description}</InfoItem>
+                </Box>
+              </Box>
+            </Card>
+          </Box>
+        </Box>
+        <Box className="flex flex-col" rowGap="20px">
           <div className="flex items-center gap-xxs">
             <Icons.Wallet color={theme.typography.color.purpleBlue} />
             <Title fontSize="1.125rem" fontWeight={600}>
@@ -490,14 +605,12 @@ export const StudentProfile = () => {
           </div>
           <Paper
             sx={{
-              borderRadius: "10px",
+              borderRadius: "20px",
               padding: "14px",
               boxShadow: "none",
               border: "1px solid #E5E7EB",
+              backgroundColor: "#F9FAFB",
               width: "100%",
-              minHeight: "357px",
-              // maxWidth: "max-content",
-              flexGrow: "1",
             }}
           >
             <div className="full-height flex flex-col justify-between gap-sm">
@@ -521,78 +634,46 @@ export const StudentProfile = () => {
                 </div>
                 <Divider />
                 <div className="flex flex-col gap-xs">
-                  <PaymentPaper>
-                    <div className="flex justify-between">
-                      <div className="flex gap-lg items-start">
-                        <PaymentInfoLine>
-                          <Icons.CalendarAdd />
-                          <span>20.02.2024</span>
-                        </PaymentInfoLine>
-                        <PaymentInfoLine>
-                          <Icons.Bill />
-                          <span>1 000 000 UZS</span>
-                        </PaymentInfoLine>
-                        <PaymentInfoLine>
-                          <Icons.Messages />
-                          <span>Click</span>
-                        </PaymentInfoLine>
-                        <div className="flex flex-col items-center gap-xxs2">
+                  {[1, 2].map((i) => (
+                    <PaymentPaper>
+                      <div className="flex justify-between">
+                        <div className="flex gap-lg items-start">
                           <PaymentInfoLine>
-                            <Icons.UserId />
-                            <span>Iroda Elliyeva</span>
+                            <Icons.CalendarAdd />
+                            <span>20.02.2024</span>
                           </PaymentInfoLine>
-                          <Typography
-                            fontSize=".75rem"
-                            fontWeight="500"
-                            letterSpacing=".12px"
-                            color="#ADACF2"
-                          >
-                            20.02/2024 12:25
-                          </Typography>
+                          <PaymentInfoLine>
+                            <Icons.Bill />
+                            <span>1 000 000 UZS</span>
+                          </PaymentInfoLine>
+                          <PaymentInfoLine>
+                            <Icons.Messages />
+                            <span>Click</span>
+                          </PaymentInfoLine>
+                          <div className="flex flex-col items-center gap-xxs2">
+                            <PaymentInfoLine>
+                              <Icons.UserId />
+                              <span>Iroda Elliyeva</span>
+                            </PaymentInfoLine>
+                            <Typography
+                              fontSize=".75rem"
+                              fontWeight="500"
+                              letterSpacing=".12px"
+                              color="#ADACF2"
+                            >
+                              20.02/2024 12:25
+                            </Typography>
+                          </div>
+                        </div>
+                        <div className="flex gap-xxs2">
+                          <Icons.Pen2 />
+                          <TypographyStyled colorFromTheme="redError">
+                            <Icons.TrashCan width="24px" height="24px" />
+                          </TypographyStyled>
                         </div>
                       </div>
-                      <div className="flex gap-xxs2">
-                        <Icons.Mailbox />
-                        <Icons.Pen2 />
-                      </div>
-                    </div>
-                  </PaymentPaper>
-                  <PaymentPaper>
-                    <div className="flex justify-between">
-                      <div className="flex gap-lg items-start">
-                        <PaymentInfoLine>
-                          <Icons.CalendarAdd />
-                          <span>20.02.2024</span>
-                        </PaymentInfoLine>
-                        <PaymentInfoLine>
-                          <Icons.Bill />
-                          <span>1 000 000 UZS</span>
-                        </PaymentInfoLine>
-                        <PaymentInfoLine>
-                          <Icons.Messages />
-                          <span>Click</span>
-                        </PaymentInfoLine>
-                        <div className="flex flex-col items-center gap-xxs2">
-                          <PaymentInfoLine>
-                            <Icons.UserId />
-                            <span>Iroda Elliyeva</span>
-                          </PaymentInfoLine>
-                          <Typography
-                            fontSize=".75rem"
-                            fontWeight="500"
-                            letterSpacing=".12px"
-                            color="#ADACF2"
-                          >
-                            20.02/2024 12:25
-                          </Typography>
-                        </div>
-                      </div>
-                      <div className="flex gap-xxs2">
-                        <Icons.Mailbox />
-                        <Icons.Pen2 />
-                      </div>
-                    </div>
-                  </PaymentPaper>
+                    </PaymentPaper>
+                  ))}
                 </div>
               </div>
               <ButtonStyled
@@ -607,8 +688,8 @@ export const StudentProfile = () => {
               </ButtonStyled>
             </div>
           </Paper>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }, [student]);
 
@@ -996,7 +1077,9 @@ export const StudentProfile = () => {
                     </div>
                     <div className="flex gap-sm items-center">
                       <div>
-                        <Title fontWeight={600}>Sakurai Hiro</Title>
+                        <Title
+                          fontWeight={600}
+                        >{`${student.lastName} ${student.firstName}`}</Title>
                         <CardText fontSize={"12px"} color={"#AEB2BA"}>
                           ID: 011/256
                         </CardText>
