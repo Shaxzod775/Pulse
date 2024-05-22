@@ -6,68 +6,84 @@ import * as routes from "../../../Constants/routes";
 import GroupProfile from "./GroupProfile/GroupProfile";
 
 import api from "../../../Core/api";
-
-// export function createGroup({
-//   id = uuidv4(),
-//   name = "GR0000-00",
-//   subject = "Frontend",
-//   teacher = "Koptleulov Arslan",
-//   weekDays = [0, 1, 2],
-//   startDate = new Date(2024, 4, 3),
-//   endDate = new Date(2024, 7, 3),
-//   roomNumber = "11",
-//   duration = 0,
-//   thumbnail = null,
-// } = {}) {
-//   return {
-//     id,
-//     name,
-//     subject,
-//     teacher,
-//     weekDays,
-//     startDate,
-//     endDate,
-//     roomNumber,
-//     duration,
-//     thumbnail,
-//   };
-// }
+import useToggle from "../../../hooks/useToggle";
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
-
-  const handleAddGroup = () => {
-    console.log('Обновлено')
-  };
+  const [refreshGroups, toggleRefreshGroups] = useToggle(false);
 
   const handleDeleteGroup = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
-    console.log(idToDeleteQuoted)
+    console.log(idToDeleteQuoted);
     try {
       // Отправляем запрос на удаление курса
-      await api.post('groups/delete', idToDeleteQuoted);
-
-
-
-      setGroups(groups.filter((group) => group.id !== idToDelete));
+      await api.post("groups/delete", idToDeleteQuoted);
+      toggleRefreshGroups(true);
     } catch (error) {
-      console.error('Error deleting course:', error);
+      console.error("Error deleting course:", error);
+    }
+  };
+
+  const handleAddGroup = async (groupData) => {
+    const formData = new FormData();
+    const {
+      name,
+      startDate,
+      endDate,
+      roomNumber,
+      courseTime,
+      classDays,
+      courseId,
+      teacherId,
+    } = groupData;
+
+    formData.append(
+      "groupData",
+      JSON.stringify({
+        name: name,
+        startDate: startDate,
+        endDate: endDate,
+        roomNumber: roomNumber,
+        courseTime: courseTime,
+        classDays: classDays,
+        courseId: courseId,
+        teacherId: teacherId,
+      })
+    );
+
+    try {
+      // Отправляем запрос на сервер с использованием Axios
+      const response = await api.post("groups/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Обрабатываем успешный ответ, если это необходимо
+      console.log(response);
+      toggleRefreshGroups(true);
+    } catch (error) {
+      // Обрабатываем ошибки
+      console.error("Error submitting course:", error);
+      // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
     }
   };
 
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await api.get('groups/');
+        const response = await api.get("groups/");
         setGroups(response.data);
+        toggleRefreshGroups(false);
       } catch (error) {
-        console.error('Error fetching groups:', error);
+        console.error("Error fetching groups:", error);
       }
     };
+    console.log("YO! useEffect");
 
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchGroups();
-  }, [handleAddGroup])
+  }, [refreshGroups]);
 
   return (
     <Routes>

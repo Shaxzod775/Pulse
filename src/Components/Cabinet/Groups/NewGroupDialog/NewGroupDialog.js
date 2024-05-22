@@ -27,6 +27,7 @@ import {
   SelectStyled,
   AutocompleteField,
   textFieldStyles,
+  FormLabelStyled,
 } from "../../CabinetStyles";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
@@ -191,8 +192,8 @@ const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
 const NewGroupDialog = ({
   open,
-  handleClose,
   handleAddGroup,
+  handleClose,
   ...otherProps
 }) => {
   const { courses, findCourseByName, allCourseNames } = useCourses();
@@ -361,39 +362,18 @@ const NewGroupDialog = ({
       return acc;
     }, []);
     const duration = calculateMonthDifference(startDate, endDate);
+    const groupData = {
+      name: name,
+      startDate: startDate,
+      endDate: endDate,
+      roomNumber: room,
+      courseTime: "14:00",
+      classDays: weekDays,
+      courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
+      teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
+    };
 
-    const formData = new FormData();
-    formData.append(
-      "groupData",
-      JSON.stringify({
-        name: name,
-        startDate: "2024-05-02T19:22:35.886Z",
-        endDate: "2024-11-02T19:22:35.886Z",
-        roomNumber: room,
-        courseTime: "67",
-        classDays: ["21"],
-        courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
-        teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
-      })
-    );
-
-    try {
-      // Отправляем запрос на сервер с использованием Axios
-      const response = await api.post("groups/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // Обрабатываем успешный ответ, если это необходимо
-      console.log(response);
-      handleAddGroup();
-      handleClose();
-    } catch (error) {
-      // Обрабатываем ошибки
-      console.error("Error submitting course:", error);
-      // Можно вывести сообщение об ошибке пользователю или предпринять другие действия
-    }
+    await handleAddGroup(groupData);
 
     handleClose();
   };
@@ -481,11 +461,10 @@ const NewGroupDialog = ({
               </div>
               <div className="full-width flex justify-between gap-sm">
                 <div className="flex flex-col gap-sm" style={{ width: "50%" }}>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="name">
-                      <FormLabel>Название группы*</FormLabel>
-                    </label>
+                  <FormControl required fullWidth variant="outlined">
+                    <FormLabelStyled>Название группы</FormLabelStyled>
                     <TextFieldStyled
+                      required
                       id="name"
                       variant="outlined"
                       placeholder="Название"
@@ -494,10 +473,8 @@ const NewGroupDialog = ({
                     />
                   </FormControl>
                   <div className="flex gap-sm">
-                    <FormControl fullWidth variant="outlined">
-                      <label htmlFor="date-start">
-                        <FormLabel>Дата начала</FormLabel>
-                      </label>
+                    <FormControl required fullWidth variant="outlined">
+                      <FormLabelStyled>Дата начала</FormLabelStyled>
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}
@@ -514,21 +491,20 @@ const NewGroupDialog = ({
                           slotProps={{
                             field: { clearable: true },
                             openPickerButton: { color: "purpleBlue" },
+                            textField: { required: true },
                           }}
                         />
                       </LocalizationProvider>
                     </FormControl>
-                    <FormControl fullWidth variant="outlined">
-                      <label htmlFor="date-start">
-                        <FormLabel>Дата завершения</FormLabel>
-                      </label>
+                    <FormControl required fullWidth variant="outlined">
+                      <FormLabelStyled>Дата завершения</FormLabelStyled>
                       <LocalizationProvider
                         dateAdapter={AdapterDateFns}
                         adapterLocale={ru}
                         localeText={russianLocale}
                       >
                         <DatePicker
-                          id="date-start"
+                          id="date-end"
                           value={endDate}
                           onChange={handleEndDateChange}
                           sx={textFieldStyles({ theme })}
@@ -538,15 +514,14 @@ const NewGroupDialog = ({
                           slotProps={{
                             field: { clearable: true },
                             openPickerButton: { color: "purpleBlue" },
+                            textField: { required: true },
                           }}
                         />
                       </LocalizationProvider>
                     </FormControl>
                   </div>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="teacher">
-                      <FormLabel>Выбрать кабинет</FormLabel>
-                    </label>
+                  <FormControl required fullWidth variant="outlined">
+                    <FormLabelStyled>Выбрать кабинет</FormLabelStyled>
                     <AutocompleteStyled
                       options={["1", "2", "3", "4", "5", "6"]}
                       value={room}
@@ -554,7 +529,8 @@ const NewGroupDialog = ({
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}
-                          id="teacher"
+                          required
+                          id="room-autocomplete"
                           variant="outlined"
                           placeholder="Выберите кабинет"
                         />
@@ -567,10 +543,8 @@ const NewGroupDialog = ({
                       }
                     />
                   </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="subject">
-                      <FormLabel>Выберите учителя</FormLabel>
-                    </label>
+                  <FormControl required fullWidth variant="outlined">
+                    <FormLabelStyled>Выберите учителя</FormLabelStyled>
                     <AutocompleteStyled
                       options={teacherNames}
                       value={teacher}
@@ -578,7 +552,8 @@ const NewGroupDialog = ({
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}
-                          id="subject"
+                          required
+                          id="teacher-autocomplete"
                           variant="outlined"
                           placeholder="Выберите учителя"
                         />
@@ -597,10 +572,8 @@ const NewGroupDialog = ({
                   rowGap="20px"
                   style={{ width: "50%" }}
                 >
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="subject">
-                      <FormLabel>Выбрать курс</FormLabel>
-                    </label>
+                  <FormControl required fullWidth variant="outlined">
+                    <FormLabelStyled>Выбрать курс</FormLabelStyled>
                     <AutocompleteStyled
                       options={allCourseNames}
                       value={selectedCourseName}
@@ -608,6 +581,7 @@ const NewGroupDialog = ({
                       renderInput={(params) => (
                         <AutocompleteField
                           {...params}
+                          required
                           id="subject"
                           variant="outlined"
                           placeholder="Выберите курс"
@@ -622,11 +596,9 @@ const NewGroupDialog = ({
                     />
                   </FormControl>
                   <Box>
-                    <label htmlFor="week-days">
-                      <FormLabel>Дни недели:</FormLabel>
-                    </label>
-                    <div className="flex gap-sm">
-                      <div className="flex items-start gap-xxs">
+                    <FormControl fullWidth>
+                      <FormLabelStyled>Дни недели</FormLabelStyled>
+                      <Box className="flex items-start" columnGap="10px">
                         {weekDaysText.map((weekDay, i) => (
                           <TagCheckbox
                             key={i}
@@ -637,183 +609,185 @@ const NewGroupDialog = ({
                             {weekDay}
                           </TagCheckbox>
                         ))}
-                      </div>
-                    </div>
+                      </Box>
+                    </FormControl>
                   </Box>
                   <Box>
-                    <label htmlFor="week-days">
-                      <FormLabel>Время начала и окончания урока</FormLabel>
-                    </label>
-                    <Box className="flex items-center" columnGap="24px">
-                      <Box className="flex items-center" columnGap="8px">
-                        <FormControl variant="outlined">
-                          <Box
-                            sx={{
-                              aspectRatio: 1,
-                              maxWidth: "50px",
-                              maxHeight: "50px",
-                            }}
-                          >
-                            <TextFieldStyled
-                              type="number"
-                              id="name"
-                              variant="outlined"
-                              placeholder="00"
-                              value={hoursNumber}
-                              onChange={handleHoursChange(setHoursNumber)}
-                              sx={timeInputStyles}
-                              autoComplete="off"
-                            />
-                          </Box>
-                        </FormControl>
-                        <Typography color="#D1D5DB">:</Typography>
-                        <FormControl variant="outlined">
-                          <Box
-                            sx={{
-                              aspectRatio: 1,
-                              maxWidth: "50px",
-                              maxHeight: "50px",
-                            }}
-                          >
-                            <TextFieldStyled
-                              type="number"
-                              id="name"
-                              variant="outlined"
-                              placeholder="00"
-                              value={minutesNumber}
-                              onChange={handleMinutesChange(setMinutesNumber)}
-                              sx={timeInputStyles}
-                              autoComplete="off"
-                            />
-                          </Box>
-                        </FormControl>
+                    <FormControl fullWidth>
+                      <FormLabelStyled>
+                        Время начала и окончания урока
+                      </FormLabelStyled>
+                      <Box className="flex items-center" columnGap="24px">
+                        <Box className="flex items-center" columnGap="8px">
+                          <FormControl variant="outlined">
+                            <Box
+                              sx={{
+                                aspectRatio: 1,
+                                maxWidth: "50px",
+                                maxHeight: "50px",
+                              }}
+                            >
+                              <TextFieldStyled
+                                type="number"
+                                id="name"
+                                variant="outlined"
+                                placeholder="00"
+                                value={hoursNumber}
+                                onChange={handleHoursChange(setHoursNumber)}
+                                sx={timeInputStyles}
+                                autoComplete="off"
+                              />
+                            </Box>
+                          </FormControl>
+                          <Typography color="#D1D5DB">:</Typography>
+                          <FormControl variant="outlined">
+                            <Box
+                              sx={{
+                                aspectRatio: 1,
+                                maxWidth: "50px",
+                                maxHeight: "50px",
+                              }}
+                            >
+                              <TextFieldStyled
+                                type="number"
+                                id="name"
+                                variant="outlined"
+                                placeholder="00"
+                                value={minutesNumber}
+                                onChange={handleMinutesChange(setMinutesNumber)}
+                                sx={timeInputStyles}
+                                autoComplete="off"
+                              />
+                            </Box>
+                          </FormControl>
+                        </Box>
+                        <Box className="flex items-center" columnGap="8px">
+                          <FormControl variant="outlined">
+                            <Box
+                              sx={{
+                                aspectRatio: 1,
+                                maxWidth: "50px",
+                                maxHeight: "50px",
+                              }}
+                            >
+                              <TextFieldStyled
+                                type="number"
+                                id="name"
+                                variant="outlined"
+                                placeholder="00"
+                                value={endHoursNumber}
+                                onChange={handleHoursChange(setEndHoursNumber)}
+                                sx={timeInputStyles}
+                                autoComplete="off"
+                              />
+                            </Box>
+                          </FormControl>
+                          <Typography color="#D1D5DB">:</Typography>
+                          <FormControl variant="outlined">
+                            <Box
+                              sx={{
+                                aspectRatio: 1,
+                                maxWidth: "50px",
+                                maxHeight: "50px",
+                              }}
+                            >
+                              <TextFieldStyled
+                                type="number"
+                                id="name"
+                                variant="outlined"
+                                placeholder="00"
+                                value={endMinutesNumber}
+                                onChange={handleMinutesChange(
+                                  setEndMinutesNumber
+                                )}
+                                sx={timeInputStyles}
+                                autoComplete="off"
+                              />
+                            </Box>
+                          </FormControl>
+                        </Box>
                       </Box>
-                      <Box className="flex items-center" columnGap="8px">
-                        <FormControl variant="outlined">
-                          <Box
-                            sx={{
-                              aspectRatio: 1,
-                              maxWidth: "50px",
-                              maxHeight: "50px",
-                            }}
-                          >
-                            <TextFieldStyled
-                              type="number"
-                              id="name"
-                              variant="outlined"
-                              placeholder="00"
-                              value={endHoursNumber}
-                              onChange={handleHoursChange(setEndHoursNumber)}
-                              sx={timeInputStyles}
-                              autoComplete="off"
-                            />
-                          </Box>
-                        </FormControl>
-                        <Typography color="#D1D5DB">:</Typography>
-                        <FormControl variant="outlined">
-                          <Box
-                            sx={{
-                              aspectRatio: 1,
-                              maxWidth: "50px",
-                              maxHeight: "50px",
-                            }}
-                          >
-                            <TextFieldStyled
-                              type="number"
-                              id="name"
-                              variant="outlined"
-                              placeholder="00"
-                              value={endMinutesNumber}
-                              onChange={handleMinutesChange(
-                                setEndMinutesNumber
-                              )}
-                              sx={timeInputStyles}
-                              autoComplete="off"
-                            />
-                          </Box>
-                        </FormControl>
-                      </Box>
-                    </Box>
+                    </FormControl>
                   </Box>
                   <Box>
-                    <label htmlFor="week-days">
-                      <FormLabel>Теги</FormLabel>
-                    </label>
-                    <Box className="full-width flex flex-wrap" gap="5px">
-                      {tags.map((tag, i) => (
+                    <FormControl fullWidth>
+                      <FormLabelStyled>Теги</FormLabelStyled>
+                      <Box className="full-width flex flex-wrap" gap="5px">
+                        {tags.map((tag, i) => (
+                          <Chip
+                            label={tag}
+                            onDelete={() => handleDeleteTag(tag)}
+                            key={i}
+                            variant="outlined"
+                            color="purpleBlue"
+                            sx={{
+                              borderRadius: "8px",
+                            }}
+                            deleteIcon={
+                              <Icons.Delete
+                                color={theme.typography.color.darkBlue}
+                              />
+                            }
+                          />
+                        ))}
+                        {tagFormOpen && (
+                          <FormControl variant="outlined">
+                            <TextField
+                              autoFocus
+                              required
+                              onBlur={() => {
+                                setTagFormOpen(!tagFormOpen);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  setTagFormOpen(false);
+                                  handleAddTag(e.target.value);
+                                }
+                              }}
+                              id="info"
+                              variant="outlined"
+                              sx={{
+                                fontSize: theme.typography.fontSize.xs,
+                                fontWeight: "400",
+                                color: "inherit",
+                                "& .MuiInputBase-root": {
+                                  borderRadius: "8px",
+                                  ".MuiInputBase-input": {
+                                    width: "100px",
+                                    padding: "4.5px 12px",
+                                    "::placeholder": {
+                                      color: "#D1D5DB",
+                                      opacity: "1",
+                                    },
+                                  },
+                                  ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
+                                    {
+                                      border: "1px solid #E5E7EB !important",
+                                      boxShadow:
+                                        "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
+                                    },
+                                },
+                                "& .MuiFormHelperText-root": {
+                                  color: "crimson",
+                                  fontSize: ".8rem",
+                                  margin: "2px 0 -10px 12px",
+                                },
+                              }}
+                            />
+                          </FormControl>
+                        )}
                         <Chip
-                          label={tag}
-                          onDelete={() => handleDeleteTag(tag)}
-                          key={i}
+                          label="+"
                           variant="outlined"
                           color="purpleBlue"
                           sx={{
-                            borderRadius: "8px",
+                            borderRadius: `${theme.custom.spacing.xxs}px`,
                           }}
-                          deleteIcon={
-                            <Icons.Delete
-                              color={theme.typography.color.darkBlue}
-                            />
-                          }
+                          onClick={() => setTagFormOpen(!tagFormOpen)}
                         />
-                      ))}
-                      {tagFormOpen && (
-                        <FormControl variant="outlined">
-                          <TextField
-                            autoFocus
-                            required
-                            onBlur={() => {
-                              setTagFormOpen(!tagFormOpen);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                setTagFormOpen(false);
-                                handleAddTag(e.target.value);
-                              }
-                            }}
-                            id="info"
-                            variant="outlined"
-                            sx={{
-                              fontSize: theme.typography.fontSize.xs,
-                              fontWeight: "400",
-                              color: "inherit",
-                              "& .MuiInputBase-root": {
-                                borderRadius: "8px",
-                                ".MuiInputBase-input": {
-                                  width: "100px",
-                                  padding: "4.5px 12px",
-                                  "::placeholder": {
-                                    color: "#D1D5DB",
-                                    opacity: "1",
-                                  },
-                                },
-                                ".MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline, &:focus .MuiOutlinedInput-notchedOutline":
-                                  {
-                                    border: "1px solid #E5E7EB !important",
-                                    boxShadow:
-                                      "0px 1px 2px 0px rgba(31, 41, 55, 0.08) !important",
-                                  },
-                              },
-                              "& .MuiFormHelperText-root": {
-                                color: "crimson",
-                                fontSize: ".8rem",
-                                margin: "2px 0 -10px 12px",
-                              },
-                            }}
-                          />
-                        </FormControl>
-                      )}
-                      <Chip
-                        label="+"
-                        variant="outlined"
-                        color="purpleBlue"
-                        sx={{
-                          borderRadius: `${theme.custom.spacing.xxs}px`,
-                        }}
-                        onClick={() => setTagFormOpen(!tagFormOpen)}
-                      />
-                    </Box>
+                      </Box>
+                    </FormControl>
                   </Box>
                 </Box>
               </div>

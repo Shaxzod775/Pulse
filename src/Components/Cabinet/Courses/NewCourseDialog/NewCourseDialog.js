@@ -183,8 +183,6 @@ const NewCourseDialog = memo(
   ({ open, handleClose, handleAddCourse, courses, ...otherProps }) => {
     const [name, changeName, resetName] = useInput("");
     const [price, changePrice, resetPrice] = useInput("");
-    // const [startDate, setStartDate] = useState(null);
-    // const [endDate, setEndDate] = useState(null);
     const [selectedDuration, setSelectedDuration] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
     const [nameError, setNameError] = useState("");
@@ -251,7 +249,7 @@ const NewCourseDialog = memo(
       if (nameError) {
         return; // Prevent form submission if name is not unique
       }
-      // const monthsDifference = calculateMonthDifference(startDate, endDate);
+
       const formData = new FormData();
       formData.append(
         "courseData",
@@ -454,32 +452,6 @@ const NewCourseDialog = memo(
                         </FormControl>
                       </div>
                     </FormControl>
-                    {/* <FormControl fullWidth variant="outlined">
-                    <label htmlFor="date-start">
-                      <FormLabel>Дата начала</FormLabel>
-                    </label>
-                    <TextFieldStyled
-                      id="date-start"
-                      variant="outlined"
-                      type="date"
-                      value={
-                        startDate ? startDate.toISOString().split("T")[0] : ""
-                      }
-                      onChange={handleStartDateChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth variant="outlined">
-                    <label htmlFor="date-start">
-                      <FormLabel>Дата завершения</FormLabel>
-                    </label>
-                    <TextFieldStyled
-                      id="date-start"
-                      variant="outlined"
-                      type="date"
-                      value={endDate ? endDate.toISOString().split("T")[0] : ""}
-                      onChange={handleEndDateChange}
-                    />
-                  </FormControl> */}
                   </div>
                   <FormControl fullWidth variant="outlined" required>
                     <FormLabelStyled>Стоимость курса</FormLabelStyled>
