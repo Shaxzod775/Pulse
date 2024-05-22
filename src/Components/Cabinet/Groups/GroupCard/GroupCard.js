@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
   Button,
@@ -19,9 +19,11 @@ import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import { format, weeksToDays } from "date-fns";
-import { getRussianWord } from "../../../../helpers/helpers";
-
-const weekDaysText = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+import {
+  calculateMonthDifference,
+  getRussianWord,
+} from "../../../../helpers/helpers";
+import { weekDaysText } from "../../../../Constants/dateLocales";
 
 const GroupCard = ({
   id,
@@ -30,6 +32,7 @@ const GroupCard = ({
   endDate,
   course,
   imageID,
+  classDays,
   courseTime,
   roomNumber,
   teacher,
@@ -38,8 +41,8 @@ const GroupCard = ({
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
   // const durationInHours = duration * lessonsInOneMonth * lessonLength;
-  // const navigate = useNavigate();
-  // const lessonsAmount = courseTime.duration * weekDays.length * 4; // months * lessons in a week * weeks in a month
+  const navigate = useNavigate();
+  // const lessonsAmount = courseTime.duration * classDays.length * 4; // months (group duration) * lessons in a week * weeks in a month
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -142,11 +145,12 @@ const GroupCard = ({
                 <TypographyStyled>Дни урока</TypographyStyled>
               </InfoWithIcon>
               <TypographyStyled small>
-                {/* {weekDays.map(
+                {classDays.map(
                   (weekDay, i) =>
-                    `${weekDaysText[weekDay]}${i < weekDays.length - 1 ? ", " : ""
+                    `${weekDaysText[weekDay]}${
+                      i < classDays.length - 1 ? ", " : ""
                     }`
-                )} */}
+                )}
               </TypographyStyled>
             </div>
             <div className="flex justify-between">
@@ -164,15 +168,16 @@ const GroupCard = ({
               </Link>
             </div>
             <div className="flex justify-between">
-              <InfoWithIcon small>
+              <InfoWithIcon>
                 <Icons.ClockContained />
                 <TypographyStyled>Продолжительность</TypographyStyled>
               </InfoWithIcon>
               <TypographyStyled small>
                 {course.duration}{" "}
-                {getRussianWord(course.duration, "месяц", "месяца", "месяцев")}/
+                {getRussianWord(course.duration, "месяц", "месяца", "месяцев")}
+                {/* / */}
                 {/* {lessonsAmount}{" "} */}
-                {getRussianWord(courseTime, "урок", "урока", "уроков")}
+                {/* {getRussianWord(lessonsAmount, "урок", "урока", "уроков")} */}
               </TypographyStyled>
             </div>
             <Box className="flex justify-between">
