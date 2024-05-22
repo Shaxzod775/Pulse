@@ -78,6 +78,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
+  const [student, changeStudent, resetStudent] = useInput("");
+
   const [teacher, setTeacher] = useState("");
 
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
@@ -93,8 +95,23 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const [selectedTags, setSelectedTags] = useState(["0"]);
 
+  const [additionalId, changeAdditionalId, resetAdditionalId] = useInput("");
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const handleClearFilters = () => {
+    resetStudent();
+    setTeacher("");
+    setSelectedCourses([]);
+    changeSelectedGroup({ target: { value: "0" } });
+    setSelectedStatuses(["0"]);
+    setSelectedFinancialStatuses(["0"]);
+    setSelectedTags(["0"]);
+    resetAdditionalId();
+    setStartDate(null);
+    setEndDate(null);
+  };
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
@@ -191,6 +208,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               <Title>Ученики</Title>
               <div className="flex items-stretch gap-xxs full-height">
                 <InputBaseStyledV2
+                  value={student}
+                  onChange={changeStudent}
                   placeholder="Поиск по ученику..."
                   sx={{
                     position: "relative",
@@ -305,6 +324,13 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                     </MenuItem>
                   ))}
                 </Select>
+                <ButtonStyled
+                  variant="outlined"
+                  color="purpleBlue"
+                  onClick={handleClearFilters}
+                >
+                  Сбросить фильтр
+                </ButtonStyled>
               </div>
             </div>
 
@@ -441,6 +467,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   ))}
                 </Select>
                 <InputBaseStyledV2
+                  value={additionalId}
+                  onChange={changeAdditionalId}
                   placeholder="Дополнительный ID"
                   sx={{
                     position: "relative",

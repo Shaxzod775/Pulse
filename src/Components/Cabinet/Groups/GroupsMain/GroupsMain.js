@@ -60,6 +60,7 @@ import {
 } from "../../../../Constants/dateLocales";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useToggle from "../../../../hooks/useToggle";
+import useInput from "../../../../hooks/useInput";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -109,6 +110,8 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
+  const [group, changeGroup, resetGroup] = useInput("");
+
   const [anchorTeacher, setAnchorTeacher] = useState(null);
 
   const [teacher, setTeacher] = useState("");
@@ -124,6 +127,17 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const handleClearFilters = () => {
+    resetGroup();
+    setTeacher("");
+    setSelectedCourses([]);
+    setSelectedWeekDays(["0"]);
+    setSelectedGroupStatuses(["0"]);
+    setSelectedTags(["0"]);
+    setStartDate(null);
+    setEndDate(null);
+  };
 
   const handleTeacherChange = (event, newValue) => {
     setTeacher(newValue);
@@ -226,6 +240,8 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
               <Title>Группы</Title>
               <div className="flex items-stretch gap-xxs full-height">
                 <InputBaseStyledV2
+                  value={group}
+                  onChange={changeGroup}
                   placeholder="Поиск по группам..."
                   sx={{
                     position: "relative",
@@ -321,6 +337,13 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     ))}
                   </SelectStyled>
                 </HeaderDiv>
+                <ButtonStyled
+                  variant="outlined"
+                  color="purpleBlue"
+                  onClick={handleClearFilters}
+                >
+                  Сбросить фильтр
+                </ButtonStyled>
               </div>
             </div>
 

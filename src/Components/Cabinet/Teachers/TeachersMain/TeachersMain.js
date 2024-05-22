@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
   Grid,
@@ -29,6 +29,7 @@ import TeacherCard from "../TeacherCard/TeacherCard";
 import NewCourseDialog from "../../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
+import useInput from "../../../../hooks/useInput";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -102,9 +103,17 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
   const navigate = useNavigate();
   const { allCourseNames } = useCourses();
 
+  const [teacher, changeTeacher, resetTeacher] = useInput("");
+
   const [selectedTeacherStatuses, setSelectedTeacherStatuses] = useState(["0"]);
 
   const [selectedCourses, setSelectedCourses] = useState(["0"]);
+
+  const handleClearFilters = () => {
+    resetTeacher();
+    setSelectedTeacherStatuses(["0"]);
+    setSelectedCourses(["0"]);
+  };
 
   const handleChangeMultipleSelect = (setter) => (event) => {
     const {
@@ -137,6 +146,8 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             <Title>Учителя</Title>
             <div className="flex items-stretch gap-xxs full-height">
               <InputBaseStyledV2
+                value={teacher}
+                onChange={changeTeacher}
                 placeholder="Поиск по учителю..."
                 sx={{
                   position: "relative",
@@ -208,6 +219,13 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
                   </MenuItem>
                 ))}
               </Select>
+              <ButtonStyled
+                variant="outlined"
+                color="purpleBlue"
+                onClick={handleClearFilters}
+              >
+                Сбросить фильтр
+              </ButtonStyled>
             </div>
           </div>
 

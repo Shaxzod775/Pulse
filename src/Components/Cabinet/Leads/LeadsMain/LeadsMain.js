@@ -157,6 +157,12 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
     );
   };
 
+  const handleClearFilters = () => {
+    setSelectedStatuses([]);
+    setSelectedCourses([]);
+    setSelectedLeadSources(["0"]);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -327,6 +333,13 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   </MenuItem>
                 ))}
               </Select>
+              <ButtonStyled
+                variant="outlined"
+                color="purpleBlue"
+                onClick={handleClearFilters}
+              >
+                Сбросить фильтр
+              </ButtonStyled>
             </div>
           </div>
 
