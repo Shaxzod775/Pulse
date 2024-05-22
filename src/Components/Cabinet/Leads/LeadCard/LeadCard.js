@@ -92,150 +92,162 @@ const LeadCard = ({
   };
   return (
     <CardStyled>
-      <Box className="flex flex-col gap-sm" padding="9px">
-        <Box className="flex justify-between items-start" padding="8px">
-          <div
-            className="flex gap-xxs2 items-stretch cursor-pointer"
-            onClick={() =>
-              navigate(routes.CABINET + routes.LEADS + routes.PROFILE)
-            }
-          >
-            <Icons.MaleAvatar style={{ minWidth: "50px", minHeight: "50px" }} />
-            <div className="flex flex-col justify-around">
-              <TypographyStyled fontWeight={600}>
-                {firstName} {lastName}
-              </TypographyStyled>
-              <TypographyStyled color="#AEB2BA" fontWeight={400} small>
-                Today 12:40
-              </TypographyStyled>
+      <Box
+        className="full-height flex flex-col justify-between"
+        padding="9px"
+        rowGap="20px"
+      >
+        <Box className="flex flex-col" rowGap="20px">
+          <Box className="flex justify-between items-start" padding="8px">
+            <div
+              className="flex gap-xxs2 items-stretch cursor-pointer"
+              onClick={() =>
+                navigate(routes.CABINET + routes.LEADS + routes.PROFILE)
+              }
+            >
+              <Icons.MaleAvatar
+                style={{ minWidth: "50px", minHeight: "50px" }}
+              />
+              <div className="flex flex-col justify-around">
+                <TypographyStyled fontWeight={600}>
+                  {firstName} {lastName}
+                </TypographyStyled>
+                <TypographyStyled color="#AEB2BA" fontWeight={400} small>
+                  Today 12:40
+                </TypographyStyled>
+              </div>
             </div>
-          </div>
-          <IconButton
-            color="purpleBlue"
-            aria-controls={open ? "dots-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            disableElevation
-            onClick={handleClick}
-            sx={{ top: "-8px", right: "-8px" }}
-          >
-            <Icons.MenuDots />
-          </IconButton>
-          <MenuStyled
-            id="demo-customized-menu"
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose} disableRipple>
-              <Link to={routes.CABINET + routes.LEADS + routes.PROFILE}>
-                <ButtonStyled color="purpleBlue">
-                  <Icons.Pen />
-                  <span>Изменить профиль</span>
+            <IconButton
+              color="purpleBlue"
+              aria-controls={open ? "dots-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              disableElevation
+              onClick={handleClick}
+              sx={{ top: "-8px", right: "-8px" }}
+            >
+              <Icons.MenuDots />
+            </IconButton>
+            <MenuStyled
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} disableRipple>
+                <Link to={routes.CABINET + routes.LEADS + routes.PROFILE}>
+                  <ButtonStyled color="purpleBlue">
+                    <Icons.Pen />
+                    <span>Изменить профиль</span>
+                  </ButtonStyled>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                <ButtonStyled
+                  color="crimson"
+                  onClick={() => handleDeleteLead(id)}
+                >
+                  <Icons.TrashCan />
+                  <span>Удалить из списка</span>
                 </ButtonStyled>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
-              <ButtonStyled
-                color="crimson"
-                onClick={() => handleDeleteLead(id)}
-              >
-                <Icons.TrashCan />
-                <span>Удалить из списка</span>
-              </ButtonStyled>
-            </MenuItem>
-          </MenuStyled>
-        </Box>
-        <Box className="flex flex-col" rowGap="12px">
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.Call />
-              <TypographyStyled>Телефон</TypographyStyled>
-            </InfoWithIcon>
-            <Link to={`tel:/${phoneNumber}`} className="link">
-              <TypographyStyled small>
-                {formattedPhoneNumber(phoneNumber)}
-              </TypographyStyled>
-            </Link>
-          </div>
-          {secondPhoneNumber && (
+              </MenuItem>
+            </MenuStyled>
+          </Box>
+          <Box className="flex flex-col" rowGap="12px">
             <div className="flex justify-between">
               <InfoWithIcon>
                 <Icons.Call />
-                <TypographyStyled>Доп. Телефон</TypographyStyled>
+                <TypographyStyled>Телефон</TypographyStyled>
               </InfoWithIcon>
-              <Link to={`tel:/${secondPhoneNumber}`} className="link">
+              <Link to={`tel:/${phoneNumber}`} className="link">
                 <TypographyStyled small>
-                  {formattedPhoneNumber(secondPhoneNumber)}
+                  {formattedPhoneNumber(phoneNumber)}
                 </TypographyStyled>
               </Link>
             </div>
-          )}
+            {secondPhoneNumber && (
+              <div className="flex justify-between">
+                <InfoWithIcon>
+                  <Icons.Call />
+                  <TypographyStyled>Доп. Телефон</TypographyStyled>
+                </InfoWithIcon>
+                <Link to={`tel:/${secondPhoneNumber}`} className="link">
+                  <TypographyStyled small>
+                    {formattedPhoneNumber(secondPhoneNumber)}
+                  </TypographyStyled>
+                </Link>
+              </div>
+            )}
 
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.Messages />
-              <TypographyStyled>E-mail</TypographyStyled>
-            </InfoWithIcon>
-            <Link
-              to={`mailto:${email}`}
-              className="link"
-              style={{
-                maxWidth: "60%",
-              }}
-            >
-              <TypographyStyled overflow="hidden" textOverflow="ellipsis" small>
-                {email}
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Messages />
+                <TypographyStyled>E-mail</TypographyStyled>
+              </InfoWithIcon>
+              <Link
+                to={`mailto:${email}`}
+                className="link"
+                style={{
+                  maxWidth: "60%",
+                }}
+              >
+                <TypographyStyled
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  small
+                >
+                  {email}
+                </TypographyStyled>
+              </Link>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.Global />
+                <TypographyStyled>Язык курса</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled
+                maxWidth="50%"
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                small
+              >
+                {/* {langEnum.join(", ")} */}
               </TypographyStyled>
-            </Link>
-          </div>
-          <div className="flex justify-between">
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.NotebookBookmark />
+                <TypographyStyled>Направление</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled
+                small
+                maxWidth="50%"
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                {/* {selectedCourseNames.join(", ")} */}
+              </TypographyStyled>
+            </div>
+            <div className="flex justify-between">
+              <InfoWithIcon>
+                <Icons.User />
+                <TypographyStyled>Откуда лид</TypographyStyled>
+              </InfoWithIcon>
+              <TypographyStyled small>{source}</TypographyStyled>
+            </div>
+          </Box>
+          <Box className="flex flex-col" rowGap="8px">
             <InfoWithIcon>
-              <Icons.Global />
-              <TypographyStyled>Язык курса</TypographyStyled>
+              <Icons.ChatRoundDots />
+              <TypographyStyled>Комментарий</TypographyStyled>
             </InfoWithIcon>
-            <TypographyStyled
-              maxWidth="50%"
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              small
-            >
-              {/* {langEnum.join(", ")} */}
-            </TypographyStyled>
-          </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.NotebookBookmark />
-              <TypographyStyled>Направление</TypographyStyled>
-            </InfoWithIcon>
-            <TypographyStyled
-              small
-              maxWidth="50%"
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-            >
-              {/* {selectedCourseNames.join(", ")} */}
-            </TypographyStyled>
-          </div>
-          <div className="flex justify-between">
-            <InfoWithIcon>
-              <Icons.User />
-              <TypographyStyled>Откуда лид</TypographyStyled>
-            </InfoWithIcon>
-            <TypographyStyled small>{source}</TypographyStyled>
-          </div>
-        </Box>
-        <Box className="flex flex-col" rowGap="8px">
-          <InfoWithIcon>
-            <Icons.ChatRoundDots />
-            <TypographyStyled>Комментарий</TypographyStyled>
-          </InfoWithIcon>
-          <TypographyStyled small>{comment}</TypographyStyled>
+            <TypographyStyled small>{comment}</TypographyStyled>
+          </Box>
         </Box>
         <div className="flex items-center justify-between">
           <InfoWithIcon>

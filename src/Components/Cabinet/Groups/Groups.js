@@ -10,7 +10,7 @@ import useToggle from "../../../hooks/useToggle";
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
-  const [refreshGroups, toggleRefreshGroups] = useToggle(false);
+  const [refresh, toggleRefresh] = useToggle(false);
 
   const handleDeleteGroup = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
@@ -18,7 +18,7 @@ const Groups = () => {
     try {
       // Отправляем запрос на удаление курса
       await api.post("groups/delete", idToDeleteQuoted);
-      toggleRefreshGroups(true);
+      toggleRefresh(true);
     } catch (error) {
       console.error("Error deleting course:", error);
     }
@@ -26,30 +26,8 @@ const Groups = () => {
 
   const handleAddGroup = async (groupData) => {
     const formData = new FormData();
-    const {
-      name,
-      startDate,
-      endDate,
-      roomNumber,
-      courseTime,
-      classDays,
-      courseId,
-      teacherId,
-    } = groupData;
 
-    formData.append(
-      "groupData",
-      JSON.stringify({
-        name: name,
-        startDate: startDate,
-        endDate: endDate,
-        roomNumber: roomNumber,
-        courseTime: courseTime,
-        classDays: classDays,
-        courseId: courseId,
-        teacherId: teacherId,
-      })
-    );
+    formData.append("groupData", JSON.stringify(groupData));
 
     try {
       // Отправляем запрос на сервер с использованием Axios
@@ -61,7 +39,7 @@ const Groups = () => {
 
       // Обрабатываем успешный ответ, если это необходимо
       console.log(response);
-      toggleRefreshGroups(true);
+      toggleRefresh(true);
     } catch (error) {
       // Обрабатываем ошибки
       console.error("Error submitting course:", error);
@@ -75,7 +53,7 @@ const Groups = () => {
         const response = await api.get("groups/");
         setGroups(response.data);
         console.log(response.data);
-        toggleRefreshGroups(false);
+        toggleRefresh(false);
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
@@ -84,7 +62,7 @@ const Groups = () => {
 
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchGroups();
-  }, [refreshGroups]);
+  }, [refresh]);
 
   return (
     <Routes>

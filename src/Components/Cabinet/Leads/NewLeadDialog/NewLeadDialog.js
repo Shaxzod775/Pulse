@@ -143,7 +143,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
 
   const handleBlurPhoneNumber = () => {
     // Check if the phone number is not valid (not 13 characters length)
-    if (phoneNumber.length !== 13) {
+    if (phoneNumber.length !== 13 && phoneNumber.length !== 4) {
       // Toggle the phone number error state to true
       togglePhoneNumberError(true);
     } else {
@@ -192,7 +192,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
   };
 
   // Function to handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if the phone number is empty or not valid (not 13 characters length)
     if (phoneNumber.length === 0 || phoneNumber.length !== 13) {
@@ -204,44 +204,21 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     // If the phone number is valid, reset the phone number error state
     // togglePhoneNumberError(false);
 
-    // const fullName = `${lastName} ${firstName} ${middleName}`;
-    // const newLead = createLead({
-    //   name: fullName,
-    //   phoneNumber: phoneNumber,
-    //   additionalPhoneNumber: additionalPhoneNumber,
-    //   email: email,
-    //   leadSource: leadSource,
-    //   selectedCourseNames: selectedCourseNames,
-    //   courseLanguages: courseLanguages,
-    //   comment: comment,
-    // });
+    const leadData = {
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      email: email,
+      phoneNumber: phoneNumber,
+      secondPhoneNumber: additionalPhoneNumber,
+      comment: comment,
+      source: leadSource,
+      course_id: "0c745667-1918-4e7a-a996-a7832089a374",
+      statusEnum: "IN_PROGRESS",
+      langEnum: "UZ",
+    };
 
-
-    try {
-
-      const response = await api.post('leads/create', {
-          firstName: firstName,
-          lastName: lastName,
-          middleName: middleName,
-          email: email,
-          phoneNumber: phoneNumber,
-          secondPhoneNumber: additionalPhoneNumber,
-          comment: comment,
-          source: "string",
-          course_id: "0c745667-1918-4e7a-a996-a7832089a374",
-          statusEnum: "IN_PROGRESS",
-          langEnum: "UZ"
-      });
-  
-
-      console.log(response);
-      handleAddLead();
-      handleClose();
-    } catch (error) {
-
-      console.error('Error submitting course:', error);
-
-    }
+    await handleAddLead(leadData);
 
     handleClose();
   };
@@ -277,9 +254,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
             <div className="flex flex-col gap-sm">
               <div className="flex gap-xxs">
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Фамилия</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Фамилия</FormLabelStyled>
                   <TextFieldStyled
                     required
                     variant="outlined"
@@ -292,9 +267,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   />
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Имя</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Имя</FormLabelStyled>
                   <TextFieldStyled
                     required
                     variant="outlined"
@@ -307,9 +280,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   />
                 </FormControl>
                 <FormControl fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Отчество</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Отчество</FormLabelStyled>
                   <TextFieldStyled
                     variant="outlined"
                     placeholder="Отчество"
@@ -324,9 +295,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                 </FormControl>
               </div>
               <div className="flex items-center justify-between">
-                <label style={{ maxWidth: "25%" }}>
-                  <FormLabelStyled row>Номер телефона:</FormLabelStyled>
-                </label>
+                <FormLabelStyled row>Номер телефона</FormLabelStyled>
                 <div
                   className="full-width flex gap-xxs"
                   style={{ maxWidth: "75%" }}
@@ -371,9 +340,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>E-mail</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>E-mail</FormLabelStyled>
                   <TextFieldStyled
                     required
                     value={email}
@@ -389,9 +356,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   />
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Откуда лид</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Откуда лид</FormLabelStyled>
                   <AutocompleteStyled
                     options={leadSources}
                     value={leadSource}
@@ -416,9 +381,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Курсы</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Курсы</FormLabelStyled>
                   <Select
                     multiple
                     required
@@ -441,9 +404,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   </Select>
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Язык курса</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Язык курса</FormLabelStyled>
                   <Select
                     multiple
                     required
@@ -468,9 +429,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Статус</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Статус</FormLabelStyled>
                   <Select
                     required
                     value={selectedStatus}
@@ -488,9 +447,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   </Select>
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
-                  <label>
-                    <FormLabelStyled>Комментарий</FormLabelStyled>
-                  </label>
+                  <FormLabelStyled>Комментарий</FormLabelStyled>
                   <TextFieldStyled
                     multiline
                     required
