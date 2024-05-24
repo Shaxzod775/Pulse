@@ -238,7 +238,7 @@ const SkillChip = styled(Chip)(({ theme }) => ({
   "& .MuiChip-label": { padding: "0" },
 }));
 
-const TeacherProfile = () => {
+const TeacherProfile = ({ handleDeleteTeacher }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [teacher, setTeacher] = useState(null);
@@ -271,6 +271,11 @@ const TeacherProfile = () => {
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
+  };
+
+  const deleteTeacher = async () => {
+    await handleDeleteTeacher(id);
+    navigate(routes.CABINET + routes.TEACHERS);
   };
 
   useEffect(() => {
@@ -686,20 +691,15 @@ const TeacherProfile = () => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <Link
-              to={routes.CABINET + routes.TEACHERS + routes.NEW}
-              className="link"
+            <DialogButton
+              variant="outlined"
+              color="crimson"
+              onClick={deleteTeacher}
             >
-              <DialogButton
-                variant="outlined"
-                color="crimson"
-                // onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-x3s">
-                  <span>Удалить учителя</span>
-                </div>
-              </DialogButton>
-            </Link>
+              <div className="flex items-center gap-x3s">
+                <span>Удалить учителя</span>
+              </div>
+            </DialogButton>
           </div>
         </div>
         <Paper

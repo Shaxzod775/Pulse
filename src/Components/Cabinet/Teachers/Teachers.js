@@ -48,37 +48,30 @@ const Teachers = () => {
   //   setTeachers([...teachers, newGroup]);
   // };
 
-  const handleDeleteTeacher = async(idToDelete) => {
-
+  const handleDeleteTeacher = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
-    console.log(idToDeleteQuoted)
+    console.log(idToDeleteQuoted);
     try {
-      
-      await api.post('teachers/delete', idToDeleteQuoted );
-      
-      
+      await api.post("teachers/delete", idToDeleteQuoted);
+
       setTeachers(teachers.filter((teacher) => teacher.id !== idToDelete));
     } catch (error) {
-      console.error('Error deleting course:', error);
+      console.error("Error deleting course:", error);
     }
-    
   };
   const fetchTeachers = async () => {
     try {
-      
-      const response = await api.get('teachers');
-      
+      const response = await api.get("teachers");
+
       setTeachers(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
-      
-      console.error('Error fetching courses:', error);
-     
+      console.error("Error fetching courses:", error);
     }
   };
   useEffect(() => {
     fetchTeachers();
-  }, [])
+  }, []);
 
   return (
     <Routes>
@@ -91,8 +84,14 @@ const Teachers = () => {
           />
         }
       />
-      <Route path={routes.PROFILE} element={<TeacherProfile />} />
-      <Route path={routes.NEW} element={<NewTeacher fetchTeachers={fetchTeachers}/>} />
+      <Route
+        path={routes.PROFILE}
+        element={<TeacherProfile handleDeleteTeacher={handleDeleteTeacher} />}
+      />
+      <Route
+        path={routes.NEW}
+        element={<NewTeacher fetchTeachers={fetchTeachers} />}
+      />
       <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.TEACHERS} replace />}
