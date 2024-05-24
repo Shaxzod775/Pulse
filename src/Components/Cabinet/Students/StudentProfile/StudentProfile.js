@@ -15,20 +15,14 @@ import {
   Chip,
   Grid,
   Divider,
-  InputBase,
   Paper,
-  ThemeProvider,
   Typography,
-  keyframes,
   styled,
   IconButton,
-  Dialog,
   Box,
 } from "@mui/material";
 import * as routes from "../../../../Constants/routes";
-import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
-import { Height, RateReview, RouteSharp } from "@mui/icons-material";
 import AttendanceCalendar from "./AttendanceCalendar/AttendanceCalendar";
 import api from "../../../../Core/api";
 import { formattedPhoneNumber } from "../../../../helpers/helpers";
@@ -40,12 +34,6 @@ const headerItemStyles = ({ theme }) => ({
   backgroundColor: "#fff",
   border: "1px solid #E5E7EB",
 });
-
-const HeaderDiv = styled("div")(({ theme }) => ({
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #E5E7EB",
-}));
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -64,38 +52,6 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
-
-const SquareContainer = styled("div")(
-  ({
-    theme,
-    width,
-    height = 200,
-    bgColor = theme.palette.purpleBlue.main,
-    active,
-  }) => ({
-    width: width ? `${width}px` : "100%",
-    height: `${height}px`,
-    backgroundColor: bgColor,
-    borderRadius: "10px",
-    // border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
-    overflow: "hidden",
-
-    "& img": {
-      // Set image to cover the entire container
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // This resizes the image to fit the container
-
-      // Maintain aspect ratio and prevent overflow
-      objectPosition: "center", // Center the image within the container
-    },
-
-    // animation: `${rainbowCycle} 6s ${
-    //   active ? "infinite" : "1"
-    // } alternate ease-in-out`,
-    // animationDelay: active ? "0s" : "3s", // Control animation timing
-  })
-);
 
 const CircleContainer = styled("div")(
   ({ theme, width = 116, height = 116, bgColor = "#F9FAFB" }) => ({
@@ -357,6 +313,7 @@ export const StudentProfile = () => {
       try {
         const response = await api.get(`students/getById/${id}`);
         setStudent(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching student:", error);
       }
@@ -492,70 +449,44 @@ export const StudentProfile = () => {
                     >
                       Телефоны родителей
                     </TypographyStyled>
-                    <InfoItem title="Фамилия Имя Очество Родителя">
-                      <Typography>Some parent</Typography>
-                      <Box className="flex items-center" columnGap="4px">
-                        <Typography>
-                          {formattedPhoneNumber(student.phoneNumber)}
-                        </Typography>
-                        <Box className="flex">
-                          <Link
-                            to={`sms:${student.phoneNumber}`}
-                            className="link"
-                          >
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
-                            >
-                              <Icons.ChatRoundDots />
-                            </IconButton>
-                          </Link>
-                          <Link
-                            to={`tel:/${student.phoneNumber}`}
-                            className="link"
-                          >
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
-                            >
-                              <Icons.Call />
-                            </IconButton>
-                          </Link>
-                        </Box>
-                      </Box>
-                    </InfoItem>
-                    <InfoItem title="Фамилия Имя Очество Родителя">
-                      <Typography>Some parent</Typography>
-                      <Box className="flex items-center" columnGap="4px">
-                        <Typography>
-                          {formattedPhoneNumber(student.phoneNumber)}
-                        </Typography>
-                        <Box className="flex">
-                          <Link
-                            to={`sms:${student.phoneNumber}`}
-                            className="link"
-                          >
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
-                            >
-                              <Icons.ChatRoundDots />
-                            </IconButton>
-                          </Link>
-                          <Link
-                            to={`tel:/${student.phoneNumber}`}
-                            className="link"
-                          >
-                            <IconButton
-                              color="purpleBlue"
-                              sx={{ marginY: "-8px" }}
-                            >
-                              <Icons.Call />
-                            </IconButton>
-                          </Link>
-                        </Box>
-                      </Box>
-                    </InfoItem>
+                    {student.contacts.length === 0 ? (
+                      <TypographyStyled>Н/Д</TypographyStyled>
+                    ) : (
+                      student.contacts.map((parentContact, i) => (
+                        <InfoItem title="Фамилия Имя Очество Родителя" key={i}>
+                          <Typography>{parentContact.name}</Typography>
+                          <Box className="flex items-center" columnGap="4px">
+                            <Typography>
+                              {formattedPhoneNumber(parentContact.phoneNumber)}
+                            </Typography>
+                            <Box className="flex">
+                              <Link
+                                to={`sms:${parentContact.phoneNumber}`}
+                                className="link"
+                              >
+                                <IconButton
+                                  color="purpleBlue"
+                                  sx={{ marginY: "-8px" }}
+                                >
+                                  <Icons.ChatRoundDots />
+                                </IconButton>
+                              </Link>
+                              <Link
+                                to={`tel:/${parentContact.phoneNumber}`}
+                                className="link"
+                              >
+                                <IconButton
+                                  color="purpleBlue"
+                                  sx={{ marginY: "-8px" }}
+                                >
+                                  <Icons.Call />
+                                </IconButton>
+                              </Link>
+                            </Box>
+                          </Box>
+                        </InfoItem>
+                      ))
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -568,26 +499,25 @@ export const StudentProfile = () => {
                 borderRadius: "20px",
                 bgcolor: "#F9FAFB",
                 boxShadow: "none",
+                "& > *": { maxWidth: "calc(50% - 10px)" },
               }}
             >
               <Box className="flex justify-between">
                 <Box className="flex flex-col" rowGap="14px">
                   <InfoItem title="Теги">
                     <Box display="flex" columnGap="8px">
-                      <SkillChip
-                        label={"VIP"}
-                        variant="outlined"
-                        color="golden"
-                      />
-                      <SkillChip
-                        label={"Сын Министра"}
-                        variant="outlined"
-                        color="blue"
-                      />
+                      {student.tags.map((tag, i) => (
+                        <SkillChip
+                          label={tag}
+                          variant="outlined"
+                          color="blue"
+                          key={i}
+                        />
+                      ))}
                     </Box>
                   </InfoItem>
                   <InfoItem title="Адрес проживания">
-                    Ташкент, Яшнабад, Тузель 1, кв 33
+                    {`${student.address.region}, ${student.address.state}, ${student.address.location}`}
                   </InfoItem>
                   <InfoItem title="Активная группа">GR011-62</InfoItem>
                   <InfoItem title="Описание">{student.description}</InfoItem>

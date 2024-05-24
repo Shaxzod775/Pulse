@@ -12,8 +12,6 @@ import {
   FormControl,
   FormControlLabel,
   IconButton,
-  InputAdornment,
-  InputBase,
   ListItemText,
   MenuItem,
   Paper,
@@ -25,7 +23,6 @@ import {
   styled,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Icons } from "../../../../Assets/Icons/icons";
@@ -48,7 +45,7 @@ import {
 } from "../../CabinetStyles";
 import Dropzone from "react-dropzone";
 import { MuiTelInput } from "mui-tel-input";
-import { ar, ru } from "date-fns/locale";
+import { ru } from "date-fns/locale";
 import _ from "lodash"; // lodash library
 import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
 import useInput from "../../../../hooks/useInput";
@@ -64,12 +61,6 @@ const headerItemStyles = ({ theme }) => ({
   backgroundColor: "#fff",
   border: "1px solid #E5E7EB",
 });
-
-const HeaderDiv = styled("div")(({ theme }) => ({
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #E5E7EB",
-}));
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -161,14 +152,15 @@ const NewStudent = ({ fetchStudents }) => {
 
   const [region, changeRegion, resetRegion] = useAutocompleteInput("");
   const [district, changeDistrict, resetDistrict] = useAutocompleteInput("");
+  const [location, changeLocation] = useInput("");
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
 
   const [parentsPhoneNumbers, setParentsPhoneNumbers] = useState([
-    { number: "", name: "" },
-    { number: "", name: "" },
-    { number: "", name: "" },
+    { phoneNumber: "", name: "" },
+    { phoneNumber: "", name: "" },
+    { phoneNumber: "", name: "" },
   ]);
   const [visibleCount, setVisibleCount] = useState(1);
 
@@ -181,6 +173,8 @@ const NewStudent = ({ fetchStudents }) => {
   const [studentStatus, setStudentStatus] = useInput("");
 
   const [files, setFiles] = useState([]);
+
+  const [description, changeDescription] = useInput("");
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -306,11 +300,11 @@ const NewStudent = ({ fetchStudents }) => {
 
       // Check if the new phone number starts with "+998" and does not exceed 12 digits
       if (newPhone.startsWith("+998") && digits.length <= 12) {
-        newValues[index].number = `+${digits}`;
+        newValues[index].phoneNumber = `+${digits}`;
         setParentsPhoneNumbers(newValues);
       } else if (digits.length <= 3) {
         // If the new phone number is "+99" or "+9", reset it to "+998"
-        newValues[index].number = "+998";
+        newValues[index].phoneNumber = "+998";
         setParentsPhoneNumbers(newValues);
       }
     };
@@ -350,20 +344,17 @@ const NewStudent = ({ fetchStudents }) => {
         passportSeries: passportSeries,
         passportNumber: passportNumber,
         address: {
-          region: "string",
-          state: "string",
-          location: "string",
+          region: region,
+          state: district,
+          location: location,
         },
         email: email,
         contractNumber: "string",
-        tags: ["string"],
-        contacts: [
-          {
-            name: "string",
-            phoneNumber: "string",
-          },
-        ],
-        description: "string",
+        tags: tags,
+        contacts: parentsPhoneNumbers.filter(
+          (parentPhoneNumber) => parentPhoneNumber.phoneNumber !== ""
+        ),
+        description: description,
       })
     );
     try {
@@ -763,6 +754,8 @@ const NewStudent = ({ fetchStudents }) => {
 
                     {/* <div className="flex gap-xxs" style={{ marginLeft: "25%" }}> */}
                     <TextFieldStyled
+                      value={location}
+                      onChange={changeLocation}
                       fullWidth
                       variant="outlined"
                       placeholder="Место проживания"
@@ -825,7 +818,7 @@ const NewStudent = ({ fetchStudents }) => {
                           variant="outlined"
                           defaultCountry="UZ"
                           onlyCountries={["UZ"]}
-                          value={parentsPhoneNumbers[0].number}
+                          value={parentsPhoneNumbers[0].phoneNumber}
                           onChange={(newPhone) =>
                             handleChangeParentPhoneNumber(0, newPhone)
                           }
@@ -864,7 +857,7 @@ const NewStudent = ({ fetchStudents }) => {
                           variant="outlined"
                           defaultCountry="UZ"
                           onlyCountries={["UZ"]}
-                          value={parentPhoneNumber.number}
+                          value={parentPhoneNumber.phoneNumber}
                           onChange={(newPhone) =>
                             handleChangeParentPhoneNumber(index + 1, newPhone)
                           }
@@ -953,8 +946,8 @@ const NewStudent = ({ fetchStudents }) => {
                           ...textFieldStyles({ theme }),
                           maxWidth: "230px",
                         }}
-                        value={dateOfBirth}
-                        onChange={handleDateChange(setDateOfBirth)}
+                        value={dateOfEnrollment}
+                        onChange={handleDateChange(setDateOfEnrollment)}
                         slots={{
                           openPickerIcon: Icons.CalendarContained,
                         }}
@@ -1171,6 +1164,8 @@ const NewStudent = ({ fetchStudents }) => {
                     <FormLabel row>Описание</FormLabel>
                   </label>
                   <TextFieldStyled
+                    value={description}
+                    onChange={changeDescription}
                     fullWidth
                     multiline
                     rows={3}
