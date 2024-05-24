@@ -223,6 +223,9 @@ const NewTeacher = ({ fetchTeachers }) => {
   //Документы
   const [files, setFiles] = useState([]);
 
+  //Описание
+  const [description, changeDescription] = useInput("");
+
   const handleImageSelection = useCallback((acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
     if (acceptedFiles.length > 0) {
@@ -403,7 +406,7 @@ const NewTeacher = ({ fetchTeachers }) => {
         ],
         education: null,
         contractNumber: "1223",
-        description: "sdasdassadasdasd",
+        description: description,
         inn: inn,
         inps: inps,
         pnfl: pinfl,
@@ -1367,6 +1370,8 @@ const NewTeacher = ({ fetchTeachers }) => {
                     <FormLabel row>Описание</FormLabel>
                   </label>
                   <TextFieldStyled
+                    value={description}
+                    onChange={changeDescription}
                     fullWidth
                     multiline
                     rows={3}

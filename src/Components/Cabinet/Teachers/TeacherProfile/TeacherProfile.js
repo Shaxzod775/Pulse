@@ -476,13 +476,17 @@ const TeacherProfile = () => {
                     <InfoItem title="Филиал">IT Park Tashkent</InfoItem>
                     <InfoItem title="Теги">
                       <Box className="flex" columnGap="8px">
-                        <SkillChip
-                          label={"Senior UX UI"}
-                          variant="outlined"
-                          color="purpleBlue"
-                        />
+                        {teacher.tags.map((tag, i) => (
+                          <SkillChip
+                            label={tag}
+                            variant="outlined"
+                            color="blue"
+                            key={i}
+                          />
+                        ))}
                       </Box>
                     </InfoItem>
+                    <InfoItem title="Описание">{teacher.description}</InfoItem>
                   </Box>
                 </Box>
               </Card>
