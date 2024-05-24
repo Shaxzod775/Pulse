@@ -7,9 +7,11 @@ import api from "../../../Core/api";
 import * as routes from "../../../Constants/routes";
 import NewStudent from "./NewStudent/NewStudent";
 import StudentProfile from "./StudentProfile/StudentProfile";
+import useToggle from "../../../hooks/useToggle";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
+  const [refresh, toggleRefresh] = useToggle(false);
 
   const handleDeleteStudent = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
@@ -18,6 +20,7 @@ const Students = () => {
       await api.post("students/delete", idToDeleteQuoted);
 
       setStudents(students.filter((student) => student.id !== idToDelete));
+      toggleRefresh(true);
     } catch (error) {
       console.error("Error deleting course:", error);
     }
@@ -29,6 +32,7 @@ const Students = () => {
 
       setStudents(response.data);
       console.log(response.data);
+      toggleRefresh(false);
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -36,7 +40,7 @@ const Students = () => {
 
   useEffect(() => {
     fetchStudents();
-  }, []);
+  }, [refresh]);
 
   return (
     <Routes>
@@ -49,7 +53,10 @@ const Students = () => {
           />
         }
       />
-      <Route path={routes.PROFILE} element={<StudentProfile />} />
+      <Route
+        path={routes.PROFILE}
+        element={<StudentProfile handleDeleteStudent={handleDeleteStudent} />}
+      />
       <Route
         path={routes.NEW}
         element={<NewStudent fetchStudents={fetchStudents} />}

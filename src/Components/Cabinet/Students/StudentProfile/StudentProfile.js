@@ -288,7 +288,7 @@ export const GroupsCard = ({ status = "active" }) => {
   );
 };
 
-export const StudentProfile = () => {
+export const StudentProfile = ({ handleDeleteStudent }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [student, setStudent] = useState(null);
@@ -306,6 +306,11 @@ export const StudentProfile = () => {
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
+  };
+
+  const deleteStudent = async () => {
+    await handleDeleteStudent(id);
+    navigate(routes.CABINET + routes.STUDENTS);
   };
 
   useEffect(() => {
@@ -951,7 +956,7 @@ export const StudentProfile = () => {
               <DialogButton
                 variant="outlined"
                 color="crimson"
-                // onClick={handleClickOpen}
+                onClick={deleteStudent}
               >
                 <div className="flex items-center gap-x3s">
                   <Typography>Удалить ученика</Typography>
