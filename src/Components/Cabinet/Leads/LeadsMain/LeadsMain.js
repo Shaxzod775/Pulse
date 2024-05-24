@@ -35,6 +35,7 @@ import {
   InputBaseStyledV2,
   TypographyStyled,
   CustomCheckbox,
+  MenuStyled,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -131,6 +132,9 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   const [selectedLeadSources, setSelectedLeadSources] = useState(["0"]);
 
+  const [anchorThreeDots, setAnchorThreeDots] = useState(null);
+  const threeDotsMenuOpen = Boolean(anchorThreeDots);
+
   const handleClickStatusSelect = (e) => {
     setAnchorStatus(e.currentTarget);
   };
@@ -169,6 +173,13 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickThreeDots = (event) => {
+    setAnchorThreeDots(event.currentTarget);
+  };
+  const handleCloseThreeDotsMenu = () => {
+    setAnchorThreeDots(null);
   };
 
   return (
@@ -354,12 +365,34 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                 <span>Добавить лида</span>
               </div>
             </ButtonStyled>
-            <ButtonStyled variant="outlined" color="purpleBlue">
-              <div className="flex items-center gap-x3s">
-                <Icons.InboxIn />
-                <span>Скачать список</span>
-              </div>
+            <ButtonStyled
+              onClick={handleClickThreeDots}
+              variant="outlined"
+              color="purpleBlue"
+              sx={{ minWidth: "0" }}
+            >
+              <Icons.MenuDots />
             </ButtonStyled>
+            <MenuStyled
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorThreeDots}
+              open={threeDotsMenuOpen}
+              onClose={handleCloseThreeDotsMenu}
+            >
+              <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
+                <ButtonStyled color="purpleBlue">
+                  <Icons.Pen />
+                  <span>Скачать список</span>
+                </ButtonStyled>
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseThreeDotsMenu}
+                disableRipple
+              ></MenuItem>
+            </MenuStyled>
 
             {/* <ButtonStyled
               variant="outlined"
