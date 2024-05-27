@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
@@ -30,6 +30,7 @@ import NewCourseDialog from "../../Courses/NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -103,14 +104,16 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
   const navigate = useNavigate();
   const { allCourseNames } = useCourses();
 
-  const [teacher, changeTeacher, resetTeacher] = useInput("");
+  const [filteredTeachers, setFilteredTeacheres] = useState(teachers);
+
+  const [teacherSearch, changeTeacherSearch, resetTeacherSearch] = useInput("");
 
   const [selectedTeacherStatuses, setSelectedTeacherStatuses] = useState(["0"]);
 
   const [selectedCourses, setSelectedCourses] = useState(["0"]);
 
   const handleClearFilters = () => {
-    resetTeacher();
+    resetTeacherSearch();
     setSelectedTeacherStatuses(["0"]);
     setSelectedCourses(["0"]);
   };
@@ -125,9 +128,39 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
     );
   };
 
+  const handleSearchFilter = (searchInput) => {
+    const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+    const filtered = teachers.filter((teacher) => {
+      const fullName = [
+        teacher.firstName.toLowerCase(),
+        teacher.middleName.toLowerCase(),
+        teacher.lastName.toLowerCase(),
+      ];
+      return lowerCaseSearchInput.every((input) =>
+        fullName.some((name) => name.includes(input))
+      );
+    });
+    setFilteredTeacheres(filtered);
+  };
+
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
+
+  useDebounce(
+    () => {
+      if (teacherSearch !== "") {
+        handleSearchFilter(teacherSearch);
+      } else {
+        setFilteredTeacheres(teachers);
+      }
+    },
+    1000,
+    [teacherSearch, teachers]
+  );
+
+  useEffect(() => setFilteredTeacheres(teachers), [teachers]);
+
   return (
     <Root
     // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
@@ -146,8 +179,8 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             <Title>Учителя</Title>
             <div className="flex items-stretch gap-xxs full-height">
               <InputBaseStyledV2
-                value={teacher}
-                onChange={changeTeacher}
+                value={teacherSearch}
+                onChange={changeTeacherSearch}
                 placeholder="Поиск по учителю..."
                 sx={{
                   position: "relative",
@@ -262,7 +295,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             rowSpacing={"18px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            {teachers.map((teacher, i) => (
+            {filteredTeachers.map((teacher, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
                 <TeacherCard
                   {...teacher}
