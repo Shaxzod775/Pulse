@@ -59,6 +59,7 @@ import useInput from "../../../../hooks/useInput";
 import { teacherNames } from "../../../../Constants/testData";
 
 import useToggle from "../../../../hooks/useToggle";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -75,6 +76,8 @@ const HeaderDiv = styled("div")(({ theme }) => ({
 const StudentsMain = ({ students, handleDeleteStudent }) => {
   const { allCourseNames } = useCourses();
   const navigate = useNavigate();
+
+  const [filteredStudents, setFilteredStudents] = useState(students);
 
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
@@ -159,6 +162,21 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
     }
   };
 
+  const handleSearchFilter = (searchInput) => {
+    const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+    const filtered = students.filter((student) => {
+      const fullName = [
+        student.firstName.toLowerCase(),
+        student.middleName.toLowerCase(),
+        student.lastName.toLowerCase(),
+      ];
+      return lowerCaseSearchInput.every((input) =>
+        fullName.some((name) => name.includes(input))
+      );
+    });
+    setFilteredStudents(filtered);
+  };
+
   const handleClickThreeDots = (event) => {
     setAnchorThreeDots(event.currentTarget);
   };
@@ -169,6 +187,20 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
+
+  useDebounce(
+    () => {
+      if (student !== "") {
+        handleSearchFilter(student);
+      } else {
+        setFilteredStudents(students);
+      }
+    },
+    1000,
+    [student, students]
+  );
+
+  useEffect(() => setFilteredStudents(students), [students]);
 
   useEffect(
     () => {
@@ -186,6 +218,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
       // const handleClickInside = (event) => {}
 
       document.addEventListener("mousedown", handleClickOutside);
+
+      console.log(`filtered: ${filteredStudents}`);
 
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
@@ -564,7 +598,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             rowSpacing={"18px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            {students.map((student, i) => (
+            {filteredStudents.map((student, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
                 <StudentCard
                   {...student}
