@@ -27,12 +27,12 @@ export const leadSources = [
 ];
 
 export const languagesFullRu = ["Узбекский", "Русский", "Английский"];
-// export const courseLanguages = ["uz", "ru", "en"];
-// export const courseLanguagesFullRu = {
-//   uz: "Узбекский",
-//   ru: "Русский",
-//   en: "Английский",
-// };
+export const courseLanguages = ["UZ", "RU", "EN"];
+export const courseLanguagesFullRu = {
+  UZ: "Узбекский",
+  RU: "Русский",
+  EN: "Английский",
+};
 // export const courseLanguagesFullEn = {
 //   uz: "Uzbek",
 //   ru: "Russian",
@@ -46,10 +46,18 @@ export const languagesFullRu = ["Узбекский", "Русский", "Анг�
 
 export const leadStatuses = [
   "Новые",
-  "Открытые",
   "В процессе",
+  "Открытые",
   "Завершенная сделка",
 ];
+
+export const leadStatusesEnum = ["NEW", "IN_PROGRESS", "RECYCLED", "DEAD"];
+export const leadStatusesEnumToText = {
+  NEW: "Новые",
+  IN_PROGRESS: "В процессе",
+  RECYCLED: "Открытые",
+  DEAD: "Завершенная сделка",
+};
 
 export const uzbekEducationLevels = [
   "Среднее образование",

@@ -50,12 +50,12 @@ const Groups = () => {
       try {
         const response = await api.get("groups/");
         setGroups(response.data);
+        console.log(response.data);
         toggleRefresh(false);
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
     };
-    console.log("YO! useEffect");
 
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchGroups();

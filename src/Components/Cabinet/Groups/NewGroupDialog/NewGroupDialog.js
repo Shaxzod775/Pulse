@@ -374,6 +374,7 @@ const NewGroupDialog = ({
       courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
       teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
     };
+    console.log(groupData);
 
     await handleAddGroup(groupData);
 

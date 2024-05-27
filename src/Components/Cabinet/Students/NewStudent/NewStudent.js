@@ -357,6 +357,29 @@ const NewStudent = ({ fetchStudents }) => {
         description: description,
       })
     );
+    console.log({
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      dateOfBirth: dateOfBirth,
+      phoneNumber: phoneNumber,
+      secondPhoneNumber: additionalPhoneNumber,
+      gender: gender,
+      passportSeries: passportSeries,
+      passportNumber: passportNumber,
+      address: {
+        region: region,
+        state: district,
+        location: location,
+      },
+      email: email,
+      contractNumber: "string",
+      tags: tags,
+      contacts: parentsPhoneNumbers.filter(
+        (parentPhoneNumber) => parentPhoneNumber.phoneNumber !== ""
+      ),
+      description: description,
+    });
     try {
       const response = await api.post("students/create", formData, {
         headers: {

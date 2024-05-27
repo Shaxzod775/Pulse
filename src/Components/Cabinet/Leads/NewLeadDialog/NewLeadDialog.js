@@ -51,9 +51,11 @@ import { russianLocale } from "../../../../Constants/dateLocales";
 import { MuiTelInput } from "mui-tel-input";
 import _ from "lodash"; // lodash library
 import {
+  courseLanguagesFullRu,
   languagesFullRu,
   leadSources,
   leadStatuses,
+  leadStatusesEnumToText,
 } from "../../../../Constants/testData";
 import useToggle from "../../../../hooks/useToggle";
 
@@ -214,7 +216,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       comment: comment,
       source: leadSource,
       course_id: "0c745667-1918-4e7a-a996-a7832089a374",
-      statusEnum: "IN_PROGRESS",
+      statusEnum: selectedStatus,
       langEnum: "UZ",
     };
 
@@ -410,20 +412,26 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                     required
                     value={courseLanguages}
                     onChange={handleChangeCourseLanguages}
-                    renderValue={(selected) => selected.join(", ")}
+                    renderValue={(selected) =>
+                      selected
+                        .map((lang) => courseLanguagesFullRu[lang])
+                        .join(", ")
+                    }
                     MenuProps={customMenuProps}
                     sx={selectStyles({ theme })}
                     input={<InputBaseStyled />}
                     IconComponent={Icons.ArrowD}
                   >
-                    {languagesFullRu.map((language) => (
-                      <MenuItem key={language} value={language}>
-                        <Checkbox
-                          checked={courseLanguages.indexOf(language) > -1}
-                        />
-                        <ListItemText primary={language} />
-                      </MenuItem>
-                    ))}
+                    {Object.entries(courseLanguagesFullRu).map(
+                      ([key, value]) => (
+                        <MenuItem key={key} value={key}>
+                          <Checkbox
+                            checked={courseLanguages.indexOf(key) > -1}
+                          />
+                          <ListItemText primary={value} />
+                        </MenuItem>
+                      )
+                    )}
                   </Select>
                 </FormControl>
               </div>
@@ -439,11 +447,13 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                     input={<InputBaseStyled />}
                     IconComponent={Icons.ArrowD}
                   >
-                    {leadStatuses.map((leadStatus) => (
-                      <MenuItem key={leadStatus} value={leadStatus}>
-                        <ListItemText primary={leadStatus} />
-                      </MenuItem>
-                    ))}
+                    {Object.entries(leadStatusesEnumToText).map(
+                      ([key, value]) => (
+                        <MenuItem key={key} value={key}>
+                          <ListItemText primary={value} />
+                        </MenuItem>
+                      )
+                    )}
                   </Select>
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
