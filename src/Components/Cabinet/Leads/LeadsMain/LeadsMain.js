@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
@@ -45,6 +45,7 @@ import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 import { leadSources, leadStatuses } from "../../../../Constants/testData";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -121,9 +122,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   const [open, setOpen] = useState(false);
 
-  const goBack = () => {
-    navigate(-1); // This navigates one step back in history
-  };
+  const [filteredLeads, setFilteredLeads] = useState(leads);
 
   const [anchorStatus, setAnchorStatus] = useState(null);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -167,6 +166,17 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
     setSelectedLeadSources(["0"]);
   };
 
+  const handleLeadSourceFilter = (selectedLeadSources) => {
+    if (selectedLeadSources.length === 1 && selectedLeadSources[0] === "0") {
+      setFilteredLeads(leads);
+    } else {
+      const filtered = leads.filter((lead) =>
+        selectedLeadSources.includes(lead.source)
+      );
+      setFilteredLeads(filtered);
+    }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -181,6 +191,20 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const handleCloseThreeDotsMenu = () => {
     setAnchorThreeDots(null);
   };
+
+  const goBack = () => {
+    navigate(-1); // This navigates one step back in history
+  };
+
+  useDebounce(
+    () => {
+      handleLeadSourceFilter(selectedLeadSources);
+    },
+    1000,
+    [selectedLeadSources]
+  );
+
+  useEffect(() => setFilteredLeads(leads), [leads]);
 
   return (
     <Root
@@ -411,6 +435,19 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
             boxShadow: "none",
           }}
         > */}
+        <Grid
+          container
+          justifyContent="start"
+          rowSpacing={"18px"}
+          columnSpacing={"32px"}
+          paddingRight="44px"
+        >
+          {leadStatuses.map((leadStatus, i) => (
+            <Grid item xs="auto" md="auto" lg={3} key={i}>
+              <StatusTitle status={leadStatus} leadsAmount={5} />
+            </Grid>
+          ))}
+        </Grid>
         <div
           style={{
             maxHeight: "100%",
@@ -425,12 +462,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
             columnSpacing={"32px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            {leadStatuses.map((leadStatus, i) => (
-              <Grid item xs="auto" md="auto" lg={3} key={i}>
-                <StatusTitle status={leadStatus} leadsAmount={5} />
-              </Grid>
-            ))}
-            {leads.map((lead, i) => (
+            {filteredLeads.map((lead, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
                 <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
                 {/* <div>LEAD CARD</div> */}
