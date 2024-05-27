@@ -61,6 +61,7 @@ import {
 import { useCourses } from "../../../../contexts/Courses.context";
 import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -108,9 +109,11 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  const [filteredGroups, setFilteredGroups] = useState(groups);
+
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
-  const [group, changeGroup, resetGroup] = useInput("");
+  const [groupSearch, changeGroupSearch, resetGroupSearch] = useInput("");
 
   const [anchorTeacher, setAnchorTeacher] = useState(null);
 
@@ -129,7 +132,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const [endDate, setEndDate] = useState(null);
 
   const handleClearFilters = () => {
-    resetGroup();
+    resetGroupSearch();
     setTeacher("");
     setSelectedCourses([]);
     setSelectedWeekDays(["0"]);
@@ -178,6 +181,17 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     }
   };
 
+  const handleGroupSearchFilter = (searchInput) => {
+    const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+    const filtered = groups.filter((group) => {
+      const groupName = group.name.toLowerCase().split(" ");
+      return lowerCaseSearchInput.every((input) =>
+        groupName.some((name) => name.includes(input))
+      );
+    });
+    setFilteredGroups(filtered);
+  };
+
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
@@ -189,6 +203,22 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useDebounce(
+    () => {
+      if (groupSearch !== "") {
+        handleGroupSearchFilter(groupSearch);
+      } else {
+        setFilteredGroups(groups);
+      }
+    },
+    1000,
+    [groupSearch, groups]
+  );
+
+  useEffect(() => {
+    setFilteredGroups(groups);
+  }, [groups]);
 
   useEffect(
     () => {
@@ -240,8 +270,8 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
               <Title>Группы</Title>
               <div className="flex items-stretch gap-xxs full-height">
                 <InputBaseStyledV2
-                  value={group}
-                  onChange={changeGroup}
+                  value={groupSearch}
+                  onChange={changeGroupSearch}
                   placeholder="Поиск по группам..."
                   sx={{
                     position: "relative",
@@ -518,12 +548,9 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             columnSpacing={"32px"}
             marginBottom={`${theme.custom.spacing.sm}px`}
           >
-            {groups.map((group, i) => (
+            {filteredGroups.map((group, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
-                <GroupCard
-                  {...groups[i]}
-                  handleDeleteGroup={handleDeleteGroup}
-                />
+                <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
               </Grid>
             ))}
           </Grid>
