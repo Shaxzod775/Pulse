@@ -159,7 +159,9 @@ const GroupCard = ({
                 <TypographyStyled>Учитель</TypographyStyled>
               </InfoWithIcon>
               <Link
-                to={routes.CABINET + routes.TEACHERS + routes.PROFILE}
+                to={
+                  routes.CABINET + routes.TEACHERS + routes.getProfilePath(id)
+                }
                 className="link flex gap-x3s"
               >
                 <TypographyStyled small>
@@ -196,7 +198,7 @@ const GroupCard = ({
             </Box>
           </Box>
           <Link
-            to={routes.CABINET + routes.GROUPS + routes.PROFILE}
+            to={routes.CABINET + routes.GROUPS + routes.getProfilePath(id)}
             className="link full-width"
           >
             <ButtonStyled

@@ -14,7 +14,6 @@ const Groups = () => {
 
   const handleDeleteGroup = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
-    console.log(idToDeleteQuoted);
     try {
       // Отправляем запрос на удаление курса
       await api.post("groups/delete", idToDeleteQuoted);
@@ -38,7 +37,6 @@ const Groups = () => {
       });
 
       // Обрабатываем успешный ответ, если это необходимо
-      console.log(response);
       toggleRefresh(true);
     } catch (error) {
       // Обрабатываем ошибки
@@ -52,7 +50,6 @@ const Groups = () => {
       try {
         const response = await api.get("groups/");
         setGroups(response.data);
-        console.log(response.data);
         toggleRefresh(false);
       } catch (error) {
         console.error("Error fetching groups:", error);

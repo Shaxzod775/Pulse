@@ -9,7 +9,7 @@ import {
   selectStylesV2,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Button,
@@ -38,7 +38,13 @@ import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 import { TypographyStyled } from "../../CabinetStyles";
 import groupImage from "../../../../Assets/Images/Group.png";
 import useInput from "../../../../hooks/useInput";
-import { weekDaysTextFull } from "../../../../Constants/dateLocales";
+import {
+  weekDaysText,
+  weekDaysTextFull,
+} from "../../../../Constants/dateLocales";
+import LoadingComponent from "../../../helpers/LoadingComponent";
+import api from "../../../../Core/api";
+import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -218,6 +224,9 @@ const AttendanceToggler = ({ initialToggle = "2" }) => {
 
 const GroupProfile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [group, setGroup] = useState(null);
+
   const [activeTab, setActiveTab] = useState(0);
   const [selectedGroup, changeSelectedGroup] = useInput("0");
   const tabsToMap = [
@@ -233,8 +242,25 @@ const GroupProfile = () => {
     navigate(-1); // This navigates one step back in history
   };
 
-  const attendanceContent = useMemo(
-    () => (
+  useEffect(() => {
+    const fetchGroup = async () => {
+      try {
+        const response = await api.get(`groups/getById/${id}`);
+        setGroup(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching group:", error);
+      }
+    };
+
+    fetchGroup();
+  }, [id]);
+
+  const attendanceContent = useMemo(() => {
+    if (!group) {
+      return "Loading...";
+    }
+    return (
       <Box
         className="flex flex-col"
         rowGap="16px"
@@ -418,9 +444,8 @@ const GroupProfile = () => {
           ))}
         </Box>
       </Box>
-    ),
-    []
-  );
+    );
+  }, [group]);
 
   const groupsContent = useMemo(
     () => <div className="flex flex-wrap gap-lg"></div>,
@@ -433,6 +458,9 @@ const GroupProfile = () => {
     [attendanceContent]
   );
 
+  if (!group) {
+    return "Loading...";
+  }
   return (
     <Root sx={{ height: "100%" }}>
       <Main className="full-height">
@@ -501,14 +529,14 @@ const GroupProfile = () => {
                     <Box className="flex justify-between">
                       <Box className="flex flex-col" rowGap="2px">
                         <TypographyStyled fontSize="1.125rem" fontWeight="600">
-                          GR011-64
+                          {group.name}
                         </TypographyStyled>
                         <TypographyStyled
                           fontSize="0.75rem"
                           color="lightGray"
                           fontWeight="400"
                         >
-                          Frontend
+                          {group.course.name}
                         </TypographyStyled>
                       </Box>
                       <Box>
@@ -539,14 +567,18 @@ const GroupProfile = () => {
                           <Icons.CalendarContained />
                           <TypographyStyled>Дата начала</TypographyStyled>
                         </InfoWithIcon>
-                        <TypographyStyled small>20.03.2024</TypographyStyled>
+                        <TypographyStyled small>
+                          {format(group.startDate, "dd.MM.yyyy")}
+                        </TypographyStyled>
                       </Box>
                       <Box className="flex justify-between items-center">
                         <InfoWithIcon>
                           <Icons.ClockDashed />
                           <TypographyStyled>Дата завершения</TypographyStyled>
                         </InfoWithIcon>
-                        <TypographyStyled small>21.06.2024</TypographyStyled>
+                        <TypographyStyled small>
+                          {format(group.endDate, "dd.MM.yyyy")}
+                        </TypographyStyled>
                       </Box>
                       <Box className="flex justify-between items-center">
                         <InfoWithIcon>
@@ -554,12 +586,21 @@ const GroupProfile = () => {
                           <TypographyStyled>Дни урока</TypographyStyled>
                         </InfoWithIcon>
                         <Box className="flex items-center" columnGap="10px">
-                          <TypographyStyled small>Пн, Ср, Чт</TypographyStyled>
+                          <TypographyStyled small>
+                            {group.classDays.map(
+                              (weekDay, i) =>
+                                `${weekDaysText[weekDay]}${
+                                  i < group.classDays.length - 1 ? ", " : ""
+                                }`
+                            )}
+                          </TypographyStyled>
                           <Icons.Circle
                             color="#A1A7B2"
                             width="4px"
                           ></Icons.Circle>
-                          <TypographyStyled small>14:00</TypographyStyled>
+                          <TypographyStyled small>
+                            {group.courseTime}
+                          </TypographyStyled>
                         </Box>
                       </Box>
                       <Box className="flex justify-between items-center">
@@ -568,12 +609,14 @@ const GroupProfile = () => {
                           <TypographyStyled>Кабинет</TypographyStyled>
                         </InfoWithIcon>
                         <Box className="flex items-center" columnGap="10px">
-                          <TypographyStyled small>1</TypographyStyled>
-                          <Icons.Circle
+                          <TypographyStyled small>
+                            {group.roomNumber}
+                          </TypographyStyled>
+                          {/* <Icons.Circle
                             color="#A1A7B2"
                             width="4px"
                           ></Icons.Circle>
-                          <TypographyStyled small>1</TypographyStyled>
+                          <TypographyStyled small>1</TypographyStyled> */}
                         </Box>
                       </Box>
                       <Box className="flex justify-between items-center">
