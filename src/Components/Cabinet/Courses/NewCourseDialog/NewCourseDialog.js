@@ -463,7 +463,7 @@ const NewCourseDialog = memo(
                       onChange={changePrice}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">so'm</InputAdornment>
+                          <InputAdornment position="end">сўм</InputAdornment>
                         ),
                         placeholder: "Введите стоимость в сумах",
                         inputComponent: NumericFormatCustom,

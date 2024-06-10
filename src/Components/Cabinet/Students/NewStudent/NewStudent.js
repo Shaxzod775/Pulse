@@ -316,6 +316,23 @@ const NewStudent = ({ fetchStudents }) => {
     setVisibleCount(visibleCount + 1);
   };
 
+  const handleRemoveFields = (index) => () => {
+    // Create a copy of the parentsPhoneNumbers array
+    const newParentsPhoneNumbers = [...parentsPhoneNumbers];
+
+    // Remove the field at the specified index
+    newParentsPhoneNumbers.splice(index, 1);
+
+    // Add a new empty field at the end of the array
+    newParentsPhoneNumbers.push({ phoneNumber: "", name: "" });
+
+    // Update the state with the modified array
+    setParentsPhoneNumbers(newParentsPhoneNumbers);
+    if (visibleCount > 1) {
+      setVisibleCount(visibleCount - 1);
+    }
+  };
+
   // Function to handle adding a new tag
   const handleAddTag = (tag) => {
     setTags([...tags, tag]);
@@ -516,6 +533,7 @@ const NewStudent = ({ fetchStudents }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Фамилия"
+                        name="family-name"
                         value={lastName}
                         helperText={
                           lastNameError ? "Только латинские буквы!" : ""
@@ -532,6 +550,7 @@ const NewStudent = ({ fetchStudents }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Имя"
+                        name="given-name"
                         value={firstName}
                         helperText={
                           firstNameError ? "Только латинские буквы!" : ""
@@ -548,6 +567,7 @@ const NewStudent = ({ fetchStudents }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Отчество"
+                        name="additional-name"
                         value={middleName}
                         helperText={
                           middleNameError ? "Только латинские буквы!" : ""
@@ -863,6 +883,14 @@ const NewStudent = ({ fetchStudents }) => {
                           }
                         />
                       </FormControl>
+                      <Box className="flex items-center">
+                        <IconButton
+                          color="crimson"
+                          onClick={handleRemoveFields(0)}
+                        >
+                          <Icons.TrashCan />
+                        </IconButton>
+                      </Box>
                     </div>
                   </div>
                 )}
@@ -902,6 +930,14 @@ const NewStudent = ({ fetchStudents }) => {
                           }
                         />
                       </FormControl>
+                      <Box className="flex items-center">
+                        <IconButton
+                          color="crimson"
+                          onClick={handleRemoveFields(index + 1)}
+                        >
+                          <Icons.TrashCan />
+                        </IconButton>
+                      </Box>
                     </div>
                   ))}
 
