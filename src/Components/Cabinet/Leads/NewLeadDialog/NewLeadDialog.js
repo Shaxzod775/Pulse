@@ -260,6 +260,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   <TextFieldStyled
                     required
                     variant="outlined"
+                    name="family-name"
                     placeholder="Фамилия"
                     value={lastName}
                     helperText={lastNameError ? "Только латинские буквы!" : ""}
@@ -273,6 +274,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   <TextFieldStyled
                     required
                     variant="outlined"
+                    name="given-name"
                     placeholder="Имя"
                     value={firstName}
                     helperText={firstNameError ? "Только латинские буквы!" : ""}
@@ -286,6 +288,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                   <TextFieldStyled
                     variant="outlined"
                     placeholder="Отчество"
+                    name="additional-name"
                     value={middleName}
                     helperText={
                       middleNameError ? "Только латинские буквы!" : ""

@@ -46,6 +46,7 @@ import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 import { leadSources, leadStatuses } from "../../../../Constants/testData";
 import useDebounce from "../../../../hooks/useDebounce";
+import useCounter from "../../../../hooks/useCounter";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -121,6 +122,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+  const [leadDialogKey, increaseLeadDialogKey] = useCounter(0);
 
   const [filteredLeads, setFilteredLeads] = useState(leads);
 
@@ -183,6 +185,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   const handleClose = () => {
     setOpen(false);
+    increaseLeadDialogKey();
   };
 
   const handleClickThreeDots = (event) => {
@@ -474,6 +477,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
       </Main>
 
       <NewLeadDialog
+        key={leadDialogKey}
         open={open}
         handleClose={handleClose}
         handleAddLead={handleAddLead}
