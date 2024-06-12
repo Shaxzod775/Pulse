@@ -291,12 +291,10 @@ const NewStudent = ({ fetchStudents }) => {
   };
 
   const handleChangeParentName = useCallback(
-    _.debounce((index, name, value) => {
+    _.debounce((index, value) => {
       setParentsPhoneNumbers((values) => {
         const newValues = [...values];
-        if (name === "name") {
-          newValues[index].name = value;
-        }
+        newValues[index].name = value;
         return newValues;
       });
     }, 10),
@@ -376,37 +374,14 @@ const NewStudent = ({ fetchStudents }) => {
 
     const formData = new FormData();
 
-    formData.append(
-      "studentData",
-      JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        middleName: middleName,
-        dateOfBirth: dateOfBirth,
-        phoneNumber: phoneNumber,
-        secondPhoneNumber: additionalPhoneNumber,
-        gender: gender,
-        passportSeries: passportSeries,
-        passportNumber: passportNumber,
-        address: {
-          region: region,
-          state: district,
-          location: location,
-        },
-        email: email,
-        contractNumber: "string",
-        tags: tags,
-        contacts: parentsPhoneNumbers.filter(
-          (parentPhoneNumber) => parentPhoneNumber.phoneNumber !== ""
-        ),
-        description: description,
-      })
-    );
-    console.log({
+    dateOfBirth.setDate(dateOfBirth.getDate() + 1);
+    const dateOfBirthFormatted = dateOfBirth.toISOString().split("T")[0];
+
+    const studentData = {
       firstName: firstName,
       lastName: lastName,
       middleName: middleName,
-      dateOfBirth: dateOfBirth,
+      dateOfBirth: dateOfBirthFormatted,
       phoneNumber: phoneNumber,
       secondPhoneNumber: additionalPhoneNumber,
       gender: gender,
@@ -424,7 +399,10 @@ const NewStudent = ({ fetchStudents }) => {
         (parentPhoneNumber) => parentPhoneNumber.phoneNumber !== ""
       ),
       description: description,
-    });
+    };
+    console.log(studentData);
+
+    formData.append("studentData", JSON.stringify(studentData));
     try {
       const response = await api.post("students/create", formData, {
         headers: {
@@ -903,11 +881,7 @@ const NewStudent = ({ fetchStudents }) => {
                           name="given-name"
                           value={parentsPhoneNumbers[0].name}
                           onChange={(event) =>
-                            handleChangeParentName(
-                              0,
-                              event.target.name,
-                              event.target.value
-                            )
+                            handleChangeParentName(0, event.target.value)
                           }
                         />
                       </FormControl>
@@ -952,7 +926,6 @@ const NewStudent = ({ fetchStudents }) => {
                           onChange={(event) =>
                             handleChangeParentName(
                               index + 1,
-                              event.target.name,
                               event.target.value
                             )
                           }

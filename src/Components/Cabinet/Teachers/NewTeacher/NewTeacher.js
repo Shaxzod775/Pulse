@@ -386,6 +386,9 @@ const NewTeacher = ({ fetchTeachers }) => {
 
     const formData = new FormData();
 
+    dateOfBirth.setDate(dateOfBirth.getDate() + 1);
+    //cz I don't know why but date is one day different when it goes to the database like
+
     formData.append(
       "teacherData",
       JSON.stringify({
