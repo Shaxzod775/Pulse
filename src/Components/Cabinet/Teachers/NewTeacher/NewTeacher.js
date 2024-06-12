@@ -221,7 +221,9 @@ const NewTeacher = ({ fetchTeachers }) => {
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
   //Документы
+  const [fileName, changeFileName, resetFileName] = useInput("");
   const [files, setFiles] = useState([]);
+  const [editingFileIndex, setEditingFileIndex] = useState(null);
 
   //Описание
   const [description, changeDescription] = useInput("");
@@ -249,9 +251,35 @@ const NewTeacher = ({ fetchTeachers }) => {
     fileInput.click();
   };
 
-  const handleFileUpload = useCallback((acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
-  }, []);
+  const handleFileUpload = useCallback(
+    (acceptedFile) => {
+      // Create a new file object with the file and the current file name
+      const newFile = { name: fileName, file: acceptedFile[0] };
+
+      // Update the files state with the new file
+      setFiles((prevFiles) => [...prevFiles, newFile]);
+
+      // Reset the file name
+      resetFileName();
+    },
+    [fileName, resetFileName]
+  );
+
+  const handleFileEditClick = (index) => () => {
+    setEditingFileIndex(index);
+    handleUploadClick("file-edit-input")();
+  };
+
+  const handleFileEdit = (event) => {
+    const file = event.target.files[0];
+    setFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles[editingFileIndex].file = file;
+      return newFiles;
+    });
+    setEditingFileIndex(null); // reset the editing index
+  };
+
   const handleFileDelete = useCallback(
     (index) => () => {
       let newFiles = [...files]; // create a new copy of files array
@@ -558,6 +586,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Фамилия"
+                        name="family-name"
                         value={lastName}
                         helperText={
                           lastNameError ? "Только латинские буквы!" : ""
@@ -574,6 +603,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Имя"
+                        name="given-name"
                         value={firstName}
                         helperText={
                           firstNameError ? "Только латинские буквы!" : ""
@@ -590,6 +620,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                       <TextFieldStyled
                         variant="outlined"
                         placeholder="Отчество"
+                        name="additional-name"
                         value={middleName}
                         helperText={
                           middleNameError ? "Только латинские буквы!" : ""
@@ -946,6 +977,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                     <FormLabel row>E-mail</FormLabel>
                   </label>
                   <TextFieldStyled
+                    name="email"
                     value={email}
                     error={emailError}
                     helperText={
@@ -967,6 +999,7 @@ const NewTeacher = ({ fetchTeachers }) => {
                     <FormLabel row>E-mail (корпоративный)</FormLabel>
                   </label>
                   <TextFieldStyled
+                    name="additional-email"
                     value={emailCorp}
                     error={emailErrorCorp}
                     helperText={
@@ -1290,6 +1323,13 @@ const NewTeacher = ({ fetchTeachers }) => {
                     className="flex flex-col"
                     rowGap="12px"
                   >
+                    <TextFieldStyled
+                      variant="outlined"
+                      placeholder="Добавьте название документа"
+                      name="file-name"
+                      value={fileName}
+                      onChange={changeFileName}
+                    />
                     <Dropzone onDrop={handleFileUpload}>
                       {({ getRootProps, getInputProps, isDragActive }) => (
                         <SquareContainer
@@ -1317,39 +1357,72 @@ const NewTeacher = ({ fetchTeachers }) => {
                         </SquareContainer>
                       )}
                     </Dropzone>
+                    <input
+                      type="file"
+                      id="file-edit-input"
+                      style={{ display: "none" }}
+                      onChange={handleFileEdit}
+                    />
                     <Box className="flex flex-col" rowGap="8px">
                       {files.map((file, index) => (
                         <>
-                          <Box
-                            className="flex justify-between"
-                            columnGap="10px"
-                          >
-                            <Box className="flex items-center" columnGap="10px">
-                              <TypographyStyled
-                                display="flex"
-                                colorFromTheme="purpleBlue"
+                          <Box className="flex flex-col" rowGap="8px">
+                            <TypographyStyled
+                              whiteSpace="nowrap"
+                              maxWidth="300px"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              colorFromTheme="lightGrey"
+                            >
+                              {file.name}
+                            </TypographyStyled>
+                            <Box
+                              className="flex justify-between"
+                              columnGap="10px"
+                            >
+                              <Box
+                                className="flex items-center"
+                                columnGap="10px"
                               >
-                                <Icons.ClipboardText />
-                              </TypographyStyled>
-                              <TypographyStyled
-                                whiteSpace="nowrap"
-                                maxWidth="300px"
-                                overflow="hidden"
-                                textOverflow="ellipsis"
+                                <TypographyStyled
+                                  display="flex"
+                                  colorFromTheme="purpleBlue"
+                                >
+                                  <Icons.ClipboardText />
+                                </TypographyStyled>
+                                <TypographyStyled
+                                  whiteSpace="nowrap"
+                                  maxWidth="300px"
+                                  overflow="hidden"
+                                  textOverflow="ellipsis"
+                                >
+                                  {formatFileName(file.file.name)}
+                                </TypographyStyled>
+                              </Box>
+                              <Box
+                                className="flex items-center"
+                                columnGap="10px"
                               >
-                                {formatFileName(file.name)}
-                              </TypographyStyled>
-                            </Box>
-                            <Box className="flex items-center" columnGap="4px">
-                              <TypographyStyled whiteSpace="nowrap">
-                                {(file.size / 1024 / 1024).toFixed(2)} MB
-                              </TypographyStyled>
-                              <IconButton
-                                color="purpleBlue"
-                                onClick={handleFileDelete(index)}
-                              >
-                                <Icons.TrashCan width="24px" height="24px" />
-                              </IconButton>
+                                <TypographyStyled whiteSpace="nowrap">
+                                  {(file.file.size / 1024 / 1024).toFixed(2)} MB
+                                </TypographyStyled>
+                                <ButtonStyled
+                                  variant="contained"
+                                  color="purpleBlue"
+                                  onClick={handleFileEditClick(index)}
+                                  sx={{ padding: "5px", borderRadius: "4px" }}
+                                >
+                                  <Icons.Edit width="18px" height="18px" />
+                                </ButtonStyled>
+                                <ButtonStyled
+                                  variant="outlined"
+                                  color="crimson"
+                                  onClick={handleFileDelete(index)}
+                                  sx={{ padding: "4px", borderRadius: "4px" }}
+                                >
+                                  <Icons.TrashCan width="18px" height="18px" />
+                                </ButtonStyled>
+                              </Box>
                             </Box>
                           </Box>
                         </>
