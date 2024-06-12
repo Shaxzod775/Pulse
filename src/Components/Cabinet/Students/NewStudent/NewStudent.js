@@ -900,7 +900,7 @@ const NewStudent = ({ fetchStudents }) => {
                         <TextFieldStyled
                           variant="outlined"
                           placeholder="Имя"
-                          name="name"
+                          name="given-name"
                           value={parentsPhoneNumbers[0].name}
                           onChange={(event) =>
                             handleChangeParentName(

@@ -364,10 +364,21 @@ const NewGroupDialog = ({
       return acc;
     }, []);
     const duration = calculateMonthDifference(startDate, endDate);
+    const startDateISO = new Date(
+      startDate.getTime() - startDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+    const endDateISO = new Date(
+      endDate.getTime() - endDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+
     const groupData = {
       name: name,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: startDateISO,
+      endDate: endDateISO,
       roomNumber: room,
       courseTime: "14:00",
       classDays: weekDays,

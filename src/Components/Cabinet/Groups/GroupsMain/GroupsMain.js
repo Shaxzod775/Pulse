@@ -62,6 +62,7 @@ import { useCourses } from "../../../../contexts/Courses.context";
 import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
+import useCounter from "../../../../hooks/useCounter";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -108,6 +109,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const { allCourseNames } = useCourses();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
 
   const [filteredGroups, setFilteredGroups] = useState(groups);
 
@@ -202,6 +204,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const handleClose = () => {
     setOpen(false);
+    increaseGroupDialogKey();
   };
 
   useDebounce(
@@ -558,6 +561,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
       </Main>
 
       <NewGroupDialog
+        key={groupDialogKey}
         open={open}
         handleClose={handleClose}
         handleAddGroup={handleAddGroup}
