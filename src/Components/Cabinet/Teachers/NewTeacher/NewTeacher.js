@@ -454,7 +454,8 @@ const NewTeacher = ({ fetchTeachers }) => {
     if (id) {
       teacherData.teacherId = id;
     }
-    console.log(`teacherData: ${teacherData}`);
+    console.log("teacherData:");
+    console.log(teacherData);
 
     formData.append("teacherData", JSON.stringify(teacherData));
     try {
