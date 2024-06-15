@@ -1,0 +1,55 @@
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.icon-container {
+  padding: 15px;
+  margin-right: 12px;
+  background-color: #f6f5ff; /* Light grey background */
+  border-radius: 20%;
+  display: flex;
+}
+
+.icon-container .icon {
+  color: #1c274c;
+  font-size: 40px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 14px;
+  color: #a2a2c2; /* Dark grey text */
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 400;
+  color: #1c274c;
+}
+
+.change {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.increase {
+  color: #66ebab;
+}
+.decrease {
+  color: #eb3333;
+}
