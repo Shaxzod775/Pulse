@@ -39,13 +39,13 @@
   align-items: center;
   justify-content: center;
 
-  padding-right: 280px;
+  padding-right: 250px;
   gap: 10px;
   margin: 0 auto;
   width: auto;
 
   position: relative;
-  right: 20px;
+  right: 87px;
 
   box-sizing: border-box;
 }
@@ -84,22 +84,19 @@
   padding: 0px;
   gap: 50px;
   margin: 0 auto;
-  width: 950px;
+  width: auto;
   height: 18px;
 }
 
 
-.header-teacher {
-  padding-right: 25px;
+.header-phoneNumber {
+  padding-right: 40px;
 }
 
 
 .otherHeaders-container h2 {
   width: auto;
   height: 18px;
-
-  display: flex;
-  align-items: center;
 
   margin: 0 auto;
 
@@ -115,7 +112,7 @@
 }
 
 
-.groups-list {
+.teachers-list {
   width: 100%;
   margin-top: 50px; 
 }
@@ -162,7 +159,7 @@
   background-color: #F9FAFB;
 }
 
-.groupName-container {
+.fullname-container {
   position: absolute;
 
   display: flex;
@@ -173,7 +170,7 @@
   margin: 0 auto;
 }
 
-.groupName-container input {
+.fullname-container input {
   box-sizing: border-box;
 
   align-items: flex-start;
@@ -192,7 +189,7 @@
   border-radius: 4px;
 }
 
-.groupName-container p,
+.fullname-container p,
 .otherInfo-container p {
   height: 18px;
 
@@ -222,37 +219,33 @@
   margin: 0 auto;
 }
 
-.startDate {
+.specialization {
   position: absolute;
-  left: 490px;
+  left: 580px;
 }
 
-.endDate {
+.NumberOfGroups {
   position: absolute;
-  left: 630px;
+  left: 710px;
 }
 
-.classDays {
+.phoneNumber {
   position: absolute;
-  left: 795px;
-}
-
-.teacher {
-  position: absolute;
-  left: 925px;
-}
-
-.duration {
-  position: absolute;
-  left: 1065px;
-}
-
-.roomNumber {
-  position: absolute;
-  left: 1250px;
+  left: 860px;
 }
 
 .studentsNumber {
   position: absolute;
-  left: 1370px;
+  left: 1000px;
 }
+
+.hiredDate {
+  position: absolute;
+  left: 1135px;
+}
+
+.branch {
+  position: absolute;
+  left: 1320px;
+}
+

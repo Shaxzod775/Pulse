@@ -31,6 +31,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
+import TeachersList from "../TeachersList/TeachersList"
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -142,6 +143,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
     });
     setFilteredTeacheres(filtered);
   };
+  const [isGrid, setIsGrid] = useState(false);
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -263,6 +265,17 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           </div>
 
           <div className="flex items-center gap-sm">
+            <ButtonStyled onClick={() => setIsGrid(!isGrid)} variant="contained" sx={{
+                          color: 'white', 
+                          backgroundColor: 'white', 
+                          '&:hover': {
+                            backgroundColor: 'white', 
+                            }
+                          }}>
+              <div className="flex items-center gap-x3s">
+                <Icons.ListIcon />
+              </div>
+            </ButtonStyled>
             <Link
               to={routes.CABINET + routes.TEACHERS + routes.NEW}
               className="link"
@@ -287,7 +300,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             overflowY: "auto",
           }}
         >
-          <Grid
+         {!isGrid ? <Grid
             container
             justifyContent="start"
             // spacing={`${12}px`}
@@ -304,6 +317,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               </Grid>
             ))}
           </Grid>
+        : <TeachersList teachersList={teachers} handleDeleteTeacher={handleDeleteTeacher} />}
         </div>
       </Main>
 

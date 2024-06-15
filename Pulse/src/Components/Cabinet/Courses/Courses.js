@@ -25,6 +25,7 @@ import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
 import { useNavigate } from "react-router-dom";
+import CoursesList from './CoursesList/CoursesList'
 import {
   useCourses,
   useCoursesDispatch,
@@ -138,6 +139,8 @@ const Courses = () => {
   const [open, setOpen] = useState(false);
   const [courses, setCourses] = useState([]);
 
+  const [isGrid, setIsGrid] = useState(false);
+
   const handleAddCourse = () => {
     console.log("Добавлен курс");
   };
@@ -209,6 +212,17 @@ const Courses = () => {
           </div>
 
           <div className="flex items-center gap-sm">
+            <ButtonStyled onClick={() => setIsGrid(!isGrid)} variant="contained" sx={{
+                            color: 'white', 
+                            backgroundColor: 'white', 
+                            '&:hover': {
+                              backgroundColor: 'white', 
+                              }
+                            }}>
+                <div className="flex items-center gap-x3s">
+                  <Icons.ListIcon />
+                </div>
+            </ButtonStyled>
             <ButtonStyled
               variant="contained"
               color="purpleBlue"
@@ -237,7 +251,7 @@ const Courses = () => {
             overflowY: "auto",
           }}
         >
-          <Grid
+         {!isGrid ? <Grid
             container
             justifyContent="start"
             columnSpacing={"32px"}
@@ -253,6 +267,8 @@ const Courses = () => {
               </Grid>
             ))}
           </Grid>
+          : <CoursesList />}
+          {/* <CoursesList /> */}
         </div>
         {/* </Paper> */}
       </Main>

@@ -621,7 +621,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               </Grid>
             ))}
           </Grid>
-          : <StudentsList students={filteredStudents} />}
+          : <StudentsList students={filteredStudents} handleDeleteStudent={handleDeleteStudent}/>}
         </div>
       </Main>
     </Root>

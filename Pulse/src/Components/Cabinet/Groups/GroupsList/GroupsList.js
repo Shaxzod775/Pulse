@@ -26,15 +26,27 @@ const GroupsList = ({ groupsList }) => {
         setChecked(event.target.checked);
     };
 
-    
-    const weekDaysText = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]; 
-    const getRussianWord = (count, singular, few, many) => {
-        return count === 1 ? singular : (count >= 2 && count <= 4 ? few : many);
-    };
+        const calculateLessonCount = (startDate, endDate, classDaysPerWeek) => {
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+  
+          const differenceInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+  
+          const lessonsPerWeek = classDaysPerWeek.length;
+  
+          const totalLessons = Math.floor(differenceInDays / 7) * lessonsPerWeek;
+  
+          const remainingDays = differenceInDays % 7;
+          for (let i = 0; i < remainingDays; i++) {
+              const currentDay = (start.getDay() + i) % 7;
+              if (classDaysPerWeek.includes(currentDay)) {
+                  totalLessons++;
+              }
+          }
+  
+          return totalLessons;
+      };
 
-    useEffect(() => {
-      console.log(groupsList)
-    }, [])
 
 
     return (
@@ -54,20 +66,20 @@ const GroupsList = ({ groupsList }) => {
             <h2 className={styles["header-studentsNumber"]}>Учеников</h2>
           </div>
         </div>
-          <div className={styles["students-list"]}>
+          <div className={styles["groups-list"]}>
             <div className={"list-wrapper"}>
               {groupsList.map((group, index) => (
               <div key={index} className={`${styles.item} ${index % 2 !== 0 ? 'grey-background' : ''}`}>
-                <div className={styles["fullname-container"]}>
+                <div className={styles["groupName-container"]}>
                   <input type='checkbox' />
-                  <p className={styles["groupName"]}>{`${group.firstName !== "" ? group.firstName : "GR000-00"} ${group.lastName !== "" ? group.lastName : "UI/UX"}`}</p>
+                  <p className={styles["groupName"]}>{`${group.name !== "" ? group.name : "GR000-00"} `}</p>
                 </div>
                 <div className={styles["otherInfo-container"]}>
-                <p className={styles["startDate"]}>{format(new Date(group.startDate), "dd.MM.yyyy")}</p>
+                  <p className={styles["startDate"]}>{format(new Date(group.startDate), "dd.MM.yyyy")}</p>
                   <p className={styles["endDate"]}>{format(new Date(group.endDate), "dd.MM.yyyy")}</p>
-                  <p className={styles["classDays"]}>{group.classDays.map((weekDay, i) => `${weekDaysText[weekDay]}${i < group.classDays.length - 1 ? ", " : ""}`)}</p>                              
-                  <p className={styles["teacher"]}>{group.teacher}</p>
-                  <p className={styles["duration"]}>{group.duration}{" "}{getRussianWord(group.duration, "месяц", "месяца", "месяцев")}</p>
+                  <p className={styles["classDays"]}>{group.classDays.map((weekDay, i) =>`${weekDaysText[weekDay]}${i < group.classDays.length - 1 ? ", " : ""}`)}</p>                              
+                  <p className={styles["teacher"]}>{group.teacher.firstName} {group.teacher.lastName}</p>
+                  <p className={styles["duration"]}>{group.course.duration}{" "}{getRussianWord(group.duration, "месяц", "месяца", "месяцев")} / {calculateLessonCount(group.startDate, group.endDate, group.classDays)} уроков</p>
                   <p className={styles["roomNumber"]}>{group.roomNumber} кабинет</p>
                   <p className={styles["studentsNumber"]}>10 {getRussianWord(10, "ученик", "ученика", "учеников")}</p>
                   <ButtonStyled

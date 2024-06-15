@@ -14,8 +14,8 @@
 }
 
 /* Common styles */
-.headers, .headers-fullname-container, .headers-fullname-container input, .otherHeaders-container,
-.item, .fullname-container, .fullname-container input, .otherInfo-container {
+.headers, .headers-courseName-container, .headers-courseName-container input, .otherHeaders-container,
+.item, .courseName-container, .courseName-container input, .otherInfo-container {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -34,23 +34,19 @@
   border-radius: 29px;
 }
 
-.headers-fullname-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+.headers-courseName-container {
   padding-right: 280px;
   gap: 10px;
   margin: 0 auto;
   width: auto;
 
   position: relative;
-  right: 20px;
+  right: 60px;
 
   box-sizing: border-box;
 }
 
-.headers-fullname-container input {
+.headers-courseName-container input {
   box-sizing: border-box;
   
   width: 16px;
@@ -64,12 +60,12 @@
   flex: none;
 }
 
-.headers-fullname {
+.headers-courseName {
   margin: 0 auto;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 150%;
   text-align: center;
   letter-spacing: 0.01em;
@@ -84,13 +80,21 @@
   padding: 0px;
   gap: 50px;
   margin: 0 auto;
-  width: 950px;
+  width: auto;
   height: 18px;
 }
 
 
-.header-teacher {
-  padding-right: 25px;
+.header-group {
+  padding-right: 35px;
+}
+
+.header-phoneNumber {
+  padding-right: 115px;
+}
+
+.header-mail {
+  padding-right: 120px;
 }
 
 
@@ -98,16 +102,13 @@
   width: auto;
   height: 18px;
 
-  display: flex;
-  align-items: center;
-
   margin: 0 auto;
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 100%;
+  font-size: 14px;
+  line-height: 150%;
   letter-spacing: 0.01em;
   color: #7D8594;
   mix-blend-mode: normal;
@@ -115,7 +116,7 @@
 }
 
 
-.groups-list {
+.courses-list {
   width: 100%;
   margin-top: 50px; 
 }
@@ -162,7 +163,7 @@
   background-color: #F9FAFB;
 }
 
-.groupName-container {
+.courseName-container {
   position: absolute;
 
   display: flex;
@@ -173,7 +174,7 @@
   margin: 0 auto;
 }
 
-.groupName-container input {
+.courseName-container input {
   box-sizing: border-box;
 
   align-items: flex-start;
@@ -192,14 +193,14 @@
   border-radius: 4px;
 }
 
-.groupName-container p,
+.courseName-container p,
 .otherInfo-container p {
   height: 18px;
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 150%;
 
   text-align: center;
@@ -222,37 +223,28 @@
   margin: 0 auto;
 }
 
-.startDate {
-  position: absolute;
-  left: 490px;
-}
-
 .endDate {
   position: absolute;
-  left: 630px;
+  left: 610px;
 }
 
-.classDays {
+.group {
   position: absolute;
-  left: 795px;
+  left: 785px;
+}
+
+.phoneNumber {
+  position: absolute;
+  left: 910px;
+}
+
+.mail {
+  position: absolute;
+  left: 1125px;
 }
 
 .teacher {
   position: absolute;
-  left: 925px;
+  left: 1335px;
 }
 
-.duration {
-  position: absolute;
-  left: 1065px;
-}
-
-.roomNumber {
-  position: absolute;
-  left: 1250px;
-}
-
-.studentsNumber {
-  position: absolute;
-  left: 1370px;
-}

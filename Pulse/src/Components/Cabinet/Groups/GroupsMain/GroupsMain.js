@@ -559,7 +559,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             overflowY: "auto",
           }}
         >
-         {isGrid ? <Grid
+         {!isGrid ? <Grid
             container
             justifyContent="start"
             rowSpacing={"18px"}
