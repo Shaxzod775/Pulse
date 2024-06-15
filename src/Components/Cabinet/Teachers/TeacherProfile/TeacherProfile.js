@@ -763,7 +763,7 @@ const TeacherProfile = ({ handleDeleteTeacher }) => {
                                 displayType="text" // Set to "input" if you want an input field
                                 thousandSeparator=" "
                               />{" "}
-                              UZS
+                              сўм
                             </CardText>
                           </InfoLine>
                         </ButtonStyled>

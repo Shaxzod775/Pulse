@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import api from "../../../../Core/api";
 
@@ -54,7 +54,10 @@ import {
   REGION_WITH_DISTRICTS,
 } from "../../../../Constants/usbekistan";
 import { russianLocale } from "../../../../Constants/dateLocales";
-import { formatFileName } from "../../../../helpers/helpers";
+import {
+  createEventWithValue,
+  formatFileName,
+} from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -126,6 +129,8 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
 
 const NewStudent = ({ fetchStudents }) => {
   const navigate = useNavigate();
+  const { id } = useParams(); // Get the id from the URL
+  const [student, setStudent] = useState(null); // Add a new state variable for the student
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -369,6 +374,7 @@ const NewStudent = ({ fetchStudents }) => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
+  // Function to submit the form
   const handleClickAdd = async (e) => {
     e.preventDefault();
 
@@ -400,16 +406,29 @@ const NewStudent = ({ fetchStudents }) => {
       ),
       description: description,
     };
+    if (id) {
+      studentData.id = id;
+    }
     console.log(studentData);
 
     formData.append("studentData", JSON.stringify(studentData));
     try {
-      const response = await api.post("students/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      let response;
+      if (id) {
+        // If an id is present, update the student
+        response = await api.post("students/update", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        // Otherwise, create a new student
+        response = await api.post("students/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
       // Обработка успешного ответа, если необходимо
       console.log("Teacher created:", response.data);
       fetchStudents();
@@ -419,6 +438,64 @@ const NewStudent = ({ fetchStudents }) => {
       console.error("Error creating teacher:", error);
     }
   };
+
+  useEffect(() => {
+    // If an id is present, fetch the student data
+    if (id) {
+      const fetchStudent = async () => {
+        try {
+          const response = await api.get(`students/getById/${id}`);
+          setStudent(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching student:", error);
+        }
+      };
+
+      fetchStudent();
+    }
+  }, [id]);
+
+  // Fill the inputs with the student data
+  useEffect(() => {
+    if (student) {
+      // Determine the number of empty slots needed
+      const uniqueContacts = [];
+      student.contacts.forEach((contact) => {
+        if (!uniqueContacts.find((c) => c.id === contact.id)) {
+          uniqueContacts.push(contact);
+        }
+      });
+      const emptyContactSlots = 3 - uniqueContacts.length;
+      // Create an array of empty contact objects
+      const emptyContacts = Array(emptyContactSlots).fill({
+        phoneNumber: "",
+        name: "",
+      });
+      // Combine student.contacts with emptyContacts
+      const parentsPhoneNumbers = [...uniqueContacts, ...emptyContacts];
+      // Now you can use setParentsPhoneNumbers to update your state
+      setVisibleCount(uniqueContacts.length);
+
+      setFirstName(student.firstName);
+      setMiddleName(student.middleName);
+      setLastName(student.lastName);
+      setDateOfBirth(new Date(student.dateOfBirth));
+      setPhoneNumber(student.phoneNumber);
+      setAdditionalPhoneNumber(student.secondPhoneNumber);
+      changeGender(createEventWithValue(student.gender));
+      setPassportSeries(student.passportSeries);
+      setPassportNumber(student.passportNumber);
+      changeRegion({}, student.address.region);
+      changeDistrict({}, student.address.state);
+      changeLocation(createEventWithValue(student.address.location));
+      setEmail(student.email);
+      // need contract number state var
+      setTags(student.tags);
+      setParentsPhoneNumbers(parentsPhoneNumbers);
+      changeDescription(createEventWithValue(student.description));
+    }
+  }, [student]);
 
   return (
     <Root>
@@ -434,7 +511,7 @@ const NewStudent = ({ fetchStudents }) => {
               <Icons.ArrowL />
             </ButtonStyled>
             <div className="flex flex-col">
-              <Title>Добавить ученика</Title>
+              <Title>{id ? "Изменить" : "Добавить"} ученика</Title>
               <div className="flex items-center gap-x3s">
                 <Link to={routes.CABINET + routes.STUDENTS} className="link">
                   <Typography fontSize="0.75rem">Ученики</Typography>
@@ -443,7 +520,9 @@ const NewStudent = ({ fetchStudents }) => {
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
                 />
-                <Typography fontSize="0.75rem">Добавить ученика</Typography>
+                <Typography fontSize="0.75rem">
+                  {id ? "Изменить" : "Добавить"} ученика
+                </Typography>
               </div>
             </div>
           </div>
@@ -460,7 +539,7 @@ const NewStudent = ({ fetchStudents }) => {
               color="purpleBlue"
               onClick={handleClickAdd}
             >
-              <span>Добавить</span>
+              <span>{id ? "Изменить" : "Добавить"}</span>
             </DialogButton>
           </div>
         </div>

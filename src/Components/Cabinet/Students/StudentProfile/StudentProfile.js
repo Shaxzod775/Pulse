@@ -261,7 +261,7 @@ export const GroupsCard = ({ status = "active" }) => {
             <Icons.Bill />
             <div>
               <Typography>Стоимость для студента:</Typography>
-              <Typography>1 000 000 UZS</Typography>
+              <Typography>1 000 000 сўм</Typography>
             </div>
           </GroupCardInfoLine>
         </div>
@@ -327,6 +327,18 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
     fetchStudent();
     console.log(student);
   }, [id]);
+
+  const uniqueContacts = useMemo(() => {
+    let unique = [];
+    if (student && student.contacts) {
+      student.contacts.forEach((contact) => {
+        if (!unique.find((c) => c.id === contact.id)) {
+          unique.push(contact);
+        }
+      });
+    }
+    return unique;
+  }, [student]);
 
   const persoalInfoContent = useMemo(() => {
     if (!student) {
@@ -454,11 +466,14 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                     >
                       Телефоны родителей
                     </TypographyStyled>
-                    {student.contacts.length === 0 ? (
+                    {uniqueContacts.length === 0 ? (
                       <TypographyStyled>Н/Д</TypographyStyled>
                     ) : (
-                      student.contacts.map((parentContact, i) => (
-                        <InfoItem title="Фамилия Имя Очество Родителя" key={i}>
+                      uniqueContacts.map((parentContact) => (
+                        <InfoItem
+                          title="Фамилия Имя Очество Родителя"
+                          key={parentContact.id}
+                        >
                           <Typography>{parentContact.name}</Typography>
                           <Box className="flex items-center" columnGap="4px">
                             <Typography>
@@ -579,7 +594,7 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                           </PaymentInfoLine>
                           <PaymentInfoLine>
                             <Icons.Bill />
-                            <span>1 000 000 UZS</span>
+                            <span>1 000 000 сўм</span>
                           </PaymentInfoLine>
                           <PaymentInfoLine>
                             <Icons.Messages />
@@ -1036,7 +1051,7 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                                 displayType="text" // Set to "input" if you want an input field
                                 thousandSeparator=" "
                               />{" "}
-                              UZS
+                              сўм
                             </CardText>
                           </InfoLine>
                         </ButtonStyled>
@@ -1045,7 +1060,11 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                   </div>
                   <div>
                     <Link
-                      to={routes.CABINET + routes.STUDENTS + routes.NEW}
+                      to={
+                        routes.CABINET +
+                        routes.STUDENTS +
+                        routes.getEditPath(student.id)
+                      }
                       className="link"
                     >
                       <DialogButton

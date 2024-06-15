@@ -642,7 +642,7 @@ const GroupProfile = () => {
                             displayType="text" // Set to "input" if you want an input field
                             thousandSeparator=" "
                           />{" "}
-                          UZS
+                          сўм
                         </TypographyStyled>
                       </Box>
                       <Box className="flex justify-between items-center">
@@ -659,7 +659,7 @@ const GroupProfile = () => {
                             displayType="text" // Set to "input" if you want an input field
                             thousandSeparator=" "
                           />{" "}
-                          UZS
+                          сўм
                         </TypographyStyled>
                       </Box>
                     </Box>
@@ -683,7 +683,7 @@ const GroupProfile = () => {
                       displayType="text" // Set to "input" if you want an input field
                       thousandSeparator=" "
                     />{" "}
-                    UZS
+                    сўм
                   </Typography>
                 </Box>
               </ButtonStyled>
