@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 
 import api from "../../../../Core/api";
@@ -64,7 +64,10 @@ import {
   socialMediaTypes,
   uzbekEducationLevels,
 } from "../../../../Constants/testData";
-import { formatFileName } from "../../../../helpers/helpers";
+import {
+  createEventWithValue,
+  formatFileName,
+} from "../../../../helpers/helpers";
 import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
@@ -143,6 +146,8 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
 
 const NewTeacher = ({ fetchTeachers }) => {
   const navigate = useNavigate();
+  const { id } = useParams(); // Get the id from the URL
+  const [teacher, setTeacher] = useState(null); // Add a new state variable for the teacher
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -417,44 +422,58 @@ const NewTeacher = ({ fetchTeachers }) => {
     dateOfBirth.setDate(dateOfBirth.getDate() + 1);
     //cz I don't know why but date is one day different when it goes to the database like
 
-    formData.append(
-      "teacherData",
-      JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        middleName: middleName,
-        email: email,
-        corporateEmail: emailCorp,
-        phoneNumber: phoneNumber,
-        secondPhoneNumber: additionalPhoneNumber,
-        gender: gender,
-        dateOfBirth: dateOfBirth,
-        passportSeries: passportSeries,
-        passportNumber: passportNumber,
-        contacts: [
-          { name: "alwi", phoneNumber: "1231321123" },
-          { name: "annaa", phoneNumber: "123212312" },
-        ],
-        education: null,
-        contractNumber: "1223",
-        description: description,
-        inn: inn,
-        inps: inps,
-        pnfl: pinfl,
-        tags: tags,
-        address: {
-          region: region,
-          state: district,
-          location: location,
-        },
-      })
-    );
+    const teacherData = {
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      email: email,
+      corporateEmail: emailCorp,
+      phoneNumber: phoneNumber,
+      secondPhoneNumber: additionalPhoneNumber,
+      gender: gender,
+      dateOfBirth: dateOfBirth,
+      passportSeries: passportSeries,
+      passportNumber: passportNumber,
+      contacts: [
+        { name: "alwi", phoneNumber: "1231321123" },
+        { name: "annaa", phoneNumber: "123212312" },
+      ],
+      education: null,
+      contractNumber: "1223",
+      description: description,
+      inn: inn,
+      inps: inps,
+      pnfl: pinfl,
+      tags: tags,
+      address: {
+        region: region,
+        state: district,
+        location: location,
+      },
+    };
+    if (id) {
+      teacherData.teacherId = id;
+    }
+    console.log(`teacherData: ${teacherData}`);
+
+    formData.append("teacherData", JSON.stringify(teacherData));
     try {
-      const response = await api.post("teachers/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      let response;
+      if (id) {
+        // If an id is present, update the teacher
+        response = await api.post("teachers/update", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        // Otherwise, create a new teacher
+        response = await api.post("teachers/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
 
       // Обработка успешного ответа, если необходимо
       console.log("Teacher created:", response.data);
@@ -465,6 +484,49 @@ const NewTeacher = ({ fetchTeachers }) => {
       console.error("Error creating teacher:", error);
     }
   };
+
+  useEffect(() => {
+    // If an id is present, fetch the teacher data
+    if (id) {
+      const fetchTeacher = async () => {
+        try {
+          const response = await api.get(`teachers/getById/${id}`);
+          setTeacher(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching teacher:", error);
+        }
+      };
+
+      fetchTeacher();
+    }
+  }, [id]);
+
+  // Fill the inputs with the teacher data
+  useEffect(() => {
+    if (teacher) {
+      setFirstName(teacher.firstName);
+      setMiddleName(teacher.middleName);
+      setLastName(teacher.lastName);
+      changeEmail(createEventWithValue(teacher.email));
+      changeEmailCorp(createEventWithValue(teacher.corporateEmail));
+      setPhoneNumber(teacher.phoneNumber);
+      setAdditionalPhoneNumber(teacher.secondPhoneNumber);
+      changeGender(createEventWithValue(teacher.gender));
+      setDateOfBirth(new Date(teacher.dateOfBirth));
+      setPassportSeries(teacher.passportSeries);
+      setPassportNumber(teacher.passportNumber);
+      //no parent contacts, education, contractNumber (for now I guess) for teacher
+      changeDescription(createEventWithValue(teacher.description));
+      changeInn(createEventWithValue(teacher.inn));
+      changeInps(createEventWithValue(teacher.inps));
+      changePinfl(createEventWithValue(teacher.pnfl));
+      setTags(teacher.tags);
+      changeRegion({}, teacher.address.region);
+      changeDistrict({}, teacher.address.state);
+      changeLocation(createEventWithValue(teacher.address.location));
+    }
+  }, [teacher]);
 
   return (
     <Root>
@@ -480,7 +542,7 @@ const NewTeacher = ({ fetchTeachers }) => {
               <Icons.ArrowL />
             </ButtonStyled>
             <div className="flex flex-col">
-              <Title>Добавить учителя</Title>
+              <Title>{id ? "Изменить" : "Добавить"} учителя</Title>
               <div className="flex items-center gap-x3s">
                 <Link to={routes.CABINET + routes.TEACHERS} className="link">
                   <Typography fontSize="0.75rem">Учителя</Typography>
@@ -489,7 +551,9 @@ const NewTeacher = ({ fetchTeachers }) => {
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
                 />
-                <Typography fontSize="0.75rem">Добавить учителя</Typography>
+                <Typography fontSize="0.75rem">
+                  {id ? "Изменить" : "Добавить"} учителя
+                </Typography>
               </div>
             </div>
           </div>
@@ -506,7 +570,7 @@ const NewTeacher = ({ fetchTeachers }) => {
               color="purpleBlue"
               onClick={handleClickAdd}
             >
-              <span>Добавить</span>
+              <span>{id ? "Изменить" : "Добавить"}</span>
             </DialogButton>
           </div>
         </div>

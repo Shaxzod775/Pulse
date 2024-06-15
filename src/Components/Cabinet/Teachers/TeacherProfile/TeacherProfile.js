@@ -771,16 +771,25 @@ const TeacherProfile = ({ handleDeleteTeacher }) => {
                     </div>
                   </div>
                   <div>
-                    <DialogButton
-                      variant="contained"
-                      color="purpleBlue"
-                      // onClick={handleClickOpen}
+                    <Link
+                      to={
+                        routes.CABINET +
+                        routes.TEACHERS +
+                        routes.getEditPath(teacher.id)
+                      }
+                      className="link"
                     >
-                      <div className="flex items-center gap-x3s">
-                        <Icons.PenNewSquare />
-                        <span>Изменить</span>
-                      </div>
-                    </DialogButton>
+                      <DialogButton
+                        variant="contained"
+                        color="purpleBlue"
+                        // onClick={handleClickOpen}
+                      >
+                        <div className="flex items-center gap-x3s">
+                          <Icons.PenNewSquare />
+                          <span>Изменить</span>
+                        </div>
+                      </DialogButton>
+                    </Link>
                   </div>
                 </div>
               </Card>

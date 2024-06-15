@@ -430,7 +430,7 @@ const NewStudent = ({ fetchStudents }) => {
         });
       }
       // Обработка успешного ответа, если необходимо
-      console.log("Teacher created:", response.data);
+      console.log("Student created:", response.data);
       fetchStudents();
       navigate("/cabinet/students");
     } catch (error) {

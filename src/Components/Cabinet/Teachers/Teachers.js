@@ -93,6 +93,10 @@ const Teachers = () => {
         element={<NewTeacher fetchTeachers={fetchTeachers} />}
       />
       <Route
+        path={routes.EDIT}
+        element={<NewTeacher fetchTeachers={fetchTeachers} />}
+      />
+      <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.TEACHERS} replace />}
       />
