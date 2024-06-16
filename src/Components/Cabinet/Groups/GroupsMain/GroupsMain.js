@@ -63,6 +63,8 @@ import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
+import { useSelector } from "react-redux";
+import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -106,7 +108,7 @@ NumericFormatCustom.propTypes = {
 };
 
 const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
-  const { allCourseNames } = useCourses();
+  const allCourseNames = useSelector(selectAllCourseNames);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
@@ -194,6 +196,13 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     setFilteredGroups(filtered);
   };
 
+  const handleCoursesSelectFilter = (selectedCourseNames) => {
+    const filtered = groups.filter((group) =>
+      selectedCourseNames.includes(group.course.name)
+    );
+    setFilteredGroups(filtered);
+  };
+
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
   };
@@ -211,12 +220,15 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     () => {
       if (groupSearch !== "") {
         handleGroupSearchFilter(groupSearch);
+      } // Apply course names filter if there are selected courses
+      if (selectedCourses.length > 0) {
+        handleCoursesSelectFilter(selectedCourses);
       } else {
         setFilteredGroups(groups);
       }
     },
     1000,
-    [groupSearch, groups]
+    [groupSearch, selectedCourses, groups]
   );
 
   useEffect(() => {
