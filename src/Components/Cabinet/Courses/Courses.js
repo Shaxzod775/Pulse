@@ -77,15 +77,6 @@ const Courses = () => {
   const [open, setOpen] = useState(false);
   const courses = useSelector(selectAllCourses);
 
-  const dispatch = useDispatch();
-  const coursesStatus = useSelector(selectCoursesStatus);
-
-  useEffect(() => {
-    if (coursesStatus === "idle") {
-      dispatch(fetchCourses());
-    }
-  }, [coursesStatus, dispatch]);
-
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -131,14 +122,6 @@ const Courses = () => {
             </ButtonStyled>
           </div>
         </div>
-        {/* <Paper
-          sx={{
-            borderRadius: "20px",
-            height: "90%",
-            padding: "32px",
-            boxShadow: "none",
-          }}
-        > */}
         <div
           style={{
             flexGrow: "1",
@@ -161,7 +144,6 @@ const Courses = () => {
             ))}
           </Grid>
         </div>
-        {/* </Paper> */}
       </Main>
 
       <NewCourseDialog open={open} handleClose={handleClose} />

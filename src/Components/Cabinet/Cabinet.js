@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import * as routes from "../../Constants/routes";
 import Sidebar from "./Sidebar/Sidebar";
@@ -25,8 +25,18 @@ import Students from "./Students/Students";
 import { theme } from "./CabinetStyles";
 import Leads from "./Leads/Leads";
 import { CoursesProvider } from "../../contexts/Courses.context";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses, selectCoursesStatus } from "../../Slices/coursesSlice";
 
 const Cabinet = () => {
+  const dispatch = useDispatch();
+  const coursesStatus = useSelector(selectCoursesStatus);
+
+  useEffect(() => {
+    if (coursesStatus === "idle") {
+      dispatch(fetchCourses());
+    }
+  }, [coursesStatus, dispatch]);
   return (
     <>
       <div className={styles["cabinet"]}>

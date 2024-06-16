@@ -102,5 +102,14 @@ export const selectAllCourses = (state) => state.courses.courses;
 export const selectCourseById = (courseId) => (state) =>
   state.courses.courses.find((course) => course.id === courseId);
 export const selectCoursesStatus = (state) => state.courses.status;
+export const selectCoursesIdName = (state) =>
+  state.courses.courses.map((course) => ({
+    id: course.id,
+    name: course.name,
+  }));
+export const selectAllCourseNames = (state) =>
+  state.courses.courses.map((course) => course.name);
+export const selectCourseByName = (courseName) => (state) =>
+  state.courses.courses.find((course) => course.name === courseName);
 
 export default coursesSlice.reducer;

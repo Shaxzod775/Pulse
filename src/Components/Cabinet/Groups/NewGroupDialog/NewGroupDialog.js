@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -35,7 +35,10 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
-import { calculateMonthDifference } from "../../../../helpers/helpers";
+import {
+  calculateMonthDifference,
+  createEventWithValue,
+} from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -45,33 +48,12 @@ import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 
 import api from "../../../../Core/api";
-
-const rainbowCycle = keyframes`
-  0% {
-    border-color: hsl(0, 100%, 50%); /* Red */
-  }
-  14% {
-    border-color: hsl(40, 100%, 50%); /* Orange */
-  }
-  28% {
-    border-color: hsl(80, 100%, 50%); /* Yellow */
-  }
-  42% {
-    border-color: hsl(120, 100%, 50%); /* Green */
-  }
-  57% {
-    border-color: hsl(180, 100%, 50%); /* Cyan */
-  }
-  71% {
-    border-color: hsl(240, 100%, 50%); /* Blue */
-  }
-  85% {
-    border-color: hsl(300, 100%, 50%); /* Magenta */
-  }
-  100% {
-    border-color: hsl(360, 100%, 50%); /* Back to Red */
-  }
-`;
+import { useSelector } from "react-redux";
+import {
+  selectAllCourseNames,
+  selectCourseByName,
+  selectCoursesIdName,
+} from "../../../../Slices/coursesSlice";
 
 const timeInputStyles = {
   "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -102,16 +84,6 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   textTransform: "none",
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
-}));
-
-const FormLabel = styled(Typography)(({ theme }) => ({
-  padding: "0",
-  color: theme.typography.color.darkBlue,
-  fontSize: theme.typography.fontSize.xs,
-  lineHeight: "normal",
-  paddingBottom: "12px",
-  letterSpacing: "0.32px",
-  fontWeight: "600",
 }));
 
 const SquareContainer = styled("div")(
@@ -188,16 +160,12 @@ function TagCheckbox({
   );
 }
 
-const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
 const NewGroupDialog = ({
   open,
   handleAddGroup,
   handleClose,
   ...otherProps
 }) => {
-  const { courses, findCourseByName, allCourseNames } = useCourses();
-
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [name, changeName, resetName] = useInput("");
@@ -225,6 +193,10 @@ const NewGroupDialog = ({
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
+  const allCourseNames = useSelector(selectAllCourseNames);
+  const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
+  console.log(selectedCourse);
+
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
     if (acceptedFiles.length > 0) {
@@ -250,16 +222,16 @@ const NewGroupDialog = ({
 
   // Function to handle change in subject selection
   const handleCourseChange = (event, newValue) => {
-    changeSelectedCourseName({ target: { value: newValue } });
-    // Find the selected course by its name
-    const selectedCourse = findCourseByName(newValue);
+    changeSelectedCourseName(createEventWithValue(newValue));
+  };
+  useEffect(() => {
     if (startDate && selectedCourse) {
       // Add the duration as months to the start date to calculate the end date
       const endDate = new Date(startDate);
       endDate.setMonth(startDate.getMonth() + selectedCourse.duration);
       setEndDate(endDate);
     }
-  };
+  }, [selectedCourseName]);
 
   // Function to handle change in teacher selection
   const handleTeacherChange = (event, newValue) => {
@@ -275,9 +247,6 @@ const NewGroupDialog = ({
   const handleStartDateChange = (newStartDate) => {
     if (newStartDate instanceof Date && !isNaN(newStartDate)) {
       setStartDate(newStartDate);
-
-      // Find the selected course by its name
-      const selectedCourse = findCourseByName(selectedCourseName);
       if (selectedCourse) {
         // Add the duration as months to the start date to calculate the end date
         const endDate = new Date(newStartDate);
@@ -382,7 +351,7 @@ const NewGroupDialog = ({
       roomNumber: room,
       courseTime: "14:00",
       classDays: weekDays,
-      courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
+      courseId: selectedCourse.id,
       teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
     };
     console.log(groupData);
