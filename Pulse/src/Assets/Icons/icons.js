@@ -87,8 +87,11 @@ import { ReactComponent as TelegramLogo } from "./svgs/telegramLogo.svg";
 import { ReactComponent as WhatsappLogo } from "./svgs/whatsappLogo.svg";
 import { ReactComponent as InstagramLogo } from "./svgs/instagramLogo.svg";
 import { ReactComponent as ListIcon } from "./svgs/listIcon.svg";
+import { ReactComponent as Add } from "./svgs/add.svg";
+import { ReactComponent as PLayMaterial } from "./svgs/playMaterial.svg";
 
 export const Icons = {
+  Add,
   ArrowD,
   ArrowDBold,
   ArrowUBold,
@@ -178,4 +181,5 @@ export const Icons = {
   WhatsappLogo,
   InstagramLogo,
   ListIcon,
+  PLayMaterial,
 };

@@ -226,6 +226,8 @@ const GroupProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [group, setGroup] = useState(null);
+  const [material, setMaterial] = useState([{name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}]);
+  const [discPrice, setDiscPrice] = useState([{fullname: "Usmonov Shaxzod Dilshodovich", phoneNumber: "+998900331533", reason: "Выйграл конкурсе"}, {fullname: "Anita Choy Chombitovna", phoneNumber: "+998900331533", reason: "Выйграл конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}]);
 
   const [activeTab, setActiveTab] = useState(0);
   const [selectedGroup, changeSelectedGroup] = useInput("0");
@@ -447,6 +449,195 @@ const GroupProfile = () => {
     );
   }, [group]);
 
+  const materials = useMemo(() => {
+    if (!group) {
+      return "Loading...";
+    }
+    return (
+      <Box
+        className="flex flex-col"
+        rowGap="16px"
+        height="auto"
+        overflowX="hidden"
+        overflowY="scroll"
+      >
+        {/* <Box className="flex items-center justify-center align-center" sx={{ border:"1px solid #6574D8", borderRadius:"10px", marginBottom:"7px", "&:hover": { cursor: "pointer" }}}>
+          <Box display="flex" columnGap="14px">
+            <Box className="flex items-center" columnGap="10px" padding="10px">
+              <Icons.Add />
+              <TypographyStyled
+                fontSize="1rem"
+                fontWeight="500"
+              >
+                Добавить Материал
+              </TypographyStyled>
+            </Box>
+          </Box>
+        </Box> */}
+        <Box className="flex flex-col"
+          rowGap="10px"
+          height="auto"
+          sx={{ maxHeight:"59vh", height:"auto", overflowY: "scroll", overflowX: "hidden" }}>
+                  <ButtonStyled variant="container"
+                        sx={{
+                          backgroundColor:"white",
+                          border:"1px solid #6574D8",
+                          minWidth: "unset",
+                          fontSize: "1.125rem",
+                          lineHeight: "150%",
+                          paddingX: "24px",
+                          paddingY: "10px",
+                          borderRadius: "10px",
+                          gap:"10px",
+                          marginLeft:"15px",
+                          marginRight:"25px",
+                          }}>
+          <Icons.Add />
+          <Typography fontSize="1rem" fontWeight="500">
+            Добавить Материал
+          </Typography>
+        </ButtonStyled>
+          {material.map((item, index) => (
+            <Box className="flex flex-col justify-between" key={index} sx={{ backgroundColor:"#F9FAFB", rowGap:"7px", paddingY:"20px", paddingX:"18px", marginX:"15px"}}>
+              <Box className="flex flex-row justify-between">
+                <Typography fontWeight="700" fontSize="14px">
+                  {item.name}
+                </Typography>
+                <Typography>
+                  {item.uploadDate.time} / {item.uploadDate.date}
+                </Typography>
+              </Box>
+              <Box className="flex flex-row items-center justify-between" sx={{ alignItems:"flex-end" }}>
+                <Box className="flex items-center" gap="5px">
+                  <Icons.PLayMaterial width="32px" height="32px" />
+                  <Typography fontSize="14px">
+                    {item.file}
+                  </Typography>
+                </Box>
+              <ButtonStyled className="flex items-center"
+                      variant="container"
+                        sx={{
+                          backgroundColor:"#8E99DE",
+                          color: "white",
+                          minWidth: "unset",
+                          fontSize: "1.125rem",
+                          lineHeight: "150%",
+                          paddingX: "24px",
+                          paddingY: "10px",
+                          borderRadius: "10px",
+                          "&:hover": {
+                            color: "#8E99DE",
+                            },
+                          }} >
+                <Typography fontSize="18px">
+                  Скачать Материал
+                </Typography>
+              </ButtonStyled>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+      );
+    }, [group]);
+
+ const discountPrice = useMemo(() => {
+  const formatUzbekPhoneNumber = (phoneNumber) => {
+      
+    const countryCode = phoneNumber.slice(0, 4); 
+    const operatorCode = phoneNumber.slice(4, 6); 
+    const firstPart = phoneNumber.slice(6, 9); 
+    const secondPart = phoneNumber.slice(9, 11); 
+    const thirdPart = phoneNumber.slice(11, 13); 
+
+    return `${countryCode} (${operatorCode}) ${firstPart}-${secondPart}-${thirdPart}`;
+  }
+
+
+    if (!group) {
+      return "Loading...";
+    }
+    return (
+      <Box className="flex flex-col justify-center"
+        marginTop="15px"
+        marginRight="35px"
+        owGap="16px"
+        maxHeight="75vh"
+        height="auto"
+        overflow="hidden">
+        <Box className="flex flex-row justify-between" sx={{ paddingY:"8px", paddingRight:"104px", paddingLeft:"51px", 
+                        backgroundColor:"#F9F9F9", borderRadius:"29px", fontWeight:"700", fontSize:"14px", color:"#7D8594" }}>
+          <Typography>
+            ФИО
+          </Typography>
+            <Box className="flex flex-row justify-between" width="630px" gap="80px">
+              <Box className="flex" width="130px">
+                <Typography className="flex" alignItems="flex-start">
+                  Телефон
+                </Typography>
+              </Box>
+              <Box className="flex" alignItems="flex-start" width="203px">
+                <Typography alignItems="flex-start">
+                  Цена со скидкой
+                </Typography>
+              </Box>
+              <Box className="flex" alignItems="flex-start" width="120px">
+                <Typography>
+                  Причина
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+        <Box className="flex flex-col"
+          rowGap="10px"
+          height="auto"
+          sx={{ maxHeight:"60vh", height:"auto", overflowY: "scroll", overflowX: "hidden" }}>
+        {discPrice.map((item, index) => (
+          <Box className="flex flex-row items-center justify-between" id={index} sx={{backgroundColor:`${index % 2 !== 0 ? "#F9F9F9" : "white"}`, paddingY:"27px", paddingX:"51px",
+                                                                                 fontSize:"12px", color:"#7D8594", weight:"500" }}>
+            <Typography>
+              {item.fullname}
+            </Typography>
+            <Box className="flex flex-row items-center justify-center align-center" width="650px" position="relative" right="35px">
+              <Box sx={{ position:"absolute", left:"10px" }}>
+                <Typography>
+                  {formatUzbekPhoneNumber(item.phoneNumber)}
+                </Typography>
+              </Box>
+              <Box sx={{ position:"absolute", left:"225px"}}>
+                <ButtonStyled variant="container"
+                        sx={{
+                          border:"1px solid #8E99DE",
+                          backgroundColor:"white",
+                          color: "#8E99DE",
+                          fontSize: "1.125rem",
+                          lineHeight: "150%",
+                          paddingX: "24px",
+                          paddingY: "8px",
+                          borderRadius: "10px",
+                          "&:hover": {
+                            color: "#8E99DE",
+                            },
+                          }}>
+                  <Typography>
+                    Добавить скидку
+                  </Typography>
+                </ButtonStyled>
+              </Box>
+              <Box sx={{ width:"auto", position:"absolute", display:"flex", alignItems:"center", justifyContent:"center", width:"auto", left:"520px" }}>
+                <Typography>
+                  {item.reason}
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+        ))}
+      </Box>
+    </Box>
+    )
+  }
+);
+
   const groupsContent = useMemo(
     () => <div className="flex flex-wrap gap-lg"></div>,
     []
@@ -454,7 +645,7 @@ const GroupProfile = () => {
 
   const emptyElement = <></>;
   const tabContents = useMemo(
-    () => [attendanceContent, groupsContent, emptyElement, emptyElement],
+    () => [attendanceContent, materials, discountPrice, groupsContent, emptyElement, emptyElement],
     [attendanceContent]
   );
 
