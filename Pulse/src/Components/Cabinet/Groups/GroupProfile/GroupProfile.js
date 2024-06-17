@@ -461,42 +461,30 @@ const GroupProfile = () => {
         overflowX="hidden"
         overflowY="scroll"
       >
-        {/* <Box className="flex items-center justify-center align-center" sx={{ border:"1px solid #6574D8", borderRadius:"10px", marginBottom:"7px", "&:hover": { cursor: "pointer" }}}>
-          <Box display="flex" columnGap="14px">
-            <Box className="flex items-center" columnGap="10px" padding="10px">
-              <Icons.Add />
-              <TypographyStyled
-                fontSize="1rem"
-                fontWeight="500"
-              >
-                Добавить Материал
-              </TypographyStyled>
-            </Box>
-          </Box>
-        </Box> */}
+        <ButtonStyled variant="container"
+                          sx={{
+                            backgroundColor:"white",
+                            border:"1px solid #6574D8",
+                            minWidth: "unset",
+                            fontSize: "1.125rem",
+                            lineHeight: "150%",
+                            paddingX: "24px",
+                            paddingY: "10px",
+                            borderRadius: "10px",
+                            gap:"10px",
+                            marginLeft:"15px",
+                            marginRight:"25px",
+                            }}>
+            <Icons.Add />
+            <Typography fontSize="1rem" fontWeight="500">
+              Добавить Материал
+            </Typography>
+          </ButtonStyled>
         <Box className="flex flex-col"
           rowGap="10px"
           height="auto"
-          sx={{ maxHeight:"59vh", height:"auto", overflowY: "scroll", overflowX: "hidden" }}>
-                  <ButtonStyled variant="container"
-                        sx={{
-                          backgroundColor:"white",
-                          border:"1px solid #6574D8",
-                          minWidth: "unset",
-                          fontSize: "1.125rem",
-                          lineHeight: "150%",
-                          paddingX: "24px",
-                          paddingY: "10px",
-                          borderRadius: "10px",
-                          gap:"10px",
-                          marginLeft:"15px",
-                          marginRight:"25px",
-                          }}>
-          <Icons.Add />
-          <Typography fontSize="1rem" fontWeight="500">
-            Добавить Материал
-          </Typography>
-        </ButtonStyled>
+          sx={{ maxHeight:"52vh", height:"auto", overflowY: "scroll", overflowX: "hidden" }}>
+
           {material.map((item, index) => (
             <Box className="flex flex-col justify-between" key={index} sx={{ backgroundColor:"#F9FAFB", rowGap:"7px", paddingY:"20px", paddingX:"18px", marginX:"15px"}}>
               <Box className="flex flex-row justify-between">
