@@ -1,121 +1,129 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Icons } from "../../../../Assets/Icons/icons";
-import { MenuItem } from "@mui/material";
-import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
 import { weekDaysText } from "../../../../Constants/dateLocales";
 import { format } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
-import styles from './GroupsList.module.css'
+import {
+  Box,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
 
-const GroupsList = ({ groupsList }) => {
+const GroupsList = ({
+  keyId,
+  id,
+  name,
+  startDate,
+  endDate,
+  course,
+  classDays,
+  duration,
+  courseTime,
+  roomNumber,
+  teacher,
+  handleDeleteGroup,
+  selectedGroupIds,
+  handleSelectGroup,
+}) => {
     const [anchorThreeDots, setAnchorThreeDots] = useState(null);
     const threeDotsMenuOpen = Boolean(anchorThreeDots);
-    const [checked, setChecked] = useState(false);
 
+    const calculateLessonCount = (startDate, endDate, classDaysPerWeek) => {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
 
-    const handleClickThreeDots = (event) => {
-    setAnchorThreeDots(event.currentTarget);
-    };
+      const differenceInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+      const lessonsPerWeek = classDaysPerWeek.length;
+
+      const totalLessons = Math.floor(differenceInDays / 7) * lessonsPerWeek;
+
+      const remainingDays = differenceInDays % 7;
+      for (let i = 0; i < remainingDays; i++) {
+          const currentDay = (start.getDay() + i) % 7;
+          if (classDaysPerWeek.includes(currentDay)) {
+              totalLessons++;
+          }
+      }
+
+      return totalLessons;
+  };
+
 
     const handleCloseThreeDotsMenu = () => {
-    setAnchorThreeDots(null);
+      setAnchorThreeDots(null);
     };
 
 
-    const handleChangeCheckBox = (event) => {
-        setChecked(event.target.checked);
+    const handleOpenThreeDotsMenu = (event) => {
+      setAnchorThreeDots(event.currentTarget);
     };
-
-        const calculateLessonCount = (startDate, endDate, classDaysPerWeek) => {
-          const start = new Date(startDate);
-          const end = new Date(endDate);
-  
-          const differenceInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-  
-          const lessonsPerWeek = classDaysPerWeek.length;
-  
-          const totalLessons = Math.floor(differenceInDays / 7) * lessonsPerWeek;
-  
-          const remainingDays = differenceInDays % 7;
-          for (let i = 0; i < remainingDays; i++) {
-              const currentDay = (start.getDay() + i) % 7;
-              if (classDaysPerWeek.includes(currentDay)) {
-                  totalLessons++;
-              }
-          }
-  
-          return totalLessons;
-      };
-
-
 
     return (
-        <div className={styles["list-container"]}>
-        <div className={styles["headers"]}>
-          <div className={styles["headers-fullname-container"]}>
-            <input type='checkbox' checked={checked} onChange={handleChangeCheckBox} />
-            <h2 className={styles["headers-fullname"]}>Название группы</h2>
-          </div>
-          <div className={styles["otherHeaders-container"]}>
-            <h2 className={styles["header-startDate"]}>Дата начала</h2>
-            <h2 className={styles["header-endDate"]}>Дата завершения</h2>
-            <h2 className={styles["header-classDays"]}>Дни урока</h2>
-            <h2 className={styles["header-teacher"]}>Учитель</h2>
-            <h2 className={styles["header-duration"]}>Продолжительность</h2>
-            <h2 className={styles["header-roomNumber"]}>Кабинет</h2>
-            <h2 className={styles["header-studentsNumber"]}>Учеников</h2>
-          </div>
-        </div>
-          <div className={styles["groups-list"]}>
-            <div className={"list-wrapper"}>
-              {groupsList.map((group, index) => (
-              <div key={index} className={`${styles.item} ${index % 2 !== 0 ? 'grey-background' : ''}`}>
-                <div className={styles["groupName-container"]}>
-                  <input type='checkbox' />
-                  <p className={styles["groupName"]}>{`${group.name !== "" ? group.name : "GR000-00"} `}</p>
-                </div>
-                <div className={styles["otherInfo-container"]}>
-                  <p className={styles["startDate"]}>{format(new Date(group.startDate), "dd.MM.yyyy")}</p>
-                  <p className={styles["endDate"]}>{format(new Date(group.endDate), "dd.MM.yyyy")}</p>
-                  <p className={styles["classDays"]}>{group.classDays.map((weekDay, i) =>`${weekDaysText[weekDay]}${i < group.classDays.length - 1 ? ", " : ""}`)}</p>                              
-                  <p className={styles["teacher"]}>{group.teacher.firstName} {group.teacher.lastName}</p>
-                  <p className={styles["duration"]}>{group.course.duration}{" "}{getRussianWord(group.duration, "месяц", "месяца", "месяцев")} / {calculateLessonCount(group.startDate, group.endDate, group.classDays)} уроков</p>
-                  <p className={styles["roomNumber"]}>{group.roomNumber} кабинет</p>
-                  <p className={styles["studentsNumber"]}>10 {getRussianWord(10, "ученик", "ученика", "учеников")}</p>
-                  <ButtonStyled
-                    onClick={handleClickThreeDots}
-                    variant="outlined"
-                    color="purpleBlue"
-                    sx={{ minWidth: "0", position: 'absolute', left: '1465px', width: '30px' }}
-                   >
-                    <Icons.MenuDots />
-                    </ButtonStyled>
-                    <MenuStyled
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                        "aria-labelledby": "demo-customized-button",
-                        }}
-                        anchorEl={anchorThreeDots}
-                        open={threeDotsMenuOpen}
-                        onClose={handleCloseThreeDotsMenu}
-                    >
-                    <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
-                        <ButtonStyled color="error">
-                            <Icons.TrashCan />
-                            <span>Удалить ученика</span>
-                        </ButtonStyled>
-                        </MenuItem>
-                        <MenuItem
-                        onClick={handleCloseThreeDotsMenu}
-                        disableRipple
-                        ></MenuItem>
-                    </MenuStyled>
-                </div>
-              </div>
-            ))}
-            </div>
-          </div>
-      </div>
+      <Box className="flex flex-row items-center text-center justify-between" sx={{ height: "75px" , backgroundColor:`${keyId % 2 !== 0 ? "#F9F9F9" : "white"}`,
+                 marginLeft:"25px", marginRight:"45px", fontWeight:"500", fontSize:"10px", textAlign:"center", color:"#7D8594", opacity:"0.7" }}>
+        <Box className="flex flex-row" marginLeft="45px" position="relative" id={id} >
+          <CustomCheckbox checked={selectedGroupIds.includes(id)} onChange={() => handleSelectGroup(id)}/>
+          <Typography>
+            {name}
+          </Typography>
+        </Box>
+        <Box className="flex flex-row items-center align-center" postition="absolute">
+          <Typography position="absolute" left="465px" >
+              {format(new Date(startDate), "dd.MM.yyyy")}
+          </Typography>
+          <Typography position="absolute" left="595px">
+              {format(new Date(endDate), "dd.MM.yyyy")}
+          </Typography>
+          <Typography position="absolute" left="760px">
+            {classDays.map((weekDay, i) =>`${weekDaysText[weekDay]}${i < classDays.length - 1 ? ", " : ""}`)}
+          </Typography>
+          <Typography position="absolute" left="875px">
+             {teacher.firstName} {teacher.lastName}
+          </Typography>
+          <Typography position="absolute" left="1000px">
+            {course.duration}{" "}{getRussianWord(course.duration, "месяц", "месяца", "месяцев")} / {calculateLessonCount(startDate, endDate, classDays)} уроков
+          </Typography>
+          <Typography position="absolute" left="1194px">
+            {roomNumber} кабинет
+          </Typography>
+          <Typography position="absolute" left="1325px">
+            10 {getRussianWord(10, "ученик", "ученика", "учеников")}
+          </Typography>
+          <ButtonStyled className="flex justify-center items-center" variant="contained" 
+                        sx={{ width:"20px", height:"20px", backgroundColor: "white", 
+                        color:"#6574D8" , position:"absolute", left:"1395px", border:"1px solid #6574D8", borderRadius:"5px",
+                        "&:hover": {
+                          backgroundColor: "white",
+                        }}} 
+                        onClick={handleOpenThreeDotsMenu}>
+            <Box className="flex items-center">
+              <Icons.ThreeDotsHor />
+            </Box>
+          </ButtonStyled>
+          <MenuStyled
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorThreeDots}
+                open={threeDotsMenuOpen}
+                onClose={handleCloseThreeDotsMenu}
+              >
+                <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
+                  <ButtonStyled color="error" onClick={() => handleDeleteGroup(id)}>
+                    <Icons.TrashCan />
+                    <span>Удалить группу</span>
+                  </ButtonStyled>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseThreeDotsMenu}
+                  disableRipple
+                ></MenuItem>
+              </MenuStyled> 
+        </Box>
+      </Box>
     )
 }
 

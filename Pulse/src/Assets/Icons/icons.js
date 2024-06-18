@@ -89,6 +89,9 @@ import { ReactComponent as InstagramLogo } from "./svgs/instagramLogo.svg";
 import { ReactComponent as ListIcon } from "./svgs/listIcon.svg";
 import { ReactComponent as Add } from "./svgs/add.svg";
 import { ReactComponent as PLayMaterial } from "./svgs/playMaterial.svg";
+import { ReactComponent as List } from "./svgs/list.svg";
+import { ReactComponent as ListSelected } from "./svgs/listSelected.svg";
+import { ReactComponent as ThreeDotsHor } from "./svgs/threeDotsHor.svg";
 
 export const Icons = {
   Add,
@@ -182,4 +185,7 @@ export const Icons = {
   InstagramLogo,
   ListIcon,
   PLayMaterial,
+  List,
+  ListSelected,
+  ThreeDotsHor,
 };

@@ -1,119 +1,109 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Icons } from "../../../../Assets/Icons/icons";
-import { MenuItem } from "@mui/material";
-import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { weekDaysText } from "../../../../Constants/dateLocales";
-import { format } from "date-fns";
-import { getRussianWord } from "../../../../helpers/helpers";
-import styles from './TeachersList.module.css'
+import {
+  Box,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
 
-const TeachersList = ({ teachersList, handleDeleteTeacher }) => {
+const TeachersList = ({
+  keyId,
+  id,
+  firstName,
+  lastName,
+  phoneNumber,
+  gender,
+  handleDeleteTeacher,
+  secondPhoneNumber,
+  selectedTeacherIds,
+  handleSelectTeacher,
+}) => {
     const [anchorThreeDots, setAnchorThreeDots] = useState(null);
     const threeDotsMenuOpen = Boolean(anchorThreeDots);
-    const [checked, setChecked] = useState(false);
-
-        
-    const formatUzbekPhoneNumber = (phoneNumber) => {
-      
-        const countryCode = phoneNumber.slice(0, 4); 
-        const operatorCode = phoneNumber.slice(4, 6); 
-        const firstPart = phoneNumber.slice(6, 9); 
-        const secondPart = phoneNumber.slice(9, 11); 
-        const thirdPart = phoneNumber.slice(11, 13); 
-  
-        return `${countryCode} (${operatorCode}) ${firstPart}-${secondPart}-${thirdPart}`;
-      }
-
-
-    const handleClickThreeDots = (event) => {
-    setAnchorThreeDots(event.currentTarget);
-    };
 
     const handleCloseThreeDotsMenu = () => {
-    setAnchorThreeDots(null);
+      setAnchorThreeDots(null);
     };
 
 
-    const handleChangeCheckBox = (event) => {
-        setChecked(event.target.checked);
+    const handleOpenThreeDotsMenu = (event) => {
+      setAnchorThreeDots(event.currentTarget);
     };
 
-    useEffect(() => {
-      console.log(teachersList)
-    }, [])
-    // id,
-    // firstName,
-    // lastName,
-    // phoneNumber,
-    // gender,
-    // secondPhoneNumber,
-    // handleDeleteTeacher,
+    const formatUzbekPhoneNumber = (phoneNumber) => {
+      
+      const countryCode = phoneNumber.slice(0, 4); 
+      const operatorCode = phoneNumber.slice(4, 6); 
+      const firstPart = phoneNumber.slice(6, 9); 
+      const secondPart = phoneNumber.slice(9, 11); 
+      const thirdPart = phoneNumber.slice(11, 13); 
+
+      return `${countryCode} (${operatorCode}) ${firstPart}-${secondPart}-${thirdPart}`;
+    }
+
 
     return (
-        <div className={styles["list-container"]}>
-        <div className={styles["headers"]}>
-          <div className={styles["headers-fullname-container"]}>
-            <input type='checkbox' checked={checked} onChange={handleChangeCheckBox} />
-            <h2 className={styles["headers-fullname"]}>ФИО</h2>
-          </div>
-          <div className={styles["otherHeaders-container"]}>
-            <h2 className={styles["header-specialization"]}>Направление</h2>
-            <h2 className={styles["header-NumberOfGroups"]}>Количество групп</h2>
-            <h2 className={styles["header-phoneNumber"]}>Номер</h2>
-            <h2 className={styles["header-studentsNumber"]}>Учеников всего</h2>
-            <h2 className={styles["header-hiredDate"]}>Дата трудоустройства</h2>
-            <h2 className={styles["header-branch"]}>Филиал</h2>
-          </div>
-        </div>
-          <div className={styles["teachers-list"]}>
-            <div className={"list-wrapper"}>
-              {teachersList.map((teacher, index) => (
-              <div key={index} className={`${styles.item} ${index % 2 !== 0 ? 'grey-background' : ''}`}>
-                <div className={styles["fullname-container"]}>
-                  <input type='checkbox' />
-                  <p className={styles["fullname"]}>{`${teacher.firstName !== "" ? teacher.lastName : "GR000-00"} `}</p>
-                </div>
-                <div className={styles["otherInfo-container"]}>
-                  <p className={styles["specialization"]}>Frontend, UX/UI</p>
-                  <p className={styles["NumberOfGroups"]}>6</p>
-                  <p className={styles["phoneNumber"]}>{formatUzbekPhoneNumber(teacher.phoneNumber)}</p>                              
-                  <p className={styles["studentsNumber"]}>333</p>
-                  <p className={styles["hiredDate"]}>22.02.2024</p>
-                  <p className={styles["branch"]}>IT Park Tashkent</p>
-                  <ButtonStyled
-                    onClick={handleClickThreeDots}
-                    variant="outlined"
-                    color="purpleBlue"
-                    sx={{ minWidth: "0", position: 'absolute', left: '1465px', width: '30px' }}
-                   >
-                    <Icons.MenuDots />
-                    </ButtonStyled>
-                    <MenuStyled
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                        "aria-labelledby": "demo-customized-button",
-                        }}
-                        anchorEl={anchorThreeDots}
-                        open={threeDotsMenuOpen}
-                        onClose={handleCloseThreeDotsMenu}
-                    >
-                    <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
-                        <ButtonStyled color="error"  onClick={() => handleDeleteTeacher(teacher.id)}>
-                            <Icons.TrashCan />
-                            <span>Удалить ученика</span>
-                        </ButtonStyled>
-                        </MenuItem>
-                        <MenuItem
-                        onClick={handleCloseThreeDotsMenu}
-                        disableRipple
-                        ></MenuItem>
-                    </MenuStyled>
-                </div>
-              </div>
-            ))}
-            </div>
-          </div>
-      </div>
+      <Box className="flex flex-row items-center text-center justify-between" sx={{ height: "75px" , backgroundColor:`${keyId % 2 !== 0 ? "#F9F9F9" : "white"}`,
+                 marginLeft:"25px", marginRight:"45px", fontWeight:"500", fontSize:"10px", textAlign:"center", color:"#7D8594", opacity:"0.7" }}>
+        <Box className="flex flex-row" marginLeft="45px" position="relative" id={id} >
+          <CustomCheckbox checked={selectedTeacherIds.includes(id)} onChange={() => handleSelectTeacher(id)}/>
+          <Typography>
+            {firstName} {lastName}
+          </Typography>
+        </Box>
+        <Box className="flex flex-row items-center align-center" postition="absolute">
+          <Typography position="absolute" left="542px" >
+              Frontend, UX/UI
+          </Typography>
+          <Typography position="absolute" left="685px">
+              6
+          </Typography>
+          <Typography position="absolute" left="835px">
+              {formatUzbekPhoneNumber(phoneNumber)}
+          </Typography>
+          <Typography position="absolute" left="1000px">
+              333
+          </Typography>
+          <Typography position="absolute" left="1132px">
+              28.02.2024
+          </Typography>
+          <Typography position="absolute" left="1300px">
+              IT Park Tashkent
+          </Typography>
+          <ButtonStyled className="flex justify-center items-center" variant="contained" 
+                        sx={{ width:"20px", height:"20px", backgroundColor: "white", 
+                        color:"#6574D8" , position:"absolute", left:"1405px", border:"1px solid #6574D8", borderRadius:"5px",
+                        "&:hover": {
+                          backgroundColor: "white",
+                        }}} 
+                        onClick={handleOpenThreeDotsMenu}>
+            <Box className="flex items-center">
+              <Icons.ThreeDotsHor />
+            </Box>
+          </ButtonStyled>
+          <MenuStyled
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorThreeDots}
+                open={threeDotsMenuOpen}
+                onClose={handleCloseThreeDotsMenu}
+              >
+                <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
+                  <ButtonStyled color="error" onClick={() => handleDeleteTeacher(id)}>
+                    <Icons.TrashCan />
+                    <span>Удалить учителя</span>
+                  </ButtonStyled>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseThreeDotsMenu}
+                  disableRipple
+                ></MenuItem>
+              </MenuStyled> 
+        </Box>
+      </Box>
     )
 }
 

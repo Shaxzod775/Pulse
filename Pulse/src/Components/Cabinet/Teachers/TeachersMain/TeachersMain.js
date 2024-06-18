@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Grid,
   IconButton,
   InputBase,
@@ -10,6 +11,7 @@ import {
   Paper,
   Select,
   styled,
+  Typography,
 } from "@mui/material";
 import {
   theme,
@@ -21,6 +23,7 @@ import {
   selectStylesV2,
   customMenuProps,
   CustomCheckbox,
+  TypographyStyled,
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -112,6 +115,39 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
   const [selectedTeacherStatuses, setSelectedTeacherStatuses] = useState(["0"]);
 
   const [selectedCourses, setSelectedCourses] = useState(["0"]);
+
+  const [selectedTeacherIds, setSelectedTeacherIds] = useState([]);
+
+  const [anchorThreeDots, setAnchorThreeDots] = useState(null);
+  const threeDotsMenuOpen = Boolean(anchorThreeDots);
+
+  const handleSelectTeacher = (id) => {
+    setSelectedTeacherIds((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((teacherId) => teacherId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+
+  const handleSelectAllTeachers = (selectAll) => {
+    if (selectAll) {
+      setSelectedTeacherIds(filteredTeachers.map((teacher) => teacher.id));
+    } else {
+      setSelectedTeacherIds([]);
+    }
+  };
+
+  const handleDeleteSelectedTeachers = (allTeachersIDs) => {
+    if (allTeachersIDs.length > 0) {
+      selectedTeacherIds.map((teacherID) => (handleDeleteTeacher(teacherID)))
+    }
+    else {
+      console.log("Выберите учеников для удаления")
+    }
+  }
+
+  const areAllTeachersSelected = filteredTeachers.length > 0 && selectedTeacherIds.length === filteredTeachers.length;
 
   const handleClearFilters = () => {
     resetTeacherSearch();
@@ -265,32 +301,77 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           </div>
 
           <div className="flex items-center gap-sm">
-            <ButtonStyled onClick={() => setIsGrid(!isGrid)} variant="contained" sx={{
-                          color: 'white', 
-                          backgroundColor: 'white', 
-                          '&:hover': {
-                            backgroundColor: 'white', 
-                            }
-                          }}>
-              <div className="flex items-center gap-x3s">
-                <Icons.ListIcon />
-              </div>
-            </ButtonStyled>
-            <Link
-              to={routes.CABINET + routes.TEACHERS + routes.NEW}
-              className="link"
-            >
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                // onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-x3s">
-                  <Icons.UserAdd />
-                  <span>Добавить учителя</span>
-                </div>
-              </ButtonStyled>
-            </Link>
+            {selectedTeacherIds.length <= 0 ? (
+                <>
+                  <ButtonStyled
+                    onClick={() => setIsGrid(!isGrid)}
+                    variant="contained"
+                    sx={{
+                      color: 'white',
+                      backgroundColor: 'white',
+                      '&:hover': {
+                        backgroundColor: 'white',
+                      },
+                    }}
+                  >
+                    <div className="flex items-center gap-x3s">
+                      {isGrid ? <Icons.ListIcon /> : <Icons.List />}
+                    </div>
+                  </ButtonStyled>
+                  <Link to={`${routes.CABINET}${routes.TEACHERS}${routes.NEW}`}>
+                    <ButtonStyled variant="contained" color="purpleBlue">
+                      <div className="flex items-center gap-x3s">
+                        <Icons.UserAdd />
+                        <span>Добавить учителя</span>
+                      </div>
+                    </ButtonStyled>
+                  </Link>
+                </>
+              ) : (
+                <Box className="flex flex-row items-center" gap="25px">
+                  <Box className="flex flex-row" gap="5px">
+                    <Icons.ListSelected />
+                    <TypographyStyled sx={{ color: "#6574D8", fontSize: "14px"}}>
+                      Выбрано {selectedTeacherIds.length}
+                    </TypographyStyled>
+                  </Box>
+                  <Box className="flex flex-row items-center" gap="5px" >
+                    <ButtonStyled
+                      variant="contained"
+                      onClick={() => setSelectedTeacherIds([])}
+                      sx={{
+                        color: '#6574D8',
+                        border: '1px solid #6574D8',
+                        backgroundColor: 'white',
+                        width:"100px",
+                        paddingX:"20px",
+                        paddingY:"10px",
+                        fontSize:"14px",
+                        '&:hover': {
+                          backgroundColor: 'white',
+                        },
+                      }}>
+                      Отменить
+                    </ButtonStyled>
+                    <ButtonStyled
+                      variant="contained"
+                      sx={{
+                        color: 'white',
+                        backgroundColor: '#6574D8',
+                        width:"100px",
+                        paddingX:"20px",
+                        paddingY:"10px",
+                        fontSize:"14px",
+                        '&:hover': {
+                          backgroundColor: '#6574D8',
+                        },
+                      }}
+                      onClick={() => handleDeleteSelectedTeachers(selectedTeacherIds)}>
+                      Удалить
+                    </ButtonStyled>
+                  </Box>
+                </Box>
+              )}
           </div>
         </div>
         <div
@@ -317,15 +398,53 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               </Grid>
             ))}
           </Grid>
-        : <TeachersList teachersList={teachers} handleDeleteTeacher={handleDeleteTeacher} />}
+        : <Box className="flex flex-col" backgroundColor="white"  border="1px solid #E5E7EB" borderRadius="20px" paddingX="30px" >
+              <Box className="flex flew-row justify-between" sx={{ paddingY:"15px", paddingRight:"34px", paddingLeft:"51px", background:"#F9F9F9", borderRadius:"29px",
+                          marginRight:"60px", marginLeft:"20px", marginTop:"40px", fontFamily: "Poppins", fontStyle: "normal",fontWeight: "600", fontSize: "12px", textAlign:  "center", color: "#7D8594" }}>
+                <Box className="flex flex-row justify-between items-center" position="relative"  >
+                  <CustomCheckbox checked={areAllTeachersSelected} onChange={(e) => handleSelectAllTeachers(e.target.checked)}/>
+                  <Typography>
+                    ФИО
+                  </Typography>
+                </Box>
+                <Box className="flex flex-row items-center" width="100%" position="relative">
+                  <Typography position="absolute" right="810px">
+                    Направление
+                  </Typography>
+                  <Typography position="absolute" right="645px">
+                    Количество групп
+                  </Typography>
+                  <Typography position="absolute" right="555px">
+                    Номер
+                  </Typography>
+                  <Typography position="absolute" right="345px">
+                    Учеников всего
+                  </Typography>
+                  <Typography position="absolute" right="165px">
+                    Дата трудоустройства
+                  </Typography>
+                  <Typography position="absolute" right="85px">
+                    Филиал
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ position:"relative", overflowX:"hidden", overflowY:"scroll", marginBottom:"15px", maxHeight:"65vh" }}>
+              {filteredTeachers.map((teacher, i)  => (
+                <TeachersList
+                  keyId={i}  
+                  {...teacher}
+                  handleDeleteTeacher={handleDeleteTeacher}
+                  selectedTeacherIds={selectedTeacherIds} 
+                  handleSelectTeacher={handleSelectTeacher} 
+                  handleSelectAllTeachers={handleSelectAllTeachers}
+                  areAllTeachersSelected={areAllTeachersSelected} 
+                  />
+              ))}
+              </Box>
+            </Box> 
+            }
         </div>
       </Main>
-
-      {/* <NewCourseDialog
-        open={open}
-        handleClose={handleClose}
-        handleAddCourse={handleAddTeacher}
-      /> */}
     </Root>
   );
 };

@@ -1,16 +1,35 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Icons } from "../../../../Assets/Icons/icons";
-import { MenuItem } from "@mui/material";
-import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
+import {
+  Box,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
 
-import styles from './StudentsList.module.css'
-
-const StudentsList = ({ students, handleDeleteStudent }) => {
+const StudentsList = ({
+  keyId,
+  id,
+  firstName,
+  lastName,
+  phoneNumber,
+  email,
+  handleDeleteStudent,
+  selectedStudentIds,
+  handleSelectStudent, 
+}) => {
     const [anchorThreeDots, setAnchorThreeDots] = useState(null);
     const threeDotsMenuOpen = Boolean(anchorThreeDots);
-    const [checked, setChecked] = useState(false);
 
-    
+    const handleCloseThreeDotsMenu = () => {
+      setAnchorThreeDots(null);
+    };
+
+
+    const handleOpenThreeDotsMenu = (event) => {
+      setAnchorThreeDots(event.currentTarget);
+    };
+
     const formatUzbekPhoneNumber = (phoneNumber) => {
       
       const countryCode = phoneNumber.slice(0, 4); 
@@ -23,83 +42,64 @@ const StudentsList = ({ students, handleDeleteStudent }) => {
     }
 
 
-    const handleClickThreeDots = (event) => {
-    setAnchorThreeDots(event.currentTarget);
-    };
-
-    const handleCloseThreeDotsMenu = () => {
-    setAnchorThreeDots(null);
-    };
-
-
-    const handleChangeCheckBox = (event) => {
-        setChecked(event.target.checked);
-    };
-
-
     return (
-        <div className={styles["list-container"]}>
-        <div className={styles["headers"]}>
-          <div className={styles["headers-fullname-container"]}>
-            <input type='checkbox' checked={checked} onChange={handleChangeCheckBox} />
-            <h2 className={styles["headers-fullname"]}>ФИО</h2>
-          </div>
-          <div className={styles["otherHeaders-container"]}>
-            <h2 className={styles["header-specialization"]}>Направление</h2>
-            <h2 className={styles["header-group"]}>Группа</h2>
-            <h2 className={styles["header-phoneNumber"]}>Номер</h2>
-            <h2 className={styles["header-mail"]}>Почта</h2>
-            <h2 className={styles["header-teacher"]}>Учитель</h2>
-          </div>
-        </div>
-          <div className={styles["students-list"]}>
-            <div className={"list-wrapper"}>
-              {students.map((student, index) => (
-              <div key={index} className={`${styles.item} ${index % 2 !== 0 ? 'grey-background' : ''}`}>
-                <div className={styles["fullname-container"]}>
-                  <input type='checkbox' />
-                  <p className={styles["fullname"]}>{`${student.firstName} ${student.lastName}`}</p>
-                </div>
-                <div className={styles["otherInfo-container"]}>
-                  <p className={styles["specialization"]}>Frontend, UX/UI</p>
-                  <p className={styles["group"]}>UX/UI GR011-62</p>
-                  <p className={styles["phoneNumber"]}>{formatUzbekPhoneNumber(student.phoneNumber)}</p>
-                  <p className={styles["mail"]}>{student.email}</p>
-                  <p className={styles["teacher"]}>Arslan Koptleulov</p>
-                  <ButtonStyled
-                    onClick={handleClickThreeDots}
-                    variant="outlined"
-                    color="purpleBlue"
-                    sx={{ minWidth: "0", position: 'absolute', left: '1465px', width: '30px' }}
-                   >
-                    <Icons.MenuDots />
-                    </ButtonStyled>
-                    <MenuStyled
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                        "aria-labelledby": "demo-customized-button",
-                        }}
-                        anchorEl={anchorThreeDots}
-                        open={threeDotsMenuOpen}
-                        onClose={handleCloseThreeDotsMenu}
-                    >
-                    <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
-                        <ButtonStyled color="error" onClick={() => handleDeleteStudent(student.id)}>
-                            <Icons.TrashCan />
-                            <span>Удалить ученика</span>
-                        </ButtonStyled>
-                        </MenuItem>
-                        <MenuItem
-                        onClick={handleCloseThreeDotsMenu}
-                        disableRipple
-                        ></MenuItem>
-                    </MenuStyled>
-                </div>
-              </div>
-            ))}
-            </div>
-          </div>
-      </div>
+      <Box className="flex flex-row items-center text-center justify-between" sx={{ height: "75px" , backgroundColor:`${keyId % 2 !== 0 ? "#F9F9F9" : "white"}`,
+                 marginLeft:"25px", marginRight:"45px", fontWeight:"500", fontSize:"10px", textAlign:"center", color:"#7D8594", opacity:"0.7" }}>
+        <Box className="flex flex-row" marginLeft="45px" position="relative" id={id} >
+          <CustomCheckbox checked={selectedStudentIds.includes(id)} onChange={() => handleSelectStudent(id)}/>
+          <Typography>
+            {firstName} {lastName}
+          </Typography>
+        </Box>
+        <Box className="flex flex-row items-center align-center" postition="absolute">
+          <Typography position="absolute" left="598px" >
+              Frontend, UX/UI
+          </Typography>
+          <Typography position="absolute" left="745px">
+              UX/UI GRO11-62
+          </Typography>
+          <Typography position="absolute" left="885px">
+              {formatUzbekPhoneNumber(phoneNumber)}
+          </Typography>
+          <Typography position="absolute" left="1090px">
+              {email}
+          </Typography>
+          <Typography position="absolute" left="1290px">
+              Arslan Koptleulov
+          </Typography>
+          <ButtonStyled className="flex justify-center items-center" variant="contained" 
+                        sx={{ width:"20px", height:"20px", backgroundColor: "white", 
+                        color:"#6574D8" , position:"absolute", left:"1395px", border:"1px solid #6574D8", borderRadius:"5px",
+                        "&:hover": {
+                          backgroundColor: "white",
+                        }}} 
+                        onClick={handleOpenThreeDotsMenu}>
+            <Box className="flex items-center">
+              <Icons.ThreeDotsHor />
+            </Box>
+          </ButtonStyled>
+          <MenuStyled
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorThreeDots}
+                open={threeDotsMenuOpen}
+                onClose={handleCloseThreeDotsMenu}
+              >
+                <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
+                  <ButtonStyled color="error" onClick={() => handleDeleteStudent(id)}>
+                    <Icons.TrashCan />
+                    <span>Удалить ученика</span>
+                  </ButtonStyled>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseThreeDotsMenu}
+                  disableRipple
+                ></MenuItem>
+              </MenuStyled> 
+        </Box>
+      </Box>
     )
 }
 
