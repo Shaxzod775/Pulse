@@ -65,6 +65,10 @@ import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
 import { useSelector } from "react-redux";
 import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
+import {
+  selectTeachersIdNameCombined,
+  selectTeachersName,
+} from "../../../../Slices/teachersSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -109,6 +113,7 @@ NumericFormatCustom.propTypes = {
 
 const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const allCourseNames = useSelector(selectAllCourseNames);
+  const allTeacherNames = useSelector(selectTeachersName);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
@@ -200,6 +205,24 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     }
   };
 
+  const handleTeacherSearchFilter = (searchInput, currentGroups) => {
+    if (searchInput !== "") {
+      const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+      const filtered = currentGroups.filter((group) => {
+        const teacherName =
+          `${group.teacher.lastName} ${group.teacher.firstName} ${group.teacher.middleName}`
+            .toLowerCase()
+            .split(" ");
+        return lowerCaseSearchInput.every((input) =>
+          teacherName.some((name) => name.includes(input))
+        );
+      });
+      return filtered;
+    } else {
+      return currentGroups;
+    }
+  };
+
   const handleCoursesSelectFilter = (selectedCourseNames, currentGroups) => {
     if (selectedCourseNames.length > 0) {
       const filtered = currentGroups.filter((group) =>
@@ -233,10 +256,13 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
       if (selectedCourses.length > 0) {
         filtered = handleCoursesSelectFilter(selectedCourses, filtered);
       }
+      if (teacher && teacher !== "") {
+        filtered = handleTeacherSearchFilter(teacher, filtered);
+      }
       setFilteredGroups(filtered);
     },
     1000,
-    [groupSearch, selectedCourses, groups]
+    [groupSearch, teacher, selectedCourses, groups]
   );
 
   useEffect(() => {
@@ -312,7 +338,8 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   }
                 />
                 <AutocompleteStyledV2
-                  options={teacherNames}
+                  freeSolo
+                  options={allTeacherNames}
                   value={teacher}
                   onChange={handleTeacherChange}
                   renderInput={(params) => (

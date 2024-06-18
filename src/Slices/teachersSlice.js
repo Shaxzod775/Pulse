@@ -141,5 +141,15 @@ export const selectTeachersIdName = (state) =>
     lastName: teacher.lastName,
     middleName: teacher.middleName,
   }));
+export const selectTeachersIdNameCombined = (state) =>
+  state.teachers.teachers.map((teacher) => ({
+    id: teacher.id,
+    name: `${teacher.lastName} ${teacher.firstName} ${teacher.middleName}`,
+  }));
+export const selectTeachersName = (state) =>
+  state.teachers.teachers.map(
+    (teacher) =>
+      `${teacher.lastName} ${teacher.firstName} ${teacher.middleName}`
+  );
 
 export default teachersSlice.reducer;
