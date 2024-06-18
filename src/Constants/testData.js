@@ -45,18 +45,24 @@ export const courseLanguagesFullRu = {
 // };
 
 export const leadStatuses = [
-  "Новые",
+  "Новый",
   "В процессе",
-  "Открытые",
+  "Открытый",
   "Завершенная сделка",
 ];
 
 export const leadStatusesEnum = ["NEW", "IN_PROGRESS", "RECYCLED", "DEAD"];
 export const leadStatusesEnumToText = {
-  NEW: "Новые",
+  NEW: "Новый",
   IN_PROGRESS: "В процессе",
-  RECYCLED: "Открытые",
+  RECYCLED: "Открытый",
   DEAD: "Завершенная сделка",
+};
+export const leadStatusesTextToEnum = {
+  Новый: "NEW",
+  "В процессе": "IN_PROGRESS",
+  Открытый: "RECYCLED",
+  "Завершенная сделка": "DEAD",
 };
 
 export const uzbekEducationLevels = [

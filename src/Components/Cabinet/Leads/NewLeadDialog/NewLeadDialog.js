@@ -41,7 +41,10 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createLead } from "../Leads";
 import Dropzone from "react-dropzone";
-import { calculateMonthDifference } from "../../../../helpers/helpers";
+import {
+  calculateMonthDifference,
+  createEventWithValue,
+} from "../../../../helpers/helpers";
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -60,6 +63,11 @@ import {
 import useToggle from "../../../../hooks/useToggle";
 
 import api from "../../../../Core/api";
+import { useSelector } from "react-redux";
+import {
+  selectAllCourseNames,
+  selectCourseByName,
+} from "../../../../Slices/coursesSlice";
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -93,8 +101,6 @@ const teacherNames = [
 ];
 
 const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
-  const { courses, findCourseByName, allCourseNames } = useCourses();
-
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -111,13 +117,16 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
 
   const [leadSource, setLeadSource] = useState("");
 
-  const [selectedCourseNames, setSelectedCourseNames] = useState([]);
+  const [selectedCourseName, changeSelectedCourseName] = useInput(null);
 
   const [courseLanguages, setCourseLanguages] = useState([]);
 
   const [comment, changeComment] = useInput("");
 
   const [selectedStatus, changeSelectedStatus] = useInput("");
+
+  const allCourseNames = useSelector(selectAllCourseNames);
+  const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
 
   const handleChangeName = (event, setter, setHelperText) => {
     const { value } = event.target;
@@ -173,14 +182,9 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     setLeadSource(newValue);
   };
 
-  const handleChangeCourses = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedCourseNames(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+  // Function to handle change in subject selection
+  const handleCourseChange = (event, newValue) => {
+    changeSelectedCourseName(createEventWithValue(newValue));
   };
 
   const handleChangeCourseLanguages = (event) => {
@@ -215,7 +219,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       secondPhoneNumber: additionalPhoneNumber,
       comment: comment,
       source: leadSource,
-      course_id: "0c745667-1918-4e7a-a996-a7832089a374",
+      course_id: selectedCourse.id,
       statusEnum: selectedStatus,
       langEnum: "UZ",
     };
@@ -386,27 +390,27 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
-                  <FormLabelStyled>Курсы</FormLabelStyled>
-                  <Select
-                    multiple
-                    required
-                    value={selectedCourseNames}
-                    onChange={handleChangeCourses}
-                    renderValue={(selected) => selected.join(", ")}
-                    MenuProps={customMenuProps}
-                    sx={selectStyles({ theme })}
-                    input={<InputBaseStyled />}
-                    IconComponent={Icons.ArrowD}
-                  >
-                    {allCourseNames.map((courseName) => (
-                      <MenuItem key={courseName} value={courseName}>
-                        <Checkbox
-                          checked={selectedCourseNames.indexOf(courseName) > -1}
-                        />
-                        <ListItemText primary={courseName} />
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <FormLabelStyled>Курс</FormLabelStyled>
+                  <AutocompleteStyled
+                    options={allCourseNames}
+                    value={selectedCourseName}
+                    onChange={handleCourseChange}
+                    renderInput={(params) => (
+                      <AutocompleteField
+                        {...params}
+                        required
+                        id="subject"
+                        variant="outlined"
+                        placeholder="Выберите курс"
+                      />
+                    )}
+                    popupIcon={
+                      <Icons.ArrowD color={theme.typography.color.darkBlue} />
+                    }
+                    clearIcon={
+                      <Icons.Delete color={theme.typography.color.darkBlue} />
+                    }
+                  />
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <FormLabelStyled>Язык курса</FormLabelStyled>

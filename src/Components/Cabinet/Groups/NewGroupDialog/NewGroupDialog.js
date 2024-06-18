@@ -195,7 +195,6 @@ const NewGroupDialog = ({
 
   const allCourseNames = useSelector(selectAllCourseNames);
   const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
-  console.log(selectedCourse);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -224,6 +223,7 @@ const NewGroupDialog = ({
   const handleCourseChange = (event, newValue) => {
     changeSelectedCourseName(createEventWithValue(newValue));
   };
+
   useEffect(() => {
     if (startDate && selectedCourse) {
       // Add the duration as months to the start date to calculate the end date

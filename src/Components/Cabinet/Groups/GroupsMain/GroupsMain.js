@@ -185,22 +185,30 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     }
   };
 
-  const handleGroupSearchFilter = (searchInput) => {
-    const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
-    const filtered = groups.filter((group) => {
-      const groupName = group.name.toLowerCase().split(" ");
-      return lowerCaseSearchInput.every((input) =>
-        groupName.some((name) => name.includes(input))
-      );
-    });
-    setFilteredGroups(filtered);
+  const handleGroupSearchFilter = (searchInput, currentGroups) => {
+    if (searchInput !== "") {
+      const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+      const filtered = currentGroups.filter((group) => {
+        const groupName = group.name.toLowerCase().split(" ");
+        return lowerCaseSearchInput.every((input) =>
+          groupName.some((name) => name.includes(input))
+        );
+      });
+      return filtered;
+    } else {
+      return currentGroups;
+    }
   };
 
-  const handleCoursesSelectFilter = (selectedCourseNames) => {
-    const filtered = groups.filter((group) =>
-      selectedCourseNames.includes(group.course.name)
-    );
-    setFilteredGroups(filtered);
+  const handleCoursesSelectFilter = (selectedCourseNames, currentGroups) => {
+    if (selectedCourseNames.length > 0) {
+      const filtered = currentGroups.filter((group) =>
+        selectedCourseNames.includes(group.course.name)
+      );
+      return filtered;
+    } else {
+      return currentGroups;
+    }
   };
 
   const goBack = () => {
@@ -218,14 +226,14 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   useDebounce(
     () => {
+      let filtered = groups;
       if (groupSearch !== "") {
-        handleGroupSearchFilter(groupSearch);
-      } // Apply course names filter if there are selected courses
-      if (selectedCourses.length > 0) {
-        handleCoursesSelectFilter(selectedCourses);
-      } else {
-        setFilteredGroups(groups);
+        filtered = handleGroupSearchFilter(groupSearch, filtered);
       }
+      if (selectedCourses.length > 0) {
+        filtered = handleCoursesSelectFilter(selectedCourses, filtered);
+      }
+      setFilteredGroups(filtered);
     },
     1000,
     [groupSearch, selectedCourses, groups]
