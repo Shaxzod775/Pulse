@@ -27,16 +27,28 @@ import Leads from "./Leads/Leads";
 import { CoursesProvider } from "../../contexts/Courses.context";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourses, selectCoursesStatus } from "../../Slices/coursesSlice";
+import {
+  fetchTeachers,
+  selectTeachersStatus,
+} from "../../Slices/teachersSlice";
 
 const Cabinet = () => {
   const dispatch = useDispatch();
   const coursesStatus = useSelector(selectCoursesStatus);
+  const teachersStatus = useSelector(selectTeachersStatus);
 
   useEffect(() => {
     if (coursesStatus === "idle") {
       dispatch(fetchCourses());
     }
   }, [coursesStatus, dispatch]);
+
+  useEffect(() => {
+    if (teachersStatus === "idle") {
+      dispatch(fetchTeachers());
+    }
+  }, [teachersStatus, dispatch]);
+
   return (
     <>
       <div className={styles["cabinet"]}>

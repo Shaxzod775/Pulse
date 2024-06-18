@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import coursesReducer from "./Slices/coursesSlice";
+import teachersReducer from "./Slices/teachersSlice";
 
 // export const store = configureStore({
 //   reducer: {
@@ -11,5 +12,6 @@ import coursesReducer from "./Slices/coursesSlice";
 export const store = configureStore({
   reducer: {
     courses: coursesReducer,
+    teachers: teachersReducer,
   },
 });

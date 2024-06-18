@@ -31,6 +31,9 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
+import { useSelector } from "react-redux";
+import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
+import { selectAllTeachers } from "../../../../Slices/teachersSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -100,7 +103,8 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
+const TeachersMain = () => {
+  const teachers = useSelector(selectAllTeachers);
   const navigate = useNavigate();
   const { allCourseNames } = useCourses();
 
@@ -297,21 +301,12 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           >
             {filteredTeachers.map((teacher, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
-                <TeacherCard
-                  {...teacher}
-                  handleDeleteTeacher={handleDeleteTeacher}
-                />
+                <TeacherCard {...teacher} />
               </Grid>
             ))}
           </Grid>
         </div>
       </Main>
-
-      {/* <NewCourseDialog
-        open={open}
-        handleClose={handleClose}
-        handleAddCourse={handleAddTeacher}
-      /> */}
     </Root>
   );
 };

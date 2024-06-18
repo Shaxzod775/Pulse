@@ -69,6 +69,12 @@ import {
   formatFileName,
 } from "../../../../helpers/helpers";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
+import {
+  createTeacher,
+  editTeacher,
+  fetchTeachers,
+} from "../../../../Slices/teachersSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -144,7 +150,8 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewTeacher = ({ fetchTeachers }) => {
+const NewTeacher = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams(); // Get the id from the URL
   const [teacher, setTeacher] = useState(null); // Add a new state variable for the teacher
@@ -417,8 +424,6 @@ const NewTeacher = ({ fetchTeachers }) => {
   const handleClickAdd = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
     dateOfBirth.setDate(dateOfBirth.getDate() + 1);
     //cz I don't know why but date is one day different when it goes to the database like
 
@@ -456,34 +461,14 @@ const NewTeacher = ({ fetchTeachers }) => {
     }
     console.log("teacherData:");
     console.log(teacherData);
-
-    formData.append("teacherData", JSON.stringify(teacherData));
-    try {
-      let response;
-      if (id) {
-        // If an id is present, update the teacher
-        response = await api.post("teachers/update", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } else {
-        // Otherwise, create a new teacher
-        response = await api.post("teachers/create", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      }
-
-      // Обработка успешного ответа, если необходимо
-      console.log("Teacher created:", response.data);
-      fetchTeachers();
-      navigate("/cabinet/teachers");
-    } catch (error) {
-      // Обработка ошибок
-      console.error("Error creating teacher:", error);
+    if (id) {
+      // If an id is present, update the teacher
+      dispatch(editTeacher(teacherData));
+    } else {
+      // Otherwise, create a new teacher
+      dispatch(createTeacher(teacherData));
     }
+    navigate("/cabinet/teachers");
   };
 
   useEffect(() => {
