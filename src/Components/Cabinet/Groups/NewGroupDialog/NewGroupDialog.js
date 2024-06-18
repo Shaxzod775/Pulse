@@ -54,6 +54,7 @@ import {
   selectCourseByName,
   selectCoursesIdName,
 } from "../../../../Slices/coursesSlice";
+import { selectTeachersIdName } from "../../../../Slices/teachersSlice";
 
 const timeInputStyles = {
   "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -173,6 +174,7 @@ const NewGroupDialog = ({
   const [selectedCourseName, changeSelectedCourseName] = useInput(null);
 
   const [teacher, changeTeacher, resetTeacher] = useInput(null);
+  // const [teacher, setTeacher] = useState(null);
 
   const [room, changeRoom, resetRoom] = useInput(null);
 
@@ -195,6 +197,7 @@ const NewGroupDialog = ({
 
   const allCourseNames = useSelector(selectAllCourseNames);
   const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
+  const teachersIdName = useSelector(selectTeachersIdName);
 
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
@@ -235,7 +238,7 @@ const NewGroupDialog = ({
 
   // Function to handle change in teacher selection
   const handleTeacherChange = (event, newValue) => {
-    changeTeacher({ target: { value: newValue } });
+    changeTeacher(createEventWithValue(newValue));
   };
 
   // Function to handle change in room selection
@@ -352,7 +355,7 @@ const NewGroupDialog = ({
       courseTime: "14:00",
       classDays: weekDays,
       courseId: selectedCourse.id,
-      teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
+      teacherId: teacher.id,
     };
     console.log(groupData);
 
@@ -533,7 +536,10 @@ const NewGroupDialog = ({
                   <FormControl required fullWidth variant="outlined">
                     <FormLabelStyled>Выберите учителя</FormLabelStyled>
                     <AutocompleteStyled
-                      options={teacherNames}
+                      options={teachersIdName}
+                      getOptionLabel={(option) =>
+                        `${option.lastName} ${option.firstName}`
+                      }
                       value={teacher}
                       onChange={handleTeacherChange}
                       renderInput={(params) => (
