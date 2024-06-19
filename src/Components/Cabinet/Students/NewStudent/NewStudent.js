@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
+<<<<<<< HEAD
 import { Link, useNavigate, useParams } from "react-router-dom";
+=======
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> source-repo/main
 
 import api from "../../../../Core/api";
 
@@ -54,10 +58,14 @@ import {
   REGION_WITH_DISTRICTS,
 } from "../../../../Constants/usbekistan";
 import { russianLocale } from "../../../../Constants/dateLocales";
+<<<<<<< HEAD
 import {
   createEventWithValue,
   formatFileName,
 } from "../../../../helpers/helpers";
+=======
+import { formatFileName } from "../../../../helpers/helpers";
+>>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -129,8 +137,11 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
 
 const NewStudent = ({ fetchStudents }) => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const { id } = useParams(); // Get the id from the URL
   const [student, setStudent] = useState(null); // Add a new state variable for the student
+=======
+>>>>>>> source-repo/main
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -374,7 +385,10 @@ const NewStudent = ({ fetchStudents }) => {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   };
 
+<<<<<<< HEAD
   // Function to submit the form
+=======
+>>>>>>> source-repo/main
   const handleClickAdd = async (e) => {
     e.preventDefault();
 
@@ -406,13 +420,17 @@ const NewStudent = ({ fetchStudents }) => {
       ),
       description: description,
     };
+<<<<<<< HEAD
     if (id) {
       studentData.id = id;
     }
+=======
+>>>>>>> source-repo/main
     console.log(studentData);
 
     formData.append("studentData", JSON.stringify(studentData));
     try {
+<<<<<<< HEAD
       let response;
       if (id) {
         // If an id is present, update the student
@@ -431,6 +449,16 @@ const NewStudent = ({ fetchStudents }) => {
       }
       // Обработка успешного ответа, если необходимо
       console.log("Student created:", response.data);
+=======
+      const response = await api.post("students/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Обработка успешного ответа, если необходимо
+      console.log("Teacher created:", response.data);
+>>>>>>> source-repo/main
       fetchStudents();
       navigate("/cabinet/students");
     } catch (error) {
@@ -439,6 +467,7 @@ const NewStudent = ({ fetchStudents }) => {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     // If an id is present, fetch the student data
     if (id) {
@@ -497,6 +526,8 @@ const NewStudent = ({ fetchStudents }) => {
     }
   }, [student]);
 
+=======
+>>>>>>> source-repo/main
   return (
     <Root>
       <Main>
@@ -511,7 +542,11 @@ const NewStudent = ({ fetchStudents }) => {
               <Icons.ArrowL />
             </ButtonStyled>
             <div className="flex flex-col">
+<<<<<<< HEAD
               <Title>{id ? "Изменить" : "Добавить"} ученика</Title>
+=======
+              <Title>Добавить ученика</Title>
+>>>>>>> source-repo/main
               <div className="flex items-center gap-x3s">
                 <Link to={routes.CABINET + routes.STUDENTS} className="link">
                   <Typography fontSize="0.75rem">Ученики</Typography>
@@ -520,9 +555,13 @@ const NewStudent = ({ fetchStudents }) => {
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
                 />
+<<<<<<< HEAD
                 <Typography fontSize="0.75rem">
                   {id ? "Изменить" : "Добавить"} ученика
                 </Typography>
+=======
+                <Typography fontSize="0.75rem">Добавить ученика</Typography>
+>>>>>>> source-repo/main
               </div>
             </div>
           </div>
@@ -539,7 +578,11 @@ const NewStudent = ({ fetchStudents }) => {
               color="purpleBlue"
               onClick={handleClickAdd}
             >
+<<<<<<< HEAD
               <span>{id ? "Изменить" : "Добавить"}</span>
+=======
+              <span>Добавить</span>
+>>>>>>> source-repo/main
             </DialogButton>
           </div>
         </div>

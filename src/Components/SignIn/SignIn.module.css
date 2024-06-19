@@ -2,6 +2,7 @@
   position: relative;
   box-sizing: border-box;
   min-height: 100vh;
+<<<<<<< HEAD
 
   display: flex;
   /* align-items: center; */
@@ -10,12 +11,23 @@
 
   background-color: #f5f5fb;
 }
+=======
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f5f5fb;
+}
+
+>>>>>>> source-repo/main
 .SignIn *,
 .SignIn *::before,
 .SignIn *::after {
   box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 .signIn-box {
   min-width: 35%;
   margin: auto;
@@ -74,6 +86,88 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+=======
+.SignIn-Container {
+  min-width: 35%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  height: 440px;
+
+  @media screen and (max-width: 1439px) {
+    min-width: 50%;
+  }
+}
+
+.SignIn-Box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 30px;
+  width: 417px;
+  height: 480px;
+  background: #ffffff;
+  border-radius: 40px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.1); 
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  width: 337px;
+  height: 36px;
+}
+
+.icons img {
+  height: 36px;
+}
+
+.SignIn-Box h1 {
+  margin-bottom: 5px;
+}
+
+.text-input {
+  width: 100%; 
+}
+
+.SignIn-Box button {
+  width: 100%;
+}
+
+.SignIn-ImageBox img {
+  width: 417px;
+  height: 480px;
+  background: #ffffff;
+  border-radius: 40px;
+}
+
+@media screen and (max-width: 767px) {
+  .SignIn-Box {
+    padding: 20px; 
+    width: 100%; 
+    border-radius: 0;
+    box-shadow: none; 
+  }
+
+  .SignIn-Container {
+    min-width: unset; 
+    flex-direction: column; 
+    height: auto; 
+  }
+
+  .SignIn-ImageBox img {
+    display: none; 
+  }
+
+  .icons {
+    width: 467px;
+  }
+>>>>>>> source-repo/main
 }
 
 /* Target the autofill */
@@ -101,9 +195,12 @@ input[type="password"]::-ms-reveal {
 .text-input > * {
   width: 100%;
 }
+<<<<<<< HEAD
 .text-input > .label {
   margin-bottom: 3px;
 }
+=======
+>>>>>>> source-repo/main
 
 .forgot-password {
   text-decoration: none;
@@ -113,6 +210,7 @@ input[type="password"]::-ms-reveal {
   color: #2684fc;
 }
 
+<<<<<<< HEAD
 .footer {
   /* position: absolute; */
   bottom: 0;
@@ -180,3 +278,6 @@ input[type="password"]::-ms-reveal {
     width: initial;
   }
 }
+=======
+
+>>>>>>> source-repo/main

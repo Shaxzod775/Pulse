@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
+<<<<<<< HEAD
 import { Link, useNavigate, useParams } from "react-router-dom";
+=======
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> source-repo/main
 import * as routes from "../../../../Constants/routes";
 
 import api from "../../../../Core/api";
@@ -64,6 +68,7 @@ import {
   socialMediaTypes,
   uzbekEducationLevels,
 } from "../../../../Constants/testData";
+<<<<<<< HEAD
 import {
   createEventWithValue,
   formatFileName,
@@ -75,6 +80,10 @@ import {
   editTeacher,
   fetchTeachers,
 } from "../../../../Slices/teachersSlice";
+=======
+import { formatFileName } from "../../../../helpers/helpers";
+import { format } from "date-fns";
+>>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -150,11 +159,16 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
+<<<<<<< HEAD
 const NewTeacher = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams(); // Get the id from the URL
   const [teacher, setTeacher] = useState(null); // Add a new state variable for the teacher
+=======
+const NewTeacher = ({ fetchTeachers }) => {
+  const navigate = useNavigate();
+>>>>>>> source-repo/main
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -424,6 +438,7 @@ const NewTeacher = () => {
   const handleClickAdd = async (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     dateOfBirth.setDate(dateOfBirth.getDate() + 1);
     //cz I don't know why but date is one day different when it goes to the database like
 
@@ -514,6 +529,62 @@ const NewTeacher = () => {
     }
   }, [teacher]);
 
+=======
+    const formData = new FormData();
+
+    dateOfBirth.setDate(dateOfBirth.getDate() + 1);
+    //cz I don't know why but date is one day different when it goes to the database like
+
+    formData.append(
+      "teacherData",
+      JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        email: email,
+        corporateEmail: emailCorp,
+        phoneNumber: phoneNumber,
+        secondPhoneNumber: additionalPhoneNumber,
+        gender: gender,
+        dateOfBirth: dateOfBirth,
+        passportSeries: passportSeries,
+        passportNumber: passportNumber,
+        contacts: [
+          { name: "alwi", phoneNumber: "1231321123" },
+          { name: "annaa", phoneNumber: "123212312" },
+        ],
+        education: null,
+        contractNumber: "1223",
+        description: description,
+        inn: inn,
+        inps: inps,
+        pnfl: pinfl,
+        tags: tags,
+        address: {
+          region: region,
+          state: district,
+          location: location,
+        },
+      })
+    );
+    try {
+      const response = await api.post("teachers/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Обработка успешного ответа, если необходимо
+      console.log("Teacher created:", response.data);
+      fetchTeachers();
+      navigate("/cabinet/teachers");
+    } catch (error) {
+      // Обработка ошибок
+      console.error("Error creating teacher:", error);
+    }
+  };
+
+>>>>>>> source-repo/main
   return (
     <Root>
       <Main>
@@ -528,7 +599,11 @@ const NewTeacher = () => {
               <Icons.ArrowL />
             </ButtonStyled>
             <div className="flex flex-col">
+<<<<<<< HEAD
               <Title>{id ? "Изменить" : "Добавить"} учителя</Title>
+=======
+              <Title>Добавить учителя</Title>
+>>>>>>> source-repo/main
               <div className="flex items-center gap-x3s">
                 <Link to={routes.CABINET + routes.TEACHERS} className="link">
                   <Typography fontSize="0.75rem">Учителя</Typography>
@@ -537,9 +612,13 @@ const NewTeacher = () => {
                   width="1rem"
                   style={{ transform: "rotate(180deg)" }}
                 />
+<<<<<<< HEAD
                 <Typography fontSize="0.75rem">
                   {id ? "Изменить" : "Добавить"} учителя
                 </Typography>
+=======
+                <Typography fontSize="0.75rem">Добавить учителя</Typography>
+>>>>>>> source-repo/main
               </div>
             </div>
           </div>
@@ -556,7 +635,11 @@ const NewTeacher = () => {
               color="purpleBlue"
               onClick={handleClickAdd}
             >
+<<<<<<< HEAD
               <span>{id ? "Изменить" : "Добавить"}</span>
+=======
+              <span>Добавить</span>
+>>>>>>> source-repo/main
             </DialogButton>
           </div>
         </div>

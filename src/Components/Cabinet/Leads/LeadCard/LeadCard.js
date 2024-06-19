@@ -24,11 +24,15 @@ import { NumericFormat } from "react-number-format";
 import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { formattedPhoneNumber } from "../../../../helpers/helpers";
+<<<<<<< HEAD
 import {
   leadStatuses,
   leadStatusesEnum,
   leadStatusesEnumToText,
 } from "../../../../Constants/testData";
+=======
+import { leadStatuses } from "../../../../Constants/testData";
+>>>>>>> source-repo/main
 
 const StatusChip = styled((props) => <Chip {...props} />)(
   ({ theme, status }) => ({
@@ -36,20 +40,36 @@ const StatusChip = styled((props) => <Chip {...props} />)(
     padding: "8px 10px",
     borderRadius: "8px",
     backgroundColor:
+<<<<<<< HEAD
       status === leadStatusesEnum[0]
         ? theme.palette.orange.light
         : status === leadStatusesEnum[1]
         ? theme.palette.blue.light
         : status === leadStatusesEnum[2]
+=======
+      status === leadStatuses[0]
+        ? theme.palette.orange.light
+        : status === leadStatuses[1]
+        ? theme.palette.blue.light
+        : status === leadStatuses[2]
+>>>>>>> source-repo/main
         ? theme.palette.golden.light
         : theme.palette.seaBlue.light,
     "& .MuiChip-label": {
       color:
+<<<<<<< HEAD
         status === leadStatusesEnum[0]
           ? theme.palette.orange.main
           : status === leadStatusesEnum[1]
           ? theme.palette.blue.main
           : status === leadStatusesEnum[2]
+=======
+        status === leadStatuses[0]
+          ? theme.palette.orange.main
+          : status === leadStatuses[1]
+          ? theme.palette.blue.main
+          : status === leadStatuses[2]
+>>>>>>> source-repo/main
           ? theme.palette.golden.main
           : theme.palette.seaBlue.main,
       padding: "0",
@@ -60,11 +80,19 @@ const StatusChip = styled((props) => <Chip {...props} />)(
       margin: "0",
       marginRight: "8px",
       color:
+<<<<<<< HEAD
         status === leadStatusesEnum[0]
           ? theme.palette.orange.main
           : status === leadStatusesEnum[1]
           ? theme.palette.blue.main
           : status === leadStatusesEnum[2]
+=======
+        status === leadStatuses[0]
+          ? theme.palette.orange.main
+          : status === leadStatuses[1]
+          ? theme.palette.blue.main
+          : status === leadStatuses[2]
+>>>>>>> source-repo/main
           ? theme.palette.golden.main
           : theme.palette.seaBlue.main,
     },
@@ -79,7 +107,11 @@ const LeadCard = ({
   secondPhoneNumber,
   email,
   source,
+<<<<<<< HEAD
   course,
+=======
+  selectedCourseNames,
+>>>>>>> source-repo/main
   langEnum,
   comment,
   statusEnum,
@@ -234,7 +266,11 @@ const LeadCard = ({
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
+<<<<<<< HEAD
                 {course.name}
+=======
+                {/* {selectedCourseNames.join(", ")} */}
+>>>>>>> source-repo/main
               </TypographyStyled>
             </div>
             <div className="flex justify-between">
@@ -259,7 +295,11 @@ const LeadCard = ({
             <TypographyStyled>Статус</TypographyStyled>
           </InfoWithIcon>
           <StatusChip
+<<<<<<< HEAD
             label={leadStatusesEnumToText[statusEnum]}
+=======
+            label={statusEnum}
+>>>>>>> source-repo/main
             status={statusEnum}
             icon={<Icons.Circle />}
           />

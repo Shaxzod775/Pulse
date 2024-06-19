@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo, useState } from "react";
+=======
+import React, { useMemo, useState } from "react";
+>>>>>>> source-repo/main
 import {
   Box,
   Button,
@@ -35,10 +39,14 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
+<<<<<<< HEAD
 import {
   calculateMonthDifference,
   createEventWithValue,
 } from "../../../../helpers/helpers";
+=======
+import { calculateMonthDifference } from "../../../../helpers/helpers";
+>>>>>>> source-repo/main
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -48,6 +56,7 @@ import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 
 import api from "../../../../Core/api";
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 import {
   selectAllCourseNames,
@@ -55,6 +64,35 @@ import {
   selectCoursesIdName,
 } from "../../../../Slices/coursesSlice";
 import { selectTeachersIdName } from "../../../../Slices/teachersSlice";
+=======
+
+const rainbowCycle = keyframes`
+  0% {
+    border-color: hsl(0, 100%, 50%); /* Red */
+  }
+  14% {
+    border-color: hsl(40, 100%, 50%); /* Orange */
+  }
+  28% {
+    border-color: hsl(80, 100%, 50%); /* Yellow */
+  }
+  42% {
+    border-color: hsl(120, 100%, 50%); /* Green */
+  }
+  57% {
+    border-color: hsl(180, 100%, 50%); /* Cyan */
+  }
+  71% {
+    border-color: hsl(240, 100%, 50%); /* Blue */
+  }
+  85% {
+    border-color: hsl(300, 100%, 50%); /* Magenta */
+  }
+  100% {
+    border-color: hsl(360, 100%, 50%); /* Back to Red */
+  }
+`;
+>>>>>>> source-repo/main
 
 const timeInputStyles = {
   "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -87,6 +125,19 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   "&:hover": { boxShadow: "none" },
 }));
 
+<<<<<<< HEAD
+=======
+const FormLabel = styled(Typography)(({ theme }) => ({
+  padding: "0",
+  color: theme.typography.color.darkBlue,
+  fontSize: theme.typography.fontSize.xs,
+  lineHeight: "normal",
+  paddingBottom: "12px",
+  letterSpacing: "0.32px",
+  fontWeight: "600",
+}));
+
+>>>>>>> source-repo/main
 const SquareContainer = styled("div")(
   ({ theme, width, height = 160, bgColor = "#fff", active }) => ({
     width: width ? `${width}px` : "100%",
@@ -161,12 +212,22 @@ function TagCheckbox({
   );
 }
 
+<<<<<<< HEAD
+=======
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+const subjects = ["Frontend", "Backend", "UI/UX", "Flutter", "IT English"];
+>>>>>>> source-repo/main
 const NewGroupDialog = ({
   open,
   handleAddGroup,
   handleClose,
   ...otherProps
 }) => {
+<<<<<<< HEAD
+=======
+  const { courses, findCourseByName, allCourseNames } = useCourses();
+
+>>>>>>> source-repo/main
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [name, changeName, resetName] = useInput("");
@@ -174,7 +235,10 @@ const NewGroupDialog = ({
   const [selectedCourseName, changeSelectedCourseName] = useInput(null);
 
   const [teacher, changeTeacher, resetTeacher] = useInput(null);
+<<<<<<< HEAD
   // const [teacher, setTeacher] = useState(null);
+=======
+>>>>>>> source-repo/main
 
   const [room, changeRoom, resetRoom] = useInput(null);
 
@@ -195,10 +259,13 @@ const NewGroupDialog = ({
   const [tags, setTags] = useState(["Тег 1", "Тег 2", "Тег 3"]);
   const [tagFormOpen, setTagFormOpen] = useState(false);
 
+<<<<<<< HEAD
   const allCourseNames = useSelector(selectAllCourseNames);
   const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
   const teachersIdName = useSelector(selectTeachersIdName);
 
+=======
+>>>>>>> source-repo/main
   const handleImageSelection = (acceptedFiles) => {
     // Assuming acceptedFiles is an array containing file objects
     if (acceptedFiles.length > 0) {
@@ -224,21 +291,35 @@ const NewGroupDialog = ({
 
   // Function to handle change in subject selection
   const handleCourseChange = (event, newValue) => {
+<<<<<<< HEAD
     changeSelectedCourseName(createEventWithValue(newValue));
   };
 
   useEffect(() => {
+=======
+    changeSelectedCourseName({ target: { value: newValue } });
+    // Find the selected course by its name
+    const selectedCourse = findCourseByName(newValue);
+>>>>>>> source-repo/main
     if (startDate && selectedCourse) {
       // Add the duration as months to the start date to calculate the end date
       const endDate = new Date(startDate);
       endDate.setMonth(startDate.getMonth() + selectedCourse.duration);
       setEndDate(endDate);
     }
+<<<<<<< HEAD
   }, [selectedCourseName]);
 
   // Function to handle change in teacher selection
   const handleTeacherChange = (event, newValue) => {
     changeTeacher(createEventWithValue(newValue));
+=======
+  };
+
+  // Function to handle change in teacher selection
+  const handleTeacherChange = (event, newValue) => {
+    changeTeacher({ target: { value: newValue } });
+>>>>>>> source-repo/main
   };
 
   // Function to handle change in room selection
@@ -250,6 +331,12 @@ const NewGroupDialog = ({
   const handleStartDateChange = (newStartDate) => {
     if (newStartDate instanceof Date && !isNaN(newStartDate)) {
       setStartDate(newStartDate);
+<<<<<<< HEAD
+=======
+
+      // Find the selected course by its name
+      const selectedCourse = findCourseByName(selectedCourseName);
+>>>>>>> source-repo/main
       if (selectedCourse) {
         // Add the duration as months to the start date to calculate the end date
         const endDate = new Date(newStartDate);
@@ -354,8 +441,13 @@ const NewGroupDialog = ({
       roomNumber: room,
       courseTime: "14:00",
       classDays: weekDays,
+<<<<<<< HEAD
       courseId: selectedCourse.id,
       teacherId: teacher.id,
+=======
+      courseId: "8c9b891e-6de2-4d41-959f-f3afc33fcf79",
+      teacherId: "c43a2788-f292-400f-916e-6aafc6204373",
+>>>>>>> source-repo/main
     };
     console.log(groupData);
 
@@ -536,10 +628,14 @@ const NewGroupDialog = ({
                   <FormControl required fullWidth variant="outlined">
                     <FormLabelStyled>Выберите учителя</FormLabelStyled>
                     <AutocompleteStyled
+<<<<<<< HEAD
                       options={teachersIdName}
                       getOptionLabel={(option) =>
                         `${option.lastName} ${option.firstName}`
                       }
+=======
+                      options={teacherNames}
+>>>>>>> source-repo/main
                       value={teacher}
                       onChange={handleTeacherChange}
                       renderInput={(params) => (

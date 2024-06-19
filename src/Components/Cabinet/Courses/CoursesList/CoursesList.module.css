@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -8,7 +6,7 @@
   box-sizing: border-box;
   position: relative;
   width: 1786px;
-  height: 100%;
+  min-height: 784px;
 
   background: #FFFFFF;
   border: 1px solid #E5E7EB;
@@ -16,8 +14,8 @@
 }
 
 /* Common styles */
-.headers, .headers-fullname-container, .headers-fullname-container input, .otherHeaders-container,
-.item, .fullname-container, .fullname-container input, .otherInfo-container {
+.headers, .headers-courseName-container, .headers-courseName-container input, .otherHeaders-container,
+.item, .courseName-container, .courseName-container input, .otherInfo-container {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -36,19 +34,19 @@
   border-radius: 29px;
 }
 
-.headers-fullname-container {
-  padding-right: 500px;
+.headers-courseName-container {
+  padding-right: 280px;
   gap: 10px;
   margin: 0 auto;
-  width: 70px;
+  width: auto;
 
   position: relative;
-  right: 45px;
+  right: 60px;
 
   box-sizing: border-box;
 }
 
-.headers-fullname-container input {
+.headers-courseName-container input {
   box-sizing: border-box;
   
   width: 16px;
@@ -62,7 +60,7 @@
   flex: none;
 }
 
-.headers-fullname {
+.headers-courseName {
   margin: 0 auto;
   font-family: 'Poppins';
   font-style: normal;
@@ -82,25 +80,26 @@
   padding: 0px;
   gap: 50px;
   margin: 0 auto;
-  width: 664px;
+  width: auto;
   height: 18px;
 }
+
 
 .header-group {
   padding-right: 35px;
 }
 
 .header-phoneNumber {
-  padding-right: 135px;
+  padding-right: 115px;
 }
 
 .header-mail {
-  padding-right: 135px;
+  padding-right: 120px;
 }
 
 
 .otherHeaders-container h2 {
-  width: 100px;
+  width: auto;
   height: 18px;
 
   margin: 0 auto;
@@ -117,7 +116,7 @@
 }
 
 
-.students-list {
+.courses-list {
   width: 100%;
   margin-top: 50px; 
 }
@@ -143,10 +142,14 @@
 
 
 .item {
-  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   padding: 14px 45px;
   gap: 40px;
+
+  height: 55px;
 
   position: relative;
   padding: 8px 34px 8px 51px;
@@ -160,16 +163,18 @@
   background-color: #F9FAFB;
 }
 
-.fullname-container {
-  justify-content: space-between;
+.courseName-container {
+  position: absolute;
+
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding-left: 24px;
   gap: 10px;
 
   margin: 0 auto;
 }
 
-.fullname-container input {
+.courseName-container input {
   box-sizing: border-box;
 
   align-items: flex-start;
@@ -188,14 +193,14 @@
   border-radius: 4px;
 }
 
-.fullname-container p,
+.courseName-container p,
 .otherInfo-container p {
   height: 18px;
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 150%;
 
   text-align: center;
@@ -209,39 +214,37 @@
 
 
 .otherInfo-container {
+  width: 100%;
+  position: relative;
   align-items: center;
   justify-content: center;
   padding: 0px;
 
-  flex: 1;
-
   margin: 0 auto;
 }
 
-.specialization {
-  position: relative;
-  left: 30px;
+.endDate {
+  position: absolute;
+  left: 610px;
 }
 
 .group {
-  position: relative;
-  left: 60px;
+  position: absolute;
+  left: 785px;
 }
 
 .phoneNumber {
-  position: relative;
-  left: 80px;
+  position: absolute;
+  left: 910px;
 }
 
 .mail {
-  position: relative;
-  left: 120px;
+  position: absolute;
+  left: 1125px;
 }
 
 .teacher {
-  position: relative;
-  left: 160px;
+  position: absolute;
+  left: 1335px;
 }
-
->>>>>>> source-repo/main
 

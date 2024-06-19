@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
+=======
+import { useNavigate, Link } from "react-router-dom";
+import * as routes from "../../../../Constants/routes";
+>>>>>>> source-repo/main
 import {
   Box,
   Button,
@@ -63,12 +68,17 @@ import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
 import {
   selectTeachersIdNameCombined,
   selectTeachersName,
 } from "../../../../Slices/teachersSlice";
+=======
+import GroupsList from "../GroupsList/GroupsList";
+
+>>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -112,8 +122,12 @@ NumericFormatCustom.propTypes = {
 };
 
 const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
+<<<<<<< HEAD
   const allCourseNames = useSelector(selectAllCourseNames);
   const allTeacherNames = useSelector(selectTeachersName);
+=======
+  const { allCourseNames } = useCourses();
+>>>>>>> source-repo/main
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
@@ -140,6 +154,41 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+<<<<<<< HEAD
+=======
+  const [selectedGroupIds, setSelectedGroupIds] = useState([]);
+
+  const [isGrid, setIsGrid] = useState(false);
+
+  const areAllGroupsSelected = filteredGroups.length > 0 && selectedGroupIds.length === filteredGroups.length;
+
+  const handleSelectGroup = (id) => {
+    setSelectedGroupIds((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((groupId) => groupId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleSelectAllGroups = (selectAll) => {
+    if (selectAll) {
+      setSelectedGroupIds(filteredGroups.map((group) => group.id));
+    } else {
+      setSelectedGroupIds([]);
+    }
+  };
+
+  const handleDeleteSelectedGroups = (allGroupsIDs) => {
+    if (allGroupsIDs.length > 0) {
+      selectedGroupIds.map((groupID) => (handleDeleteGroup(groupID)))
+    }
+    else {
+      console.log("Выберите группы для удаления")
+    }
+  }
+
+
+>>>>>>> source-repo/main
   const handleClearFilters = () => {
     resetGroupSearch();
     setTeacher("");
@@ -190,6 +239,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     }
   };
 
+<<<<<<< HEAD
   const handleGroupSearchFilter = (searchInput, currentGroups) => {
     if (searchInput !== "") {
       const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
@@ -232,6 +282,17 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     } else {
       return currentGroups;
     }
+=======
+  const handleGroupSearchFilter = (searchInput) => {
+    const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
+    const filtered = groups.filter((group) => {
+      const groupName = group.name.toLowerCase().split(" ");
+      return lowerCaseSearchInput.every((input) =>
+        groupName.some((name) => name.includes(input))
+      );
+    });
+    setFilteredGroups(filtered);
+>>>>>>> source-repo/main
   };
 
   const goBack = () => {
@@ -249,6 +310,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   useDebounce(
     () => {
+<<<<<<< HEAD
       let filtered = groups;
       if (groupSearch !== "") {
         filtered = handleGroupSearchFilter(groupSearch, filtered);
@@ -263,6 +325,16 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     },
     1000,
     [groupSearch, teacher, selectedCourses, groups]
+=======
+      if (groupSearch !== "") {
+        handleGroupSearchFilter(groupSearch);
+      } else {
+        setFilteredGroups(groups);
+      }
+    },
+    1000,
+    [groupSearch, groups]
+>>>>>>> source-repo/main
   );
 
   useEffect(() => {
@@ -338,8 +410,12 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   }
                 />
                 <AutocompleteStyledV2
+<<<<<<< HEAD
                   freeSolo
                   options={allTeacherNames}
+=======
+                  options={teacherNames}
+>>>>>>> source-repo/main
                   value={teacher}
                   onChange={handleTeacherChange}
                   renderInput={(params) => (
@@ -428,6 +504,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             </div>
 
             <div className="flex items-center gap-sm">
+<<<<<<< HEAD
               <ButtonStyled
                 variant="contained"
                 color="purpleBlue"
@@ -438,6 +515,77 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   <span>Создать группу</span>
                 </div>
               </ButtonStyled>
+=======
+              {selectedGroupIds.length <= 0 ? (
+                  <>
+                    <ButtonStyled
+                      onClick={() => setIsGrid(!isGrid)}
+                      variant="contained"
+                      sx={{
+                        color: 'white',
+                        backgroundColor: 'white',
+                        '&:hover': {
+                          backgroundColor: 'white',
+                        },
+                      }}
+                    >
+                      <div className="flex items-center gap-x3s">
+                        {isGrid ? <Icons.ListIcon /> : <Icons.List />}
+                      </div>
+                    </ButtonStyled>
+                      <ButtonStyled variant="contained" color="purpleBlue" onClick={handleClickOpen}>
+                        <div className="flex items-center gap-x3s">
+                          <Icons.AddCircle  />
+                          <span>Добавить группу</span>
+                        </div>
+                      </ButtonStyled>
+                  </>
+                ) : (
+                  <Box className="flex flex-row items-center" gap="25px">
+                    <Box className="flex flex-row" gap="5px">
+                      <Icons.ListSelected />
+                      <TypographyStyled sx={{ color: "#6574D8", fontSize: "14px"}}>
+                        Выбрано {selectedGroupIds.length}
+                      </TypographyStyled>
+                    </Box>
+                    <Box className="flex flex-row items-center" gap="5px" >
+                      <ButtonStyled
+                        variant="contained"
+                        onClick={() => setSelectedGroupIds([])}
+                        sx={{
+                          color: '#6574D8',
+                          border: '1px solid #6574D8',
+                          backgroundColor: 'white',
+                          width:"100px",
+                          paddingX:"20px",
+                          paddingY:"10px",
+                          fontSize:"14px",
+                          '&:hover': {
+                            backgroundColor: 'white',
+                          },
+                        }}>
+                        Отменить
+                      </ButtonStyled>
+                      <ButtonStyled
+                        variant="contained"
+                        sx={{
+                          color: 'white',
+                          backgroundColor: '#6574D8',
+                          width:"100px",
+                          paddingX:"20px",
+                          paddingY:"10px",
+                          fontSize:"14px",
+                          '&:hover': {
+                            backgroundColor: '#6574D8',
+                          },
+                        }}
+                        onClick={() => handleDeleteSelectedGroups(selectedGroupIds)}>
+                        Удалить
+                      </ButtonStyled>
+                    </Box>
+                  </Box>
+                )}
+>>>>>>> source-repo/main
             </div>
           </div>
           <Box>
@@ -589,9 +737,16 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             maxHeight: "100%",
             paddingRight: "32px",
             overflowY: "auto",
+<<<<<<< HEAD
           }}
         >
           <Grid
+=======
+            overflowY: `${!isGrid ? "auto" : "hidden"}`,
+          }}
+        >
+         {!isGrid ? <Grid
+>>>>>>> source-repo/main
             container
             justifyContent="start"
             rowSpacing={"18px"}
@@ -603,7 +758,61 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                 <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
               </Grid>
             ))}
+<<<<<<< HEAD
           </Grid>
+=======
+          </Grid> : <Box  className="flex flex-col" backgroundColor="white" border="1px solid #E5E7EB" borderRadius="20px" paddingX="30px" >
+              <Box className="flex flew-row justify-between"  sx={{ paddingY:"15px", paddingRight:"34px", paddingLeft:"51px", background:"#F9F9F9", borderRadius:"29px",
+                          marginRight:"60px", marginLeft:"20px", marginTop:"40px", fontFamily: "Poppins", fontStyle: "normal", fontWeight: "600", fontSize: "11px", textAlign: "center", 
+                          color: "#7D8594", width: "auto" }}>
+                <Box className="flex flex-row justify-between items-center" position="relative"  >
+                  <CustomCheckbox checked={areAllGroupsSelected} onChange={(e) => handleSelectAllGroups(e.target.checked)}/>
+                  <Typography>
+                    Название Группы
+                  </Typography>
+                </Box>
+                <Box className="flex flex-row items-center" position="relative">
+                  <Box width="auto" position="relative" right="495px">
+                    <Typography>
+                      Дата начала
+                    </Typography>
+                  </Box>
+                  <Typography position="relative" right="435px">
+                    Дата завершения
+                  </Typography>
+                  <Typography position="relative" right="365px">
+                    Дни урока
+                  </Typography>
+                  <Typography position="relative" right="305px">
+                    Учитель
+                  </Typography>
+                  <Typography position="relative" right="225px">
+                    Продолжительность
+                  </Typography>
+                  <Typography position="relative" right="140px">
+                    Кабинет
+                  </Typography>
+                  <Typography position="relative" right="55px">
+                    Учеников
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ position:"relative", overflowX:"hidden", overflowY:"scroll", marginBottom:"15px", maxHeight:"75vh" }}>
+              {filteredGroups.map((group, i)  => (
+                <GroupsList
+                  keyId={i}  
+                  {...group}
+                  handleDeleteGroup={handleDeleteGroup}
+                  selectedGroupIds={selectedGroupIds} 
+                  handleSelectGroup={handleSelectGroup} 
+                  handleSelectAllGroups={handleSelectAllGroups}
+                  areAllGroupsSelected={areAllGroupsSelected} 
+                  />
+              ))}
+              </Box>
+            </Box> 
+          }
+>>>>>>> source-repo/main
         </div>
       </Main>
 

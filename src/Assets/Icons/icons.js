@@ -86,8 +86,20 @@ import { ReactComponent as LinkedinLogo } from "./svgs/linkedinLogo.svg";
 import { ReactComponent as TelegramLogo } from "./svgs/telegramLogo.svg";
 import { ReactComponent as WhatsappLogo } from "./svgs/whatsappLogo.svg";
 import { ReactComponent as InstagramLogo } from "./svgs/instagramLogo.svg";
+<<<<<<< HEAD
 
 export const Icons = {
+=======
+import { ReactComponent as ListIcon } from "./svgs/listIcon.svg";
+import { ReactComponent as Add } from "./svgs/add.svg";
+import { ReactComponent as PLayMaterial } from "./svgs/playMaterial.svg";
+import { ReactComponent as List } from "./svgs/list.svg";
+import { ReactComponent as ListSelected } from "./svgs/listSelected.svg";
+import { ReactComponent as ThreeDotsHor } from "./svgs/threeDotsHor.svg";
+
+export const Icons = {
+  Add,
+>>>>>>> source-repo/main
   ArrowD,
   ArrowDBold,
   ArrowUBold,
@@ -176,4 +188,12 @@ export const Icons = {
   TelegramLogo,
   WhatsappLogo,
   InstagramLogo,
+<<<<<<< HEAD
+=======
+  ListIcon,
+  PLayMaterial,
+  List,
+  ListSelected,
+  ThreeDotsHor,
+>>>>>>> source-repo/main
 };
