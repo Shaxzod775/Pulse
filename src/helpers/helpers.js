@@ -83,6 +83,7 @@ export function getSocialIconByName(name) {
 export const getIconByGender = (gender, Icon1, Icon2) => {
   return gender.toLowerCase() === "male" ? Icon1 : Icon2;
 };
+<<<<<<< HEAD
 
 // for custom hook useInput, in particular for the part where you use changeInput with your own string: changeInput(createEventWithValue("your own string"))
 export const createEventWithValue = (value) => {
@@ -92,3 +93,5 @@ export const createEventWithValue = (value) => {
     },
   };
 };
+=======
+>>>>>>> source-repo/main

@@ -12,9 +12,15 @@ import * as routes from "../../Constants/routes";
 import api from "../../Core/api";
 import { useGlobal } from "../../Core/global";
 
+<<<<<<< HEAD
 const Logo = require("../../Assets/Images/Logo.png");
 const LogoClosed = require("../../Assets/Images/LogoClosed.png");
 const LogoScanning = require("../../Assets/Images/LogoScanning.png");
+=======
+const SignInLogo = require("../../Assets/Images/SignIn.png");
+const ThreeTriangles = require("../../Assets/Images/ThreeTriangles.png");
+const Sun = require("../../Assets/Images/Sun.png");
+>>>>>>> source-repo/main
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +48,7 @@ const SignIn = () => {
   
   return (
     <div className={styles["SignIn"]}>
+<<<<<<< HEAD
       <div className={styles["signIn-box"]}>
         <div className={styles["logo"]}>
           <img src={showPassword ? Logo : LogoClosed} alt="Logo" />
@@ -51,12 +58,31 @@ const SignIn = () => {
           <div className={`${styles["text-input"]}`}>
             <div className={styles["label"]}>Почта</div>
             <TextField
+=======
+      <div className={styles["SignIn-Container"]}>
+        <div className={styles["SignIn-Box"]}>
+            <div className={styles["icons"]}>
+              <img src={ThreeTriangles} alt="ThreeTriangles" />
+              <img src={Sun} alt="Sun" />
+            </div>
+          <h1>Войти в Систему</h1>
+         <div className={styles["form"]}>
+          <div className={`${styles["text-input"]}`}>
+          <TextField
+>>>>>>> source-repo/main
               id="outlined-required"
               type="email"
               autoComplete="current-password"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+<<<<<<< HEAD
               sx={{
+=======
+              placeholder="Введите почту"
+              sx={{
+                width: "100%",
+                marginBottom: "15px",
+>>>>>>> source-repo/main
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
                   "& .MuiInputBase-input": {
@@ -65,6 +91,7 @@ const SignIn = () => {
                 },
               }}
             />
+<<<<<<< HEAD
           </div>
           {/* <div className={`${styles["text-input"]}`}>
             <div className={styles["label"]}>Пароль</div>
@@ -84,13 +111,21 @@ const SignIn = () => {
           </div> */}
           <div className={`${styles["text-input"]}`}>
             <div className={styles["label"]}>Пароль</div>
+=======
+>>>>>>> source-repo/main
             <TextField
               id="outlined-password-input"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+<<<<<<< HEAD
               sx={{
+=======
+              placeholder="Введите пароль"
+              sx={{
+                width: "100%",
+>>>>>>> source-repo/main
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
                   "& .MuiInputBase-input": {
@@ -113,6 +148,7 @@ const SignIn = () => {
               }}
             />
           </div>
+<<<<<<< HEAD
           <Button
             variant="contained"
             onClick={handleSignIn}
@@ -147,6 +183,31 @@ const SignIn = () => {
           Copyright © 2024. Все права защищены.
         </div>
       </div>
+=======
+         </div> 
+         <Button 
+          variant="contained"
+          onClick={handleSignIn}
+          sx={{
+            backgroundColor: "#6574D8",
+            borderRadius: "12px",
+            padding: "10px",
+            "&:hover": {
+              backgroundColor: "#6574D8",
+            }
+          }}
+          >
+          Войти
+         </Button>
+         <Link to={routes.HOME} className={styles["forgot-password"]}>    
+            <div>Забыли Пароль?</div>
+         </Link>
+        </div>
+        <div className={styles['SignIn-ImageBox']}>
+          <img src={SignInLogo} alt="SignInLogo" />
+        </div>
+      </div>     
+>>>>>>> source-repo/main
     </div>
   );
 };

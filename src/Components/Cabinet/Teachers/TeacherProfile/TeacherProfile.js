@@ -763,7 +763,11 @@ const TeacherProfile = ({ handleDeleteTeacher }) => {
                                 displayType="text" // Set to "input" if you want an input field
                                 thousandSeparator=" "
                               />{" "}
+<<<<<<< HEAD
                               сўм
+=======
+                              UZS
+>>>>>>> source-repo/main
                             </CardText>
                           </InfoLine>
                         </ButtonStyled>
@@ -771,6 +775,7 @@ const TeacherProfile = ({ handleDeleteTeacher }) => {
                     </div>
                   </div>
                   <div>
+<<<<<<< HEAD
                     <Link
                       to={
                         routes.CABINET +
@@ -790,6 +795,18 @@ const TeacherProfile = ({ handleDeleteTeacher }) => {
                         </div>
                       </DialogButton>
                     </Link>
+=======
+                    <DialogButton
+                      variant="contained"
+                      color="purpleBlue"
+                      // onClick={handleClickOpen}
+                    >
+                      <div className="flex items-center gap-x3s">
+                        <Icons.PenNewSquare />
+                        <span>Изменить</span>
+                      </div>
+                    </DialogButton>
+>>>>>>> source-repo/main
                   </div>
                 </div>
               </Card>

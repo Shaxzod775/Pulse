@@ -23,10 +23,17 @@ const RevenueHeader = ({ activeTime, setActiveTime, month, setMonth }) => {
     <div className={styles.header}>
       {/* Implement your header content here */}
       <div className={styles.title}>Доход 2023</div>
+<<<<<<< HEAD
       {/* <p>4.765.000 сўм + 36% (2022)</p> */}
       <div className={styles.headerContent}>
         <div className={styles["value-box"]}>
           <div className={styles.value}>4 765 000 сўм</div>
+=======
+      {/* <p>4.765.000 UZS + 36% (2022)</p> */}
+      <div className={styles.headerContent}>
+        <div className={styles["value-box"]}>
+          <div className={styles.value}>4 765 000 UZS</div>
+>>>>>>> source-repo/main
           <div
             className={`${styles.change} ${
               change >= 1 ? styles.increase : styles.decrease

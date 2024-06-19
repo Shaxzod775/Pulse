@@ -261,7 +261,11 @@ export const GroupsCard = ({ status = "active" }) => {
             <Icons.Bill />
             <div>
               <Typography>Стоимость для студента:</Typography>
+<<<<<<< HEAD
               <Typography>1 000 000 сўм</Typography>
+=======
+              <Typography>1 000 000 UZS</Typography>
+>>>>>>> source-repo/main
             </div>
           </GroupCardInfoLine>
         </div>
@@ -328,6 +332,7 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
     console.log(student);
   }, [id]);
 
+<<<<<<< HEAD
   const uniqueContacts = useMemo(() => {
     let unique = [];
     if (student && student.contacts) {
@@ -340,6 +345,8 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
     return unique;
   }, [student]);
 
+=======
+>>>>>>> source-repo/main
   const persoalInfoContent = useMemo(() => {
     if (!student) {
       return "Loading...";
@@ -466,6 +473,7 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                     >
                       Телефоны родителей
                     </TypographyStyled>
+<<<<<<< HEAD
                     {uniqueContacts.length === 0 ? (
                       <TypographyStyled>Н/Д</TypographyStyled>
                     ) : (
@@ -474,6 +482,13 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                           title="Фамилия Имя Очество Родителя"
                           key={parentContact.id}
                         >
+=======
+                    {student.contacts.length === 0 ? (
+                      <TypographyStyled>Н/Д</TypographyStyled>
+                    ) : (
+                      student.contacts.map((parentContact, i) => (
+                        <InfoItem title="Фамилия Имя Очество Родителя" key={i}>
+>>>>>>> source-repo/main
                           <Typography>{parentContact.name}</Typography>
                           <Box className="flex items-center" columnGap="4px">
                             <Typography>
@@ -594,7 +609,11 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                           </PaymentInfoLine>
                           <PaymentInfoLine>
                             <Icons.Bill />
+<<<<<<< HEAD
                             <span>1 000 000 сўм</span>
+=======
+                            <span>1 000 000 UZS</span>
+>>>>>>> source-repo/main
                           </PaymentInfoLine>
                           <PaymentInfoLine>
                             <Icons.Messages />
@@ -1051,7 +1070,11 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                                 displayType="text" // Set to "input" if you want an input field
                                 thousandSeparator=" "
                               />{" "}
+<<<<<<< HEAD
                               сўм
+=======
+                              UZS
+>>>>>>> source-repo/main
                             </CardText>
                           </InfoLine>
                         </ButtonStyled>
@@ -1060,11 +1083,15 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
                   </div>
                   <div>
                     <Link
+<<<<<<< HEAD
                       to={
                         routes.CABINET +
                         routes.STUDENTS +
                         routes.getEditPath(student.id)
                       }
+=======
+                      to={routes.CABINET + routes.STUDENTS + routes.NEW}
+>>>>>>> source-repo/main
                       className="link"
                     >
                       <DialogButton

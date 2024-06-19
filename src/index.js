@@ -4,17 +4,26 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+<<<<<<< HEAD
 import { Provider } from "react-redux";
 import { store } from "./store";
+=======
+>>>>>>> source-repo/main
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+<<<<<<< HEAD
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
+=======
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+>>>>>>> source-repo/main
   </React.StrictMode>
 );
 
