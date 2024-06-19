@@ -45,7 +45,7 @@ export const deleteCourse = createAsyncThunk(
 );
 
 const coursesSlice = createSlice({
-  name: "teachers",
+  name: "courses",
   initialState,
   reducers: {},
   extraReducers(builder) {
