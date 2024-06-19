@@ -1,0 +1,15 @@
+.circles {
+  width: 100%; /* or some specific dimension */
+  height: 100%; /* or some specific dimension */
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.circles > * {
+  max-width: min-content !important;
+}
+
+.circles > * > svg {
+  width: min-content !important;
+}
