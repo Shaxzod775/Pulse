@@ -1,0 +1,25 @@
+.lessons {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.title {
+  flex: 0.5;
+  color: #1c274c;
+  font-size: 1.4rem; /* Adjust the size as needed */
+  font-weight: 1000;
+}
+
+.circles {
+  flex: 3;
+  /* Additional styling for the circular progress bars */
+}
+
+.progress {
+  flex: 2;
+  margin-left: 20px;
+  /* Additional styling for the progress bars */
+}
