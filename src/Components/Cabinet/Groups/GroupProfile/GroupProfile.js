@@ -226,11 +226,8 @@ const GroupProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [group, setGroup] = useState(null);
-<<<<<<< HEAD
-=======
   const [material, setMaterial] = useState([{name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}, {name: "UX/UI - Figma это база", file:  "figma_база.mp4", uploadDate: {time: "13:23", date: "15.02.2024"}}]);
   const [discPrice, setDiscPrice] = useState([{fullname: "Usmonov Shaxzod Dilshodovich", phoneNumber: "+998900331533", reason: "Выйграл конкурсе"}, {fullname: "Anita Choy Chombitovna", phoneNumber: "+998900331533", reason: "Выйграл конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}, {fullname: "Cameron Williamson Williamson", phoneNumber: "+998900331533", reason: "Выйграл в конкурсе"}]);
->>>>>>> source-repo/main
 
   const [activeTab, setActiveTab] = useState(0);
   const [selectedGroup, changeSelectedGroup] = useInput("0");
@@ -452,8 +449,6 @@ const GroupProfile = () => {
     );
   }, [group]);
 
-<<<<<<< HEAD
-=======
   const materials = useMemo(() => {
     if (!group) {
       return "Loading...";
@@ -643,7 +638,6 @@ const GroupProfile = () => {
   }
 );
 
->>>>>>> source-repo/main
   const groupsContent = useMemo(
     () => <div className="flex flex-wrap gap-lg"></div>,
     []
@@ -651,11 +645,7 @@ const GroupProfile = () => {
 
   const emptyElement = <></>;
   const tabContents = useMemo(
-<<<<<<< HEAD
-    () => [attendanceContent, groupsContent, emptyElement, emptyElement],
-=======
     () => [attendanceContent, materials, discountPrice, groupsContent, emptyElement, emptyElement],
->>>>>>> source-repo/main
     [attendanceContent]
   );
 
@@ -843,11 +833,7 @@ const GroupProfile = () => {
                             displayType="text" // Set to "input" if you want an input field
                             thousandSeparator=" "
                           />{" "}
-<<<<<<< HEAD
-                          сўм
-=======
                           UZS
->>>>>>> source-repo/main
                         </TypographyStyled>
                       </Box>
                       <Box className="flex justify-between items-center">
@@ -864,11 +850,7 @@ const GroupProfile = () => {
                             displayType="text" // Set to "input" if you want an input field
                             thousandSeparator=" "
                           />{" "}
-<<<<<<< HEAD
-                          сўм
-=======
                           UZS
->>>>>>> source-repo/main
                         </TypographyStyled>
                       </Box>
                     </Box>
@@ -892,11 +874,7 @@ const GroupProfile = () => {
                       displayType="text" // Set to "input" if you want an input field
                       thousandSeparator=" "
                     />{" "}
-<<<<<<< HEAD
-                    сўм
-=======
                     UZS
->>>>>>> source-repo/main
                   </Typography>
                 </Box>
               </ButtonStyled>

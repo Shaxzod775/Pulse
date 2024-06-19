@@ -44,22 +44,9 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import LeadCard from "../LeadCard/LeadCard";
 import { BorderColor, Widgets } from "@mui/icons-material";
 import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
-<<<<<<< HEAD
-import {
-  leadSources,
-  leadStatuses,
-  leadStatusesEnumToText,
-  leadStatusesTextToEnum,
-} from "../../../../Constants/testData";
-import useDebounce from "../../../../hooks/useDebounce";
-import useCounter from "../../../../hooks/useCounter";
-import { useSelector } from "react-redux";
-import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
-=======
 import { leadSources, leadStatuses } from "../../../../Constants/testData";
 import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
->>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -132,10 +119,6 @@ const StatusTitle = ({ status, leadsAmount }) => {
 const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
 const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
-<<<<<<< HEAD
-  const allCourseNames = useSelector(selectAllCourseNames);
-=======
->>>>>>> source-repo/main
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -185,38 +168,6 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
     setSelectedLeadSources(["0"]);
   };
 
-<<<<<<< HEAD
-  const handleLeadSourceFilter = (selectedLeadSources, currentLeads) => {
-    if (selectedLeadSources.length === 1 && selectedLeadSources[0] === "0") {
-      return currentLeads;
-    } else {
-      const filtered = currentLeads.filter((lead) =>
-        selectedLeadSources.includes(lead.source)
-      );
-      return filtered;
-    }
-  };
-
-  const handleCoursesSelectFilter = (selectedCourseNames, currentLeads) => {
-    if (selectedCourseNames.length > 0) {
-      const filtered = currentLeads.filter((lead) =>
-        selectedCourseNames.includes(lead.course.name)
-      );
-      return filtered;
-    } else {
-      return currentLeads;
-    }
-  };
-
-  const handleLeadStatusFilter = (selectedLeadStatuses, currentLeads) => {
-    if (selectedLeadStatuses.length === 0) {
-      return currentLeads;
-    } else {
-      const filtered = currentLeads.filter((lead) =>
-        selectedLeadStatuses.includes(lead.statusEnum)
-      );
-      return filtered;
-=======
   const handleLeadSourceFilter = (selectedLeadSources) => {
     if (selectedLeadSources.length === 1 && selectedLeadSources[0] === "0") {
       setFilteredLeads(leads);
@@ -225,7 +176,6 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
         selectedLeadSources.includes(lead.source)
       );
       setFilteredLeads(filtered);
->>>>>>> source-repo/main
     }
   };
 
@@ -251,30 +201,10 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   useDebounce(
     () => {
-<<<<<<< HEAD
-      let filtered = leads;
-      if (
-        selectedLeadSources.length !== 0 &&
-        !(selectedLeadSources.length === 1 && selectedLeadSources[0] === "0")
-      ) {
-        filtered = handleLeadSourceFilter(selectedLeadSources, filtered);
-      }
-      if (selectedCourses.length > 0) {
-        filtered = handleCoursesSelectFilter(selectedCourses, filtered);
-      }
-      if (selectedStatuses.length > 0) {
-        filtered = handleLeadStatusFilter(selectedStatuses, filtered);
-      }
-      setFilteredLeads(filtered);
-    },
-    1000,
-    [selectedLeadSources, selectedCourses, selectedStatuses, leads]
-=======
       handleLeadSourceFilter(selectedLeadSources);
     },
     1000,
     [selectedLeadSources]
->>>>>>> source-repo/main
   );
 
   useEffect(() => setFilteredLeads(leads), [leads]);
@@ -324,22 +254,12 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   onChange={handleChangeMultipleSelect(setSelectedStatuses)}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
-<<<<<<< HEAD
-                      // if (selected.length === leadSources.length) {
-                      //   return "";
-                      // }
-                      return "..."; // Render "..." if multiple courses are selected
-                    }
-
-                    return leadStatusesEnumToText[selected];
-=======
                       if (selected.length === leadSources.length) {
                         return "";
                       }
                       return "..."; // Render "..." if multiple courses are selected
                     }
                     return selected;
->>>>>>> source-repo/main
                   }}
                   IconComponent={
                     Boolean(anchorStatus) ? Icons.ArrowUBold : Icons.ArrowDBold
@@ -356,19 +276,9 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   }}
                 >
                   {leadStatuses.map((status, i) => (
-<<<<<<< HEAD
-                    <MenuItem value={leadStatusesTextToEnum[status]} key={i}>
-                      <CustomCheckbox
-                        checked={
-                          selectedStatuses.indexOf(
-                            leadStatusesTextToEnum[status]
-                          ) > -1
-                        }
-=======
                     <MenuItem value={status} key={i}>
                       <CustomCheckbox
                         checked={selectedStatuses.indexOf(status) > -1}
->>>>>>> source-repo/main
                       />
                       <ListItemText primary={status} />
                     </MenuItem>
@@ -391,11 +301,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   <Icons.NotebookBookmark color="#b4b7c3" />
                   <span style={{ margin: "0 -8px 0 8px", color: "#1C274C" }}>
                     {(selectedCourses.length < 1 ||
-<<<<<<< HEAD
-                      selectedCourses.length === allCourseNames.length) &&
-=======
                       selectedCourses.length === courses.length) &&
->>>>>>> source-repo/main
                       "Все курсы"}
                   </span>
                 </label>
@@ -407,11 +313,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                   onChange={handleChangeMultipleSelect(setSelectedCourses)}
                   renderValue={(selected) => {
                     if (selected.length > 1) {
-<<<<<<< HEAD
-                      if (selected.length === allCourseNames.length) {
-=======
                       if (selected.length === courses.length) {
->>>>>>> source-repo/main
                         return "";
                       }
                       return "..."; // Render "..." if multiple courses are selected
@@ -432,20 +334,13 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
                     "& > svg": { transform: "none !important" },
                   }}
                 >
-<<<<<<< HEAD
-                  {allCourseNames.map((course, i) => (
-=======
                   {courses.map((course, i) => (
->>>>>>> source-repo/main
                     <MenuItem value={course} key={i}>
                       <CustomCheckbox
                         checked={selectedCourses.indexOf(course) > -1}
                       />
                       <ListItemText primary={course} />
-<<<<<<< HEAD
-=======
                       {/* {course} */}
->>>>>>> source-repo/main
                     </MenuItem>
                   ))}
                 </SelectStyled>

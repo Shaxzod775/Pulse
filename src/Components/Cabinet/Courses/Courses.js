@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import {
-=======
 import * as routes from "../../../Constants/routes";
 import {
   Box,
->>>>>>> source-repo/main
   Button,
   Grid,
   IconButton,
@@ -23,11 +19,8 @@ import {
   Root,
   Title,
   SelectStyled,
-<<<<<<< HEAD
-=======
   TypographyStyled,
   CustomCheckbox,
->>>>>>> source-repo/main
 } from "../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -35,12 +28,8 @@ import { v4 as uuidv4 } from "uuid";
 import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
 import { Icons } from "../../../Assets/Icons/icons";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-=======
 import { useNavigate, Link } from "react-router-dom";
 import CoursesList from './CoursesList/CoursesList'
->>>>>>> source-repo/main
 import {
   useCourses,
   useCoursesDispatch,
@@ -48,15 +37,6 @@ import {
 import { addCourse, deleteCourse } from "../../../reducers/courses.reducer";
 
 import api from "../../../Core/api";
-<<<<<<< HEAD
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCourses,
-  selectAllCourses,
-  selectCoursesStatus,
-} from "../../../Slices/coursesSlice";
-=======
->>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -64,8 +44,6 @@ const headerItemStyles = ({ theme }) => ({
   border: "1px solid #E5E7EB",
 });
 
-<<<<<<< HEAD
-=======
 const HeaderDiv = styled("div")(({ theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#fff",
@@ -133,7 +111,6 @@ export function createCourse({
   };
 }
 
->>>>>>> source-repo/main
 const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
   props,
   ref
@@ -164,9 +141,6 @@ NumericFormatCustom.propTypes = {
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
-<<<<<<< HEAD
-  const courses = useSelector(selectAllCourses);
-=======
   const [courses, setCourses] = useState([]);
 
   const [selectedCoursesIds, setSelectedCoursesIds] = useState([]);
@@ -223,7 +197,6 @@ const Courses = () => {
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchCourses();
   }, []); // Пустой массив зависимостей означает, что эффект будет выполняться только один раз при монтировании компонента
->>>>>>> source-repo/main
 
   const navigate = useNavigate();
 
@@ -239,8 +212,6 @@ const Courses = () => {
     setOpen(false);
   };
 
-<<<<<<< HEAD
-=======
   const handleDeleteCourse = async (idToDelete) => {
     const idToDeleteQuoted = `"${idToDelete}"`;
     console.log(idToDeleteQuoted);
@@ -257,7 +228,6 @@ const Courses = () => {
     }
   };
 
->>>>>>> source-repo/main
   return (
     <Root
     // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
@@ -277,20 +247,6 @@ const Courses = () => {
           </div>
 
           <div className="flex items-center gap-sm">
-<<<<<<< HEAD
-            <ButtonStyled
-              variant="contained"
-              color="purpleBlue"
-              onClick={handleClickOpen}
-            >
-              <div className="flex items-center gap-xs">
-                <Icons.AddCircle />
-                <span>Создать курс</span>
-              </div>
-            </ButtonStyled>
-          </div>
-        </div>
-=======
             {selectedCoursesIds.length <= 0 ? (
                   <>
                     <ButtonStyled
@@ -370,24 +326,16 @@ const Courses = () => {
             boxShadow: "none",
           }}
         > */}
->>>>>>> source-repo/main
         <div
           style={{
             flexGrow: "1",
             // maxHeight: "100%",
             paddingRight: "32px",
-<<<<<<< HEAD
-            overflowY: "auto",
-          }}
-        >
-          <Grid
-=======
             overflowY: "hidden",
             overflowX: "hidden",
           }}
         >
          {!isGrid ? <Grid
->>>>>>> source-repo/main
             container
             justifyContent="start"
             columnSpacing={"32px"}
@@ -396,16 +344,6 @@ const Courses = () => {
           >
             {courses.map((course, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
-<<<<<<< HEAD
-                <CourseCard {...course} />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      </Main>
-
-      <NewCourseDialog open={open} handleClose={handleClose} />
-=======
                 <CourseCard
                   {...course}
                   handleDeleteCourse={handleDeleteCourse}
@@ -467,7 +405,6 @@ const Courses = () => {
         handleAddCourse={handleAddCourse}
         courses={courses}
       />
->>>>>>> source-repo/main
     </Root>
   );
 };

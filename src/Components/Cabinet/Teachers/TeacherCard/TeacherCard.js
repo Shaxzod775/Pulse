@@ -28,11 +28,6 @@ import {
   getIconByGender,
   getRussianWord,
 } from "../../../../helpers/helpers";
-<<<<<<< HEAD
-import { useDispatch } from "react-redux";
-import { deleteTeacher } from "../../../../Slices/teachersSlice";
-=======
->>>>>>> source-repo/main
 
 const TeacherCard = ({
   id,
@@ -41,24 +36,11 @@ const TeacherCard = ({
   phoneNumber,
   gender,
   secondPhoneNumber,
-<<<<<<< HEAD
-}) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleDeleteTeacher = () => {
-    dispatch(deleteTeacher(id));
-  };
-
-=======
   handleDeleteTeacher,
 }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
->>>>>>> source-repo/main
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -148,14 +130,10 @@ const TeacherCard = ({
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose} disableRipple>
-<<<<<<< HEAD
-                <ButtonStyled color="crimson" onClick={handleDeleteTeacher}>
-=======
                 <ButtonStyled
                   color="crimson"
                   onClick={() => handleDeleteTeacher(id)}
                 >
->>>>>>> source-repo/main
                   <Icons.TrashCan />
                   <TypographyStyled fontWeight={400}>
                     Удалить из списка

@@ -7,11 +7,6 @@ import NewTeacher from "./NewTeacher/NewTeacher";
 import TeacherProfile from "./TeacherProfile/TeacherProfile";
 
 import api from "../../../Core/api";
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-import { selectAllTeachers } from "../../../Slices/teachersSlice";
-=======
->>>>>>> source-repo/main
 
 const teacherNames = [
   "Koptleulov Arslan",
@@ -20,15 +15,6 @@ const teacherNames = [
   "Muhammad Matchonov",
 ];
 
-<<<<<<< HEAD
-const Teachers = () => {
-  return (
-    <Routes>
-      <Route path={routes.HOME} element={<TeachersMain />} />
-      <Route path={routes.PROFILE} element={<TeacherProfile />} />
-      <Route path={routes.NEW} element={<NewTeacher />} />
-      <Route path={routes.EDIT} element={<NewTeacher />} />
-=======
 export function createTeacher({
   id = uuidv4(),
   name = "Eshmatov Toshmat",
@@ -106,7 +92,6 @@ const Teachers = () => {
         path={routes.NEW}
         element={<NewTeacher fetchTeachers={fetchTeachers} />}
       />
->>>>>>> source-repo/main
       <Route
         path="*"
         element={<Navigate to={routes.CABINET + routes.TEACHERS} replace />}

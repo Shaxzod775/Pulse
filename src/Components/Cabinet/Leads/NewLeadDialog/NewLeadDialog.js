@@ -41,14 +41,7 @@ import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
 import { createLead } from "../Leads";
 import Dropzone from "react-dropzone";
-<<<<<<< HEAD
-import {
-  calculateMonthDifference,
-  createEventWithValue,
-} from "../../../../helpers/helpers";
-=======
 import { calculateMonthDifference } from "../../../../helpers/helpers";
->>>>>>> source-repo/main
 import { useCourses } from "../../../../contexts/Courses.context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -67,14 +60,6 @@ import {
 import useToggle from "../../../../hooks/useToggle";
 
 import api from "../../../../Core/api";
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-import {
-  selectAllCourseNames,
-  selectCourseByName,
-} from "../../../../Slices/coursesSlice";
-=======
->>>>>>> source-repo/main
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -108,11 +93,8 @@ const teacherNames = [
 ];
 
 const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
-<<<<<<< HEAD
-=======
   const { courses, findCourseByName, allCourseNames } = useCourses();
 
->>>>>>> source-repo/main
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -129,11 +111,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
 
   const [leadSource, setLeadSource] = useState("");
 
-<<<<<<< HEAD
-  const [selectedCourseName, changeSelectedCourseName] = useInput(null);
-=======
   const [selectedCourseNames, setSelectedCourseNames] = useState([]);
->>>>>>> source-repo/main
 
   const [courseLanguages, setCourseLanguages] = useState([]);
 
@@ -141,12 +119,6 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
 
   const [selectedStatus, changeSelectedStatus] = useInput("");
 
-<<<<<<< HEAD
-  const allCourseNames = useSelector(selectAllCourseNames);
-  const selectedCourse = useSelector(selectCourseByName(selectedCourseName));
-
-=======
->>>>>>> source-repo/main
   const handleChangeName = (event, setter, setHelperText) => {
     const { value } = event.target;
     if (/^[a-zA-Z\s]*$/.test(value)) {
@@ -201,11 +173,6 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
     setLeadSource(newValue);
   };
 
-<<<<<<< HEAD
-  // Function to handle change in subject selection
-  const handleCourseChange = (event, newValue) => {
-    changeSelectedCourseName(createEventWithValue(newValue));
-=======
   const handleChangeCourses = (event) => {
     const {
       target: { value },
@@ -214,7 +181,6 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
->>>>>>> source-repo/main
   };
 
   const handleChangeCourseLanguages = (event) => {
@@ -249,11 +215,7 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
       secondPhoneNumber: additionalPhoneNumber,
       comment: comment,
       source: leadSource,
-<<<<<<< HEAD
-      course_id: selectedCourse.id,
-=======
       course_id: "0c745667-1918-4e7a-a996-a7832089a374",
->>>>>>> source-repo/main
       statusEnum: selectedStatus,
       langEnum: "UZ",
     };
@@ -424,29 +386,6 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
               </div>
               <div className="flex gap-lg">
                 <FormControl required fullWidth variant="outlined">
-<<<<<<< HEAD
-                  <FormLabelStyled>Курс</FormLabelStyled>
-                  <AutocompleteStyled
-                    options={allCourseNames}
-                    value={selectedCourseName}
-                    onChange={handleCourseChange}
-                    renderInput={(params) => (
-                      <AutocompleteField
-                        {...params}
-                        required
-                        id="subject"
-                        variant="outlined"
-                        placeholder="Выберите курс"
-                      />
-                    )}
-                    popupIcon={
-                      <Icons.ArrowD color={theme.typography.color.darkBlue} />
-                    }
-                    clearIcon={
-                      <Icons.Delete color={theme.typography.color.darkBlue} />
-                    }
-                  />
-=======
                   <FormLabelStyled>Курсы</FormLabelStyled>
                   <Select
                     multiple
@@ -468,7 +407,6 @@ const NewLeadDialog = ({ open, handleClose, handleAddLead, ...otherProps }) => {
                       </MenuItem>
                     ))}
                   </Select>
->>>>>>> source-repo/main
                 </FormControl>
                 <FormControl required fullWidth variant="outlined">
                   <FormLabelStyled>Язык курса</FormLabelStyled>

@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useInRouterContext, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
-<<<<<<< HEAD
-=======
   Box,
->>>>>>> source-repo/main
   Grid,
   IconButton,
   InputBase,
@@ -14,10 +11,7 @@ import {
   Paper,
   Select,
   styled,
-<<<<<<< HEAD
-=======
   Typography,
->>>>>>> source-repo/main
 } from "@mui/material";
 import {
   theme,
@@ -29,10 +23,7 @@ import {
   selectStylesV2,
   customMenuProps,
   CustomCheckbox,
-<<<<<<< HEAD
-=======
   TypographyStyled,
->>>>>>> source-repo/main
 } from "../../CabinetStyles";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
@@ -43,13 +34,7 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
-import { selectAllTeachers } from "../../../../Slices/teachersSlice";
-=======
 import TeachersList from "../TeachersList/TeachersList"
->>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -119,12 +104,7 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-<<<<<<< HEAD
-const TeachersMain = () => {
-  const teachers = useSelector(selectAllTeachers);
-=======
 const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
->>>>>>> source-repo/main
   const navigate = useNavigate();
   const { allCourseNames } = useCourses();
 
@@ -136,8 +116,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
 
   const [selectedCourses, setSelectedCourses] = useState(["0"]);
 
-<<<<<<< HEAD
-=======
   const [selectedTeacherIds, setSelectedTeacherIds] = useState([]);
 
   const [anchorThreeDots, setAnchorThreeDots] = useState(null);
@@ -171,7 +149,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
 
   const areAllTeachersSelected = filteredTeachers.length > 0 && selectedTeacherIds.length === filteredTeachers.length;
 
->>>>>>> source-repo/main
   const handleClearFilters = () => {
     resetTeacherSearch();
     setSelectedTeacherStatuses(["0"]);
@@ -202,10 +179,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
     });
     setFilteredTeacheres(filtered);
   };
-<<<<<<< HEAD
-=======
   const [isGrid, setIsGrid] = useState(false);
->>>>>>> source-repo/main
 
   const goBack = () => {
     navigate(-1); // This navigates one step back in history
@@ -327,23 +301,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           </div>
 
           <div className="flex items-center gap-sm">
-<<<<<<< HEAD
-            <Link
-              to={routes.CABINET + routes.TEACHERS + routes.NEW}
-              className="link"
-            >
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                // onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-x3s">
-                  <Icons.UserAdd />
-                  <span>Добавить учителя</span>
-                </div>
-              </ButtonStyled>
-            </Link>
-=======
             {selectedTeacherIds.length <= 0 ? (
                 <>
                   <ButtonStyled
@@ -415,7 +372,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
                   </Box>
                 </Box>
               )}
->>>>>>> source-repo/main
           </div>
         </div>
         <div
@@ -425,11 +381,7 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
             overflowY: "auto",
           }}
         >
-<<<<<<< HEAD
-          <Grid
-=======
          {!isGrid ? <Grid
->>>>>>> source-repo/main
             container
             justifyContent="start"
             // spacing={`${12}px`}
@@ -439,12 +391,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
           >
             {filteredTeachers.map((teacher, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
-<<<<<<< HEAD
-                <TeacherCard {...teacher} />
-              </Grid>
-            ))}
-          </Grid>
-=======
                 <TeacherCard
                   {...teacher}
                   handleDeleteTeacher={handleDeleteTeacher}
@@ -497,7 +443,6 @@ const TeachersMain = ({ teachers, handleDeleteTeacher }) => {
               </Box>
             </Box> 
             }
->>>>>>> source-repo/main
         </div>
       </Main>
     </Root>

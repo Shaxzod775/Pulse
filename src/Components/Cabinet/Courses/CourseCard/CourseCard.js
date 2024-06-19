@@ -22,24 +22,6 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { getRussianWord } from "../../../../helpers/helpers";
-<<<<<<< HEAD
-import { useDispatch } from "react-redux";
-import { deleteCourse } from "../../../../Slices/coursesSlice";
-
-const CourseCard = ({ id, name, duration, price, thumbnail }) => {
-  const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleDeleteCourse = () => {
-    dispatch(deleteCourse(id));
-  };
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-=======
 
 const CourseCard = ({
   id,
@@ -54,7 +36,6 @@ const CourseCard = ({
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
->>>>>>> source-repo/main
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -106,14 +87,10 @@ const CourseCard = ({
                 {/* </Link> */}
               </MenuItem>
               <MenuItem onClick={handleClose} disableRipple>
-<<<<<<< HEAD
-                <ButtonStyled color="crimson" onClick={handleDeleteCourse}>
-=======
                 <ButtonStyled
                   color="crimson"
                   onClick={() => handleDeleteCourse(id)}
                 >
->>>>>>> source-repo/main
                   <Icons.TrashCan />
                   <span>Удалить курс</span>
                 </ButtonStyled>
@@ -155,12 +132,7 @@ const CourseCard = ({
               </TypographyStyled>
             </div>
           </Box>
-<<<<<<< HEAD
-          <Box></Box>
-          {/* <Link className="link full-width">
-=======
           <Link className="link full-width">
->>>>>>> source-repo/main
             <ButtonStyled
               fullWidth
               variant="contained"
@@ -172,11 +144,7 @@ const CourseCard = ({
                 <Typography>Открыть</Typography>
               </div>
             </ButtonStyled>
-<<<<<<< HEAD
-          </Link> */}
-=======
           </Link>
->>>>>>> source-repo/main
         </Box>
       </CardStyled>
     </>

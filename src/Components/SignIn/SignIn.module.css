@@ -2,16 +2,6 @@
   position: relative;
   box-sizing: border-box;
   min-height: 100vh;
-<<<<<<< HEAD
-
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
-  flex-direction: column;
-
-  background-color: #f5f5fb;
-}
-=======
   
   display: flex;
   align-items: center;
@@ -20,73 +10,12 @@
   background-color: #f5f5fb;
 }
 
->>>>>>> source-repo/main
 .SignIn *,
 .SignIn *::before,
 .SignIn *::after {
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-.signIn-box {
-  min-width: 35%;
-  margin: auto;
-  padding: 40px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  background-color: #fff;
-  color: #1c274c;
-  border-radius: 34px;
-  box-shadow: 0px 11px 34px 0px #00000033;
-  transition: all 0.1s ease-in-out;
-}
-@media screen and (max-width: 1439px) {
-  .signIn-box {
-    min-width: 50%;
-  }
-}
-@media screen and (max-width: 767px) {
-  .signIn-box {
-    flex: 1;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-/* @media screen and (max-height: 767px) {
-  .signIn-box {
-    flex: 1;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-} */
-
-.logo {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.logo img {
-  width: 125px;
-  height: 125px;
-}
-.logo-title {
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-=======
 .SignIn-Container {
   min-width: 35%;
   margin: auto;
@@ -167,7 +96,6 @@
   .icons {
     width: 467px;
   }
->>>>>>> source-repo/main
 }
 
 /* Target the autofill */
@@ -195,12 +123,6 @@ input[type="password"]::-ms-reveal {
 .text-input > * {
   width: 100%;
 }
-<<<<<<< HEAD
-.text-input > .label {
-  margin-bottom: 3px;
-}
-=======
->>>>>>> source-repo/main
 
 .forgot-password {
   text-decoration: none;
@@ -210,74 +132,4 @@ input[type="password"]::-ms-reveal {
   color: #2684fc;
 }
 
-<<<<<<< HEAD
-.footer {
-  /* position: absolute; */
-  bottom: 0;
-  width: 100%;
-  padding: 20px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-
-  background-color: #e4e4ec;
-  transition: all 10s ease-in-out;
-}
-@media screen and (max-width: 767px) {
-  .footer {
-    flex-direction: column;
-    /* flex: 2; */
-  }
-}
-@media screen and (max-width: 424px) {
-  .footer {
-    align-items: flex-start;
-  }
-}
-
-.footer-btns {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.75rem;
-  color: #646468;
-}
-@media screen and (max-width: 424px) {
-  .footer-btns {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-.footer-btn {
-  cursor: pointer;
-}
-.footer-divider {
-  margin: 0 1rem;
-  height: 1.2rem;
-  width: 1px;
-  background-color: #d2d2d7;
-}
-@media screen and (max-width: 424px) {
-  .footer-divider {
-    margin: 0.5rem 0;
-    height: 0.1rem;
-    max-height: 5px;
-    width: 2rem;
-  }
-}
-
-.copyright {
-  width: 22px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-@media screen and (max-width: 1439px) {
-  .copyright {
-    width: initial;
-  }
-}
-=======
-
->>>>>>> source-repo/main

@@ -57,17 +57,11 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { useCourses } from "../../../../contexts/Courses.context";
 import useInput from "../../../../hooks/useInput";
 import { teacherNames } from "../../../../Constants/testData";
-<<<<<<< HEAD
-
-import useToggle from "../../../../hooks/useToggle";
-import useDebounce from "../../../../hooks/useDebounce";
-=======
 import StudentsListItem from '../StudentsList/StudentsList';
 
 import useToggle from "../../../../hooks/useToggle";
 import useDebounce from "../../../../hooks/useDebounce";
 import { CheckBoxOutlineBlankRounded } from "@mui/icons-material";
->>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -111,11 +105,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-<<<<<<< HEAD
-  const [anchorThreeDots, setAnchorThreeDots] = useState(null);
-  const threeDotsMenuOpen = Boolean(anchorThreeDots);
-
-=======
   const [selectedStudentIds, setSelectedStudentIds] = useState([]);
 
   const [isGrid, setIsGrid] = useState(false);
@@ -151,7 +140,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const areAllStudentsSelected = filteredStudents.length > 0 && selectedStudentIds.length === filteredStudents.length;
 
->>>>>>> source-repo/main
   const handleClearFilters = () => {
     resetStudent();
     setTeacher("");
@@ -425,23 +413,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             </div>
 
             <div className="flex items-center gap-sm">
-<<<<<<< HEAD
-              <Link to={routes.CABINET + routes.STUDENTS + routes.NEW}>
-                <ButtonStyled variant="contained" color="purpleBlue">
-                  <div className="flex items-center gap-x3s">
-                    <Icons.UserAdd />
-                    <span>Добавить ученика</span>
-                  </div>
-                </ButtonStyled>
-              </Link>
-              {/* <ButtonStyled variant="outlined" color="purpleBlue">
-              <div className="flex items-center gap-x3s">
-                <Icons.InboxIn />
-                <span>Скачать список</span>
-              </div>
-            </ButtonStyled> */}
-
-=======
             {selectedStudentIds.length <= 0 ? (
                       <>
                         <ButtonStyled
@@ -513,7 +484,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                         </Box>
                       </Box>
                     )}
->>>>>>> source-repo/main
               <ButtonStyled
                 onClick={handleClickThreeDots}
                 variant="outlined"
@@ -541,13 +511,8 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   onClick={handleCloseThreeDotsMenu}
                   disableRipple
                 ></MenuItem>
-<<<<<<< HEAD
-              </MenuStyled>
-            </div>
-=======
               </MenuStyled> 
             </div> 
->>>>>>> source-repo/main
           </div>
           <Box>
             <Box
@@ -713,18 +678,11 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
           style={{
             maxHeight: "100%",
             paddingRight: "32px",
-<<<<<<< HEAD
-            overflowY: "auto",
-          }}
-        >
-          <Grid
-=======
             overflowY: `${!isGrid ? "auto" : "hidden"}`,
             overflowX: "hidden",
           }}
         >
          {!isGrid ? <Grid
->>>>>>> source-repo/main
             container
             justifyContent="start"
             columnSpacing={"32px"}
@@ -740,8 +698,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               </Grid>
             ))}
           </Grid>
-<<<<<<< HEAD
-=======
           : <Box className="flex flex-col" backgroundColor="white" border="1px solid #E5E7EB" borderRadius="20px" paddingX="30px" >
               <Box className="flex flew-row justify-between"  sx={{ paddingY:"15px", paddingRight:"34px", paddingLeft:"51px", background:"#F9F9F9", borderRadius:"29px",
                           marginRight:"60px", marginLeft:"20px", marginTop:"40px", fontFamily: "Poppins", fontStyle: "normal",fontWeight: "600", fontSize: "12px", textAlign:  "center", color: "#7D8594" }}>
@@ -784,7 +740,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
               </Box>
             </Box> 
           }
->>>>>>> source-repo/main
         </div>
       </Main>
     </Root>

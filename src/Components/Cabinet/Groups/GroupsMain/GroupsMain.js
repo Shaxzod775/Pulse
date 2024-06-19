@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-=======
 import { useNavigate, Link } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
->>>>>>> source-repo/main
 import {
   Box,
   Button,
@@ -68,17 +64,8 @@ import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
-import {
-  selectTeachersIdNameCombined,
-  selectTeachersName,
-} from "../../../../Slices/teachersSlice";
-=======
 import GroupsList from "../GroupsList/GroupsList";
 
->>>>>>> source-repo/main
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -122,12 +109,7 @@ NumericFormatCustom.propTypes = {
 };
 
 const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
-<<<<<<< HEAD
-  const allCourseNames = useSelector(selectAllCourseNames);
-  const allTeacherNames = useSelector(selectTeachersName);
-=======
   const { allCourseNames } = useCourses();
->>>>>>> source-repo/main
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
@@ -154,8 +136,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-<<<<<<< HEAD
-=======
   const [selectedGroupIds, setSelectedGroupIds] = useState([]);
 
   const [isGrid, setIsGrid] = useState(false);
@@ -188,7 +168,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   }
 
 
->>>>>>> source-repo/main
   const handleClearFilters = () => {
     resetGroupSearch();
     setTeacher("");
@@ -239,50 +218,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     }
   };
 
-<<<<<<< HEAD
-  const handleGroupSearchFilter = (searchInput, currentGroups) => {
-    if (searchInput !== "") {
-      const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
-      const filtered = currentGroups.filter((group) => {
-        const groupName = group.name.toLowerCase().split(" ");
-        return lowerCaseSearchInput.every((input) =>
-          groupName.some((name) => name.includes(input))
-        );
-      });
-      return filtered;
-    } else {
-      return currentGroups;
-    }
-  };
-
-  const handleTeacherSearchFilter = (searchInput, currentGroups) => {
-    if (searchInput !== "") {
-      const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
-      const filtered = currentGroups.filter((group) => {
-        const teacherName =
-          `${group.teacher.lastName} ${group.teacher.firstName} ${group.teacher.middleName}`
-            .toLowerCase()
-            .split(" ");
-        return lowerCaseSearchInput.every((input) =>
-          teacherName.some((name) => name.includes(input))
-        );
-      });
-      return filtered;
-    } else {
-      return currentGroups;
-    }
-  };
-
-  const handleCoursesSelectFilter = (selectedCourseNames, currentGroups) => {
-    if (selectedCourseNames.length > 0) {
-      const filtered = currentGroups.filter((group) =>
-        selectedCourseNames.includes(group.course.name)
-      );
-      return filtered;
-    } else {
-      return currentGroups;
-    }
-=======
   const handleGroupSearchFilter = (searchInput) => {
     const lowerCaseSearchInput = searchInput.toLowerCase().trim().split(" ");
     const filtered = groups.filter((group) => {
@@ -292,7 +227,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
       );
     });
     setFilteredGroups(filtered);
->>>>>>> source-repo/main
   };
 
   const goBack = () => {
@@ -310,22 +244,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   useDebounce(
     () => {
-<<<<<<< HEAD
-      let filtered = groups;
-      if (groupSearch !== "") {
-        filtered = handleGroupSearchFilter(groupSearch, filtered);
-      }
-      if (selectedCourses.length > 0) {
-        filtered = handleCoursesSelectFilter(selectedCourses, filtered);
-      }
-      if (teacher && teacher !== "") {
-        filtered = handleTeacherSearchFilter(teacher, filtered);
-      }
-      setFilteredGroups(filtered);
-    },
-    1000,
-    [groupSearch, teacher, selectedCourses, groups]
-=======
       if (groupSearch !== "") {
         handleGroupSearchFilter(groupSearch);
       } else {
@@ -334,7 +252,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     },
     1000,
     [groupSearch, groups]
->>>>>>> source-repo/main
   );
 
   useEffect(() => {
@@ -410,12 +327,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   }
                 />
                 <AutocompleteStyledV2
-<<<<<<< HEAD
-                  freeSolo
-                  options={allTeacherNames}
-=======
                   options={teacherNames}
->>>>>>> source-repo/main
                   value={teacher}
                   onChange={handleTeacherChange}
                   renderInput={(params) => (
@@ -504,18 +416,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             </div>
 
             <div className="flex items-center gap-sm">
-<<<<<<< HEAD
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-xs">
-                  <Icons.AddCircle />
-                  <span>Создать группу</span>
-                </div>
-              </ButtonStyled>
-=======
               {selectedGroupIds.length <= 0 ? (
                   <>
                     <ButtonStyled
@@ -585,7 +485,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                     </Box>
                   </Box>
                 )}
->>>>>>> source-repo/main
             </div>
           </div>
           <Box>
@@ -737,16 +636,10 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             maxHeight: "100%",
             paddingRight: "32px",
             overflowY: "auto",
-<<<<<<< HEAD
-          }}
-        >
-          <Grid
-=======
             overflowY: `${!isGrid ? "auto" : "hidden"}`,
           }}
         >
          {!isGrid ? <Grid
->>>>>>> source-repo/main
             container
             justifyContent="start"
             rowSpacing={"18px"}
@@ -758,9 +651,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                 <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
               </Grid>
             ))}
-<<<<<<< HEAD
-          </Grid>
-=======
           </Grid> : <Box  className="flex flex-col" backgroundColor="white" border="1px solid #E5E7EB" borderRadius="20px" paddingX="30px" >
               <Box className="flex flew-row justify-between"  sx={{ paddingY:"15px", paddingRight:"34px", paddingLeft:"51px", background:"#F9F9F9", borderRadius:"29px",
                           marginRight:"60px", marginLeft:"20px", marginTop:"40px", fontFamily: "Poppins", fontStyle: "normal", fontWeight: "600", fontSize: "11px", textAlign: "center", 
@@ -812,7 +702,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
               </Box>
             </Box> 
           }
->>>>>>> source-repo/main
         </div>
       </Main>
 
