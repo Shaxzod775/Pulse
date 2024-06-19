@@ -106,7 +106,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const [selectedStudentIds, setSelectedStudentIds] = useState([]);
 
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
 
   const [anchorThreeDots, setAnchorThreeDots] = useState(null);
   const threeDotsMenuOpen = Boolean(anchorThreeDots);

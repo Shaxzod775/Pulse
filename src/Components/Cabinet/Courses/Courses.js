@@ -84,7 +84,7 @@ const Courses = () => {
 
   const [selectedCoursesIds, setSelectedCoursesIds] = useState([]);
 
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
 
   const areAllCoursessSelected =
     courses.length > 0 && selectedCoursesIds.length === courses.length;
