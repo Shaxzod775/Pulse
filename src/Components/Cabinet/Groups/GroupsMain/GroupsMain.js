@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -116,6 +116,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
   const allCourseNames = useSelector(selectAllCourseNames);
   const allTeacherNames = useSelector(selectTeachersName);
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
 
@@ -295,6 +296,38 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
     1000,
     [groupSearch, teacher, selectedCourses, groups]
   );
+
+  // Function to update URL parameters based on current filters
+  const updateUrlParams = () => {
+    const params = {
+      ...(groupSearch && { groupSearch }),
+      ...(teacher && { teacher }),
+      ...(selectedCourses.length > 0 && { courses: selectedCourses.join(",") }),
+      // Add other filters as needed
+    };
+    navigate({
+      pathname: location.pathname,
+      search: new URLSearchParams(params).toString(),
+    });
+  };
+  // Call this function whenever filters change
+  useEffect(() => {
+    updateUrlParams();
+  }, [groupSearch, teacher, selectedCourses]);
+
+  // Function to read URL parameters and set filters on component mount
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const groupSearchParam = params.get("groupSearch");
+    const teacherParam = params.get("teacher");
+    const coursesParam = params.get("courses");
+
+    if (groupSearchParam) changeGroupSearch(groupSearchParam);
+    if (teacherParam) setTeacher(teacherParam);
+    if (coursesParam) setSelectedCourses(coursesParam.split(","));
+
+    // Add other filters as needed
+  }, []);
 
   useEffect(() => {
     setFilteredGroups(groups);

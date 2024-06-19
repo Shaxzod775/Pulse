@@ -35,10 +35,15 @@ const TeacherCard = ({
   id,
   firstName,
   lastName,
+  middleName,
   phoneNumber,
   gender,
   secondPhoneNumber,
 }) => {
+  const fullName = `${lastName} ${firstName} ${middleName}`;
+  const queryParams = new URLSearchParams({ teacher: fullName }).toString();
+  const linkPathToGroups = `${routes.CABINET}${routes.GROUPS}?${queryParams}`;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -179,7 +184,7 @@ const TeacherCard = ({
                 <Icons.Documents />
                 <TypographyStyled>Количетсво групп</TypographyStyled>
               </InfoWithIcon>
-              <Link to={routes.CABINET + routes.GROUPS} className="link">
+              <Link to={linkPathToGroups} className="link">
                 <TypographyStyled small>6</TypographyStyled>
               </Link>
             </div>
