@@ -69,6 +69,7 @@ import {
   selectTeachersIdNameCombined,
   selectTeachersName,
 } from "../../../../Slices/teachersSlice";
+import GroupsList from "../GroupsList/GroupsList";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -139,6 +140,12 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const [isGrid, setIsGrid] = useState(true);
+  const [selectedGroupIds, setSelectedGroupIds] = useState([]);
+  const areAllGroupsSelected =
+    filteredGroups.length > 0 &&
+    selectedGroupIds.length === filteredGroups.length;
 
   const handleClearFilters = () => {
     resetGroupSearch();
@@ -231,6 +238,30 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
       return filtered;
     } else {
       return currentGroups;
+    }
+  };
+
+  const handleDeleteSelectedGroups = (allGroupsIDs) => {
+    if (allGroupsIDs.length > 0) {
+      selectedGroupIds.map((groupID) => handleDeleteGroup(groupID));
+    } else {
+      console.log("Выберите группы для удаления");
+    }
+  };
+
+  const handleSelectGroup = (id) => {
+    setSelectedGroupIds((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((groupId) => groupId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleSelectAllGroups = (selectAll) => {
+    if (selectAll) {
+      setSelectedGroupIds(filteredGroups.map((group) => group.id));
+    } else {
+      setSelectedGroupIds([]);
     }
   };
 
@@ -428,16 +459,85 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             </div>
 
             <div className="flex items-center gap-sm">
-              <ButtonStyled
-                variant="contained"
-                color="purpleBlue"
-                onClick={handleClickOpen}
-              >
-                <div className="flex items-center gap-xs">
-                  <Icons.AddCircle />
-                  <span>Создать группу</span>
-                </div>
-              </ButtonStyled>
+              {selectedGroupIds.length <= 0 ? (
+                <>
+                  <ButtonStyled
+                    onClick={() => setIsGrid(!isGrid)}
+                    variant="contained"
+                    sx={{
+                      color: "white",
+                      backgroundColor: "white",
+                      "&:hover": {
+                        backgroundColor: "white",
+                      },
+                    }}
+                  >
+                    <div className="flex items-center gap-x3s">
+                      {isGrid ? <Icons.ListIcon /> : <Icons.List />}
+                    </div>
+                  </ButtonStyled>
+                  <ButtonStyled
+                    variant="contained"
+                    color="purpleBlue"
+                    onClick={handleClickOpen}
+                  >
+                    <div className="flex items-center gap-x3s">
+                      <Icons.AddCircle />
+                      <span>Добавить группу</span>
+                    </div>
+                  </ButtonStyled>
+                </>
+              ) : (
+                <Box className="flex flex-row items-center" gap="25px">
+                  <Box className="flex flex-row" gap="5px">
+                    <Icons.ListSelected />
+                    <TypographyStyled
+                      sx={{ color: "#6574D8", fontSize: "14px" }}
+                    >
+                      Выбрано {selectedGroupIds.length}
+                    </TypographyStyled>
+                  </Box>
+                  <Box className="flex flex-row items-center" gap="5px">
+                    <ButtonStyled
+                      variant="contained"
+                      onClick={() => setSelectedGroupIds([])}
+                      sx={{
+                        color: "#6574D8",
+                        border: "1px solid #6574D8",
+                        backgroundColor: "white",
+                        width: "100px",
+                        paddingX: "20px",
+                        paddingY: "10px",
+                        fontSize: "14px",
+                        "&:hover": {
+                          backgroundColor: "white",
+                        },
+                      }}
+                    >
+                      Отменить
+                    </ButtonStyled>
+                    <ButtonStyled
+                      variant="contained"
+                      sx={{
+                        color: "white",
+                        backgroundColor: "#6574D8",
+                        width: "100px",
+                        paddingX: "20px",
+                        paddingY: "10px",
+                        fontSize: "14px",
+                        "&:hover": {
+                          backgroundColor: "#6574D8",
+                        },
+                      }}
+                      onClick={() =>
+                        handleDeleteSelectedGroups(selectedGroupIds)
+                      }
+                    >
+                      Удалить
+                    </ButtonStyled>
+                  </Box>
+                </Box>
+              )}
             </div>
           </div>
           <Box>
@@ -591,19 +691,105 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             overflowY: "auto",
           }}
         >
-          <Grid
-            container
-            justifyContent="start"
-            rowSpacing={"18px"}
-            columnSpacing={"32px"}
-            marginBottom={`${theme.custom.spacing.sm}px`}
-          >
-            {filteredGroups.map((group, i) => (
-              <Grid item xs="auto" md="auto" lg={3} key={i}>
-                <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
-              </Grid>
-            ))}
-          </Grid>
+          {isGrid ? (
+            <Grid
+              container
+              justifyContent="start"
+              rowSpacing={"18px"}
+              columnSpacing={"32px"}
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {filteredGroups.map((group, i) => (
+                <Grid item xs="auto" md="auto" lg={3} key={i}>
+                  <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Box
+              className="flex flex-col"
+              backgroundColor="white"
+              border="1px solid #E5E7EB"
+              borderRadius="20px"
+              paddingX="30px"
+            >
+              <Box
+                className="flex flew-row justify-between"
+                sx={{
+                  paddingY: "15px",
+                  paddingRight: "34px",
+                  paddingLeft: "51px",
+                  background: "#F9F9F9",
+                  borderRadius: "29px",
+                  marginRight: "60px",
+                  marginLeft: "20px",
+                  marginTop: "40px",
+                  fontFamily: "Poppins",
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  fontSize: "11px",
+                  textAlign: "center",
+                  color: "#7D8594",
+                  width: "auto",
+                }}
+              >
+                <Box
+                  className="flex flex-row justify-between items-center"
+                  position="relative"
+                >
+                  <CustomCheckbox
+                    checked={areAllGroupsSelected}
+                    onChange={(e) => handleSelectAllGroups(e.target.checked)}
+                  />
+                  <Typography>Название Группы</Typography>
+                </Box>
+                <Box className="flex flex-row items-center" position="relative">
+                  <Box width="auto" position="relative" right="495px">
+                    <Typography>Дата начала</Typography>
+                  </Box>
+                  <Typography position="relative" right="435px">
+                    Дата завершения
+                  </Typography>
+                  <Typography position="relative" right="365px">
+                    Дни урока
+                  </Typography>
+                  <Typography position="relative" right="305px">
+                    Учитель
+                  </Typography>
+                  <Typography position="relative" right="225px">
+                    Продолжительность
+                  </Typography>
+                  <Typography position="relative" right="140px">
+                    Кабинет
+                  </Typography>
+                  <Typography position="relative" right="55px">
+                    Учеников
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  position: "relative",
+                  overflowX: "hidden",
+                  overflowY: "scroll",
+                  marginBottom: "15px",
+                  maxHeight: "75vh",
+                }}
+              >
+                {filteredGroups.map((group, i) => (
+                  <GroupsList
+                    keyId={i}
+                    {...group}
+                    handleDeleteGroup={handleDeleteGroup}
+                    selectedGroupIds={selectedGroupIds}
+                    handleSelectGroup={handleSelectGroup}
+                    handleSelectAllGroups={handleSelectAllGroups}
+                    areAllGroupsSelected={areAllGroupsSelected}
+                  />
+                ))}
+              </Box>
+            </Box>
+          )}
         </div>
       </Main>
 
