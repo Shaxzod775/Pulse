@@ -63,13 +63,14 @@ import useToggle from "../../../../hooks/useToggle";
 import useInput from "../../../../hooks/useInput";
 import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
 import {
   selectTeachersIdNameCombined,
   selectTeachersName,
 } from "../../../../Slices/teachersSlice";
 import GroupsList from "../GroupsList/GroupsList";
+import { deleteGroup, selectAllGroups } from "../../../../Slices/groupsSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -112,11 +113,13 @@ NumericFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
-  const allCourseNames = useSelector(selectAllCourseNames);
-  const allTeacherNames = useSelector(selectTeachersName);
+const GroupsMain = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const groups = useSelector(selectAllGroups);
+  const allCourseNames = useSelector(selectAllCourseNames);
+  const allTeacherNames = useSelector(selectTeachersName);
   const [open, setOpen] = useState(false);
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
 
@@ -244,7 +247,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
 
   const handleDeleteSelectedGroups = (allGroupsIDs) => {
     if (allGroupsIDs.length > 0) {
-      selectedGroupIds.map((groupID) => handleDeleteGroup(groupID));
+      selectedGroupIds.map((groupID) => dispatch(deleteGroup(groupID)));
     } else {
       console.log("Выберите группы для удаления");
     }
@@ -734,7 +737,7 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
             >
               {filteredGroups.map((group, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <GroupCard {...group} handleDeleteGroup={handleDeleteGroup} />
+                  <GroupCard {...group} />
                 </Grid>
               ))}
             </Grid>
@@ -813,7 +816,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
                   <GroupsList
                     keyId={i}
                     {...group}
-                    handleDeleteGroup={handleDeleteGroup}
                     selectedGroupIds={selectedGroupIds}
                     handleSelectGroup={handleSelectGroup}
                     handleSelectAllGroups={handleSelectAllGroups}
@@ -830,7 +832,6 @@ const GroupsMain = ({ groups, handleAddGroup, handleDeleteGroup }) => {
         key={groupDialogKey}
         open={open}
         handleClose={handleClose}
-        handleAddGroup={handleAddGroup}
       />
     </Root>
   );

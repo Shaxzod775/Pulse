@@ -24,6 +24,8 @@ import {
   getRussianWord,
 } from "../../../../helpers/helpers";
 import { weekDaysText } from "../../../../Constants/dateLocales";
+import { useDispatch } from "react-redux";
+import { deleteGroup } from "../../../../Slices/groupsSlice";
 
 const GroupCard = ({
   id,
@@ -36,8 +38,8 @@ const GroupCard = ({
   courseTime,
   roomNumber,
   teacher,
-  handleDeleteGroup,
 }) => {
+  const dispatch = useDispatch();
   const lessonsInOneMonth = 12;
   const lessonLength = 2; // in hours
   // const durationInHours = duration * lessonsInOneMonth * lessonLength;
@@ -46,6 +48,11 @@ const GroupCard = ({
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const handleDeleteGroup = () => {
+    dispatch(deleteGroup(id));
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -109,10 +116,7 @@ const GroupCard = ({
               {/* </Link> */}
             </MenuItem>
             <MenuItem onClick={handleClose} disableRipple>
-              <ButtonStyled
-                color="crimson"
-                onClick={() => handleDeleteGroup(id)}
-              >
+              <ButtonStyled color="crimson" onClick={handleDeleteGroup}>
                 <Icons.TrashCan />
                 <span>Удалить группу</span>
               </ButtonStyled>

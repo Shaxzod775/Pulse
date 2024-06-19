@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { getRussianWord } from "../../../../helpers/helpers";
 import { Box, MenuItem, Typography } from "@mui/material";
 import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
+import { useDispatch } from "react-redux";
+import { deleteGroup } from "../../../../Slices/groupsSlice";
 
 const GroupsList = ({
   keyId,
@@ -18,10 +20,10 @@ const GroupsList = ({
   courseTime,
   roomNumber,
   teacher,
-  handleDeleteGroup,
   selectedGroupIds,
   handleSelectGroup,
 }) => {
+  const dispatch = useDispatch();
   const [anchorThreeDots, setAnchorThreeDots] = useState(null);
   const threeDotsMenuOpen = Boolean(anchorThreeDots);
 
@@ -44,6 +46,10 @@ const GroupsList = ({
     }
 
     return totalLessons;
+  };
+
+  const handleDeleteGroup = () => {
+    dispatch(deleteGroup(id));
   };
 
   const handleCloseThreeDotsMenu = () => {
@@ -143,7 +149,7 @@ const GroupsList = ({
           onClose={handleCloseThreeDotsMenu}
         >
           <MenuItem onClick={handleCloseThreeDotsMenu} disableRipple>
-            <ButtonStyled color="error" onClick={() => handleDeleteGroup(id)}>
+            <ButtonStyled color="error" onClick={handleDeleteGroup}>
               <Icons.TrashCan />
               <span>Удалить группу</span>
             </ButtonStyled>

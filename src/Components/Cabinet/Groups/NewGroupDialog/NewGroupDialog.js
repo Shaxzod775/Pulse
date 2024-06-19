@@ -33,7 +33,6 @@ import { Icons } from "../../../../Assets/Icons/icons";
 import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
 import useInput from "../../../../hooks/useInput";
-import { createGroup } from "../Groups";
 import Dropzone from "react-dropzone";
 import {
   calculateMonthDifference,
@@ -48,13 +47,14 @@ import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 
 import api from "../../../../Core/api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectAllCourseNames,
   selectCourseByName,
   selectCoursesIdName,
 } from "../../../../Slices/coursesSlice";
 import { selectTeachersIdName } from "../../../../Slices/teachersSlice";
+import { createGroup } from "../../../../Slices/groupsSlice";
 
 const timeInputStyles = {
   "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -161,12 +161,8 @@ function TagCheckbox({
   );
 }
 
-const NewGroupDialog = ({
-  open,
-  handleAddGroup,
-  handleClose,
-  ...otherProps
-}) => {
+const NewGroupDialog = ({ open, handleClose, ...otherProps }) => {
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [name, changeName, resetName] = useInput("");
@@ -359,7 +355,7 @@ const NewGroupDialog = ({
     };
     console.log(groupData);
 
-    await handleAddGroup(groupData);
+    dispatch(createGroup(groupData));
 
     handleClose();
   };

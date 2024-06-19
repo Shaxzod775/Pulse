@@ -14,7 +14,7 @@ export const fetchGroups = createAsyncThunk("groups/fetchGroups", async () => {
 
 export const createGroup = createAsyncThunk(
   "groups/createGroup",
-  async (groupData, { rejectWithValue }) => {
+  async (groupData, { rejectWithValue, dispatch }) => {
     try {
       const formData = new FormData();
       formData.append("groupData", JSON.stringify(groupData));
@@ -25,6 +25,7 @@ export const createGroup = createAsyncThunk(
         },
       });
 
+      dispatch(fetchGroups());
       return response.data; // Return the response data from the server
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -66,7 +67,6 @@ const groupsSlice = createSlice({
       })
       .addCase(createGroup.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.groups.push(action.meta.arg); // Add the new group to the state array
       })
       .addCase(createGroup.rejected, (state, action) => {
         state.status = "failed";
