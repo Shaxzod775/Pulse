@@ -94,6 +94,7 @@ import { ReactComponent as ListSelected } from "./svgs/listSelected.svg";
 import { ReactComponent as ThreeDotsHor } from "./svgs/threeDotsHor.svg";
 
 export const Icons = {
+  Add,
   ArrowD,
   ArrowDBold,
   ArrowUBold,
