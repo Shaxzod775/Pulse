@@ -1,0 +1,14 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<defs>
+		<clipPath id="clip2833_11497">
+			<rect id="Bold Duotone / School / Square Academic Cap" width="24.000000" height="24.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip2833_11497)">
+		<path id="Vector" d="M14.21 3.49C12.79 2.83 11.2 2.83 9.78 3.49L3.09 6.63C2.01 7.14 1.73 8.56 2.25 9.54L2.25 14.5C2.25 14.91 2.58 15.25 3 15.25C3.41 15.25 3.75 14.91 3.75 14.5L3.75 10.67L9.78 13.5C11.2 14.16 12.79 14.16 14.21 13.5L20.9 10.36C22.36 9.68 22.36 7.31 20.9 6.63L14.21 3.49Z" fill="currentColor" fill-opacity="1.000000" fill-rule="evenodd"/>
+		<g opacity="0.500000">
+			<path id="Vector" d="M5 11.25L9.78 13.5C11.2 14.16 12.79 14.16 14.21 13.5L19 11.25L19 16.62C19 17.63 18.49 18.57 17.61 19.06C16.14 19.87 13.79 20.99 12 20.99C10.2 20.99 7.85 19.87 6.38 19.06C5.5 18.57 5 17.63 5 16.62L5 11.25Z" fill="currentColor" fill-opacity="1.000000" fill-rule="nonzero"/>
+		</g>
+	</g>
+</svg>
