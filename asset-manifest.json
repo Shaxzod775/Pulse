@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Pulse/static/css/main.70704fe1.css",
-    "main.js": "/Pulse/static/js/main.af856570.js",
-    "static/js/453.51b20bab.chunk.js": "/Pulse/static/js/453.51b20bab.chunk.js",
+    "main.js": "/Pulse/static/js/main.347abbe2.js",
+    "static/js/453.cfde3951.chunk.js": "/Pulse/static/js/453.cfde3951.chunk.js",
     "static/media/Group.png": "/Pulse/static/media/Group.82638d854eae4154917d.png",
     "static/media/male.svg": "/Pulse/static/media/male.0764a8f2e275bdd733f283abbfaba897.svg",
     "static/media/female1.svg": "/Pulse/static/media/female1.2f252ffc5e69b8dd92579ff5a85f98d9.svg",
@@ -107,11 +107,11 @@
     "static/media/dividerDot.svg": "/Pulse/static/media/dividerDot.bd71fc075e396f8d0c258209473be93d.svg",
     "static/media/circle.svg": "/Pulse/static/media/circle.dbc0bead6380117ba3a6b861034ac047.svg",
     "main.70704fe1.css.map": "/Pulse/static/css/main.70704fe1.css.map",
-    "main.af856570.js.map": "/Pulse/static/js/main.af856570.js.map",
-    "453.51b20bab.chunk.js.map": "/Pulse/static/js/453.51b20bab.chunk.js.map"
+    "main.347abbe2.js.map": "/Pulse/static/js/main.347abbe2.js.map",
+    "453.cfde3951.chunk.js.map": "/Pulse/static/js/453.cfde3951.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.70704fe1.css",
-    "static/js/main.af856570.js"
+    "static/js/main.347abbe2.js"
   ]
 }
