@@ -52,7 +52,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ru } from "date-fns/locale";
-import { russianLocale } from "../../../../Constants/dateLocales";
+import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import { teacherNames } from "../../../../Constants/testData";
 import {
   weekDaysTextFull,
@@ -136,7 +136,7 @@ const GroupsMain = () => {
   const [anchorCourseSelect, setAnchorCourseSelect] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState([]);
 
-  const [selectedWeekDays, setSelectedWeekDays] = useState(["0"]);
+  const [selectedWeekDays, setSelectedWeekDays] = useState(["DEFAULT"]);
 
   const [selectedGroupStatuses, setSelectedGroupStatuses] = useState(["0"]);
 
@@ -245,6 +245,40 @@ const GroupsMain = () => {
     }
   };
 
+  const handleWeekDaysSelectFilter = (selectedWeekDays, currentGroups) => {
+    if (selectedWeekDays.length > 1) {
+      console.log(selectedWeekDays);
+      const filtered = currentGroups.filter((group) =>
+        selectedWeekDays.every((selectedWeekDay) =>
+          group.classDays.includes(selectedWeekDay)
+        )
+      );
+      return filtered;
+    } else {
+      return currentGroups;
+    }
+  };
+
+  const handleStartDateFilter = (selectedStartDate, currentGroups) => {
+    if (selectedStartDate) {
+      return currentGroups.filter(
+        (group) => new Date(group.startDate) > new Date(selectedStartDate)
+      );
+    } else {
+      return currentGroups;
+    }
+  };
+
+  const handleEndDateFilter = (selectedEndDate, currentGroups) => {
+    if (selectedEndDate) {
+      return currentGroups.filter(
+        (group) => new Date(group.endDate) < new Date(selectedEndDate)
+      );
+    } else {
+      return currentGroups;
+    }
+  };
+
   const handleDeleteSelectedGroups = (allGroupsIDs) => {
     if (allGroupsIDs.length > 0) {
       selectedGroupIds.map((groupID) => dispatch(deleteGroup(groupID)));
@@ -294,10 +328,30 @@ const GroupsMain = () => {
       if (teacher && teacher !== "") {
         filtered = handleTeacherSearchFilter(teacher, filtered);
       }
+      if (selectedWeekDays.length > 1) {
+        filtered = handleWeekDaysSelectFilter(
+          selectedWeekDays.slice(1),
+          filtered
+        );
+      }
+      if (startDate) {
+        filtered = handleStartDateFilter(startDate, filtered);
+      }
+      if (endDate) {
+        filtered = handleEndDateFilter(endDate, filtered);
+      }
       setFilteredGroups(filtered);
     },
     1000,
-    [groupSearch, teacher, selectedCourses, groups]
+    [
+      groupSearch,
+      teacher,
+      selectedCourses,
+      selectedWeekDays,
+      startDate,
+      endDate,
+      groups,
+    ]
   );
 
   // Function to update URL parameters based on current filters
@@ -638,7 +692,7 @@ const GroupsMain = () => {
                     if (selected.length === 1) return "Дни недели";
                     return selected
                       .slice(1)
-                      .map((day) => weekDaysTextFullToShort[day])
+                      .map((day) => weekDaysText[day])
                       .join(", ");
                   }}
                   MenuProps={customMenuProps}
@@ -646,10 +700,10 @@ const GroupsMain = () => {
                   input={<InputBaseStyledV2 />}
                   IconComponent={Icons.ArrowDBold}
                 >
-                  {weekDaysTextFull.map((weekDayFull) => (
-                    <MenuItem key={weekDayFull} value={weekDayFull}>
+                  {weekDaysTextFull.map((weekDayFull, i) => (
+                    <MenuItem key={weekDayFull} value={`${i}`}>
                       <CustomCheckbox
-                        checked={selectedWeekDays.indexOf(weekDayFull) > -1}
+                        checked={selectedWeekDays.indexOf(`${i}`) > -1}
                       />
                       <ListItemText primary={weekDayFull} />
                     </MenuItem>
