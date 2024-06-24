@@ -61,6 +61,11 @@ import { teacherNames } from "../../../../Constants/testData";
 
 import useToggle from "../../../../hooks/useToggle";
 import useDebounce from "../../../../hooks/useDebounce";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteStudent,
+  selectAllStudents,
+} from "../../../../Slices/studentsSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -74,9 +79,11 @@ const HeaderDiv = styled("div")(({ theme }) => ({
   border: "1px solid #E5E7EB",
 }));
 
-const StudentsMain = ({ students, handleDeleteStudent }) => {
-  const { allCourseNames } = useCourses();
+const StudentsMain = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const students = useSelector(selectAllStudents);
+  const { allCourseNames } = useCourses();
 
   const [filteredStudents, setFilteredStudents] = useState(students);
 
@@ -129,7 +136,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
 
   const handleDeleteSelectedStudents = (allStudentsIDs) => {
     if (allStudentsIDs.length > 0) {
-      selectedStudentIds.map((studentID) => handleDeleteStudent(studentID));
+      selectedStudentIds.map((studentID) => dispatch(deleteStudent(studentID)));
     } else {
       console.log("Выберите учеников для удаления");
     }
@@ -696,10 +703,7 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
             >
               {filteredStudents.map((student, i) => (
                 <Grid item xs="auto" md="auto" lg={3} key={i}>
-                  <StudentCard
-                    {...student}
-                    handleDeleteStudent={handleDeleteStudent}
-                  />
+                  <StudentCard {...student} />
                 </Grid>
               ))}
             </Grid>
@@ -771,7 +775,6 @@ const StudentsMain = ({ students, handleDeleteStudent }) => {
                   <StudentsListItem
                     keyId={i}
                     {...student}
-                    handleDeleteStudent={handleDeleteStudent}
                     selectedStudentIds={selectedStudentIds}
                     handleSelectStudent={handleSelectStudent}
                     handleSelectAllStudents={handleSelectAllStudents}

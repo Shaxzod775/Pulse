@@ -28,6 +28,7 @@ import api from "../../../../Core/api";
 import { formattedPhoneNumber } from "../../../../helpers/helpers";
 import { format } from "date-fns";
 import { genders } from "../../../../Constants/testData";
+import { useDispatch } from "react-redux";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -288,7 +289,8 @@ export const GroupsCard = ({ status = "active" }) => {
   );
 };
 
-export const StudentProfile = ({ handleDeleteStudent }) => {
+export const StudentProfile = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const [student, setStudent] = useState(null);
@@ -309,7 +311,7 @@ export const StudentProfile = ({ handleDeleteStudent }) => {
   };
 
   const deleteStudent = async () => {
-    await handleDeleteStudent(id);
+    dispatch(deleteStudent(id));
     navigate(routes.CABINET + routes.STUDENTS);
   };
 

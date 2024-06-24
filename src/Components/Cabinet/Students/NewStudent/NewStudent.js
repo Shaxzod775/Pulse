@@ -58,6 +58,8 @@ import {
   createEventWithValue,
   formatFileName,
 } from "../../../../helpers/helpers";
+import { useDispatch } from "react-redux";
+import { createStudent, editStudent } from "../../../../Slices/studentsSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -127,7 +129,8 @@ const RadioStyled = styled(Radio)(({ theme }) => ({
   },
 }));
 
-const NewStudent = ({ fetchStudents }) => {
+const NewStudent = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams(); // Get the id from the URL
   const [student, setStudent] = useState(null); // Add a new state variable for the student
@@ -411,32 +414,14 @@ const NewStudent = ({ fetchStudents }) => {
     }
     console.log(studentData);
 
-    formData.append("studentData", JSON.stringify(studentData));
-    try {
-      let response;
-      if (id) {
-        // If an id is present, update the student
-        response = await api.post("students/update", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } else {
-        // Otherwise, create a new student
-        response = await api.post("students/create", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      }
-      // Обработка успешного ответа, если необходимо
-      console.log("Student created:", response.data);
-      fetchStudents();
-      navigate("/cabinet/students");
-    } catch (error) {
-      // Обработка ошибок
-      console.error("Error creating teacher:", error);
+    if (id) {
+      // If an id is present, update the student
+      dispatch(editStudent(studentData));
+    } else {
+      // Otherwise, create a new student
+      dispatch(createStudent(studentData));
     }
+    navigate("/cabinet/students");
   };
 
   useEffect(() => {

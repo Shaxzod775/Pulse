@@ -25,6 +25,8 @@ import { auto } from "@popperjs/core";
 import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
 import { getIconByGender } from "../../../../helpers/helpers";
+import { useDispatch } from "react-redux";
+import { deleteStudent } from "../../../../Slices/studentsSlice";
 
 const StudentCard = ({
   id,
@@ -33,12 +35,17 @@ const StudentCard = ({
   phoneNumber,
   gender,
   email,
-  handleDeleteStudent,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const handleDeleteStudent = () => {
+    dispatch(deleteStudent(id));
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -133,10 +140,7 @@ const StudentCard = ({
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose} disableRipple>
-                <ButtonStyled
-                  color="crimson"
-                  onClick={() => handleDeleteStudent(id)}
-                >
+                <ButtonStyled color="crimson" onClick={handleDeleteStudent}>
                   <Icons.TrashCan />
                   <span>Удалить из списка</span>
                 </ButtonStyled>

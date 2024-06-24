@@ -32,12 +32,17 @@ import {
   selectTeachersStatus,
 } from "../../Slices/teachersSlice";
 import { fetchGroups, selectGroupsStatus } from "../../Slices/groupsSlice";
+import {
+  fetchStudents,
+  selectStudentsStatus,
+} from "../../Slices/studentsSlice";
 
 const Cabinet = () => {
   const dispatch = useDispatch();
   const coursesStatus = useSelector(selectCoursesStatus);
   const teachersStatus = useSelector(selectTeachersStatus);
   const groupsStatus = useSelector(selectGroupsStatus);
+  const studentsStatus = useSelector(selectStudentsStatus);
 
   useEffect(() => {
     if (coursesStatus === "idle") {
@@ -56,6 +61,12 @@ const Cabinet = () => {
       dispatch(fetchGroups());
     }
   }, [groupsStatus, dispatch]);
+
+  useEffect(() => {
+    if (studentsStatus === "idle") {
+      dispatch(fetchStudents());
+    }
+  }, [studentsStatus, dispatch]);
 
   return (
     <>
