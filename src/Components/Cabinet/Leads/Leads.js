@@ -41,7 +41,6 @@ const Leads = () => {
         const response = await api.get("leads");
         // Обновляем состояние courses данными из ответа
         setLeads(response.data);
-        console.log(response.data);
         toggleRefresh(false);
       } catch (error) {
         // Обрабатываем ошибки
@@ -53,16 +52,6 @@ const Leads = () => {
     // Вызываем функцию для загрузки курсов при монтировании компонента
     fetchLeads();
   }, [refresh]);
-
-  const groupedLeads = leads.reduce((acc, lead) => {
-    const { status } = lead;
-    if (!acc[status]) {
-      acc[status] = [];
-    }
-    acc[status].push(lead);
-    return acc;
-  }, {});
-  console.log(groupedLeads);
 
   return (
     <Routes>

@@ -47,6 +47,7 @@ import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 import {
   leadSources,
   leadStatuses,
+  leadStatusesEnum,
   leadStatusesEnumToText,
   leadStatusesTextToEnum,
 } from "../../../../Constants/testData";
@@ -54,6 +55,7 @@ import useDebounce from "../../../../hooks/useDebounce";
 import useCounter from "../../../../hooks/useCounter";
 import { useSelector } from "react-redux";
 import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
+import { getRussianWord } from "../../../../helpers/helpers";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -103,11 +105,11 @@ const StatusTitle = ({ status, leadsAmount }) => {
   //     ? theme.palette.golden.main
   //     : theme.palette.orange.main;
   const colorMain =
-    status === leadStatuses[0]
+    status === leadStatusesEnum[0]
       ? theme.palette.orange.main
-      : status === leadStatuses[1]
+      : status === leadStatusesEnum[1]
       ? theme.palette.blue.main
-      : status === leadStatuses[2]
+      : status === leadStatusesEnum[2]
       ? theme.palette.golden.main
       : theme.palette.seaBlue.main;
   return (
@@ -115,15 +117,20 @@ const StatusTitle = ({ status, leadsAmount }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-xxs2">
           <Icons.Circle color={colorMain} />
-          <Typography>{status}</Typography>
+          <Typography>{leadStatusesEnumToText[status]}</Typography>
         </div>
-        <Chip label={`${leadsAmount} leads`} />
+        <Chip
+          label={`${leadsAmount} ${getRussianWord(
+            leadsAmount,
+            "лид",
+            "лида",
+            "лидов"
+          )}`}
+        />
       </div>
     </Card>
   );
 };
-
-const courses = ["Frontend", "UI/UX", "Backend", "Flutter", "IT English"];
 
 const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const allCourseNames = useSelector(selectAllCourseNames);
@@ -251,6 +258,17 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   );
 
   useEffect(() => setFilteredLeads(leads), [leads]);
+
+  const groupedLeads = leadStatusesEnum.reduce((acc, status) => {
+    acc[status] = []; // Initialize an empty array for each status
+    return acc;
+  }, {});
+  filteredLeads?.forEach((lead) => {
+    const { statusEnum } = lead;
+    groupedLeads[statusEnum].push(lead);
+  });
+
+  console.log(groupedLeads);
 
   return (
     <Root
@@ -492,9 +510,12 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
           columnSpacing={"32px"}
           paddingRight="44px"
         >
-          {leadStatuses.map((leadStatus, i) => (
+          {leadStatusesEnum.map((leadStatusEnum, i) => (
             <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <StatusTitle status={leadStatus} leadsAmount={5} />
+              <StatusTitle
+                status={leadStatusEnum}
+                leadsAmount={groupedLeads[leadStatusEnum]?.length || 0}
+              />
             </Grid>
           ))}
         </Grid>
@@ -505,7 +526,7 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
             overflowY: "auto",
           }}
         >
-          <Grid
+          {/* <Grid
             container
             justifyContent="start"
             rowSpacing={"18px"}
@@ -515,7 +536,28 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
             {filteredLeads.map((lead, i) => (
               <Grid item xs="auto" md="auto" lg={3} key={i}>
                 <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
-                {/* <div>LEAD CARD</div> */}
+              </Grid>
+            ))}
+          </Grid> */}
+          <Grid
+            container
+            justifyContent="start"
+            rowSpacing="18px"
+            columnSpacing="32px"
+            marginBottom={`${theme.custom.spacing.sm}px`}
+          >
+            {/* Render each status column */}
+            {Object.entries(groupedLeads).map(([status, leads]) => (
+              <Grid item xs="auto" md="auto" lg={3} key={status}>
+                {/* Render the vertical grid for each status */}
+                <Grid container direction="column" spacing={2}>
+                  {leads.map((lead) => (
+                    <Grid item key={lead.id}>
+                      {/* Render your LeadCard component here */}
+                      <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
             ))}
           </Grid>

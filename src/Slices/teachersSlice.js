@@ -72,7 +72,7 @@ const teachersSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      // FETCHING COURSES
+      // FETCHING TEACHERS
       .addCase(fetchTeachers.pending, (state, action) => {
         state.status = "loading";
       })
@@ -85,7 +85,7 @@ const teachersSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      // CREATING COURSE
+      // CREATING TEACHER
       .addCase(createTeacher.pending, (state) => {
         state.status = "loading";
       })
@@ -107,7 +107,7 @@ const teachersSlice = createSlice({
         state.status = "failed";
         state.error = action.payload; // Handle the error message from rejectWithValue
       })
-      // DELETING COURSE
+      // DELETING TEACHER
       .addCase(deleteTeacher.pending, (state, action) => {
         state.status = "loading";
       })
