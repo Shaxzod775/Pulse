@@ -54,6 +54,16 @@ const Leads = () => {
     fetchLeads();
   }, [refresh]);
 
+  const groupedLeads = leads.reduce((acc, lead) => {
+    const { status } = lead;
+    if (!acc[status]) {
+      acc[status] = [];
+    }
+    acc[status].push(lead);
+    return acc;
+  }, {});
+  console.log(groupedLeads);
+
   return (
     <Routes>
       <Route
