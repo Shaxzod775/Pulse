@@ -34,6 +34,18 @@ const Leads = () => {
     }
   };
 
+  const handleUpdateLeadStatus = async (uuid, status) => {
+    try {
+      const response = await api.post(
+        `leads/update-status?uuid=${uuid}&status=${status}`
+      );
+      console.log("Lead status updated:", response);
+      toggleRefresh(true);
+    } catch (error) {
+      console.error("Error updating lead status:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchLeads = async () => {
       try {
@@ -62,6 +74,7 @@ const Leads = () => {
             leads={leads}
             handleDeleteLead={handleDeleteLead}
             handleAddLead={handleAddLead}
+            handleUpdateLeadStatus={handleUpdateLeadStatus}
           />
         }
       />
