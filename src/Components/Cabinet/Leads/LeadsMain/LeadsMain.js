@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
@@ -151,6 +151,20 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
   const [anchorThreeDots, setAnchorThreeDots] = useState(null);
   const threeDotsMenuOpen = Boolean(anchorThreeDots);
 
+  const groupedLeads = useMemo(() => {
+    const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
+      acc[status] = []; // Initialize an empty array for each status
+      return acc;
+    }, {});
+
+    filteredLeads?.forEach((lead) => {
+      const { statusEnum } = lead;
+      initialGroupedLeads[statusEnum].push(lead);
+    });
+
+    return initialGroupedLeads; // Return the computed value
+  }, [filteredLeads]);
+
   const handleClickStatusSelect = (e) => {
     setAnchorStatus(e.currentTarget);
   };
@@ -259,16 +273,10 @@ const LeadsMain = ({ leads, handleDeleteLead, handleAddLead }) => {
 
   useEffect(() => setFilteredLeads(leads), [leads]);
 
-  const groupedLeads = leadStatusesEnum.reduce((acc, status) => {
-    acc[status] = []; // Initialize an empty array for each status
-    return acc;
-  }, {});
-  filteredLeads?.forEach((lead) => {
-    const { statusEnum } = lead;
-    groupedLeads[statusEnum].push(lead);
-  });
-
-  console.log(groupedLeads);
+  const onDragEnd = (result) => {
+    // Handle reordering logic here
+    // Update your state based on result.source.index and result.destination.index
+  };
 
   return (
     <Root
