@@ -246,7 +246,7 @@ const GroupsMain = () => {
   };
 
   const handleWeekDaysSelectFilter = (selectedWeekDays, currentGroups) => {
-    if (selectedWeekDays.length > 1) {
+    if (selectedWeekDays.length > 0) {
       console.log(selectedWeekDays);
       const filtered = currentGroups.filter((group) =>
         selectedWeekDays.every((selectedWeekDay) =>
@@ -328,7 +328,7 @@ const GroupsMain = () => {
       if (teacher && teacher !== "") {
         filtered = handleTeacherSearchFilter(teacher, filtered);
       }
-      if (selectedWeekDays.length > 1) {
+      if (selectedWeekDays.length > 0) {
         filtered = handleWeekDaysSelectFilter(
           selectedWeekDays.slice(1),
           filtered
@@ -692,6 +692,7 @@ const GroupsMain = () => {
                     if (selected.length === 1) return "Дни недели";
                     return selected
                       .slice(1)
+                      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
                       .map((day) => weekDaysText[day])
                       .join(", ");
                   }}
