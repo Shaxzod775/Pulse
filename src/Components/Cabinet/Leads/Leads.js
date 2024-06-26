@@ -67,17 +67,21 @@ const Leads = () => {
 
   return (
     <Routes>
-      <Route
-        path={routes.HOME}
-        element={
-          <LeadsMain
-            leads={leads}
-            handleDeleteLead={handleDeleteLead}
-            handleAddLead={handleAddLead}
-            handleUpdateLeadStatus={handleUpdateLeadStatus}
-          />
-        }
-      />
+      {leads.length > 0 ? (
+        <Route
+          path={routes.HOME}
+          element={
+            <LeadsMain
+              leads={leads}
+              handleDeleteLead={handleDeleteLead}
+              handleAddLead={handleAddLead}
+              handleUpdateLeadStatus={handleUpdateLeadStatus}
+            />
+          }
+        />
+      ) : (
+        <></>
+      )}
       <Route path={routes.PROFILE} element={<div>LEADS PROFILE</div>} />
       <Route path={routes.NEW} element={<div>CREATE NEW LEAD</div>} />
       <Route

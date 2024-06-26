@@ -159,19 +159,45 @@ const LeadsMain = ({
 
   const [anchorThreeDots, setAnchorThreeDots] = useState(null);
   const threeDotsMenuOpen = Boolean(anchorThreeDots);
-  const groupedLeads = useMemo(() => {
-    const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
-      acc[status] = []; // Initialize an empty array for each status
-      return acc;
-    }, {});
+  const [groupedLeads, setGroupedLeads] = useLocalStorage("groupedLeads", {});
 
-    filteredLeads?.forEach((lead) => {
-      const { statusEnum } = lead;
-      initialGroupedLeads[statusEnum].push(lead);
-    });
+  useEffect(() => {
+    console.log(leads);
+    if (Object.keys(groupedLeads).length === 0) {
+      const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
+        acc[status] = []; // Initialize an empty array for each status
+        return acc;
+      }, {});
+      leads?.forEach((lead) => {
+        const { statusEnum } = lead;
+        initialGroupedLeads[statusEnum].push(lead);
+      });
+      console.log(leads);
+      setGroupedLeads(initialGroupedLeads); // Update the state
+    } else {
+      const updatedGroupedLeads = { ...groupedLeads };
+      Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
+        // Map existing leads to their corresponding objects
+        updatedGroupedLeads[entry] = leadsInEntry.map((leadInEntry) =>
+          leads.find((lead) => lead.id === leadInEntry.id)
+        );
 
-    return initialGroupedLeads; // Return the computed value
-  }, [filteredLeads]);
+        // Filter new leads based on the statusEnum
+        const newLeads = leads.filter((lead) => {
+          return (
+            lead.statusEnum === entry &&
+            !leadsInEntry.some((leadInEntry) => leadInEntry.id === lead.id)
+          );
+        });
+        // Add the new leads to the existing leads
+        updatedGroupedLeads[entry] = [
+          ...updatedGroupedLeads[entry],
+          ...newLeads,
+        ];
+      });
+      setGroupedLeads(updatedGroupedLeads);
+    }
+  }, [leads]);
 
   const handleClickStatusSelect = (e) => {
     setAnchorStatus(e.currentTarget);
@@ -283,45 +309,92 @@ const LeadsMain = ({
     setFilteredLeads(leads);
   }, [leads]);
 
-  useEffect(() => {
-    const groupedLeadsIdsOrder = JSON.parse(
-      localStorage.getItem("groupedLeadsIdsOrder")
-    );
-    // IF THERE IS NO LocalStorage item groupedLeadsIdsOrder
-    if (!groupedLeadsIdsOrder && leads?.length) {
-      const groupedIdsOrderArray = {};
-      Object.entries(groupedLeads).forEach(([entry, leads]) => {
-        groupedIdsOrderArray[entry] = leads.map((lead, index) => lead.id);
-      });
-      localStorage.setItem(
-        "groupedLeadsIdsOrder",
-        JSON.stringify(groupedIdsOrderArray)
-      );
-    }
+  // useEffect(() => {
+  //   const groupedLeadsIdsOrder = JSON.parse(
+  //     localStorage.getItem("groupedLeadsIdsOrder")
+  //   );
+  //   // IF THERE IS NO LocalStorage item groupedLeadsIdsOrder
+  //   if (!groupedLeadsIdsOrder && leads?.length) {
+  //     const groupedIdsOrderArray = {};
+  //     Object.entries(groupedLeads).forEach(([entry, leads]) => {
+  //       groupedIdsOrderArray[entry] = leads.map((lead, index) => lead.id);
+  //     });
+  //     localStorage.setItem(
+  //       "groupedLeadsIdsOrder",
+  //       JSON.stringify(groupedIdsOrderArray)
+  //     );
+  //   }
 
-    let myObject = {};
-    if (groupedLeadsIdsOrder) {
-      Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
-        myObject[entry] = leadsInEntry.map((leadsInEntry) =>
-          leads.find((lead) => lead.id === leadsInEntry.id)
-        );
-      });
-      const objectWithNewItems = {};
-      Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
-        objectWithNewItems[entry] = groupedLeads[entry].filter((lead) => {
-          return !leadsInEntry.includes(lead.id);
-        });
-      });
-      Object.entries(objectWithNewItems).forEach(([entry, leadsInEntry]) => {
-        if (leadsInEntry.length > 0)
-          myObject[entry] = [...leadsInEntry, ...myObject[entry]];
-      });
-    }
-  }, [groupedLeads]);
+  //   let myObject = {};
+  //   if (groupedLeadsIdsOrder) {
+  //     // getting full lead object from sorted (by dnd) grouped lead ids
+  //     Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
+  //       myObject[entry] = leadsInEntry.map((leadsInEntry) =>
+  //         leads.find((lead) => lead.id === leadsInEntry.id)
+  //       );
+  //     });
+
+  //     const objectWithNewItems = {};
+  //     // filling objectWithNewItems with new items whose id is not in the sorted (by dnd) grouped lead ids (local storage)
+  //     Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
+  //       objectWithNewItems[entry] = groupedLeads[entry].filter((lead) => {
+  //         return !leadsInEntry.includes(lead.id);
+  //       });
+  //     });
+  //     // filling myObject with new items
+  //     Object.entries(objectWithNewItems).forEach(([entry, leadsInEntry]) => {
+  //       if (leadsInEntry.length > 0)
+  //         myObject[entry] = [...leadsInEntry, ...myObject[entry]];
+  //     });
+  //   }
+  // }, [filteredLeads]);
 
   const onDragEnd = async (result) => {
-    // Update your state based on result.source.index and result.destination.index
-    if (result.destination) {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.draggableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    // const column = groupedLeads[source.droppableId];
+    const sourceLeads = [...groupedLeads[source.droppableId]];
+    const destinationLeads = [...groupedLeads[destination.droppableId]];
+
+    if (source.droppableId === destination.droppableId) {
+      sourceLeads.splice(source.index, 1);
+      sourceLeads.splice(
+        destination.index,
+        0,
+        leads.find((lead) => lead.id === draggableId)
+      );
+
+      const newGroupedLeads = {
+        ...groupedLeads,
+        [source.droppableId]: sourceLeads,
+      };
+      setGroupedLeads(newGroupedLeads);
+    } else {
+      sourceLeads.splice(source.index, 1);
+      destinationLeads.splice(
+        destination.index,
+        0,
+        leads.find((lead) => lead.id === draggableId)
+      );
+
+      const newGroupedLeads = {
+        ...groupedLeads,
+        [source.droppableId]: sourceLeads,
+        [destination.droppableId]: destinationLeads,
+      };
+
+      setGroupedLeads(newGroupedLeads);
+
       const uuid = result.draggableId;
       const status = result.destination.droppableId;
 
@@ -329,6 +402,7 @@ const LeadsMain = ({
     }
   };
 
+  if (!groupedLeads) return;
   return (
     <Root
     // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
