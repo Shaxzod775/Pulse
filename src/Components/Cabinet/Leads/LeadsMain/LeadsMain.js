@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 import {
+  Box,
   Button,
   ButtonBase,
   Card,
@@ -162,7 +163,6 @@ const LeadsMain = ({
   const [groupedLeads, setGroupedLeads] = useLocalStorage("groupedLeads", {});
 
   useEffect(() => {
-    console.log(leads);
     if (Object.keys(groupedLeads).length === 0) {
       const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
         acc[status] = []; // Initialize an empty array for each status
@@ -172,14 +172,15 @@ const LeadsMain = ({
         const { statusEnum } = lead;
         initialGroupedLeads[statusEnum].push(lead);
       });
-      console.log(leads);
       setGroupedLeads(initialGroupedLeads); // Update the state
     } else {
       const updatedGroupedLeads = { ...groupedLeads };
       Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
         // Map existing leads to their corresponding objects
         updatedGroupedLeads[entry] = leadsInEntry.map((leadInEntry) =>
-          leads.find((lead) => lead.id === leadInEntry.id)
+          leads.find(
+            (lead) => lead.id === leadInEntry.id && lead.statusEnum === entry
+          )
         );
 
         // Filter new leads based on the statusEnum
@@ -366,6 +367,7 @@ const LeadsMain = ({
     const sourceLeads = [...groupedLeads[source.droppableId]];
     const destinationLeads = [...groupedLeads[destination.droppableId]];
 
+    // if dragged item is dropped in the same leads
     if (source.droppableId === destination.droppableId) {
       sourceLeads.splice(source.index, 1);
       sourceLeads.splice(
@@ -676,37 +678,38 @@ const LeadsMain = ({
                 <Grid item xs="auto" md="auto" lg={3} key={status}>
                   <Droppable droppableId={status}>
                     {(provided) => (
-                      <Grid
+                      <Box
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        container
-                        direction="column"
-                        spacing={2}
+                        minHeight="500px"
+                        height="100%"
                       >
-                        {groupedLeads[status].map((lead, index) => (
-                          <Draggable
-                            key={lead.id}
-                            draggableId={lead.id}
-                            index={index}
-                          >
-                            {(provided) => (
-                              <Grid
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                item
-                              >
-                                {/* Render your LeadCard component here */}
-                                <LeadCard
-                                  {...lead}
-                                  handleDeleteLead={handleDeleteLead}
-                                />
-                              </Grid>
-                            )}
-                          </Draggable>
-                        ))}
-                        {/* {provided.placeholder} */}
-                      </Grid>
+                        <Grid container direction="column" spacing={2}>
+                          {groupedLeads[status].map((lead, index) => (
+                            <Draggable
+                              key={lead.id}
+                              draggableId={lead.id}
+                              index={index}
+                            >
+                              {(provided) => (
+                                <Grid
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  item
+                                >
+                                  {/* Render your LeadCard component here */}
+                                  <LeadCard
+                                    {...lead}
+                                    handleDeleteLead={handleDeleteLead}
+                                  />
+                                </Grid>
+                              )}
+                            </Draggable>
+                          ))}
+                          {/* {provided.placeholder} */}
+                        </Grid>
+                      </Box>
                     )}
                   </Droppable>
                 </Grid>
