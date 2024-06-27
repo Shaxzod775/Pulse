@@ -177,11 +177,15 @@ const LeadsMain = ({
       const updatedGroupedLeads = { ...groupedLeads };
       Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
         // Map existing leads to their corresponding objects
-        updatedGroupedLeads[entry] = leadsInEntry.map((leadInEntry) =>
-          leads.find(
-            (lead) => lead.id === leadInEntry.id && lead.statusEnum === entry
+        updatedGroupedLeads[entry] = leadsInEntry
+          .filter((lead) => Boolean(lead))
+          .map((leadInEntry) =>
+            leads.find(
+              (lead) => lead.id === leadInEntry.id && lead.statusEnum === entry
+            )
           )
-        );
+          .filter((lead) => Boolean(lead));
+        console.log(updatedGroupedLeads);
 
         // Filter new leads based on the statusEnum
         const newLeads = leads.filter((lead) => {
