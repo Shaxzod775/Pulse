@@ -149,7 +149,7 @@ const LeadsMain = ({
   const [open, setOpen] = useState(false);
   const [leadDialogKey, increaseLeadDialogKey] = useCounter(0);
 
-  const [filteredLeads, setFilteredLeads] = useState(leads);
+  const [filteredLeads, setFilteredLeads] = useState({});
 
   const [anchorStatus, setAnchorStatus] = useState(null);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -163,11 +163,14 @@ const LeadsMain = ({
   const [groupedLeads, setGroupedLeads] = useLocalStorage("groupedLeads", {});
 
   useEffect(() => {
+    // if groupedLeads in local storage is empty object with no keys
     if (Object.keys(groupedLeads).length === 0) {
+      // initialize object, it becomes kinda like this: {NEW: [], IN_PROGRESS: [], RECYCLED: [], DEAD: []}
       const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
         acc[status] = []; // Initialize an empty array for each status
         return acc;
       }, {});
+      // filling empty arrays of the corresponding keys with the corresponding leads where lead's statusEnum is equal to key in the object
       leads?.forEach((lead) => {
         const { statusEnum } = lead;
         initialGroupedLeads[statusEnum].push(lead);
@@ -175,8 +178,8 @@ const LeadsMain = ({
       setGroupedLeads(initialGroupedLeads); // Update the state
     } else {
       const updatedGroupedLeads = { ...groupedLeads };
+      // Map existing leads to their corresponding keys in the object
       Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
-        // Map existing leads to their corresponding objects
         updatedGroupedLeads[entry] = leadsInEntry
           .filter((lead) => Boolean(lead))
           .map((leadInEntry) =>
@@ -185,7 +188,6 @@ const LeadsMain = ({
             )
           )
           .filter((lead) => Boolean(lead));
-        console.log(updatedGroupedLeads);
 
         // Filter new leads based on the statusEnum
         const newLeads = leads.filter((lead) => {
@@ -194,6 +196,7 @@ const LeadsMain = ({
             !leadsInEntry.some((leadInEntry) => leadInEntry.id === lead.id)
           );
         });
+
         // Add the new leads to the existing leads
         updatedGroupedLeads[entry] = [
           ...updatedGroupedLeads[entry],
@@ -240,18 +243,24 @@ const LeadsMain = ({
     if (selectedLeadSources.length === 1 && selectedLeadSources[0] === "0") {
       return currentLeads;
     } else {
-      const filtered = currentLeads.filter((lead) =>
-        selectedLeadSources.includes(lead.source)
-      );
+      const filtered = {};
+      Object.entries(currentLeads).forEach(([entry, leadsInEntry]) => {
+        filtered[entry] = leadsInEntry.filter((lead) =>
+          selectedLeadSources.includes(lead.source)
+        );
+      });
       return filtered;
     }
   };
 
   const handleCoursesSelectFilter = (selectedCourseNames, currentLeads) => {
     if (selectedCourseNames.length > 0) {
-      const filtered = currentLeads.filter((lead) =>
-        selectedCourseNames.includes(lead.course.name)
-      );
+      const filtered = {};
+      Object.entries(currentLeads).forEach(([entry, leadsInEntry]) => {
+        filtered[entry] = leadsInEntry.filter((lead) =>
+          selectedCourseNames.includes(lead.course.name)
+        );
+      });
       return filtered;
     } else {
       return currentLeads;
@@ -262,9 +271,12 @@ const LeadsMain = ({
     if (selectedLeadStatuses.length === 0) {
       return currentLeads;
     } else {
-      const filtered = currentLeads.filter((lead) =>
-        selectedLeadStatuses.includes(lead.statusEnum)
-      );
+      const filtered = {};
+      Object.entries(currentLeads).forEach(([entry, leadsInEntry]) => {
+        filtered[entry] = selectedLeadStatuses.includes(entry)
+          ? leadsInEntry
+          : [];
+      });
       return filtered;
     }
   };
@@ -291,7 +303,7 @@ const LeadsMain = ({
 
   useDebounce(
     () => {
-      let filtered = leads;
+      let filtered = { ...groupedLeads };
       if (
         selectedLeadSources.length !== 0 &&
         !(selectedLeadSources.length === 1 && selectedLeadSources[0] === "0")
@@ -304,55 +316,14 @@ const LeadsMain = ({
       if (selectedStatuses.length > 0) {
         filtered = handleLeadStatusFilter(selectedStatuses, filtered);
       }
+      console.log(filtered);
       setFilteredLeads(filtered);
     },
     1000,
-    [selectedLeadSources, selectedCourses, selectedStatuses, leads]
+    [selectedLeadSources, selectedCourses, selectedStatuses, groupedLeads]
   );
 
-  useEffect(() => {
-    setFilteredLeads(leads);
-  }, [leads]);
-
-  // useEffect(() => {
-  //   const groupedLeadsIdsOrder = JSON.parse(
-  //     localStorage.getItem("groupedLeadsIdsOrder")
-  //   );
-  //   // IF THERE IS NO LocalStorage item groupedLeadsIdsOrder
-  //   if (!groupedLeadsIdsOrder && leads?.length) {
-  //     const groupedIdsOrderArray = {};
-  //     Object.entries(groupedLeads).forEach(([entry, leads]) => {
-  //       groupedIdsOrderArray[entry] = leads.map((lead, index) => lead.id);
-  //     });
-  //     localStorage.setItem(
-  //       "groupedLeadsIdsOrder",
-  //       JSON.stringify(groupedIdsOrderArray)
-  //     );
-  //   }
-
-  //   let myObject = {};
-  //   if (groupedLeadsIdsOrder) {
-  //     // getting full lead object from sorted (by dnd) grouped lead ids
-  //     Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
-  //       myObject[entry] = leadsInEntry.map((leadsInEntry) =>
-  //         leads.find((lead) => lead.id === leadsInEntry.id)
-  //       );
-  //     });
-
-  //     const objectWithNewItems = {};
-  //     // filling objectWithNewItems with new items whose id is not in the sorted (by dnd) grouped lead ids (local storage)
-  //     Object.entries(groupedLeadsIdsOrder).forEach(([entry, leadsInEntry]) => {
-  //       objectWithNewItems[entry] = groupedLeads[entry].filter((lead) => {
-  //         return !leadsInEntry.includes(lead.id);
-  //       });
-  //     });
-  //     // filling myObject with new items
-  //     Object.entries(objectWithNewItems).forEach(([entry, leadsInEntry]) => {
-  //       if (leadsInEntry.length > 0)
-  //         myObject[entry] = [...leadsInEntry, ...myObject[entry]];
-  //     });
-  //   }
-  // }, [filteredLeads]);
+  useEffect(() => setFilteredLeads({ ...groupedLeads }), [groupedLeads]);
 
   const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
@@ -408,7 +379,7 @@ const LeadsMain = ({
     }
   };
 
-  if (!groupedLeads) return;
+  if (!groupedLeads || !filteredLeads) return;
   return (
     <Root
     // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
@@ -645,7 +616,7 @@ const LeadsMain = ({
             <Grid item xs="auto" md="auto" lg={3} key={i}>
               <StatusTitle
                 status={leadStatusEnum}
-                leadsAmount={groupedLeads[leadStatusEnum]?.length || 0}
+                leadsAmount={filteredLeads[leadStatusEnum]?.length || 0}
               />
             </Grid>
           ))}
@@ -689,7 +660,7 @@ const LeadsMain = ({
                         height="100%"
                       >
                         <Grid container direction="column" spacing={2}>
-                          {groupedLeads[status].map((lead, index) => (
+                          {filteredLeads[status].map((lead, index) => (
                             <Draggable
                               key={lead.id}
                               draggableId={lead.id}
@@ -711,7 +682,7 @@ const LeadsMain = ({
                               )}
                             </Draggable>
                           ))}
-                          {/* {provided.placeholder} */}
+                          {provided.placeholder}
                         </Grid>
                       </Box>
                     )}
