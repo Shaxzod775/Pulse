@@ -491,17 +491,8 @@ const TeachersMain = () => {
                   maxHeight: "65vh",
                 }}
               >
-                {/* {filteredTeachers.map((teacher, i) => (
-                  <TeachersList
-                    keyId={i}
-                    {...teacher}
-                    selectedTeacherIds={selectedTeacherIds}
-                    handleSelectTeacher={handleSelectTeacher}
-                    handleSelectAllTeachers={handleSelectAllTeachers}
-                    areAllTeachersSelected={areAllTeachersSelected}
-                  />
-                ))} */}
-                {dummyInfo.map((teacher, i) => (
+
+                {filteredTeachers.map((teacher, i) => (
                   <TeachersList
                     keyId={i}
                     {...teacher}

@@ -824,14 +824,23 @@ const GroupsMain = () => {
                   fontFamily: "Poppins",
                   fontStyle: "normal",
                   fontWeight: "600",
+<<<<<<< HEAD
                   fontSize: "14px",
+=======
+                  fontSize: "11px",
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                   textAlign: "center",
                   color: "#7D8594",
                   width: "auto",
                 }}
               >
                 <Box
+<<<<<<< HEAD
                   className="flex items-center"
+=======
+                  className="flex flex-row justify-between items-center"
+                  position="relative"
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                 >
                   <CustomCheckbox
                     checked={areAllGroupsSelected}
@@ -839,6 +848,7 @@ const GroupsMain = () => {
                   />
                   <Typography>Название Группы</Typography>
                 </Box>
+<<<<<<< HEAD
                 <Box className="flex flex-row justify-between items-center" flexGrow="4" maxWidth="75%">
                   <Typography display="flex" width="9%" alignItems="flex-start">
                     Дата начала
@@ -859,6 +869,28 @@ const GroupsMain = () => {
                     Кабинет
                   </Typography>
                   <Typography display="flex" width="12%" alignItems="flex-start">
+=======
+                <Box className="flex flex-row items-center" position="relative">
+                  <Box width="auto" position="relative" right="495px">
+                    <Typography>Дата начала</Typography>
+                  </Box>
+                  <Typography position="relative" right="435px">
+                    Дата завершения
+                  </Typography>
+                  <Typography position="relative" right="365px">
+                    Дни урока
+                  </Typography>
+                  <Typography position="relative" right="305px">
+                    Учитель
+                  </Typography>
+                  <Typography position="relative" right="225px">
+                    Продолжительность
+                  </Typography>
+                  <Typography position="relative" right="140px">
+                    Кабинет
+                  </Typography>
+                  <Typography position="relative" right="55px">
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                     Учеников
                   </Typography>
                 </Box>
@@ -872,6 +904,7 @@ const GroupsMain = () => {
                   maxHeight: "75vh",
                 }}
               >
+<<<<<<< HEAD
                 {/* {filteredGroups.map((group, i) => (
                   <GroupsList
                     keyId={i}
@@ -883,6 +916,9 @@ const GroupsMain = () => {
                   />
                 ))} */}
                 {dummyInfo.map((group, i) => (
+=======
+                {filteredGroups.map((group, i) => (
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                   <GroupsList
                     keyId={i}
                     {...group}

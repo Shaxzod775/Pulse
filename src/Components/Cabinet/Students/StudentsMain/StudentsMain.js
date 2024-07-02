@@ -734,14 +734,23 @@ const StudentsMain = () => {
                   fontFamily: "Poppins",
                   fontStyle: "normal",
                   fontWeight: "600",
+<<<<<<< HEAD
                   fontSize: "14px",
+=======
+                  fontSize: "12px",
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                   textAlign: "center",
                   color: "#7D8594",
                 }}
               >
                 <Box
+<<<<<<< HEAD
                   className="flex items-center"
                   maxWidth="200px"
+=======
+                  className="flex flex-row justify-between items-center"
+                  position="relative"
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                 >
                   <CustomCheckbox
                     checked={areAllStudentsSelected}
@@ -749,6 +758,7 @@ const StudentsMain = () => {
                   />
                   <Typography>ФИО</Typography>
                 </Box>
+<<<<<<< HEAD
                 <Box className="flex flex-row items-center justify-between" flexGrow="3" maxWidth="70%">
                   <Typography display="flex" width="16%" alignItems="flex-start">
                     Направление
@@ -763,6 +773,22 @@ const StudentsMain = () => {
                     Почта
                   </Typography>
                   <Typography display="flex" width="16%" alignItems="flex-center">
+=======
+                <Box className="flex flex-row items-center" position="relative">
+                  <Typography position="absolute" right="755px">
+                    Направление
+                  </Typography>
+                  <Typography position="absolute" right="645px">
+                    Группа
+                  </Typography>
+                  <Typography position="absolute" right="505px">
+                    Номер
+                  </Typography>
+                  <Typography position="absolute" right="305px">
+                    Почта
+                  </Typography>
+                  <Typography position="absolute" right="95px">
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                     Учитель
                   </Typography>
                 </Box>
@@ -776,6 +802,7 @@ const StudentsMain = () => {
                   maxHeight: "65vh",
                 }}
               >
+<<<<<<< HEAD
                 {/* {filteredStudents.map((student, i) => (
                   <StudentsListItem
                     keyId={i}
@@ -787,6 +814,9 @@ const StudentsMain = () => {
                   />
                 ))} */}
                 {dummyInfo.map((student, i) => (
+=======
+                {filteredStudents.map((student, i) => (
+>>>>>>> d4669bd6de70dc8a26e9e1ce8cceb8fa39f311a9
                   <StudentsListItem
                     keyId={i}
                     {...student}

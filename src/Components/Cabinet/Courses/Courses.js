@@ -126,6 +126,37 @@ const Courses = () => {
     }
   };
 
+  const [selectedCoursesIds, setSelectedCoursesIds] = useState([]);
+
+  const [isGrid, setIsGrid] = useState(true);
+
+  const areAllCoursessSelected =
+    courses.length > 0 && selectedCoursesIds.length === courses.length;
+
+  const handleSelectCourse = (id) => {
+    setSelectedCoursesIds((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((courseId) => courseId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleSelectAllCourses = (selectAll) => {
+    if (selectAll) {
+      setSelectedCoursesIds(courses.map((course) => course.id));
+    } else {
+      setSelectedCoursesIds([]);
+    }
+  };
+
+  const handleDeleteSelectedCourses = (allCoursesIDs) => {
+    if (allCoursesIDs.length > 0) {
+      selectedCoursesIds.map((courseID) => dispatch(deleteCourse(courseID)));
+    } else {
+      console.log("Выберите курсы для удаления");
+    }
+  };
+
   const navigate = useNavigate();
 
   const goBack = () => {

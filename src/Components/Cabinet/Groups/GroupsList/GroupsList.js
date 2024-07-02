@@ -48,6 +48,7 @@ const GroupsList = ({
   //   return totalLessons;
   // };
 
+
   const handleDeleteGroup = () => {
     dispatch(deleteGroup(id));
   };
@@ -78,6 +79,7 @@ const GroupsList = ({
       <Box
         className="flex flex-row"
         marginLeft="45px"
+        position="relative"
         id={id}
       >
         <CustomCheckbox
