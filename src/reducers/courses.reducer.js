@@ -26,4 +26,4 @@ const coursesReducer = (state, action) => {
 };
 
 // Export action creators and reducer
-export { addCourse, deleteCourse, coursesReducer };
+export { addCourse, coursesReducer, deleteCourse };

@@ -1,35 +1,20 @@
+import { Box, IconButton, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import * as routes from "../../../../Constants/routes";
-import {
-  Button,
-  IconButton,
-  CardContent,
-  CardMedia,
-  Divider,
-  Typography,
-  Menu,
-  MenuItem,
-  styled,
-  Box,
-} from "@mui/material";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import courseImage from "../../../../Assets/Images/Course.png";
-import arslanAvatar from "../../../../Assets/Images/Avatars/Arslan.png";
-import { format, weeksToDays } from "date-fns";
-import { auto } from "@popperjs/core";
-import { borderRadius } from "@mui/system";
-import { NumericFormat } from "react-number-format";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import * as routes from "../../../../Constants/routes";
 import {
   formattedPhoneNumber,
   getIconByGender,
-  getRussianWord,
 } from "../../../../helpers/helpers";
-import { useDispatch } from "react-redux";
 import { deleteTeacher } from "../../../../Slices/teachersSlice";
+import {
+  ButtonStyled,
+  MenuStyled,
+  TypographyStyled,
+} from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 
 const TeacherCard = ({
   id,

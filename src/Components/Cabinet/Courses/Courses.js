@@ -1,46 +1,24 @@
+import { Box, Grid, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { useNavigate } from "react-router-dom";
+import { Icons } from "../../../Assets/Icons/icons";
+import { deleteCourse } from "../../../reducers/courses.reducer";
 import {
-  Button,
-  Grid,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Typography,
-  Paper,
-  styled,
-  Box,
-} from "@mui/material";
-import {
-  theme,
   ButtonStyled,
-  ContentHeader,
+  CustomCheckbox,
   Main,
   Root,
+  theme,
   Title,
-  SelectStyled,
-  CustomCheckbox,
   TypographyStyled,
 } from "../CabinetStyles";
-import { NumericFormat } from "react-number-format";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import CourseCard from "./CourseCard/CourseCard";
 import NewCourseDialog from "./NewCourseDialog/NewCourseDialog";
-import { Icons } from "../../../Assets/Icons/icons";
-import { useNavigate } from "react-router-dom";
-import {
-  useCourses,
-  useCoursesDispatch,
-} from "../../../contexts/Courses.context";
-import { addCourse, deleteCourse } from "../../../reducers/courses.reducer";
 
-import api from "../../../Core/api";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCourses,
-  selectAllCourses,
-  selectCoursesStatus,
-} from "../../../Slices/coursesSlice";
+import { selectAllCourses } from "../../../Slices/coursesSlice";
 import CoursesList from "./CoursesList/CoursesList";
 
 const headerItemStyles = ({ theme }) => ({
@@ -81,19 +59,6 @@ const Courses = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const courses = useSelector(selectAllCourses);
-  
-  const dummyInfo = ([
-    {id: 1, name: "Python"},
-    {id: 2, name: "Javascript"},
-    {id: 3, name: "English"},
-    {id: 4, name: "Django"},
-    {id: 5, name: "Express.js"},
-    {id: 6, name: "GoLang"},
-    {id: 7, name: "GoLang"},
-    {id: 8, name: "GoLang"},
-    {id: 9, name: "GoLang"},
-    {id: 10, name: "GoLang"},
-  ])
 
   const [selectedCoursesIds, setSelectedCoursesIds] = useState([]);
 
@@ -126,7 +91,6 @@ const Courses = () => {
     }
   };
 
-
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -140,6 +104,10 @@ const Courses = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(courses)
+  },[])
 
   return (
     <Root
@@ -325,7 +293,7 @@ const Courses = () => {
                   maxHeight: "75vh",
                 }}
               >
-                {dummyInfo.map((course, i) => ( 
+                {courses.map((course, i) => (
                   <CoursesList
                     keyId={i}
                     {...course}
@@ -335,16 +303,6 @@ const Courses = () => {
                     areAllCoursessSelected={areAllCoursessSelected}
                   />
                 ))}
-                {/* {courses.map((course, i) => (
-                  <CoursesList
-                    keyId={i}
-                    {...course}
-                    selectedCoursesIds={selectedCoursesIds}
-                    handleSelectCourse={handleSelectCourse}
-                    handleSelectAllCourses={handleSelectAllCourses}
-                    areAllCoursessSelected={areAllCoursessSelected}
-                  />
-                ))} */}
               </Box>
             </Box>
           )}

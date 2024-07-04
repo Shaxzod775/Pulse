@@ -1,29 +1,19 @@
+import { Box, IconButton, MenuItem } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
-import * as routes from "../../../../Constants/routes";
-import {
-  Box,
-  Button,
-  CardContent,
-  CardMedia,
-  Divider,
-  IconButton,
-  MenuItem,
-  Typography,
-  styled,
-} from "@mui/material";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import courseImage from "../../../../Assets/Images/Course.png";
-import { format, weeksToDays } from "date-fns";
-import { auto } from "@popperjs/core";
-import { borderRadius } from "@mui/system";
 import { NumericFormat } from "react-number-format";
-import { getRussianWord } from "../../../../helpers/helpers";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import courseImage from "../../../../Assets/Images/Course.png";
+import * as routes from "../../../../Constants/routes";
+import { getRussianWord } from "../../../../helpers/helpers";
 import { deleteCourse } from "../../../../Slices/coursesSlice";
+import {
+  ButtonStyled,
+  MenuStyled,
+  TypographyStyled,
+} from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 
 const CourseCard = ({ id, name, duration, price, thumbnail }) => {
   const dispatch = useDispatch();

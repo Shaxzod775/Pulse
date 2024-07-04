@@ -1,31 +1,21 @@
+import { Box, IconButton, MenuItem, Typography } from "@mui/material";
+import { format } from "date-fns";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as routes from "../../../../Constants/routes";
-import {
-  Button,
-  IconButton,
-  CardContent,
-  CardMedia,
-  Divider,
-  Menu,
-  MenuItem,
-  styled,
-  Typography,
-  Box,
-} from "@mui/material";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { theme, ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import groupImage from "../../../../Assets/Images/Group.png";
-import { format, weeksToDays } from "date-fns";
-import {
-  calculateMonthDifference,
-  getRussianWord,
-} from "../../../../helpers/helpers";
-import { weekDaysText } from "../../../../Constants/dateLocales";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import groupImage from "../../../../Assets/Images/Group.png";
+import { weekDaysText } from "../../../../Constants/dateLocales";
+import * as routes from "../../../../Constants/routes";
+import { getRussianWord } from "../../../../helpers/helpers";
 import { deleteGroup } from "../../../../Slices/groupsSlice";
+import {
+  ButtonStyled,
+  MenuStyled,
+  theme,
+  TypographyStyled,
+} from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 
 const GroupCard = ({
   id,

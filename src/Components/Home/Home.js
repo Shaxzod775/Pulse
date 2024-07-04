@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 // import "./Home.scss";
-import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
-import * as routes from "../../Constants/routes";
 import kindergarten from "../../Assets/Images/HomeCards/kindergarten.jpg";
 import learningCenter from "../../Assets/Images/HomeCards/learningCenter.jpg";
 import school from "../../Assets/Images/HomeCards/school.jpg";
+import * as routes from "../../Constants/routes";
+import styles from "./Home.module.css";
 
 const Home = () => {
   return (

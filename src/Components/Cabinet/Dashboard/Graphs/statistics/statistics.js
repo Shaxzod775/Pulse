@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./statistics.module.css";
 import CustomPieChart from "./custom-piechart/custom-piechart";
+import styles from "./statistics.module.css";
 
 const Statistics = () => {
   return (

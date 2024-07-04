@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as routes from "../../../../Constants/routes";
 
@@ -12,10 +12,6 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  IconButton,
-  InputAdornment,
-  InputBase,
-  InputLabel,
   ListItemText,
   MenuItem,
   Paper,
@@ -27,10 +23,30 @@ import {
   styled,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ru } from "date-fns/locale";
+import _ from "lodash"; // lodash library
+import { MuiTelInput } from "mui-tel-input";
+import Dropzone from "react-dropzone";
+import { useDispatch } from "react-redux";
 import { Icons } from "../../../../Assets/Icons/icons";
+import { russianLocale } from "../../../../Constants/dateLocales";
+import {
+  socialMediaTypes,
+  uzbekEducationLevels,
+} from "../../../../Constants/testData";
+import {
+  REGIONS,
+  REGION_WITH_DISTRICTS,
+} from "../../../../Constants/usbekistan";
+import {
+  createEventWithValue,
+  formatFileName,
+} from "../../../../helpers/helpers";
+import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
+import useInput from "../../../../hooks/useInput";
+import { createTeacher, editTeacher } from "../../../../Slices/teachersSlice";
 import {
   AutocompleteField,
   AutocompleteStyled,
@@ -38,7 +54,6 @@ import {
   InputBaseStyled,
   Main,
   Root,
-  SelectStyled,
   SquareContainer,
   TextFieldStyled,
   Title,
@@ -49,44 +64,12 @@ import {
   textFieldStyles,
   theme,
 } from "../../CabinetStyles";
-import Dropzone from "react-dropzone";
-import { MuiTelInput } from "mui-tel-input";
-import { ar, ru } from "date-fns/locale";
-import _ from "lodash"; // lodash library
-import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
-import useInput from "../../../../hooks/useInput";
-import {
-  REGIONS,
-  REGION_WITH_DISTRICTS,
-} from "../../../../Constants/usbekistan";
-import { russianLocale } from "../../../../Constants/dateLocales";
-import {
-  socialMediaTypes,
-  uzbekEducationLevels,
-} from "../../../../Constants/testData";
-import {
-  createEventWithValue,
-  formatFileName,
-} from "../../../../helpers/helpers";
-import { format } from "date-fns";
-import { useDispatch } from "react-redux";
-import {
-  createTeacher,
-  editTeacher,
-  fetchTeachers,
-} from "../../../../Slices/teachersSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#fff",
   border: "1px solid #E5E7EB",
 });
-
-const HeaderDiv = styled("div")(({ theme }) => ({
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #E5E7EB",
-}));
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",

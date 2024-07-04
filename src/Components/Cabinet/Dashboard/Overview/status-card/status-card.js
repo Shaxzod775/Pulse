@@ -1,6 +1,6 @@
+import Icon from "@mui/material/Icon";
 import React from "react";
 import styles from "./status-card.module.css";
-import Icon from "@mui/material/Icon";
 
 const StatusCard = ({ icon, title, value, change }) => {
   return (

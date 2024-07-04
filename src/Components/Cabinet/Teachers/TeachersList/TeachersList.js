@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Icons } from "../../../../Assets/Icons/icons";
 import { Box, MenuItem, Typography } from "@mui/material";
-import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Icons } from "../../../../Assets/Icons/icons";
 import { deleteTeacher } from "../../../../Slices/teachersSlice";
+import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
 
 const TeachersList = ({
   keyId,
@@ -11,6 +11,8 @@ const TeachersList = ({
   firstName,
   lastName,
   phoneNumber,
+  gender,
+  secondPhoneNumber,
   selectedTeacherIds,
   handleSelectTeacher,
 }) => {
@@ -42,14 +44,14 @@ const TeachersList = ({
 
   return (
     <Box
-      className="flex flex-row items-center justify-between"
+      className="flex flex-row items-center text-center justify-between"
       sx={{
         height: "75px",
         backgroundColor: `${keyId % 2 !== 0 ? "#F9F9F9" : "white"}`,
         marginLeft: "25px",
         marginRight: "45px",
         fontWeight: "500",
-        fontSize: "14px",
+        fontSize: "13px",
         textAlign: "center",
         color: "#7D8594",
         opacity: "0.7",
@@ -58,6 +60,7 @@ const TeachersList = ({
       <Box
         className="flex flex-row"
         marginLeft="45px"
+        position="relative"
         id={id}
       >
         <CustomCheckbox
@@ -97,6 +100,8 @@ const TeachersList = ({
             height: "20px",
             backgroundColor: "white",
             color: "#6574D8",
+            position: "absolute",
+            left: "1405px",
             border: "1px solid #6574D8",
             borderRadius: "5px",
             "&:hover": {

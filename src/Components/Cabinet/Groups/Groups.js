@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 // import { v4 as uuidv4 } from "uuid";
-import GroupsMain from "./GroupsMain/GroupsMain";
 import * as routes from "../../../Constants/routes";
 import GroupProfile from "./GroupProfile/GroupProfile";
-
-import api from "../../../Core/api";
+import GroupsMain from "./GroupsMain/GroupsMain";
 
 const Groups = () => {
   return (

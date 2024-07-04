@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styles from "./revenue.module.css";
-import RevenueHeader from "./revenue-header/revenue-header";
 import CustomLineChart from "./custom-linechart/custom-linechart";
+import RevenueHeader from "./revenue-header/revenue-header";
+import styles from "./revenue.module.css";
 
 const StaticYear = 2023;
-const StaticMonthIndex = 11; // december
+// const StaticMonthIndex = 11; // december
 
 // Helper function to check for leap year
 const isLeapYear = (year) => {
@@ -17,10 +17,10 @@ const getDaysInMonth = (year, monthIndex) => {
 };
 
 // Function to generate random data for each day of the year
-const generateYearData = () => {
-  const days = isLeapYear(StaticYear) ? 366 : 365;
-  return Array.from({ length: days }, () => Math.floor(Math.random() * 10));
-};
+// const generateYearData = () => {
+//   const days = isLeapYear(StaticYear) ? 366 : 365;
+//   return Array.from({ length: days }, () => Math.floor(Math.random() * 10));
+// };
 
 // const WholeData = generateYearData();
 const WholeData = [

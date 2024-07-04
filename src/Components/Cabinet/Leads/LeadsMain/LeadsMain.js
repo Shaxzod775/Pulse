@@ -1,50 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as routes from "../../../../Constants/routes";
 import {
   Box,
-  Button,
-  ButtonBase,
   Card,
-  Checkbox,
   Chip,
   Grid,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
   ListItemText,
-  Menu,
   MenuItem,
-  Paper,
   Select,
-  TextField,
   Typography,
   styled,
 } from "@mui/material";
-import {
-  theme,
-  ButtonStyled,
-  ContentHeader,
-  Main,
-  Root,
-  Title,
-  TextFieldStyled,
-  SelectStyled,
-  customMenuProps,
-  selectStylesV2,
-  InputBaseStyledV2,
-  TypographyStyled,
-  CustomCheckbox,
-  MenuStyled,
-} from "../../CabinetStyles";
-import { NumericFormat } from "react-number-format";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable } from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Icons } from "../../../../Assets/Icons/icons";
-import LeadCard from "../LeadCard/LeadCard";
-import { BorderColor, Widgets } from "@mui/icons-material";
-import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 import {
   leadSources,
   leadStatuses,
@@ -52,15 +21,26 @@ import {
   leadStatusesEnumToText,
   leadStatusesTextToEnum,
 } from "../../../../Constants/testData";
-import useDebounce from "../../../../hooks/useDebounce";
-import useCounter from "../../../../hooks/useCounter";
-import { useSelector } from "react-redux";
 import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
 import { getRussianWord } from "../../../../helpers/helpers";
-import { DragDropContext, Draggable } from "react-beautiful-dnd";
-import { StrictModeDroppable as Droppable } from "../../../helpers/StrictModeDroppable";
-import api from "../../../../Core/api";
+import useCounter from "../../../../hooks/useCounter";
 import { useLocalStorage } from "../../../../hooks/useStorage";
+import { StrictModeDroppable as Droppable } from "../../../helpers/StrictModeDroppable";
+import {
+  ButtonStyled,
+  CustomCheckbox,
+  InputBaseStyledV2,
+  Main,
+  MenuStyled,
+  Root,
+  SelectStyled,
+  Title,
+  customMenuProps,
+  selectStylesV2,
+  theme,
+} from "../../CabinetStyles";
+import LeadCard from "../LeadCard/LeadCard";
+import NewLeadDialog from "../NewLeadDialog/NewLeadDialog";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -163,47 +143,50 @@ const LeadsMain = ({
   const [groupedLeads, setGroupedLeads] = useLocalStorage("groupedLeads", {});
 
   useEffect(() => {
-    // if groupedLeads in local storage is empty object with no keys
-    if (Object.keys(groupedLeads).length === 0) {
-      // initialize object, it becomes kinda like this: {NEW: [], IN_PROGRESS: [], RECYCLED: [], DEAD: []}
-      const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
-        acc[status] = []; // Initialize an empty array for each status
-        return acc;
-      }, {});
-      // filling empty arrays of the corresponding keys with the corresponding leads where lead's statusEnum is equal to key in the object
-      leads?.forEach((lead) => {
-        const { statusEnum } = lead;
-        initialGroupedLeads[statusEnum].push(lead);
-      });
-      setGroupedLeads(initialGroupedLeads); // Update the state
-    } else {
-      const updatedGroupedLeads = { ...groupedLeads };
-      // Map existing leads to their corresponding keys in the object
-      Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
-        updatedGroupedLeads[entry] = leadsInEntry
-          .filter((lead) => Boolean(lead))
-          .map((leadInEntry) =>
-            leads.find(
-              (lead) => lead.id === leadInEntry.id && lead.statusEnum === entry
-            )
-          )
-          .filter((lead) => Boolean(lead));
-
-        // Filter new leads based on the statusEnum
-        const newLeads = leads.filter((lead) => {
-          return (
-            lead.statusEnum === entry &&
-            !leadsInEntry.some((leadInEntry) => leadInEntry.id === lead.id)
-          );
+    if (leads.length > 0) {
+      if (Object.keys(groupedLeads).length === 0) {
+        // if groupedLeads in local storage is empty object with no keys
+        // initialize object, it becomes kinda like this: {NEW: [], IN_PROGRESS: [], RECYCLED: [], DEAD: []}
+        const initialGroupedLeads = leadStatusesEnum.reduce((acc, status) => {
+          acc[status] = []; // Initialize an empty array for each status
+          return acc;
+        }, {});
+        // filling empty arrays of the corresponding keys with the corresponding leads where lead's statusEnum is equal to key in the object
+        leads?.forEach((lead) => {
+          const { statusEnum } = lead;
+          initialGroupedLeads[statusEnum].push(lead);
         });
+        setGroupedLeads(initialGroupedLeads); // Update the state
+      } else {
+        const updatedGroupedLeads = { ...groupedLeads };
+        // Map existing leads to their corresponding keys in the object
+        Object.entries(updatedGroupedLeads).forEach(([entry, leadsInEntry]) => {
+          updatedGroupedLeads[entry] = leadsInEntry
+            .filter((lead) => Boolean(lead))
+            .map((leadInEntry) =>
+              leads.find(
+                (lead) =>
+                  lead.id === leadInEntry.id && lead.statusEnum === entry
+              )
+            )
+            .filter((lead) => Boolean(lead));
 
-        // Add the new leads to the existing leads
-        updatedGroupedLeads[entry] = [
-          ...updatedGroupedLeads[entry],
-          ...newLeads,
-        ];
-      });
-      setGroupedLeads(updatedGroupedLeads);
+          // Filter new leads based on the statusEnum
+          const newLeads = leads.filter((lead) => {
+            return (
+              lead.statusEnum === entry &&
+              !leadsInEntry.some((leadInEntry) => leadInEntry.id === lead.id)
+            );
+          });
+
+          // Add the new leads to the existing leads
+          updatedGroupedLeads[entry] = [
+            ...updatedGroupedLeads[entry],
+            ...newLeads,
+          ];
+        });
+        setGroupedLeads(updatedGroupedLeads);
+      }
     }
   }, [leads]);
 
@@ -301,7 +284,8 @@ const LeadsMain = ({
     navigate(-1); // This navigates one step back in history
   };
 
-  useDebounce(
+  //useDebounce(
+  useEffect(
     () => {
       let filtered = { ...groupedLeads };
       if (
@@ -319,11 +303,9 @@ const LeadsMain = ({
       console.log(filtered);
       setFilteredLeads(filtered);
     },
-    1000,
+    // 1000,
     [selectedLeadSources, selectedCourses, selectedStatuses, groupedLeads]
   );
-
-  useEffect(() => setFilteredLeads({ ...groupedLeads }), [groupedLeads]);
 
   const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
@@ -338,7 +320,6 @@ const LeadsMain = ({
       return;
     }
 
-    // const column = groupedLeads[source.droppableId];
     const sourceLeads = [...groupedLeads[source.droppableId]];
     const destinationLeads = [...groupedLeads[destination.droppableId]];
 
@@ -371,6 +352,7 @@ const LeadsMain = ({
       };
 
       setGroupedLeads(newGroupedLeads);
+      setFilteredLeads(newGroupedLeads);
 
       const uuid = result.draggableId;
       const status = result.destination.droppableId;
@@ -379,7 +361,89 @@ const LeadsMain = ({
     }
   };
 
-  if (!groupedLeads || !filteredLeads) return;
+  let leadListContent;
+  if (leads.length > 0) {
+    leadListContent = (
+      <>
+        <Grid
+          container
+          justifyContent="start"
+          rowSpacing={"18px"}
+          columnSpacing={"32px"}
+          paddingRight="44px"
+        >
+          {leadStatusesEnum.map((leadStatusEnum, i) => (
+            <Grid item xs="auto" md="auto" lg={3} key={i}>
+              <StatusTitle
+                status={leadStatusEnum}
+                leadsAmount={filteredLeads[leadStatusEnum]?.length || 0}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <div
+          style={{
+            maxHeight: "100%",
+            paddingRight: "32px",
+            overflowY: "auto",
+          }}
+        >
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Grid
+              container
+              justifyContent="start"
+              rowSpacing="18px"
+              columnSpacing="32px"
+              marginBottom={`${theme.custom.spacing.sm}px`}
+            >
+              {leadStatusesEnum.map((status) => (
+                <Grid item xs="auto" md="auto" lg={3} key={status}>
+                  <Droppable droppableId={status}>
+                    {(provided) => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        minHeight="500px"
+                        height="100%"
+                      >
+                        <Grid container direction="column" spacing={2}>
+                          {filteredLeads[status].map((lead, index) => (
+                            <Draggable
+                              key={lead.id}
+                              draggableId={lead.id}
+                              index={index}
+                            >
+                              {(provided) => (
+                                <Grid
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  item
+                                >
+                                  {/* Render your LeadCard component here */}
+                                  <LeadCard
+                                    {...lead}
+                                    handleDeleteLead={handleDeleteLead}
+                                  />
+                                </Grid>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </Grid>
+                      </Box>
+                    )}
+                  </Droppable>
+                </Grid>
+              ))}
+            </Grid>
+          </DragDropContext>
+        </div>
+      </>
+    );
+  } else {
+    leadListContent = <div></div>;
+  }
   return (
     <Root
     // sx={{ maxHeight: "calc(100% - 122px)", display: "flex" }}
@@ -605,93 +669,7 @@ const LeadsMain = ({
             </ButtonStyled> */}
           </div>
         </div>
-        <Grid
-          container
-          justifyContent="start"
-          rowSpacing={"18px"}
-          columnSpacing={"32px"}
-          paddingRight="44px"
-        >
-          {leadStatusesEnum.map((leadStatusEnum, i) => (
-            <Grid item xs="auto" md="auto" lg={3} key={i}>
-              <StatusTitle
-                status={leadStatusEnum}
-                leadsAmount={filteredLeads[leadStatusEnum]?.length || 0}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <div
-          style={{
-            maxHeight: "100%",
-            paddingRight: "32px",
-            overflowY: "auto",
-          }}
-        >
-          {/* <Grid
-            container
-            justifyContent="start"
-            rowSpacing={"18px"}
-            columnSpacing={"32px"}
-            marginBottom={`${theme.custom.spacing.sm}px`}
-          >
-            {filteredLeads.map((lead, i) => (
-              <Grid item xs="auto" md="auto" lg={3} key={i}>
-                <LeadCard {...lead} handleDeleteLead={handleDeleteLead} />
-              </Grid>
-            ))}
-          </Grid> */}
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Grid
-              container
-              justifyContent="start"
-              rowSpacing="18px"
-              columnSpacing="32px"
-              marginBottom={`${theme.custom.spacing.sm}px`}
-            >
-              {leadStatusesEnum.map((status) => (
-                <Grid item xs="auto" md="auto" lg={3} key={status}>
-                  <Droppable droppableId={status}>
-                    {(provided) => (
-                      <Box
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        minHeight="500px"
-                        height="100%"
-                      >
-                        <Grid container direction="column" spacing={2}>
-                          {filteredLeads[status].map((lead, index) => (
-                            <Draggable
-                              key={lead.id}
-                              draggableId={lead.id}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <Grid
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  item
-                                >
-                                  {/* Render your LeadCard component here */}
-                                  <LeadCard
-                                    {...lead}
-                                    handleDeleteLead={handleDeleteLead}
-                                  />
-                                </Grid>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </Grid>
-                      </Box>
-                    )}
-                  </Droppable>
-                </Grid>
-              ))}
-            </Grid>
-          </DragDropContext>
-        </div>
+        {leadListContent}
       </Main>
 
       <NewLeadDialog

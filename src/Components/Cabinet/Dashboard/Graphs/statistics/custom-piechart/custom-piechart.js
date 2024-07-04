@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "./custom-piechart.module.css";
+import { styled } from "@mui/material/styles";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
-import { styled } from "@mui/material/styles";
+import React from "react";
+import styles from "./custom-piechart.module.css";
 
 const configuration = {
   innerRadius: "54%",

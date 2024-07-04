@@ -1,32 +1,17 @@
+import { Box, IconButton, MenuItem, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as routes from "../../../../Constants/routes";
-import {
-  Button,
-  CardContent,
-  CardMedia,
-  Divider,
-  Typography,
-  Menu,
-  MenuItem,
-  IconButton,
-  styled,
-  Card,
-  Box,
-} from "@mui/material";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import courseImage from "../../../../Assets/Images/Course.png";
-import mariyaAvatar from "../../../../Assets/Images/Avatars/Mariya.png";
-import { format, weeksToDays } from "date-fns";
-import { auto } from "@popperjs/core";
-import { borderRadius } from "@mui/system";
-import { NumericFormat } from "react-number-format";
-import { getIconByGender } from "../../../../helpers/helpers";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import * as routes from "../../../../Constants/routes";
+import { getIconByGender } from "../../../../helpers/helpers";
 import { deleteStudent } from "../../../../Slices/studentsSlice";
+import {
+  ButtonStyled,
+  MenuStyled,
+  TypographyStyled,
+} from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 
 const StudentCard = ({
   id,

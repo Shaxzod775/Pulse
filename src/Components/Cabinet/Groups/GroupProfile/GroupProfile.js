@@ -1,50 +1,38 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  ListItemText,
+  MenuItem,
+  Paper,
+  Select,
+  Typography,
+  styled,
+} from "@mui/material";
+import { format } from "date-fns";
+import React, { useEffect, useMemo, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import groupImage from "../../../../Assets/Images/Group.png";
+import {
+  weekDaysText,
+  weekDaysTextFull,
+} from "../../../../Constants/dateLocales";
+import * as routes from "../../../../Constants/routes";
+import api from "../../../../Core/api";
+import useInput from "../../../../hooks/useInput";
 import {
   ButtonStyled,
   InputBaseStyledV2,
   Main,
   Root,
   Title,
+  TypographyStyled,
   customMenuProps,
   selectStylesV2,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  Button,
-  Card,
-  Chip,
-  Grid,
-  Divider,
-  InputBase,
-  Paper,
-  ThemeProvider,
-  Typography,
-  keyframes,
-  styled,
-  IconButton,
-  Dialog,
-  Box,
-  Select,
-  MenuItem,
-  ListItemText,
-} from "@mui/material";
-import * as routes from "../../../../Constants/routes";
-import Dropzone from "react-dropzone";
-import { NumericFormat } from "react-number-format";
-import { Height, RouteSharp } from "@mui/icons-material";
 import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import groupImage from "../../../../Assets/Images/Group.png";
-import useInput from "../../../../hooks/useInput";
-import {
-  weekDaysText,
-  weekDaysTextFull,
-} from "../../../../Constants/dateLocales";
-import LoadingComponent from "../../../helpers/LoadingComponent";
-import api from "../../../../Core/api";
-import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",

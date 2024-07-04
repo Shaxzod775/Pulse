@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./custom-linechart.module.css";
 
 // const year = 1990; // replace with the year you want

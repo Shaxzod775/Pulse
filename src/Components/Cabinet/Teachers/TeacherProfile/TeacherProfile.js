@@ -1,14 +1,3 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  ButtonStyled,
-  Main,
-  Root,
-  Title,
-  TypographyStyled,
-  theme,
-} from "../../CabinetStyles";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Icons } from "../../../../Assets/Icons/icons";
 import {
   Box,
   Button,
@@ -17,36 +6,38 @@ import {
   Divider,
   Grid,
   IconButton,
-  InputBase,
   Paper,
-  ThemeProvider,
   Typography,
-  keyframes,
   styled,
 } from "@mui/material";
-import * as routes from "../../../../Constants/routes";
+import { format } from "date-fns";
+import React, { useEffect, useMemo, useState } from "react";
 import Dropzone from "react-dropzone";
 import { NumericFormat } from "react-number-format";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import * as routes from "../../../../Constants/routes";
+import { genders, socialMediaTypes } from "../../../../Constants/testData";
+import api from "../../../../Core/api";
 import {
   formattedPhoneNumber,
   getSocialIconByName,
 } from "../../../../helpers/helpers";
-import { genders, socialMediaTypes } from "../../../../Constants/testData";
+import {
+  ButtonStyled,
+  Main,
+  Root,
+  Title,
+  TypographyStyled,
+  theme,
+} from "../../CabinetStyles";
 import { GroupsCard } from "../../Students/StudentProfile/StudentProfile";
-import api from "../../../../Core/api";
-import { format } from "date-fns";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#fff",
   border: "1px solid #E5E7EB",
 });
-
-const HeaderDiv = styled("div")(({ theme }) => ({
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  border: "1px solid #E5E7EB",
-}));
 
 const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   minHeight: "44px",
@@ -62,38 +53,6 @@ const DialogButton = styled(Button)(({ theme, variant, color }) => ({
   boxShadow: "none",
   "&:hover": { boxShadow: "none" },
 }));
-
-const SquareContainer = styled("div")(
-  ({
-    theme,
-    width,
-    height = 200,
-    bgColor = theme.palette.purpleBlue.main,
-    active,
-  }) => ({
-    width: width ? `${width}px` : "100%",
-    height: `${height}px`,
-    backgroundColor: bgColor,
-    borderRadius: "10px",
-    // border: `${active ? "3px dashed #cccccc" : "1px solid #E5E7EB"}`,
-    overflow: "hidden",
-
-    "& img": {
-      // Set image to cover the entire container
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // This resizes the image to fit the container
-
-      // Maintain aspect ratio and prevent overflow
-      objectPosition: "center", // Center the image within the container
-    },
-
-    // animation: `${rainbowCycle} 6s ${
-    //   active ? "infinite" : "1"
-    // } alternate ease-in-out`,
-    // animationDelay: active ? "0s" : "3s", // Control animation timing
-  })
-);
 
 const CircleContainer = styled("div")(
   ({ theme, width, height = 116, bgColor = "#F9FAFB" }) => ({
@@ -140,56 +99,6 @@ const CardText = styled(Typography)(
     lineHeight: "normal",
   })
 );
-
-const ProfileTabHeader = styled("div")(
-  ({
-    theme,
-    active,
-    fontWeight = 500,
-    fontSize = "1.125rem",
-    fontFamily = "inherit",
-  }) => ({
-    color: active ? "#1C0D64" : "#AEB2BA",
-    fontFamily: fontFamily,
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    lineHeight: "150%",
-    position: "relative",
-    transition: "all 0.3s ease-in-out",
-    cursor: active ? "" : "pointer",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      left: active ? "0%" : "50%",
-      right: active ? "0%" : "50%",
-      bottom: "-14px",
-      height: "2px",
-      backgroundColor: "#6574D8",
-      transition: "all .3s ease-in-out",
-    },
-    "&:hover": { opacity: active ? "" : ".5" },
-  })
-);
-
-// const InfoItem = styled("div")(({ theme }) => ({
-//   display: "flex",
-//   flexDirection: "column",
-//   gap: "8px",
-//   lineHeight: "150%",
-//   fontFamily: "Poppins, Rubik, sans-serif",
-//   "& > h5": {
-//     margin: "0",
-//     color: "#AEB2BA",
-//     fontSize: "0.875rem",
-//     fontWeight: "500",
-//     letterSpacing: ".36px",
-//   },
-//   "& > span": {
-//     color: "#1C0D64",
-//     fontSize: "1rem",
-//     letterSpacing: ".32px",
-//   },
-// }));
 
 const InfoItem = ({ title, children }) => (
   <Box className="flex flex-col" rowGap="4px" lineHeight="150%">

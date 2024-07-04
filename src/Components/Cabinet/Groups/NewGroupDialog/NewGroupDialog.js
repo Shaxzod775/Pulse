@@ -1,4 +1,3 @@
-import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -6,55 +5,41 @@ import {
   Dialog,
   DialogContent,
   FormControl,
-  InputAdornment,
-  InputBase,
-  MenuItem,
-  OutlinedInput,
-  Select,
   TextField,
   Typography,
-  duration,
-  keyframes,
   styled,
-  textFieldClasses,
 } from "@mui/material";
-import {
-  theme,
-  Root,
-  Title,
-  TextFieldStyled,
-  AutocompleteStyled,
-  SelectStyled,
-  AutocompleteField,
-  textFieldStyles,
-  FormLabelStyled,
-} from "../../CabinetStyles";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { NumericFormat } from "react-number-format";
-import PropTypes from "prop-types";
-import useInput from "../../../../hooks/useInput";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ru } from "date-fns/locale";
+import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
+import { Icons } from "../../../../Assets/Icons/icons";
+import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
 import {
   calculateMonthDifference,
   createEventWithValue,
 } from "../../../../helpers/helpers";
-import { useCourses } from "../../../../contexts/Courses.context";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ru } from "date-fns/locale";
-import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
-import { teacherNames } from "../../../../Constants/testData";
+import useInput from "../../../../hooks/useInput";
+import {
+  AutocompleteField,
+  AutocompleteStyled,
+  FormLabelStyled,
+  Root,
+  TextFieldStyled,
+  Title,
+  textFieldStyles,
+  theme,
+} from "../../CabinetStyles";
 
-import api from "../../../../Core/api";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectAllCourseNames,
   selectCourseByName,
-  selectCoursesIdName,
 } from "../../../../Slices/coursesSlice";
-import { selectTeachersIdName } from "../../../../Slices/teachersSlice";
 import { createGroup } from "../../../../Slices/groupsSlice";
+import { selectTeachersIdName } from "../../../../Slices/teachersSlice";
 
 const timeInputStyles = {
   "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -221,6 +206,7 @@ const NewGroupDialog = ({ open, handleClose, ...otherProps }) => {
   // Function to handle change in subject selection
   const handleCourseChange = (event, newValue) => {
     changeSelectedCourseName(createEventWithValue(newValue));
+    console.log(selectedCourse);
   };
 
   useEffect(() => {

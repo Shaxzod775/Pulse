@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./Dashboard-main.module.css";
-import Overview from "../Overview/Overview";
-import Lessons from "../Lessons/Lessons";
 import Graphs from "../Graphs/Graphs";
+import Lessons from "../Lessons/Lessons";
+import Overview from "../Overview/Overview";
+import styles from "./Dashboard-main.module.css";
 
 const DashboardMain = () => {
   return (

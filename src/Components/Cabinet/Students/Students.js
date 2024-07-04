@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import StudentsMain from "./StudentsMain/StudentsMain";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-
-import api from "../../../Core/api";
+import StudentsMain from "./StudentsMain/StudentsMain";
 
 import * as routes from "../../../Constants/routes";
 import NewStudent from "./NewStudent/NewStudent";
 import StudentProfile from "./StudentProfile/StudentProfile";
-import useToggle from "../../../hooks/useToggle";
 
 const Students = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./Dashboard.module.css";
 import DashboardMain from "./Dashboard-main/Dashboard-main";
+import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
   return (

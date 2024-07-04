@@ -1,41 +1,29 @@
+import { ThemeProvider } from "@mui/material";
 import React, { useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import * as routes from "../../Constants/routes";
-import Sidebar from "./Sidebar/Sidebar";
-import Header from "./Header/Header";
-import Dashboard from "./Dashboard/Dashboard";
-import styles from "./Cabinet.module.css";
-import Groups from "./Groups/Groups";
-import {
-  ThemeProvider,
-  createTheme,
-  styled,
-  InputLabel,
-  Select,
-  Button,
-  Card,
-  TextField,
-  Autocomplete,
-} from "@mui/material";
-import Courses from "./Courses/Courses";
-import TeachersMain from "./Teachers/TeachersMain/TeachersMain";
-import StudentsMain from "./Students/StudentsMain/StudentsMain";
-import Teachers from "./Teachers/Teachers";
-import Students from "./Students/Students";
-import { theme } from "./CabinetStyles";
-import Leads from "./Leads/Leads";
-import { CoursesProvider } from "../../contexts/Courses.context";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+import * as routes from "../../Constants/routes";
+import { CoursesProvider } from "../../contexts/Courses.context";
 import { fetchCourses, selectCoursesStatus } from "../../Slices/coursesSlice";
-import {
-  fetchTeachers,
-  selectTeachersStatus,
-} from "../../Slices/teachersSlice";
 import { fetchGroups, selectGroupsStatus } from "../../Slices/groupsSlice";
 import {
   fetchStudents,
   selectStudentsStatus,
 } from "../../Slices/studentsSlice";
+import {
+  fetchTeachers,
+  selectTeachersStatus,
+} from "../../Slices/teachersSlice";
+import styles from "./Cabinet.module.css";
+import { theme } from "./CabinetStyles";
+import Courses from "./Courses/Courses";
+import Dashboard from "./Dashboard/Dashboard";
+import Groups from "./Groups/Groups";
+import Header from "./Header/Header";
+import Leads from "./Leads/Leads";
+import Sidebar from "./Sidebar/Sidebar";
+import Students from "./Students/Students";
+import Teachers from "./Teachers/Teachers";
 
 const Cabinet = () => {
   const dispatch = useDispatch();

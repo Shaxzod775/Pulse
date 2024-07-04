@@ -1,21 +1,19 @@
 import {
-  createTheme,
-  styled,
-  InputLabel,
-  Select,
-  Button,
-  Card as GridCard,
-  TextField,
   Autocomplete,
-  Menu,
-  FormControl,
-  Typography,
-  InputBase,
+  Button,
   Checkbox,
+  createTheme,
+  FormControl,
+  FormLabel,
+  InputBase,
+  InputLabel,
+  Menu,
+  Select,
+  styled,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { SIDEBAR_OPEN_WIDTH } from "../../Constants/stylesConstants";
-import { BorderColor } from "@mui/icons-material";
-import { FormLabel } from "@mui/material";
 
 export const theme = createTheme({
   palette: {

@@ -1,4 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  Chip,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+  styled,
+} from "@mui/material";
+import { format } from "date-fns";
+import React, { useEffect, useMemo, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
+import * as routes from "../../../../Constants/routes";
+import { genders } from "../../../../Constants/testData";
+import api from "../../../../Core/api";
+import { formattedPhoneNumber } from "../../../../helpers/helpers";
 import {
   ButtonStyled,
   Main,
@@ -7,28 +28,7 @@ import {
   TypographyStyled,
   theme,
 } from "../../CabinetStyles";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Icons } from "../../../../Assets/Icons/icons";
-import {
-  Button,
-  Card,
-  Chip,
-  Grid,
-  Divider,
-  Paper,
-  Typography,
-  styled,
-  IconButton,
-  Box,
-} from "@mui/material";
-import * as routes from "../../../../Constants/routes";
-import { NumericFormat } from "react-number-format";
 import AttendanceCalendar from "./AttendanceCalendar/AttendanceCalendar";
-import api from "../../../../Core/api";
-import { formattedPhoneNumber } from "../../../../helpers/helpers";
-import { format } from "date-fns";
-import { genders } from "../../../../Constants/testData";
-import { useDispatch } from "react-redux";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",

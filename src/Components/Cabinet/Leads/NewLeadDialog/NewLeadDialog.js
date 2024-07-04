@@ -1,68 +1,40 @@
-import React, { useCallback, useMemo, useState } from "react";
 import {
-  Box,
   Button,
   Checkbox,
-  Chip,
   Dialog,
   DialogContent,
   FormControl,
-  InputAdornment,
-  InputBase,
   ListItemText,
   MenuItem,
-  OutlinedInput,
   Select,
-  TextField,
   Typography,
-  duration,
-  keyframes,
   styled,
-  textFieldClasses,
 } from "@mui/material";
-import {
-  theme,
-  Root,
-  Title,
-  TextFieldStyled,
-  AutocompleteStyled,
-  SelectStyled,
-  AutocompleteField,
-  textFieldStyles,
-  muiTelInputStyles,
-  customMenuProps,
-  selectStyles,
-  InputBaseStyled,
-  FormLabelStyled,
-} from "../../CabinetStyles";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { NumericFormat } from "react-number-format";
-import PropTypes from "prop-types";
-import useInput from "../../../../hooks/useInput";
-import { createLead } from "../Leads";
-import Dropzone from "react-dropzone";
-import {
-  calculateMonthDifference,
-  createEventWithValue,
-} from "../../../../helpers/helpers";
-import { useCourses } from "../../../../contexts/Courses.context";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ru } from "date-fns/locale";
-import { russianLocale } from "../../../../Constants/dateLocales";
-import { MuiTelInput } from "mui-tel-input";
 import _ from "lodash"; // lodash library
+import { MuiTelInput } from "mui-tel-input";
+import React, { useCallback, useState } from "react";
+import { Icons } from "../../../../Assets/Icons/icons";
 import {
   courseLanguagesFullRu,
-  languagesFullRu,
   leadSources,
-  leadStatuses,
   leadStatusesEnumToText,
 } from "../../../../Constants/testData";
+import { createEventWithValue } from "../../../../helpers/helpers";
+import useInput from "../../../../hooks/useInput";
 import useToggle from "../../../../hooks/useToggle";
+import {
+  AutocompleteField,
+  AutocompleteStyled,
+  FormLabelStyled,
+  InputBaseStyled,
+  Root,
+  TextFieldStyled,
+  customMenuProps,
+  muiTelInputStyles,
+  selectStyles,
+  theme,
+} from "../../CabinetStyles";
 
-import api from "../../../../Core/api";
 import { useSelector } from "react-redux";
 import {
   selectAllCourseNames,

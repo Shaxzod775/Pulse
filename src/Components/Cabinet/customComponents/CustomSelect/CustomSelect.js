@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
 import {
   ButtonBase,
   Collapse,
@@ -8,10 +7,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { theme } from "../../CabinetStyles";
-import { Icons } from "../../../../Assets/Icons/icons";
 import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
 import { styled } from "@mui/system";
+import React, { useEffect, useRef, useState } from "react";
+import { Icons } from "../../../../Assets/Icons/icons";
+import { theme } from "../../CabinetStyles";
 
 const Root = styled("div")(({ theme }) => ({
   position: "relative",

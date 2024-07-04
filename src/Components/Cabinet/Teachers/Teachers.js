@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import * as routes from "../../../Constants/routes";
-import TeachersMain from "./TeachersMain/TeachersMain";
 import NewTeacher from "./NewTeacher/NewTeacher";
 import TeacherProfile from "./TeacherProfile/TeacherProfile";
-
-import api from "../../../Core/api";
-import { useSelector } from "react-redux";
-import { selectAllTeachers } from "../../../Slices/teachersSlice";
-
-const teacherNames = [
-  "Koptleulov Arslan",
-  "Ilya Starodubtsev",
-  "Aziz Mamajonov",
-  "Muhammad Matchonov",
-];
+import TeachersMain from "./TeachersMain/TeachersMain";
 
 const Teachers = () => {
   return (

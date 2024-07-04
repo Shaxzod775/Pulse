@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import api from "../../../../Core/api";
 
-import * as routes from "../../../../Constants/routes";
 import {
   Box,
   Button,
@@ -23,9 +22,27 @@ import {
   styled,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ru } from "date-fns/locale";
+import _ from "lodash"; // lodash library
+import { MuiTelInput } from "mui-tel-input";
+import Dropzone from "react-dropzone";
+import { useDispatch } from "react-redux";
 import { Icons } from "../../../../Assets/Icons/icons";
+import { russianLocale } from "../../../../Constants/dateLocales";
+import * as routes from "../../../../Constants/routes";
+import {
+  REGIONS,
+  REGION_WITH_DISTRICTS,
+} from "../../../../Constants/usbekistan";
+import {
+  createEventWithValue,
+  formatFileName,
+} from "../../../../helpers/helpers";
+import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
+import useInput from "../../../../hooks/useInput";
+import { createStudent, editStudent } from "../../../../Slices/studentsSlice";
 import {
   AutocompleteField,
   AutocompleteStyled,
@@ -43,23 +60,6 @@ import {
   textFieldStyles,
   theme,
 } from "../../CabinetStyles";
-import Dropzone from "react-dropzone";
-import { MuiTelInput } from "mui-tel-input";
-import { ru } from "date-fns/locale";
-import _ from "lodash"; // lodash library
-import useAutocompleteInput from "../../../../hooks/useAutocompleteHandler";
-import useInput from "../../../../hooks/useInput";
-import {
-  REGIONS,
-  REGION_WITH_DISTRICTS,
-} from "../../../../Constants/usbekistan";
-import { russianLocale } from "../../../../Constants/dateLocales";
-import {
-  createEventWithValue,
-  formatFileName,
-} from "../../../../helpers/helpers";
-import { useDispatch } from "react-redux";
-import { createStudent, editStudent } from "../../../../Slices/studentsSlice";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",

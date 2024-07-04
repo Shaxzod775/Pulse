@@ -1,34 +1,19 @@
+import { Box, Chip, IconButton, MenuItem, styled } from "@mui/material";
 import React from "react";
-import {
-  Button,
-  CardContent,
-  CardMedia,
-  Divider,
-  Typography,
-  Menu,
-  MenuItem,
-  IconButton,
-  styled,
-  Chip,
-  Box,
-} from "@mui/material";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { ButtonStyled, MenuStyled } from "../../CabinetStyles";
-import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
-import { TypographyStyled } from "../../CabinetStyles";
-import courseImage from "../../../../Assets/Images/Course.png";
-import { format, weeksToDays } from "date-fns";
-import { auto } from "@popperjs/core";
-import { borderRadius } from "@mui/system";
-import { NumericFormat } from "react-number-format";
-import * as routes from "../../../../Constants/routes";
 import { Link, useNavigate } from "react-router-dom";
-import { formattedPhoneNumber } from "../../../../helpers/helpers";
+import { Icons } from "../../../../Assets/Icons/icons";
+import * as routes from "../../../../Constants/routes";
 import {
-  leadStatuses,
   leadStatusesEnum,
   leadStatusesEnumToText,
 } from "../../../../Constants/testData";
+import { formattedPhoneNumber } from "../../../../helpers/helpers";
+import {
+  ButtonStyled,
+  MenuStyled,
+  TypographyStyled,
+} from "../../CabinetStyles";
+import { CardStyled, InfoWithIcon } from "../../GridItemCardStyles";
 
 const StatusChip = styled((props) => <Chip {...props} />)(
   ({ theme, status }) => ({

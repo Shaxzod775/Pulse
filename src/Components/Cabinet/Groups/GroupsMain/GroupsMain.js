@@ -1,76 +1,55 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
-  Button,
-  ButtonBase,
-  Checkbox,
   Collapse,
   Grid,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
   ListItemText,
-  Menu,
   MenuItem,
-  Paper,
   Select,
-  TextField,
   Typography,
   styled,
 } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ru } from "date-fns/locale";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Icons } from "../../../../Assets/Icons/icons";
 import {
-  theme,
-  ButtonStyled,
-  ContentHeader,
-  Main,
-  Root,
-  Title,
-  TextFieldStyled,
-  SelectStyled,
-  customMenuProps,
-  selectStylesV2,
-  InputBaseStyledV2,
-  AutocompleteStyledV2,
+  russianLocale,
+  weekDaysText,
+  weekDaysTextFull,
+} from "../../../../Constants/dateLocales";
+import useCounter from "../../../../hooks/useCounter";
+import useDebounce from "../../../../hooks/useDebounce";
+import useInput from "../../../../hooks/useInput";
+import useToggle from "../../../../hooks/useToggle";
+import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
+import { deleteGroup, selectAllGroups } from "../../../../Slices/groupsSlice";
+import { selectTeachersName } from "../../../../Slices/teachersSlice";
+import {
   AutocompleteFieldV2,
   AutocompleteMenuProps,
-  selectStyles,
-  InputBaseStyled,
+  AutocompleteStyledV2,
+  ButtonStyled,
   CustomCheckbox,
+  InputBaseStyledV2,
+  Main,
+  Root,
+  SelectStyled,
+  Title,
   TypographyStyled,
-  textFieldStyles,
+  customMenuProps,
+  selectStylesV2,
   textFieldStylesV2,
+  theme,
 } from "../../CabinetStyles";
-import { NumericFormat } from "react-number-format";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import GroupCard from "../GroupCard/GroupCard";
-import { Icons } from "../../../../Assets/Icons/icons";
-import NewGroupDialog from "../NewGroupDialog/NewGroupDialog";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ru } from "date-fns/locale";
-import { russianLocale, weekDaysText } from "../../../../Constants/dateLocales";
-import { teacherNames } from "../../../../Constants/testData";
-import {
-  weekDaysTextFull,
-  weekDaysTextFullToShort,
-} from "../../../../Constants/dateLocales";
-import { useCourses } from "../../../../contexts/Courses.context";
-import useToggle from "../../../../hooks/useToggle";
-import useInput from "../../../../hooks/useInput";
-import useDebounce from "../../../../hooks/useDebounce";
-import useCounter from "../../../../hooks/useCounter";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAllCourseNames } from "../../../../Slices/coursesSlice";
-import {
-  selectTeachersIdNameCombined,
-  selectTeachersName,
-} from "../../../../Slices/teachersSlice";
 import GroupsList from "../GroupsList/GroupsList";
-import { deleteGroup, selectAllGroups } from "../../../../Slices/groupsSlice";
+import NewGroupDialog from "../NewGroupDialog/NewGroupDialog";
 
 const headerItemStyles = ({ theme }) => ({
   borderRadius: "10px",
@@ -124,12 +103,6 @@ const GroupsMain = () => {
   const [groupDialogKey, increaseGroupDialogKey] = useCounter(0);
 
   const [filteredGroups, setFilteredGroups] = useState(groups);
-
-  const [dummyInfo, setDummyInfo] = useState([
-    {id: 1, name: "GR011-62", startDate: "2024-02-23", endDate: "2024-12-05", course: {name: "UI/UX Design", duration: 3}, classDays: [2], roomNumber: 4, teacher: {firstName:"Arslan", lastName:"Koptleulov"}},
-    {id: 2, name: "GR011-62", startDate: "2024-02-23", endDate: "2024-20-09", course: {name: "UI/UX Design", duration: 1}, classDays: [2, 4, 6], roomNumber: 12, teacher: {firstName:"Arslan", lastName:"Koptleulov"}},
-    {id: 3, name: "GR011-62", startDate: "2024-02-23", endDate: "2024-12-05", course: {name: "UI/UX Design", duration: 2}, classDays: [1, 3, 5], roomNumber: 9, teacher: {firstName:"Arslan", lastName:"Koptleulov"}},
-  ])
 
   const [allFiltersOpen, toggleAllfiltersOpen] = useToggle(false);
 
@@ -825,14 +798,13 @@ const GroupsMain = () => {
                   fontStyle: "normal",
                   fontWeight: "600",
                   fontSize: "14px",
-
                   textAlign: "center",
                   color: "#7D8594",
                   width: "auto",
                 }}
               >
                 <Box
-                  className="flex items-center"
+                  className="flex flex-row items-center"
                 >
                   <CustomCheckbox
                     checked={areAllGroupsSelected}
@@ -873,17 +845,7 @@ const GroupsMain = () => {
                   maxHeight: "75vh",
                 }}
               >
-                {/* {filteredGroups.map((group, i) => (
-                  <GroupsList
-                    keyId={i}
-                    {...group}
-                    selectedGroupIds={selectedGroupIds}
-                    handleSelectGroup={handleSelectGroup}
-                    handleSelectAllGroups={handleSelectAllGroups}
-                    areAllGroupsSelected={areAllGroupsSelected}
-                  />
-                ))} */}
-                {dummyInfo.map((group, i) => (
+                {filteredGroups.map((group, i) => (
                   <GroupsList
                     keyId={i}
                     {...group}

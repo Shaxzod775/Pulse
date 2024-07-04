@@ -1,9 +1,9 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import SignIn from "./Components/SignIn/SignIn";
-import Home from "./Components/Home/Home";
-import * as routes from "./Constants/routes";
 import Cabinet from "./Components/Cabinet/Cabinet";
+import Home from "./Components/Home/Home";
+import SignIn from "./Components/SignIn/SignIn";
+import * as routes from "./Constants/routes";
 import { useGlobal } from "./Core/global";
 
 function App() {

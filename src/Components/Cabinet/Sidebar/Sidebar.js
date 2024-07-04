@@ -1,27 +1,12 @@
+import { Collapse, ThemeProvider, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import styles from "./Sidebar.module.css"; // Assuming you will create a CSS file to style the sidebar
-import {
-  PaidOutlined,
-  KeyboardDoubleArrowRightOutlined,
-  PeopleAltOutlined,
-  CalendarMonthOutlined,
-  SchoolOutlined,
-  DescriptionOutlined,
-  PersonOutlineOutlined,
-  MoveToInboxOutlined,
-  CameraAltOutlined,
-  SettingsOutlined,
-  LogoutOutlined,
-  Iso,
-  KeyboardDoubleArrowLeftOutlined,
-} from "@mui/icons-material";
-import { Collapse, ThemeProvider, Typography, styled } from "@mui/material";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Icons } from "../../../Assets/Icons/icons";
 import * as routes from "../../../Constants/routes";
 import { SIDEBAR_OPEN_WIDTH } from "../../../Constants/stylesConstants";
-import { Icons } from "../../../Assets/Icons/icons";
-import { theme } from "../CabinetStyles";
 import { useGlobal } from "../../../Core/global";
+import { theme } from "../CabinetStyles";
+import styles from "./Sidebar.module.css"; // Assuming you will create a CSS file to style the sidebar
 
 const menuItemStyles = ({ theme, color = "purpleGrey" }) => ({
   padding: "10px",

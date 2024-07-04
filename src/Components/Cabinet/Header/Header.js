@@ -1,16 +1,10 @@
 import React from "react";
 import styles from "./Header.module.css"; // Make sure to create the corresponding CSS Module file
 
-import {
-  Search as SearchIcon,
-  Language as LanguageIcon,
-  Notifications as NotificationsIcon,
-  AccountCircle as AccountCircleIcon,
-} from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { Icon, IconButton, Toolbar } from "@mui/material";
-import * as routes from "../../../Constants/routes";
 import { Icons } from "../../../Assets/Icons/icons";
+import * as routes from "../../../Constants/routes";
 import { useGlobal } from "../../../Core/global";
 
 const Header = () => {

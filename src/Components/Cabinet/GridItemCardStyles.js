@@ -1,4 +1,4 @@
-import { Box, Card, styled } from "@mui/material";
+import { Card, styled } from "@mui/material";
 
 export const CardStyled = styled(Card)(({ theme }) => ({
   // "::before": {

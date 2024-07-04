@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./progress.module.css";
 import ProgressBar from "./progress-bar/progress-bar";
+import styles from "./progress.module.css";
 import Scale from "./scale/scale";
 
 const Progress = () => {

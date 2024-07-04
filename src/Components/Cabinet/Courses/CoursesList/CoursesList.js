@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { weekDaysText } from "../../../../Constants/dateLocales";
-import { format } from "date-fns";
-import { getRussianWord } from "../../../../helpers/helpers";
 import { Box, MenuItem, Typography } from "@mui/material";
-import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Icons } from "../../../../Assets/Icons/icons";
 import { deleteCourse } from "../../../../reducers/courses.reducer";
+import { ButtonStyled, CustomCheckbox, MenuStyled } from "../../CabinetStyles";
 
 const CoursesList = ({
   keyId,

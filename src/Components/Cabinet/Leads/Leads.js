@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import * as routes from "../../../Constants/routes";
-import LeadsMain from "./LeadsMain/LeadsMain";
-import { leadStatuses } from "../../../Constants/testData";
 import api from "../../../Core/api";
 import useToggle from "../../../hooks/useToggle";
-
-const names = ["Elyorov Ahmad", "Aliyev Shohrux", "Azizova Aziza"];
+import LeadsMain from "./LeadsMain/LeadsMain";
 
 const Leads = () => {
   const [leads, setLeads] = useState([]);
@@ -67,21 +63,21 @@ const Leads = () => {
 
   return (
     <Routes>
-      {leads.length > 0 ? (
-        <Route
-          path={routes.HOME}
-          element={
-            <LeadsMain
-              leads={leads}
-              handleDeleteLead={handleDeleteLead}
-              handleAddLead={handleAddLead}
-              handleUpdateLeadStatus={handleUpdateLeadStatus}
-            />
-          }
-        />
-      ) : (
+      {/* {leads.length > 0 ? ( */}
+      <Route
+        path={routes.HOME}
+        element={
+          <LeadsMain
+            leads={leads}
+            handleDeleteLead={handleDeleteLead}
+            handleAddLead={handleAddLead}
+            handleUpdateLeadStatus={handleUpdateLeadStatus}
+          />
+        }
+      />
+      {/* ) : (
         <></>
-      )}
+      )} */}
       <Route path={routes.PROFILE} element={<div>LEADS PROFILE</div>} />
       <Route path={routes.NEW} element={<div>CREATE NEW LEAD</div>} />
       <Route

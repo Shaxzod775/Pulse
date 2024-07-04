@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./circles.module.css";
-import { PieChart } from "@mui/x-charts/PieChart";
 import PiechartLabeled from "./piechart-labeled/piechart-labeled";
 
 const Circles = () => {

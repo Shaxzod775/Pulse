@@ -1,8 +1,10 @@
+import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Typography, Box } from "@mui/material";
 import { Icons } from "../../../../../Assets/Icons/icons";
-import { monthsInGenitiveForm } from "../../../../../Constants/dateLocales";
-import { weekDaysTextFull } from "../../../../../Constants/dateLocales";
+import {
+  monthsInGenitiveForm,
+  weekDaysTextFull,
+} from "../../../../../Constants/dateLocales";
 import { ButtonStyled, TypographyStyled } from "../../../CabinetStyles";
 
 const AttendanceMonthCell = ({ text, cellType = "neutral" }) => {

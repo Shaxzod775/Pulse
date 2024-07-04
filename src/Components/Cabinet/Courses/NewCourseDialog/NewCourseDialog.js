@@ -1,40 +1,33 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
-  Chip,
   Dialog,
   DialogContent,
   FormControl,
   InputAdornment,
-  TextField,
   Typography,
-  duration,
   styled,
 } from "@mui/material";
-import {
-  theme,
-  Root,
-  Title,
-  TextFieldStyled,
-  AutocompleteStyled,
-  SquareContainer,
-} from "../../CabinetStyles";
-import { Icons } from "../../../../Assets/Icons/icons";
-import { NumericFormat } from "react-number-format";
 import PropTypes from "prop-types";
-import useInput from "../../../../hooks/useInput";
+import React, { memo, useMemo, useState } from "react";
 import Dropzone from "react-dropzone";
-import { getRussianWord } from "../../../../helpers/helpers";
-import { useCourses } from "../../../../contexts/Courses.context";
-import { FormLabelStyled } from "../../CabinetStyles";
-import api from "../../../../Core/api";
-import CourseCard from "../CourseCard/CourseCard";
+import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
+import { Icons } from "../../../../Assets/Icons/icons";
+import { getRussianWord } from "../../../../helpers/helpers";
+import useInput from "../../../../hooks/useInput";
 import {
   createCourse,
   selectAllCourses,
 } from "../../../../Slices/coursesSlice";
+import {
+  FormLabelStyled,
+  Root,
+  SquareContainer,
+  TextFieldStyled,
+  Title,
+  theme,
+} from "../../CabinetStyles";
 
 const timeInputStyles = {
   minHeight: "unset",

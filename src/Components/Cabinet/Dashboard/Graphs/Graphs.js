@@ -1,7 +1,7 @@
 import React from "react";
+import styles from "./Graphs.module.css";
 import Revenue from "./revenue/revenue";
 import Statistics from "./statistics/statistics";
-import styles from "./Graphs.module.css";
 
 const Graphs = () => {
   return (
