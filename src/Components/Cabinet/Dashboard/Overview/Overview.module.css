@@ -1,0 +1,16 @@
+/* .overview {
+  display: flex;
+  justify-content: space-between;
+} */
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.overview > * {
+  /* flex: 0 0 25%;
+  max-width: 25%;
+  box-sizing: border-box; */
+}
