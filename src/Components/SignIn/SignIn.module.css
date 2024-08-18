@@ -1,0 +1,152 @@
+.SignIn {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f5f5fb;
+}
+
+.SignIn *,
+.SignIn *::before,
+.SignIn *::after {
+  box-sizing: border-box;
+}
+
+.SignIn-Container {
+  min-width: 35%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  height: 625px;
+
+  padding: 45px;
+
+  @media screen and (max-width: 1439px) {
+    min-width: 50%;
+  }
+}
+
+.SignIn-Box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 45px;
+  gap: 35px;
+
+  width: 100%;
+  height: 100%;
+  
+  max-height: 530px;
+  min-width: 460px;
+
+  background: #ffffff;
+  border-radius: 40px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+ 
+  width: 100%;
+}
+
+.icons img {
+  height: 36px;
+}
+
+.SignIn-Box h1 {
+  margin-bottom: 5px;
+}
+
+.text-input {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  
+  gap: 15px;
+  width: 100%;
+}
+
+.button-container p {
+  margin: 0;
+  color: rgb(245, 0, 0);
+}
+
+.SignIn-ImageBox {
+  width: 100%;
+  height: 100%;
+
+  max-height: 550px;
+  min-width: 460px;
+}
+
+.SignIn-ImageBox img {
+  width: 100%;
+  height: 100%;
+
+  background: #ffffff;
+  border-radius: 40px;
+}
+
+
+
+@media screen and (max-width: 1040px) {
+  .SignIn-Box {
+    padding: 30px;
+    width: 100%;
+  }
+
+  .SignIn-Container {
+    min-width: unset;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .SignIn-ImageBox img {
+    display: none;
+  }
+
+}
+
+/* Target the autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1c274c;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* Target the icon container specifically */
+.MuiInputAdornment-root:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+input[type="password"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-ms-reveal {
+  visibility: hidden;
+  display: none !important;
+  margin-right: -20px; /* Adjust as necessary */
+}
+
+.text-input > * {
+  width: 100%;
+}
+
+.forgot-password {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2684fc;
+}
