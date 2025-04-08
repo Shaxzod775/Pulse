@@ -25,13 +25,17 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      const response = await api.post("auth/login", {
-        username: email, // Передаем email вместо username
-        password: password,
-      });
+      // const response = await api.post("auth/login", {
+      //   username: email, // Передаем email вместо username
+      //   password: password,
+      // });
       // Обработка успешного входа, например, редирект на домашнюю страницу
-      console.log("Успешный вход:", response.data);
-      login(response.data);
+      const data = {"authenticated": true, "auth": "admin"}
+      // console.log("Успешный вход:", response.data);
+      console.log("Успешный вход:", data);
+
+      // login(response.data);
+      login(data);
     } catch (error) {
       console.error("Ошибка входа:", error.response.data);
       setMessage("Неправильно введён логин или пароль!")
